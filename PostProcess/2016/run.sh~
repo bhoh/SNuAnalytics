@@ -1,0 +1,63 @@
+# /xrootd//store/user/jhchoi/Latino/HWWNano/
+# Sites_cfg: /xrd/store/group/phys_higgs/cmshww/jhchoi/Latino/HWWNano/
+# changed to /xrd/store/user/jhchoi/Latino/HWWNano/
+# L1Loose
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i Prod -s MCl1loose2016 -b
+
+
+
+
+
+##--MCCorr2016_SemiLep--##
+SAMPLES=()
+SAMPLES=(GluGluHToWWToLNuQQ_M125 GluGluHToWWToLNuQQ_M700 GluGluHToWWToLNuQQ_M4000 GluGluHToWWToLNuQQ_M5000 \
+WWToLNuQQ \
+WWToLNuQQ_AMCNLOFXFX \
+WZ_AMCNLO \
+ZZ \
+Wg_AMCNLOFXFX \
+Wg_AMCNLOFXFX_ext2 \
+Wg_AMCNLOFXFX_ext3 \
+QCD_Pt_15to20_bcToE \
+QCD_Pt_20to30_bcToE \
+QCD_Pt_30to80_bcToE \
+QCD_Pt_80to170_bcToE \
+QCD_Pt_170to250_bcToE \
+QCD_Pt_250toInf_bcToE \
+TTToSemiLeptonic \
+ST_tW_antitop \
+ST_tW_top \
+TTWJetsToLNu \
+TTWJetsToQQ \
+TTZToQQ \
+#TTZjets \
+WJetsToLNu \
+WJetsToLNu_ext2 \
+#DYJetsToLL_M-10to50-LO \
+#DYJetsToLL_M-50-LO \
+DYJetsToLL_M-50-LO_ext1 \
+DYJetsToLL_M-50-LO_ext2 \
+DYJetsToLL_M-10to50 \
+DYJetsToLL_M-10to50_ext1 \
+#DYJetsToLL_M-50 \
+DYJetsToLL_M-50_ext2 \
+)
+EXCLUDE=()
+
+
+
+#--Run--#
+SAMPLE_LIST=''
+EXCLUDE_LIST=''
+for s in ${SAMPLES[@]};do SAMPLE_LIST=${s}','${SAMPLE_LIST};done
+for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
+#echo ${SAMPLE_LIST}
+#echo ${EXCLUDE_LIST}
+mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST} -R
+
+
+
+
+
+SAMPLES=()
+EXCLUDE=()

@@ -1,0 +1,25 @@
+# /xrootd//store/user/jhchoi/Latino/HWWNano/
+# Sites_cfg: /xrd/store/group/phys_higgs/cmshww/jhchoi/Latino/HWWNano/
+# changed to /xrd/store/user/jhchoi/Latino/HWWNano/
+# L1Loose
+
+##--DATACorr2017--##
+SAMPLES=()
+SAMPLES=()
+EXCLUDE=()
+
+#--Run--#
+SAMPLE_LIST=''
+EXCLUDE_LIST=''
+for s in ${SAMPLES[@]};do SAMPLE_LIST=${s}','${SAMPLE_LIST};done
+for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
+#echo ${SAMPLE_LIST}
+#echo ${EXCLUDE_LIST}
+mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST} -R
+
+
+
+
+
+SAMPLES=()
+EXCLUDE=()
