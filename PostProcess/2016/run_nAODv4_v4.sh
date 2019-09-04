@@ -93,7 +93,7 @@ WW-LOext1
 WWToLNuQQ
 WWToLNuQQ_AMCNLOFXFX
 TTToSemiLeptonic
-#TT_TuneCUETP8M2T4
+TT_TuneCUETP8M2T4
 ST_t-channel_top
 ST_t-channel_antitop
 ST_tW_antitop
@@ -258,14 +258,31 @@ done
 #mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i Prod -s MCl1loose2016 -b
 
 #--Corr Step--#
-mkPostProc.py -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5 -s MCCorr2016v5 -b -T ${SAMPLE_LIST}
-#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5 -s MCCorr2016v5 -T GluGluHToWWToLNuQQ_M5000
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016 -s MCCorr2016 -b -T ${SAMPLE_LIST}
 
 #--add PreselFatJet--#
 
 #mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s Semilep2016 -T ${SAMPLE_LIST} -b
-#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s Semilep2016 -T GluGluHToWWToLNuQQ_M5000
+mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s Semilep2016 -T GluGluHToWWToLNuQQ_M5000
 
+##---old
+
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPresel_semilep -T GluGluHToWWToLNuQQ_M5000
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPresel_semilep -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselWlep_semilep -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselCleaning_semilep -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselCleaningWlep_semilep -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselCleaningWlep_semilep -T ${SAMPLE_LIST} -b
+
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselCleaning_semilep_v2 -T GluGluHToWWToLNuQQ_M5000
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s FatJetPreselCleaning_semilep_v2 -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016 -s preselfatjetMaker -T GluGluHToWWToLNuQQ_M5000
+
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016__FatJetPreselCleaning_semilep_v2 -s wlepMaker -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016__FatJetPreselCleaning_semilep_v2 -s wlepMaker -T GluGluHToWWToLNuQQ_M5000 
+
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016__FatJetPreselCleaning_semilep_v2__wlepMaker -s whadJetSel -T GluGluHToWWToLNuQQ_M5000 
+#mkPostProc.py -p Summer16_102X_nAODv4_Full2016v4 -i MCl1loose2016__MCCorr2016__FatJetPreselCleaning_semilep_v2__wlepMaker -s whadJetSel -T ${SAMPLE_LIST} -b
 
 
 #whadJetSel

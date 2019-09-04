@@ -56,30 +56,6 @@ DYJetsToLL_M-50 \
 '''
 
 SAMPLES=(
-GluGluHToTauTau_M125
-GluGluHToTauTau_M125_ext1
-VBFHToTauTau_M125
-HWminusJ_HToTauTau_M125
-HWplusJ_HToTauTau_M125
-HZJ_HToTauTau_M125
-HZJ_HToWW_M120
-HZJ_HToWW_M125
-HZJ_HToWW_M130
-GluGluZH_HToWW_M120
-GluGluZH_HToWW_M125
-GluGluZH_HToWW_M130
-HWminusJ_HToWW_M120
-HWminusJ_HToWW_M125
-HWminusJ_HToWW_M130
-HWplusJ_HToWW_M120
-HWplusJ_HToWW_M125
-HWplusJ_HToWW_M130
-HWminusJ_HToWW_LNu_M120
-HWminusJ_HToWW_LNu_M125
-HWminusJ_HToWW_LNu_M130
-HWplusJ_HToWW_LNu_M120
-HWplusJ_HToWW_LNu_M125
-HWplusJ_HToWW_LNu_M130
 GluGluHToWWToLNuQQ_M115
 GluGluHToWWToLNuQQ_M125
 GluGluHToWWToLNuQQ_M135
@@ -217,6 +193,7 @@ DYJetsToLL_M-50_HT-1200to2500
 DYJetsToLL_M-50_HT-2500toInf
 QCD_HT200to300
 QCD_HT300to500
+QCD_HT500to700
 QCD_HT700to1000
 QCD_HT1000to1500
 WmTo2J_ZTo2L
@@ -241,12 +218,14 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #echo ${EXCLUDE_LIST}
 
 #--l1Prod--#
-mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i Prod -s MCl1loose2017v2 -b -T ${SAMPLE_LIST}
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i Prod -s MCl1loose2017v2 -b -T ${SAMPLE_LIST}
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i Prod -s MCl1loose2017v2 -b
 #--Corr--#
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST}
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5 -s MCCorr2017v5 -b -T ${SAMPLE_LIST}
 
-
+#--semilep--#
+mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5 -s Semilep2017 -b -T ${SAMPLE_LIST}
 
 
 

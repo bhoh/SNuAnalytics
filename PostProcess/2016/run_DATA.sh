@@ -33,8 +33,21 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #echo ${SAMPLE_LIST}
 #echo ${EXCLUDE_LIST}
 
+
+
+
+
+##---run DATA semilep2016
+
+mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5 -s Semilep2016 -T SingleMuon_Run2016H-Nano14Dec2018-v1
+#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5 -s Semilep2016 -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5 -s Semilep2016 -T ${SAMPLE_LIST} -b
+
+
+
 ##-run l1skim-##
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i Prod -s DATAl1loose2016 -b -T ${SAMPLE_LIST}
+
 ##No need to run independent Corr step
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016 -s FatJetPresel_semilep -T ${SAMPLE_LIST} -b
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016 -s FatJetPreselCleaning_semilep -T ${SAMPLE_LIST} -b
@@ -43,10 +56,12 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016 -s FatJetPreselCleaningWlep_semilep -T ${SAMPLE_LIST} -b
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016 -s FatJetPreselCleaning_semilep_v2 -T SingleMuon_Run2016H-Nano14Dec2018-v1
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016 -s FatJetPreselCleaning_semilep_v2 -T ${SAMPLE_LIST} -b
-mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016__FatJetPreselCleaning_semilep_v2 -s wlepMaker -T ${SAMPLE_LIST} -b
+#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016__FatJetPreselCleaning_semilep_v2 -s wlepMaker -T ${SAMPLE_LIST} -b
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016__FatJetPreselCleaning_semilep_v2 -s wlepMaker -T SingleMuon_Run2016H-Nano14Dec2018-v1 -b
 #wlepMaker
 
+
+#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v4 -i DATAl1loose2016__FatJetPreselCleaning_semilep_v2__wlepMaker -s whadJetSel -T ${SAMPLE_LIST} -b
 
 
 

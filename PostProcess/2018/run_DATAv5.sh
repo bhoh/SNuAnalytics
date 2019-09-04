@@ -5,7 +5,16 @@
 
 ##--DATACorr2017--##
 SAMPLES=()
-SAMPLES=()
+SAMPLES=(\
+SingleMuon_Run2018A-Nano1June2019-v1 \
+SingleMuon_Run2018B-Nano1June2019-v1 \
+SingleMuon_Run2018C-Nano1June2019-v1 \
+SingleMuon_Run2018D-Nano1June2019_ver2-v1 \
+EGamma_Run2018A-Nano1June2019-v1 \
+EGamma_Run2018B-Nano1June2019-v1 \
+EGamma_Run2018C-Nano1June2019-v1 \
+EGamma_Run2018D-Nano1June2019_ver2-v1 \
+)
 EXCLUDE=()
 
 #--Run--#
@@ -15,7 +24,11 @@ for s in ${SAMPLES[@]};do SAMPLE_LIST=${s}','${SAMPLE_LIST};done
 for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #echo ${SAMPLE_LIST}
 #echo ${EXCLUDE_LIST}
-mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST} -R
+
+#--l1Prod--#
+
+#--Cor--#
+mkPostProc.py -p Run2018_102X_nAODv5_Full2018v5 -i DATAl1loose2018v5 -s Semilep2018 -b -T ${SAMPLE_LIST}
 
 
 
