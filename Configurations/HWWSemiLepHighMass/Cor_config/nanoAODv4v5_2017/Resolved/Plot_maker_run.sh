@@ -1,6 +1,6 @@
 
 
-mkPlot.py   --pycfg=configuration.py   --inputFile=rootFile_semilep_Resolved/plots_semilep_Resolved.root
+mkPlot.py   --pycfg=configuration.py   --inputFile=rootFile_Resolved2017/plots_semilep_Resolved2017.root
 
 
 
