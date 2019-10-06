@@ -9,7 +9,8 @@ tag='simple2017'
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
 plotFile='plot.py' ##color code and some format-related things
-samplesFile = 'samples_'+tag+'.py'
+samplesFile = 'samples_missing.py'
+#samplesFile = 'samples_'+tag+'.py'
 
 lumi=41.5
 
