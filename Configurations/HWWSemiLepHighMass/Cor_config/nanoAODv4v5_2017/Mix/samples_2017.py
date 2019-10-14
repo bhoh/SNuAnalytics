@@ -91,12 +91,12 @@ elif  'sdfarm' in SITE:
 
 
 CAMPAIGN='Fall2017_102X_nAODv4_Full2017v5'
-STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017"
+STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
 
 
 
 CAMPAIGN_DATA='Run2017_102X_nAODv4_Full2017v5'
-STEP_DATA="DATAl1loose2017v5__Semilep2017"
+STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel2017"
 
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
@@ -174,7 +174,8 @@ DataTrig = {
 ############### SIGNAL ####################
 ###########################################
 
-List_MX=[125,200,210,230,250,300,350,400,500,550,600,650,700,750,800,900,1500,2000,2500,3000,4000,5000]
+#List_MX=[125,200,210,230,250,300,350,400,500,550,600,650,700,750,800,900,1500,2000,2500,3000,4000,5000]
+List_MX=[125,200,500,900,2500,4000,5000]
 for MX in List_MX:
 
   samples['ggHWWlnuqq_M'+str(MX)] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),

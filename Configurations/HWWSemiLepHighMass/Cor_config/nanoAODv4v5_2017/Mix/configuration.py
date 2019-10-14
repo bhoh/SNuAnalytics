@@ -1,16 +1,16 @@
 ##Just set below things##
 
-#tag='FatJetPreselCleaningWlep_semilep'
-tag='simple2017'
-#tag='Boosted2017'
-#tag='semilep_tight80XWP'
+
+#tag='simple2017'
+tag='2017'
+
 
 
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
 plotFile='plot.py' ##color code and some format-related things
-samplesFile = 'samples_missing.py'
-#samplesFile = 'samples_'+tag+'.py'
+#samplesFile = 'samples_missing.py'
+samplesFile = 'samples_'+tag+'.py'
 
 lumi=41.5
 

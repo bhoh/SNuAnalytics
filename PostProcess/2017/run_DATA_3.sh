@@ -25,7 +25,7 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #--Cor--#
 #mkPostProc.py -p Run2017_102X_nAODv4_Full2017v4 -i DATAl1loose2017v2 -s DATACorr2017 -b -T ${SAMPLE_LIST}
 #mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5 -s Semilep2017 -b -T ${SAMPLE_LIST}
-mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5__Semilep2017 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST} -R
+mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5__Semilep2017 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST}
 
 
 

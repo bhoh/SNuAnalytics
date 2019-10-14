@@ -1,0 +1,1394 @@
+cp: missing destination file operand after '/cms/ldap_home/jhchoi/.proxy'
+Try 'cp --help' for more information.
+
+--------------------------------------------------------------------------------------------
+   _  __                 ___           __    ___                           _          
+  / |/ /__ ____  ___    / _ \___  ___ / /_  / _ \_______  _______ ___ ___ (_)__  ___ _
+ /    / _ `/ _ \/ _ \  / ___/ _ \(_-</ __/ / ___/ __/ _ \/ __/ -_|_-<(_-</ / _ \/ _ `/
+/_/|_/\_,_/_//_/\___/ /_/   \___/___/\__/ /_/  /_/  \___/\__/\__/___/___/_/_//_/\_, / 
+                                                                               /___/  
+--------------------------------------------------------------------------------------------
+
+ Productions :  ['Summer16_102X_nAODv4_Full2016v5']
+ Steps       :  ['MCCorr2016v5']
+_LocalSite  =  sdfarm
+_TargetSite =  None
+----------- Running on production: Summer16_102X_nAODv4_Full2016v5
+---------------- for Step :  MCCorr2016v5
+INFO: Using Local Batch
+Computing baseW for WJetsToLNu
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu 61526.7 1.00
+baseW: xs,N -> W 61526.7 3.49260351588e+12 1.7616285307e-05
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu
+1.7616285307e-05
+Computing baseW for WJetsToLNu_HT1200_2500
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT1200_2500', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT1200_2500', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT1200_2500 1.32900 1.21
+baseW: xs,N -> W 1.60809 244532.0 0.00657619452669
+0.00657619452669
+Computing baseW for WJetsToLNu_HT2500_inf_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT2500_inf', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT2500_inf', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT2500_inf 0.03216 1.21
+baseW: xs,N -> W 0.0389136 2384260.0 1.63210388129e-05
+1.63210388129e-05
+Computing baseW for WJetsToLNu_HT2500_inf_ext1
+1.63210388129e-05
+Computing baseW for WJetsToLNu_HT2500_inf_ext1
+1.63210388129e-05
+Computing baseW for WJetsToLNu_HT2500_inf_ext1
+1.63210388129e-05
+Computing baseW for WJetsToLNu_HT400_600
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT400_600', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT400_600', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT400_600 48.9100 1.21
+baseW: xs,N -> W 59.1811 1963464.0 0.030141168873
+0.030141168873
+Computing baseW for WJetsToLNu_HT400_600
+0.030141168873
+Computing baseW for WJetsToLNu_HT400_600
+0.030141168873
+Computing baseW for WJetsToLNu_HT400_600
+0.030141168873
+Computing baseW for WJetsToLNu_HT800_1200
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT800_1200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT800_1200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT800_1200 5.50100 1.21
+baseW: xs,N -> W 6.65621 1544513.0 0.00430958496303
+0.00430958496303
+Computing baseW for WJetsToLNu_HT800_1200
+0.00430958496303
+Computing baseW for WJetsToLNu_HT800_1200
+0.00430958496303
+Computing baseW for WJetsToLNu_HT70_100
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT70_100', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT70_100', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT70_100 1319.00 1.21
+baseW: xs,N -> W 1595.99 10020533.0 0.15927196687
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT70_100
+0.15927196687
+Computing baseW for WJetsToLNu_HT100_200_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT100_200 1345.00 1.21
+baseW: xs,N -> W 1627.45 14106492.0 0.115368867044
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT100_200_ext1
+0.115368867044
+Computing baseW for WJetsToLNu_HT600_800
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT600_800', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT600_800', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT600_800 12.0500 1.21
+baseW: xs,N -> W 14.5805 3779141.0 0.00385815189219
+0.00385815189219
+Computing baseW for WJetsToLNu_HT600_800
+0.00385815189219
+Computing baseW for WJetsToLNu_HT600_800
+0.00385815189219
+Computing baseW for WJetsToLNu_HT600_800
+0.00385815189219
+Computing baseW for WJetsToLNu_HT600_800
+0.00385815189219
+Computing baseW for WJetsToLNu_HT600_800
+0.00385815189219
+Computing baseW for WJetsToLNu_HT400_600_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT400_600', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT400_600', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT400_600 48.9100 1.21
+baseW: xs,N -> W 59.1811 5796237.0 0.0102102622788
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT400_600_ext1
+0.0102102622788
+Computing baseW for WJetsToLNu_HT100_200_ext2
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT100_200 1345.00 1.21
+baseW: xs,N -> W 1627.45 19914590.0 0.08172149163
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_HT100_200_ext2
+0.08172149163
+Computing baseW for WJetsToLNu_ext2
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu 61526.7 1.00
+baseW: xs,N -> W 61526.7 3.66617456099e+13 1.67822614489e-06
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_ext2
+1.67822614489e-06
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT1200_2500', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT1200_2500', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT1200_2500 1.32900 1.21
+baseW: xs,N -> W 1.60809 6627909.0 0.000242624031199
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT1200_2500_ext1
+0.000242624031199
+Computing baseW for WJetsToLNu_HT2500_inf
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT2500_inf', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT2500_inf', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT2500_inf 0.03216 1.21
+baseW: xs,N -> W 0.0389136 253561.0 0.000153468396165
+0.000153468396165
+Computing baseW for WJetsToLNu_HT200_400
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT200_400 359.700 1.21
+baseW: xs,N -> W 435.237 4963240.0 0.0876921124104
+0.0876921124104
+Computing baseW for WJetsToLNu_HT200_400
+0.0876921124104
+Computing baseW for WJetsToLNu_HT200_400
+0.0876921124104
+Computing baseW for WJetsToLNu_HT200_400
+0.0876921124104
+Computing baseW for WJetsToLNu_HT200_400
+0.0876921124104
+Computing baseW for WJetsToLNu_HT200_400_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT200_400 359.700 1.21
+baseW: xs,N -> W 435.237 14106492.0 0.0308536665246
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext1
+0.0308536665246
+Computing baseW for WJetsToLNu_HT200_400_ext2
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT200_400', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT200_400 359.700 1.21
+baseW: xs,N -> W 435.237 19914590.0 0.0218551825571
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT200_400_ext2
+0.0218551825571
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT800_1200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT800_1200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT800_1200 5.50100 1.21
+baseW: xs,N -> W 6.65621 6286023.0 0.00105889049404
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT800_1200_ext1
+0.00105889049404
+Computing baseW for WJetsToLNu_HT100_200
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT100_200', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT100_200 1345.00 1.21
+baseW: xs,N -> W 1627.45 9945478.0 0.163637182647
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT100_200
+0.163637182647
+Computing baseW for WJetsToLNu_HT600_800_ext1
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT600_800', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+{'HiggsMass': 0.0, 'ProdMode': 'unknown', 'DecayMode': 'unknown', 'Energy': '13TeV', 'Sample': 'WJetsToLNu_HT600_800', 'FinalStateBR': 1.0, 'FinalState': 'unknown', 'xs': 0.0, 'HiggsBR': 0.0, 'ProdXS': 0.0}
+WJetsToLNu_HT600_800 12.0500 1.21
+baseW: xs,N -> W 14.5805 14908339.0 0.000978009689745
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+Computing baseW for WJetsToLNu_HT600_800_ext1
+0.000978009689745
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part19____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part19____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part16____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part16____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part18____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part18____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part17____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part17____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT70_100__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT400_600_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part17____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part17____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part18____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part18____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part19____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part19____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part16____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200_ext2__part16____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part21____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part21____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part65____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part65____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part39____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part39____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part79____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part79____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part131____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part131____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part46____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part46____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part32____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part32____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part50____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part50____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part49____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part49____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part125____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part125____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part33____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part33____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part24____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part24____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part116____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part116____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part142____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part142____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part73____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part73____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part44____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part44____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part68____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part68____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part17____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part17____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part113____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part113____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part56____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part56____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part147____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part147____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part114____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part114____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part19____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part19____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part84____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part84____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part119____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part119____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part71____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part71____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part90____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part90____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part104____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part104____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part62____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part62____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part87____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part87____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part149____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part149____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part57____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part57____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part47____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part47____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part100____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part100____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part23____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part23____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part93____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part93____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part107____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part107____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part58____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part58____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part136____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part136____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part146____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part146____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part109____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part109____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part82____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part82____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part27____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part27____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part59____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part59____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part94____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part94____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part67____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part67____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part42____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part42____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part70____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part70____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part139____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part139____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part99____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part99____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part86____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part86____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part18____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part18____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part31____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part31____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part96____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part96____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part26____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part26____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part144____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part144____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part129____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part129____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part76____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part76____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part133____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part133____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part66____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part66____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part91____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part91____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part122____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part122____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part38____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part38____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part63____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part63____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part89____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part89____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part102____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part102____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part60____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part60____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part36____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part36____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part64____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part64____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part95____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part95____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part48____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part48____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part126____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part126____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part45____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part45____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part118____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part118____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part121____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part121____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part35____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part35____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part150____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part150____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part115____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part115____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part117____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part117____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part41____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part41____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part37____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part37____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part74____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part74____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part85____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part85____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part53____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part53____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part112____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part112____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part72____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part72____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part40____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part40____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part77____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part77____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part80____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part80____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part75____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part75____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part55____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part55____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part143____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part143____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part78____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part78____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part25____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part25____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part16____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part16____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part110____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part110____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part148____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part148____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part52____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part52____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part140____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part140____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part106____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part106____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part124____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part124____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part105____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part105____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part137____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part137____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part101____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part101____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part132____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part132____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part20____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part20____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part97____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part97____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part81____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part81____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part51____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part51____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part145____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part145____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part103____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part103____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part88____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part88____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part135____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part135____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part111____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part111____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part128____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part128____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part29____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part29____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part138____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part138____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part22____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part22____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part141____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part141____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part54____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part54____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part98____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part98____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part34____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part34____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part83____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part83____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part108____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part108____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part92____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part92____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part43____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part43____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part30____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part30____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part130____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part130____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part61____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part61____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part28____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part28____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part69____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part69____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part120____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part120____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part123____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part123____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part127____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part127____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part134____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_ext2__part134____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT1200_2500_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT2500_inf__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext1__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part16____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part16____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part19____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part19____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part18____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part18____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part17____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT200_400_ext2__part17____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT800_1200_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT100_200__part2____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part9____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part9____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part7____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part7____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part14____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part14____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part1____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part1____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part10____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part10____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part4____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part4____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part3____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part3____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part12____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part12____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part13____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part13____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part6____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part6____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part8____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part8____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part15____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part15____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part0____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part0____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part11____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part11____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part16____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part16____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part5____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part5____MCl1loose2016v5  on  8nh
+/cms/ldap_home/jhchoi/HWW_Analysis/slc7/latino_master_v3/191008/jhchoi_workdir/jobs//NanoGardening__Summer16_102X_nAODv4_Full2016v5/NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part2____MCl1loose2016v5
+Submit NanoGardening__Summer16_102X_nAODv4_Full2016v5__MCCorr2016v5__WJetsToLNu_HT600_800_ext1__part2____MCl1loose2016v5  on  8nh

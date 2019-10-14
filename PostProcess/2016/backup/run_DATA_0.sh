@@ -9,17 +9,6 @@ SAMPLES=(\
 SingleElectron_Run2016B-Nano14Dec2018_ver2-v1 \
 SingleElectron_Run2016C-Nano14Dec2018-v1 \
 SingleElectron_Run2016D-Nano14Dec2018-v1 \
-SingleElectron_Run2016E-Nano14Dec2018-v1 \
-SingleElectron_Run2016F-Nano14Dec2018-v1 \
-SingleElectron_Run2016G-Nano14Dec2018-v1 \
-SingleElectron_Run2016H-Nano14Dec2018-v1 \
-SingleMuon_Run2016B-Nano14Dec2018_ver2-v1 \
-SingleMuon_Run2016C-Nano14Dec2018-v1 \
-SingleMuon_Run2016D-Nano14Dec2018-v1 \
-SingleMuon_Run2016E-Nano14Dec2018-v1 \
-SingleMuon_Run2016F-Nano14Dec2018-v1 \
-SingleMuon_Run2016G-Nano14Dec2018-v1 \
-SingleMuon_Run2016H-Nano14Dec2018-v1 \
 )
 EXCLUDE=()
 

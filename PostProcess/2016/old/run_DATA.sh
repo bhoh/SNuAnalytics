@@ -6,9 +6,16 @@
 ##--DATACorr2017--##
 SAMPLES=()
 SAMPLES=(\
+SingleElectron_Run2017B-Nano14Dec2018-v1 \
+SingleElectron_Run2017C-Nano14Dec2018-v1 \
 SingleElectron_Run2017D-Nano14Dec2018-v1 \
 SingleElectron_Run2017E-Nano14Dec2018-v1 \
 SingleElectron_Run2017F-Nano14Dec2018-v1 \
+SingleMuon_Run2017B-Nano14Dec2018-v1 \
+SingleMuon_Run2017C-Nano14Dec2018-v1 \
+SingleMuon_Run2017D-Nano14Dec2018-v1 \
+SingleMuon_Run2017E-Nano14Dec2018-v1 \
+SingleMuon_Run2017F-Nano14Dec2018-v1 \
 )
 EXCLUDE=()
 
@@ -25,7 +32,7 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #--Cor--#
 #mkPostProc.py -p Run2017_102X_nAODv4_Full2017v4 -i DATAl1loose2017v2 -s DATACorr2017 -b -T ${SAMPLE_LIST}
 #mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5 -s Semilep2017 -b -T ${SAMPLE_LIST}
-mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5__Semilep2017 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST}
+mkPostProc.py -p Run2017_102X_nAODv4_Full2017v5 -i DATAl1loose2017v5__Semilep2017 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST} -R
 
 
 
