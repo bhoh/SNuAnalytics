@@ -48,6 +48,8 @@ plot['ggHWWlnuqq_M900']  = {
                   'samples'  : ['ggHWWlnuqq_M900'],
                   'scale'    : 120
 }
+
+
 '''
 plot['ggHWWlnuqq_M2500']  = {
                   'nameHR' : 'ggHWWlnuqq_M2500',
@@ -76,6 +78,6 @@ plot['DATA']  = {
 		  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
-legend['lumi'] = 'L = 41.5/fb'
+legend['lumi'] = 'L = 35.9/fb'
 #legend['lumi'] = 'Simulation'
 legend['sqrt'] = '#sqrt{s} = 13 TeV'

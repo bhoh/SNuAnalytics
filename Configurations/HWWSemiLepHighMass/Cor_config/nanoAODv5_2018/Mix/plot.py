@@ -46,7 +46,7 @@ plot['ggHWWlnuqq_M900']  = {
                   'isData'   : 0,
                   'color': 632,   
                   'samples'  : ['ggHWWlnuqq_M900'],
-                  'scale'    : 120
+                  'scale'    : 30
 }
 '''
 plot['ggHWWlnuqq_M2500']  = {
@@ -55,7 +55,7 @@ plot['ggHWWlnuqq_M2500']  = {
                   'isData'   : 0,
                   'color': 600,   
                   'samples'  : ['ggHWWlnuqq_M2500'],
-                  'scale'    : 3000
+                  'scale'    : 120
 }
 
 plot['ggHWWlnuqq_M5000']  = {
@@ -64,10 +64,10 @@ plot['ggHWWlnuqq_M5000']  = {
                   'isData'   : 0,
                   'color': 616,   
                   'samples'  : ['ggHWWlnuqq_M5000'],
-                  'scale'    : 3000
+                  'scale'    : 120
 }
-'''
 
+'''
 plot['DATA']  = {
                   'nameHR' : 'DATA',
                   'isSignal' : 0,
@@ -76,6 +76,6 @@ plot['DATA']  = {
 		  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
-legend['lumi'] = 'L = 41.5/fb'
-#legend['lumi'] = 'Simulation'
+legend['lumi'] = 'L = 59.7/fb'
+
 legend['sqrt'] = '#sqrt{s} = 13 TeV'

@@ -11,7 +11,7 @@ supercut = 'nLepton>0'
 
 
 
-eleWP='mvaFall17V1Iso_WP90'
+eleWP='mvaFall17V2Iso_WP90'
 muWP='cut_Tight_HWWW'
 
 METtype='Puppi'
@@ -45,7 +45,7 @@ else:
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
 bAlgo='DeepB'
-bWP='0.1522'
+bWP='0.1241'
 
 isbjet='(CleanJet_jetIdx[CleanJetNotFat_jetIdx]>0 && CleanJet_pt[CleanJetNotFat_jetIdx]>20 && fabs(CleanJet_eta[CleanJetNotFat_jetIdx]) < 2.4 && Jet_btag'+bAlgo+'[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] > '+bWP+'  )'
 nbjet='(Sum$'+isbjet+')'

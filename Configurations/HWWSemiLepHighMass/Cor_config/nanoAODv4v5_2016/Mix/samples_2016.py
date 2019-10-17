@@ -5,8 +5,8 @@
 supercut = 'nLepton>0'
 
 
-eleWP='mvaFall17V1Iso_WP90'
-muWP='cut_Tight_HWWW'
+eleWP='mva_90p_Iso2016'
+muWP='cut_Tight80x'
 
 METtype='Puppi'
 
@@ -40,7 +40,7 @@ else:
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
 bAlgo='DeepB'
-bWP='0.1522'
+bWP='0.2217'
 
 isbjet='(CleanJet_jetIdx[CleanJetNotFat_jetIdx]>0 && CleanJet_pt[CleanJetNotFat_jetIdx]>20 && fabs(CleanJet_eta[CleanJetNotFat_jetIdx]) < 2.4 && Jet_btag'+bAlgo+'[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] > '+bWP+'  )'
 nbjet='(Sum$'+isbjet+')'
@@ -90,13 +90,13 @@ elif  'sdfarm' in SITE:
   treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
 
 
-CAMPAIGN='Fall2017_102X_nAODv4_Full2017v5'
-STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
+CAMPAIGN='Summer16_102X_nAODv4_Full2016v5'
+STEP="MCl1loose2016v5__MCCorr2016v5__Semilep2016__HMlnjjSel2017"
 
 
 
-CAMPAIGN_DATA='Run2017_102X_nAODv4_Full2017v5'
-STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel2017"
+CAMPAIGN_DATA='Run2016_102X_nAODv4_Full2016v5'
+STEP_DATA="DATAl1loose2016v5__Semilep2016__HMlnjjSel2017"
 
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
@@ -151,11 +151,14 @@ METFilter_DATA = 'METFilter_DATA'
 ############ DATA DECLARATION ##################                                                                                             
 ################################################ 
 DataRun = [
-  ['B','Run2017B-Nano14Dec2018-v1'] ,
-  ['C','Run2017C-Nano14Dec2018-v1'],
-  ['D','Run2017D-Nano14Dec2018-v1'],
-  ['E','Run2017E-Nano14Dec2018-v1'],
-  ['F','Run2017F-Nano14Dec2018-v1']
+    ['B','Run2016B-Nano14Dec2018_ver2-v1'] ,
+    ['C','Run2016C-Nano14Dec2018-v1'] ,
+    ['D','Run2016D-Nano14Dec2018-v1'] ,
+    ['E','Run2016E-Nano14Dec2018-v1'] ,
+    ['F','Run2016F-Nano14Dec2018-v1'] ,
+    ['G','Run2016G-Nano14Dec2018-v1'] ,
+    ['H','Run2016H-Nano14Dec2018-v1'] ,
+
 ]
 
 DataSets = ['SingleMuon',\
@@ -188,17 +191,10 @@ for MX in List_MX:
 #############  BACKGROUNDS  ###############                                                                                                  
 ###########################################                                                                                                  
 
-samples['Wjets'] = {    'name'   :   getSampleFiles(directory,'WJetsToLNu_HT100_200',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT200_400',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT400_600',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT600_800',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT800_1200',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT1200_2500',False,'nanoLatino_')
-                        + getSampleFiles(directory,'WJetsToLNu_HT2500_inf',False,'nanoLatino_')
-                        ,
-                     'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+samples['Wjets'] = {    'name'   :   getSampleFiles(directory,'WJetsToLNu',False,'nanoLatino_')+getSampleFiles(directory,'WJetsToLNu_ext2',False,'nanoLatino_'),
+                        'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                         'FilesPerJob' : 5,
-                 }
+                    }
 
 
 ############ DY ############                                                                                                   
@@ -261,14 +257,14 @@ samples['QCD'] = {    'name'   :   getSampleFiles(directory,'QCD_Pt-15to20_MuEnr
 #                 }
 #def getEventSumw(directory,sample,prefix):
 
-#Wjets_w1=str(getEventSumw(directory,'WJetsToLNu','nanoLatino_'))
-#Wjets_w2=str(getEventSumw(directory,'WJetsToLNu_ext2','nanoLatino_'))
-#Wjets_totalw=str(float(Wjets_w1)+float(Wjets_w2))
-#print "Wjets_w1="+Wjets_w1
-#print "Wjets_w2="+Wjets_w2
-#print "Wjets_totalw="+Wjets_totalw
-#addSampleWeight(samples,'Wjets','WJetsToLNu',Wjets_w1+"/"+Wjets_totalw)
-#addSampleWeight(samples,'Wjets','WJetsToLNu_ext2',Wjets_w2+"/"+Wjets_totalw)
+Wjets_w1=str(getEventSumw(directory,'WJetsToLNu','nanoLatino_'))
+Wjets_w2=str(getEventSumw(directory,'WJetsToLNu_ext2','nanoLatino_'))
+Wjets_totalw=str(float(Wjets_w1)+float(Wjets_w2))
+print "Wjets_w1="+Wjets_w1
+print "Wjets_w2="+Wjets_w2
+print "Wjets_totalw="+Wjets_totalw
+addSampleWeight(samples,'Wjets','WJetsToLNu',Wjets_w1+"/"+Wjets_totalw)
+addSampleWeight(samples,'Wjets','WJetsToLNu_ext2',Wjets_w2+"/"+Wjets_totalw)
 
 
 
