@@ -1,10 +1,5 @@
 #-----Variable Deinition-----#                                                                                                                                
 
-supercut = 'nLepton>0'
-
-
-eleWP='mvaFall17V1Iso_WP90'
-muWP='cut_Tight_HWWW'
 
 METtype='PF'
 #METtype='Puppi'
@@ -35,9 +30,6 @@ else:
     Wlep_mass='Wlep_mass_'+METtype
 
 
-LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
-
-
 
 #------End of Variable Definition-----#  
 
@@ -45,70 +37,143 @@ LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+
 
 
 
-#variables['Event'] = {
-#    'name' : '1',
-#    'range':(1,0,1),
-#    'xaxis':'1',
-#    'fold': 3
-#}
+variables['Event'] = {
+    'name' : '1',
+    'range':(1,0,1),
+    'xaxis':'1',
+    'fold': 3
+}
 
 variables['CleanFatJet_tau21']={
     'name' : 'CleanFatJet_tau21',
     'range':(20,0,1),
-    'xaxis':'Fat #{tau}21',
+    'xaxis':'FatJet #tau_{21}',
     'fold':0
 }
 
-variables['WptOvHfatM']={
-    'name' : 'WptOvHfatM',
+variables['CleanFatJet_pt']={
+    'name' : 'CleanFatJet_pt',
+    'range':(50,100,1000),
+    'xaxis':'FatJet P_{T} [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJet_mass']={
+    'name' : 'CleanFatJet_mass',
+    'range':(50,40,250),
+    'xaxis':'FatJet Mass [GeV]',
+    'fold':0
+}
+
+
+
+variables['CleanFatJetPassMBoostedSB_tau21']={
+    'name' : 'CleanFatJetPassMBoostedSB_tau21[0]',
     'range':(20,0,1),
-    'xaxis':'min(Wlep_pt,Wj_pt)/Mww',
+    'xaxis':'FatJet #tau_{21}',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSB_pt']={
+    'name' : 'CleanFatJetPassMBoostedSB_pt[0]',
+    'range':(50,100,1000),
+    'xaxis':'FatJet P_{T} [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSB_mass']={
+    'name' : 'CleanFatJetPassMBoostedSB_mass[0]',
+    'range':(50,40,250),
+    'xaxis':'FatJet Mass [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSB_WptOvHfatM']={
+    'name' : 'CleanFatJetPassMBoostedSB_WptOvHfatM[0]',
+    'range':(20,0,1),
+    'xaxis':'min(W_{pT})/M(WW)',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSB_HlnFat_mass']={
+    'name' : 'CleanFatJetPassMBoostedSB_HlnFat_mass[0]',
+    'range':(80,0,4000),
+    'xaxis':'m_{lnJ} [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSR_tau21']={
+    'name' : 'CleanFatJetPassMBoostedSB_tau21[0]',
+    'range':(20,0,1),
+    'xaxis':'FatJet #tau_{21}',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSR_pt']={
+    'name' : 'CleanFatJetPassMBoostedSB_pt[0]',
+    'range':(50,100,1000),
+    'xaxis':'FatJet P_{T} [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSR_mass']={
+    'name' : 'CleanFatJetPassMBoostedSR_mass[0]',
+    'range':(50,40,250),
+    'xaxis':'FatJet Mass [GeV]',
+    'fold':0
+}
+
+variables['CleanFatJetPassMBoostedSR_WptOvHfatM']={
+    'name' : 'CleanFatJetPassMBoostedSR_WptOvHfatM[0]',
+    'range':(20,0,1),
+    'xaxis':'min(Wlep_{pT},WJ_{pT})/M(WW)',
+    'fold':0
+}
+variables['CleanFatJetPassMBoostedSR_HlnFat_mass']={
+    'name' : 'CleanFatJetPassMBoostedSB_HlnFat_mass[0]',
+    'range':(80,0,4000),
+    'xaxis':'m_{lnJ} [GeV]',
     'fold':0
 
-}
+
 
 variables['WptOvHak4M']={
     'name' : 'WptOvHak4M',
     'range':(20,0,1),
-    'xaxis':'min(Wlep_pt,Wjj_pt)/Mww',
+    'xaxis':'min(Wlep_{pT},Wjj_{pT})/M(WW)',
     'fold':0
 }
 
 variables['lepton_pt']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
-    'xaxis':'lepton P_{T}',
+    'xaxis':'lepton P_{T} [GeV]',
     'fold':0
 }
 
 variables['pfMet']={
     'name' : 'MET_pt',
     'range':(50,20,600),
-    'xaxis':'MET (GeV)',
+    'xaxis':'MET [GeV]',
     'fold':0
 }
 
 variables['Wlep_pt']={
     'name' : 'Wlep_pt_PF',
     'range':(50,50,1000),
-    'xaxis':'W_{Lep} P_{T} (GeV)',
+    'xaxis':'W_{Lep} P_{T} [GeV]',
     'fold':0
 }
 
 variables['lnjj_mt']={
     'name' : 'Hlnjj_mt',
     'range':(50,0,400),
-    'xaxis':'lnjj m_{T} (GeV)',
+    'xaxis':'lnjj m_{T} [GeV]',
     'fold':0
 }
 
 
-variables['Fat_pt']={
-    'name' : 'CleanFatJet_pt[0]',
-    'range':(50,100,1000),
-    'xaxis':'AK8 P_{T} (GeV)',
-    'fold':0
-}
+
 
 
 variables ['PV_npvs']={
@@ -119,38 +184,26 @@ variables ['PV_npvs']={
 }
 
 
-variables['CleanFatJet_mass'] = {
-    'name' : 'CleanFatJet_mass[0]',
-    'range':(50,40,250),
-    'xaxis':'FatJet_mass (GeV)',
-    'fold':0
-}
 
-variables['JJ_mass'] = {
+
+variables['jj_mass'] = {
     'name' : 'Whad_mass',
     'range':(50,40,250),
-    'xaxis':'m_{jj} (GeV)',
+    'xaxis':'m_{jj} [GeV]',
     'fold':0
 }
 
-variables['JJ_pt'] = {
+variables['jj_pt'] = {
     'name' : 'Whad_pt',
     'range':(50,50,900),
-    'xaxis':'jj P_{T} (GeV)',
-    'fold':0
-}
-
-variables['LnFat_mass']={
-    'name': 'HlnFat_mass',
-    'range':(80,0,4000),
-    'xaxis':'m_{lnFat}',
+    'xaxis':'jj P_{T} [GeV]',
     'fold':0
 }
 
 variables['LnJJ_mass']={
     'name': 'Hlnjj_mass',
     'range':(80,0,4000),
-    'xaxis':'m_{lnjj}',
+    'xaxis':'m_{lnjj} [GeV]',
     'fold':0
 }
 
@@ -158,8 +211,35 @@ variables['LnJJ_mass']={
 variables['Wlep_mt']={
     'name': 'Wlep_mt',
     'range':(80,0,4000),
-    'xaxis':'mt_{Wlep}',
+    'xaxis':'mt_{Wlep} [GeV]',
     'fold':0
 }
 
 
+variables['vbfFat_jj_dEta']={
+    'name': 'vbfFat_jj_dEta',
+    'range':(50,0,10),
+    'xaxis':'#Delta#eta(jj)',
+    'fold':0
+}
+variables['vbfFat_jj_mass']={
+    'name': 'vbfFat_jj_mass',
+    'range':(100,0,1000),
+    'xaxis':'M(jj) [GeV]',
+    'fold':0
+}
+
+
+variables['vbfjj_jj_dEta']={
+    'name': 'vbfjj_jj_dEta',
+    'range':(50,0,10),
+    'xaxis':'#Delta(#eta)(jj)',
+    'fold':0
+}
+
+variables['vbfjj_jj_mass']={
+    'name': 'vbfjj_jj_mass',
+    'range':(100,0,1000),
+    'xaxis':'M(jj) [GeV]',
+    'fold':0
+}

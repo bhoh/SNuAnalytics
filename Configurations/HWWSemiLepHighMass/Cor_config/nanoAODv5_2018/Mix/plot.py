@@ -1,13 +1,13 @@
 
 
-#plot['DY']  = {
-#                  'nameHR' : 'DY',
-#                  'isSignal' : 0,
-#                  'color': 418, 
-#                  'isData'   : 0,
-#                  'samples'  : ['DY']
-#              }
-#
+plot['DY']  = {
+                  'nameHR' : 'DY',
+                  'isSignal' : 0,
+                  'color': 418, 
+                  'isData'   : 0,
+                  'samples'  : ['DY']
+              }
+
 plot['top']  = {
                   'nameHR' : 'Top',
                   'isSignal' : 0,
@@ -22,6 +22,15 @@ plot['Wjets']  = {
                   'isData'   : 0,
                   'samples'  : ['Wjets']
               }
+'''
+plot['QCD']  = {
+                  'nameHR' : 'QCD',
+                  'isSignal' : 0,
+                  'color': 857,
+                  'isData'   : 0,
+                  'samples'  : ['QCD']
+              }
+'''
 #plot['WWToLNuQQ']  = {
 #                  'nameHR' : 'WWToLNuQQ',
 #                  'isSignal' : 0,

@@ -8,35 +8,6 @@ supercut = 'nLepton>0'
 eleWP='mvaFall17V1Iso_WP90'
 muWP='cut_Tight_HWWW'
 
-METtype='Puppi'
-
-if METtype=='' or METtype=='PF':
-    MET_pt='MET_pt'
-    MET_phi='MET_phi'
-    Wlep_px='Wlep_px_PF'
-    Wlep_py='Wlep_py_PF'
-    Wlep_pz='Wlep_pz_PF'
-    Wlep_E='Wlep_E_PF'
-    Wlep_pt='Wlep_pt_PF'
-    Wlep_eta='Wlep_eta_PF'
-    Wlep_phi='Wlep_phi_PF'
-    Wlep_mass='Wlep_mass_PF'
-
-
-else:
-    MET_pt=METtype+'MET_pt'
-    MET_phi=METtype+'MET_phi'
-    Wlep_px='Wlep_px_'+METtype
-    Wlep_py='Wlep_py_'+METtype
-    Wlep_pz='Wlep_pz_'+METtype
-    Wlep_E='Wlep_E_'+METtype
-    Wlep_pt='Wlep_pt_'+METtype
-    Wlep_eta='Wlep_eta_'+METtype
-    Wlep_phi='Wlep_phi_'+METtype
-    Wlep_mass='Wlep_mass_'+METtype
-
-
-
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
 bAlgo='DeepB'
@@ -47,21 +18,6 @@ nbjet='(Sum$'+isbjet+')'
 btagSF_each='( '+isbjet+'*Alt$(Jet_btagSF_shape, 1) + !'+isbjet+'*1 )'
 logbtagSF='(Sum$(  TMath::Log('+btagSF_each+')))'
 btagSF='(TMath::Exp( '+logbtagSF+' ))'
-
-
-ww_px_pow2=' pow(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_px+', 2    )'
-ww_px='(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_px+')'
-ww_py_pow2=' pow(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_py+', 2    )'
-ww_py='(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_py+')'
-ww_pz_pow2=' pow(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_pz+', 2    )'
-ww_pz='(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_pz+')'
-ww_E_pow2=' pow(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_E+', 2    )'
-ww_E='(     CleanFatJet_pt[0]*cos(CleanFatJet_phi[0])+'+Wlep_E+')'
-
-mww = '( sqrt( '+ww_E_pow2+' - '+ww_px_pow2+' - '+ww_py_pow2+' -'+ww_pz_pow2+'    )     )'
-ww_pt='( sqrt( '+ww_px_pow2+' + '+ww_py_pow2+'  )  )'
-ww_phi = '(atan('+ww_py+'/'+ww_px+' ) )'
-ww_eta=' ( asinh('+ww_pz+'/'+ww_pt+') )'
 
 #------End of Variable Definition-----#
 
@@ -91,12 +47,13 @@ elif  'sdfarm' in SITE:
 
 
 CAMPAIGN='Fall2017_102X_nAODv4_Full2017v5'
-STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
+#STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
+STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel_New"
 
 
 
 CAMPAIGN_DATA='Run2017_102X_nAODv4_Full2017v5'
-STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel2017"
+STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel_New"
 
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
@@ -108,7 +65,7 @@ directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
-LepWPweight='(((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_IdIsoSF'+'[0]'+')) || ((Lepton_isTightMuon_'+muWP+'[0]>0.5)*(Lepton_tightMuon_'+muWP+'_IdIsoSF'+'[0]'+')))'
+LepWPweight='(((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_IdIsoSF'+'[0]'+')) + ((Lepton_isTightMuon_'+muWP+'[0]>0.5)*(Lepton_tightMuon_'+muWP+'_IdIsoSF'+'[0]'+')))'
 XSWeight      = 'XSWeight'
 #SFweight      = 'SFweight'+Nlep+'l*'+LepWPweight+'*'+LepWPCut
 #SFweight = 'puWeight*\
@@ -206,11 +163,11 @@ ptllDYW_NLO = '((0.623108 + 0.0722934*gen_ptll - 0.00364918*gen_ptll*gen_ptll + 
 ptllDYW_LO = '((0.632927+0.0456956*gen_ptll-0.00154485*gen_ptll*gen_ptll+2.64397e-05*gen_ptll*gen_ptll*gen_ptll-2.19374e-07*gen_ptll*gen_ptll*gen_ptll*gen_ptll+6.99751e-10*gen_ptll*gen_ptll*gen_ptll*gen_ptll*gen_ptll)*(gen_ptll>0)*(gen_ptll<100)+(1.41713-0.00165342*gen_ptll)*(gen_ptll>=100)*(gen_ptll<300)+1*(gen_ptll>=300))'
 
 
-#samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50',False,'nanoLatino_')
-#                     + getSampleFiles(directory,'DYJetsToLL_M-10to50-LO',False,'nanoLatino_'),
-#                     'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-#                     'FilesPerJob' : 5,
-#}
+samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50-LO',False,'nanoLatino_')
+                     + getSampleFiles(directory,'DYJetsToLL_M-10to50-LO',False,'nanoLatino_'),
+                     'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+ptllDYW_LO,
+                     'FilesPerJob' : 5,
+}
 #addSampleWeight(samples,'DY','DYJetsToLL_M-50',ptllDYW_NLO)
 #addSampleWeight(samples,'DY','DYJetsToLL_M-10to50-LO',ptllDYW_LO)
 

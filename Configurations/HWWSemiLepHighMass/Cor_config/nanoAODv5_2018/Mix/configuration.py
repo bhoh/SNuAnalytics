@@ -18,6 +18,6 @@ outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
 aliasesFile='aliases.py'
-#nuisancesFile = 'nuisances.py'
+nuisancesFile = 'nuisances.py'
 
 
