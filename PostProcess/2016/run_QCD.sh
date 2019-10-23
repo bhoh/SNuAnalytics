@@ -5,20 +5,14 @@
 
 
 SAMPLES=(
-QCD_Pt_15to20_bcToE
-QCD_Pt_20to30_bcToE
-QCD_Pt_30to80_bcToE
-QCD_Pt_80to170_bcToE
-QCD_Pt_170to250_bcToE
-QCD_Pt_250toInf_bcToE
 QCD_Pt-15to20_MuEnrichedPt5
 QCD_Pt-20toInf_MuEnrichedPt15
 QCD_Pt-20to30_EMEnriched
 QCD_Pt-50to80_EMEnriched
-QCD_Pt-80to120_EMEnriched
-QCD_Pt-120to170_EMEnriched
+#QCD_Pt-80to120_EMEnriched
+#QCD_Pt-120to170_EMEnriched
 #QCD_Pt-170to300_EMEnriched
-QCD_Pt-300toInf_EMEnriched
+#QCD_Pt-300toInf_EMEnriched
 )
 
 EXCLUDE=()
@@ -44,6 +38,7 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #--semilep--#
 #mkPostProc.py -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5__MCCorr2016v5 -s Semilep2016 -b -T ${SAMPLE_LIST}
 #mkPostProc.py -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5__MCCorr2016v5__Semilep2016 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST}
+mkPostProc.py -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5__MCCorr2016v5__Semilep2016 -s HMlnjjSel_New -b -T ${SAMPLE_LIST}
 
 
 

@@ -1,12 +1,18 @@
 SAMPLES=(
-ST_t-channel_top
-ST_t-channel_antitop
-ST_tW_top_ext1
-ST_tW_antitop_ext1
-ST_s-channel_ext1
-TTToSemiLeptonic
-TTZjets
-TTWjets
+DYJetsToLL_M-4to50_HT-200to400
+DYJetsToLL_M-4to50_HT-400to600
+DYJetsToLL_M-4to50_HT-600toInf
+#DYJetsToLL_M-10to50-LO_ext1
+DYJetsToLL_M-10to50-LO
+DYJetsToLL_M-50-LO
+DYJetsToLL_M-50_HT-70to100
+DYJetsToLL_M-50_HT-100to200
+DYJetsToLL_M-50_HT-200to400
+DYJetsToLL_M-50_HT-400to600
+DYJetsToLL_M-50_HT-600to800
+DYJetsToLL_M-50_HT-800to1200
+DYJetsToLL_M-50_HT-1200to2500
+DYJetsToLL_M-50_HT-2500toInf
 )
 
 #--Run--#
