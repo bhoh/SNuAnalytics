@@ -134,7 +134,7 @@ variables['CleanFatJetPassMBoostedSR_HlnFat_mass']={
     'range':(80,0,4000),
     'xaxis':'m_{lnJ} [GeV]',
     'fold':0
-
+}
 
 
 variables['WptOvHak4M']={
