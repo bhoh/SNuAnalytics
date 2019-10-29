@@ -35,9 +35,9 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i Prod -s DATAl1loose2016v5 -b -T ${SAMPLE_LIST}
 #--Cor--#
 
-#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5 -s Semilep2016 -b -T ${SAMPLE_LIST}
+mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5 -s Semilep2016 -b -T ${SAMPLE_LIST}
 #mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5__Semilep2016 -s HMlnjjSel2017 -b -T ${SAMPLE_LIST}
-mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5__Semilep2016 -s HMlnjjSel_New -b -T ${SAMPLE_LIST}
+#mkPostProc.py -p Run2016_102X_nAODv4_Full2016v5 -i DATAl1loose2016v5__Semilep2016 -s HMlnjjSel_New -b -T ${SAMPLE_LIST}
 
 
 

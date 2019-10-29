@@ -48,12 +48,12 @@ elif  'sdfarm' in SITE:
 
 CAMPAIGN='Fall2017_102X_nAODv4_Full2017v5'
 #STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
-STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel_New"
+STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel"
 
 
 
 CAMPAIGN_DATA='Run2017_102X_nAODv4_Full2017v5'
-STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel_New"
+STEP_DATA="DATAl1loose2017v5__Semilep2017__HMlnjjSel"
 
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
@@ -76,7 +76,8 @@ XSWeight      = 'XSWeight'
 SFweight = 'puWeight*\
 TriggerEffWeight_1l*\
 Lepton_RecoSF[0]*\
-EMTFbug_veto'
+EMTFbug_veto*\
+PrefireWeight'
 SFweight=SFweight+'*'+LepWPweight+'*'+LepWPCut
 
 #GenLepMatch   = 'GenLepMatch'+Nlep+'l'
@@ -191,7 +192,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
 #                     'FilesPerJob' : 5,
 #                    }
 
-'''
+
 samples['QCD'] = {    'name'   :   getSampleFiles(directory,'QCD_Pt-15to20_MuEnrichedPt5',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-20to30_MuEnrichedPt5',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-30to50_MuEnrichedPt5',False,'nanoLatino_')
@@ -208,7 +209,7 @@ samples['QCD'] = {    'name'   :   getSampleFiles(directory,'QCD_Pt-15to20_MuEnr
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                      'FilesPerJob' : 5,
                     }
-'''
+
 
 
 
