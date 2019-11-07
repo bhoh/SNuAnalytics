@@ -210,18 +210,23 @@ samples['QCD'] = {    'name'   :   getSampleFiles(directory,'QCD_Pt-15to20_MuEnr
                       +getSampleFiles(directory,'QCD_Pt-80to120_MuEnrichedPt5',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-120to170_MuEnrichedPt5',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-170to300_MuEnrichedPt5',False,'nanoLatino_')
-                      #+getSampleFiles(directory,'QCD_Pt-300to470_MuEnrichedPt5',False,'nanoLatino_')
-                      #+getSampleFiles(directory,'QCD_Pt-470to600_MuEnrichedPt5',False,'nanoLatino_')
-                      #+getSampleFiles(directory,'QCD_Pt-600to800_MuEnrichedPt5',False,'nanoLatino_')
-                      #+getSampleFiles(directory,'QCD_Pt-800to1000_MuEnrichedPt5',False,'nanoLatino_')
-                      #+getSampleFiles(directory,'QCD_Pt-1000toInf_MuEnrichedPt5',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-300to470_MuEnrichedPt5',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-470to600_MuEnrichedPt5',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-600to800_MuEnrichedPt5',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-800to1000_MuEnrichedPt5',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-1000toInf_MuEnrichedPt5',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-20to30_EMEnriched',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-30to50_EMEnriched',False,'nanoLatino_')
                       +getSampleFiles(directory,'QCD_Pt-50to80_EMEnriched',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-80to120_EMEnriched',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-120to170_EMEnriched',False,'nanoLatino_')
+                      #+getSampleFiles(directory,'QCD_Pt-170to300_EMEnriched',False,'nanoLatino_')
+                      +getSampleFiles(directory,'QCD_Pt-300toInf_EMEnriched',False,'nanoLatino_')
+                      
 
                       ,
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                     'FilesPerJob' : 20,
+                     'FilesPerJob' : 5,
                     }
 
 
@@ -232,10 +237,24 @@ addSampleWeight(samples, 'QCD', 'QCD_Pt-50to80_MuEnrichedPt5', '0.0196')
 addSampleWeight(samples, 'QCD', 'QCD_Pt-80to120_MuEnrichedPt5', '0.0322')
 addSampleWeight(samples, 'QCD', 'QCD_Pt-120to170_MuEnrichedPt5', '0.04518')
 addSampleWeight(samples, 'QCD', 'QCD_Pt-170to300_MuEnrichedPt5', '0.0598')
-#addSampleWeight(samples, 'QCD', 'QCD_Pt-15to20_EMEnriched', '0.0096')  #missing sample
-addSampleWeight(samples, 'QCD', 'QCD_Pt-20to30_EMEnriched', '0.0088')
+
+addSampleWeight(samples, 'QCD', 'QCD_Pt-300to470_MuEnrichedPt5', '0.10196')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-470to600_MuEnrichedPt5', '0.08722')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-600to800_MuEnrichedPt5', '0.13412')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-800to1000_MuEnrichedPt5', '0.14552')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-1000toInf_MuEnrichedPt5', '0.15544')
+
+
+
+addSampleWeight(samples, 'QCD', 'QCD_Pt-15to20_EMEnriched', '0.0096*0.1101')  
+
+addSampleWeight(samples, 'QCD', 'QCD_Pt-20to30_EMEnriched', '0.0124') ##To correct Wrong xsec
 addSampleWeight(samples, 'QCD', 'QCD_Pt-30to50_EMEnriched', '0.0470')
 addSampleWeight(samples, 'QCD', 'QCD_Pt-50to80_EMEnriched', '0.100')
+
+addSampleWeight(samples, 'QCD', 'QCD_Pt-80to120_EMEnriched', '0.162')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-120to170_EMEnriched', '0.1636')
+addSampleWeight(samples, 'QCD', 'QCD_Pt-300toInf_EMEnriched', '0.15')
 
 
 

@@ -39,8 +39,8 @@ BoostCats['BoostedTop']='IsBoostedTopCR'
     
 BoostProcCats={}
 BoostProcCats['']='1'
-BoostProcCats['ggf']='!IsVbfFat'
-BoostProcCats['vbf']='IsVbfFat'
+#BoostProcCats['ggf']='!IsVbfFat'
+#BoostProcCats['vbf']='IsVbfFat'
 
 
 ResolveCats={}
@@ -50,8 +50,8 @@ ResolveCats['ResolvedTop']='IsResolvedTopCR'
     
 ResolveProcCats={}
 ResolveProcCats['']='1'
-ResolveProcCats['ggf']='!IsVbfjj'
-ResolveProcCats['vbf']='IsVbfjj'
+#ResolveProcCats['ggf']='!IsVbfjj'
+#ResolveProcCats['vbf']='IsVbfjj'
 
 
 

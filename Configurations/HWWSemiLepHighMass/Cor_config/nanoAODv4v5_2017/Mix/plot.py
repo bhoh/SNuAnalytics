@@ -1,11 +1,10 @@
-
-
-plot['DY']  = {
-                  'nameHR' : 'DY',
+plot['Wjets']  = {
+                  'nameHR' : 'Wjets',
                   'isSignal' : 0,
-                  'color': 418, 
+                  'color': 921,
                   'isData'   : 0,
-                  'samples'  : ['DY']
+                  'samples'  : ['Wjets'],
+                  'scale'    : 0.915, 
               }
 
 plot['top']  = {
@@ -15,20 +14,28 @@ plot['top']  = {
                   'isData'   : 0,                 
                   'samples'  : ['top']
               }
-plot['Wjets']  = {
-                  'nameHR' : 'Wjets',
+
+
+
+plot['QCD']  = {
+                  'nameHR' : 'QCD',
                   'isSignal' : 0,
-                  'color': 921,
+                  'color': 851,
                   'isData'   : 0,
-                  'samples'  : ['Wjets']
+   
+                  'samples'  : ['QCD']
               }
-#plot['WWToLNuQQ']  = {
-#                  'nameHR' : 'WWToLNuQQ',
-#                  'isSignal' : 0,
-#                  'color': 851,
-#                  'isData'   : 0,
-#                  'samples'  : ['WWToLNuQQ']
-#              }
+
+plot['DY']  = {
+                  'nameHR' : 'DY',
+                  'isSignal' : 0,
+                  'color': 418, 
+                  'isData'   : 0,
+                  'samples'  : ['DY']
+              }
+
+
+
 
 
 #plot['ggHWWlnuqq_M700']  = {
