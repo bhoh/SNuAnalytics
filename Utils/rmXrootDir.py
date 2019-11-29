@@ -1,10 +1,11 @@
 from os import *
 from os.path import *
 
-mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017'
-dataDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Run2017_102X_nAODv4_Full2017v5/DATAl1loose2017v5__Semilep2017__HMlnjjSel2017'
+mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew__HMlnjjVarsGen'
+#dataDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Run2017_102X_nAODv4_Full2017v5/DATAl1loose2017v5__Semilep2017__HMlnjjSel2017'
 
-targetDir = dataDir
+targetDir = mcDir
+#targetDir = dataDir
 
 
 file_list = [f for f in listdir(targetDir) if isfile(join(targetDir, f))]
