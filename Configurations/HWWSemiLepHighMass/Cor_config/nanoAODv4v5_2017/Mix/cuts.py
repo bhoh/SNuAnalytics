@@ -57,6 +57,27 @@ ResolveProcCats['']='1'
 
 
 ##===Define cuts===###
+'''
+for Lep in LepCats:                                                                                                                                                               
+
+    cuts[Lep]={
+        'expr':LepCats[Lep],
+        'categories':{
+            'BoostedSR':'IsBoostedSR',
+            'BoostedSB':'IsBoostedSB',
+            'BoostedTopCR':'IsBoostedTopCR',
+            'ResolvedSR':'IsResolvedSR',
+            'ResolvedSB':'IsResolvedSB',
+            'ResolvedTopCR':'IsResolvedTopCR'
+        }
+        
+    }
+'''
+
+
+
+
+
 for Lep in LepCats:
     
 
@@ -72,4 +93,5 @@ for Lep in LepCats:
             cuts[Lep+RProcCat+RCat]=ResolveCats[RCat]\
                 +'&&'+ResolveProcCats[RProcCat]\
                 +'&&'+LepCats[Lep]
+
 
