@@ -55,50 +55,57 @@ DYJetsToLL_M-50 \
 )
 '''
 
+#SAMPLES=(
+#GluGluHToWWToLNuQQ_M125
+#GluGluHToWWToLNuQQ_M200
+#GluGluHToWWToLNuQQ_M500
+#GluGluHToWWToLNuQQ_M900
+#GluGluHToWWToLNuQQ_M2500
+#GluGluHToWWToLNuQQ_M4000
+#GluGluHToWWToLNuQQ_M5000
+#VBFHToWWToLNuQQ_M125
+#VBFHToWWToLNuQQ_M200
+#VBFHToWWToLNuQQ_M500
+#VBFHToWWToLNuQQ_M900
+#VBFHToWWToLNuQQ_M2500
+#VBFHToWWToLNuQQ_M4000
+#VBFHToWWToLNuQQ_M5000
+#QCD_Pt-20to30_EMEnriched
+#QCD_Pt-30to50_EMEnriched
+#QCD_Pt-50to80_EMEnriched
+#TTToSemiLeptonic
+#ST_t-channel_top
+#ST_t-channel_antitop
+#ST_tW_antitop
+#ST_tW_top
+#ST_s-channel
+#TTWjets
+#TTWjets_ext1
+#TTZjets
+#TTZjets_ext1
+#WJetsToLNu-LO
+#WJetsToLNu-LO_ext1
+#WJetsToLNu_HT100_200
+#WJetsToLNu_HT200_400
+#WJetsToLNu_HT400_600
+#WJetsToLNu_HT600_800
+#WJetsToLNu_HT800_1200
+#WJetsToLNu_HT1200_2500
+#WJetsToLNu_HT2500_inf
+#QCD_HT200to300
+#QCD_HT300to500
+#QCD_HT500to700
+#QCD_HT700to1000
+#QCD_HT1000to1500
+#)
+
 SAMPLES=(
-GluGluHToWWToLNuQQ_M125
-GluGluHToWWToLNuQQ_M200
-GluGluHToWWToLNuQQ_M500
 GluGluHToWWToLNuQQ_M900
-GluGluHToWWToLNuQQ_M2500
-GluGluHToWWToLNuQQ_M4000
-GluGluHToWWToLNuQQ_M5000
-VBFHToWWToLNuQQ_M125
-VBFHToWWToLNuQQ_M200
-VBFHToWWToLNuQQ_M500
 VBFHToWWToLNuQQ_M900
-VBFHToWWToLNuQQ_M2500
-VBFHToWWToLNuQQ_M4000
-VBFHToWWToLNuQQ_M5000
-QCD_Pt-20to30_EMEnriched
-QCD_Pt-30to50_EMEnriched
-QCD_Pt-50to80_EMEnriched
-TTToSemiLeptonic
-ST_t-channel_top
-ST_t-channel_antitop
-ST_tW_antitop
-ST_tW_top
-ST_s-channel
-TTWjets
-TTWjets_ext1
-TTZjets
-TTZjets_ext1
 WJetsToLNu-LO
 WJetsToLNu-LO_ext1
-WJetsToLNu_HT100_200
-WJetsToLNu_HT200_400
-WJetsToLNu_HT400_600
-WJetsToLNu_HT600_800
-WJetsToLNu_HT800_1200
-WJetsToLNu_HT1200_2500
-WJetsToLNu_HT2500_inf
-QCD_HT200to300
-QCD_HT300to500
-QCD_HT500to700
-QCD_HT700to1000
-QCD_HT1000to1500
+TTToSemiLeptonic
 )
-
 EXCLUDE=()
 
 #--Run--#
@@ -121,11 +128,15 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST}
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5 -s MCCorr2017v5 -b -T ${SAMPLE_LIST}
 
+
 #--semilep--#
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5 -s HMlnjjSel2017 -T ${SAMPLE_LIST} -b -n
-mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s HMlnjjSel2017 -T ${SAMPLE_LIST} -b -R
+mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s HMlnjjSelBWRew -b
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017__BWReweight -s HMlnjjSel -b -n
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s HMlnjjSel2017 -T ${SAMPLE_LIST} -b -R
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5 -s Semilep2017 -b -T ${SAMPLE_LIST}
 
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s MelaDisc -T ${SAMPLE_LIST} -b -n
 
 
 SAMPLES=()

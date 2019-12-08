@@ -286,6 +286,7 @@ addSampleWeight(samples, 'QCD_EM', 'QCD_Pt-300toInf_EMEnriched', '0.15')
 #samples['WWToLNuQQ'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
 #                            'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
 #                 }
+
 #def getEventSumw(directory,sample,prefix):
 
 #Wjets_w1=str(getEventSumw(directory,'WJetsToLNu','nanoLatino_'))

@@ -23,4 +23,4 @@ sleep 10m
 . run_WJet_3.sh
 sleep 10m
 
-#. run_QCD.sh
+. run_QCD.sh
