@@ -1,40 +1,27 @@
 #-----Variable Deinition-----#                                                                                                                                
 
+bAlgo='DeepB'
+bWP='0.1522'
 
-METtype='PF'
-#METtype='Puppi'
+'''
+isbjet='(Jet_btag'+bAlgo+'[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] > '+bWP +' )'
+nbjet='(Sum$'+isbjet+')'
+btagSF_each='( '+isbjet+'*Alt$(Jet_btagSF, 1) + !'+isbjet+'*1 )'
+logbtagSF='(Sum$(  TMath::Log('+btagSF_each+')))'
+btagSF='(TMath::Exp( '+logbtagSF+' ))'
+'''
 
-if METtype=='' or METtype=='PF':
-    MET_pt='MET_pt'
-    MET_phi='MET_phi'
-    Wlep_px='Wlep_px_PF'
-    Wlep_py='Wlep_py_PF'
-    Wlep_pz='Wlep_pz_PF'
-    Wlep_E='Wlep_E_PF'
-    Wlep_pt='Wlep_pt_PF'
-    Wlep_eta='Wlep_eta_PF'
-    Wlep_phi='Wlep_phi_PF'
-    Wlep_mass='Wlep_mass_PF'
+'''
+isbjetBoosted='((Jet_btag'+bAlgo+'[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] > '+bWP+')' +'&&'+'(Jet_pt[CleanJet_jetIdx[CleanJetNotFat_jetIdx]]>20)'+'&&'+'fabs(Jet_eta[CleanJet_jetIdx[CleanJetNotFat_jetIdx]])<2.4   )'
+nbjetBoosted='(Sum$('+isbjetBoosted+'))'
 
-
-else:
-    MET_pt=METtype+'MET_pt'
-    MET_phi=METtype+'MET_phi'
-    Wlep_px='Wlep_px_'+METtype
-    Wlep_py='Wlep_py_'+METtype
-    Wlep_pz='Wlep_pz_'+METtype
-    Wlep_E='Wlep_E_'+METtype
-    Wlep_pt='Wlep_pt_'+METtype
-    Wlep_eta='Wlep_eta_'+METtype
-    Wlep_phi='Wlep_phi_'+METtype
-    Wlep_mass='Wlep_mass_'+METtype
+isbjetResolved='(  (Jet_btag'+bAlgo+'[CleanJet_jetIdx[Iteration$]] > '+bWP +')'+'&&'+'(CleanJet_pt[Iteration$]>20)  &&  (fabs(CleanJet_eta[Iteration$])<2.4) && (Iteration$ != idx_j1  || Iteration$ != idx_j2) )'
+nbjetResolved='(Sum$('+isbjetResolved+'))'
+'''
 
 
 
-#------End of Variable Definition-----#  
-
-
-
+#------End of Variable Definition-----#
 
 
 variables['Event'] = {
@@ -149,17 +136,117 @@ variables['lepton_pt']={
     'range':(50,25,600),
     'xaxis':'lepton P_{T} [GeV]',
     'fold':0
+
+}
+variables['lepton_eta']={
+    'name' : 'Lepton_eta[0]',
+    'range':(50,-5,5),
+    'xaxis':'lepton #eta',
+    'fold':0
+}
+variables['CleanJet_pt']={
+    'name' : 'CleanJet_pt[0]',
+    'range':(50,20,600),
+    'xaxis':'jet P_{T} [GeV]',
+    'fold':0
+}
+variables['CleanJet_eta']={
+    'name' : 'CleanJet_eta[0]',
+    'range':(50,-5,5),
+    'xaxis':'jet #eta',
+    'fold':0
 }
 
-variables['pfMet']={
-    'name' : 'MET_pt',
-    'range':(50,20,600),
+variables['nbjetBoosted']={
+    'name' : 'nbjetBoosted_jetIdx',
+    'range':(10,0,10.),
+    'xaxis':'nbjets',
+    'fold':3
+}
+
+variables['nbjetResolved']={
+    'name' : 'nbjetResolved_jetIdx',
+    'range':(10,0,10.),
+    'xaxis':'nbjets',
+    'fold':3
+}
+
+
+
+variables['bjetBoosted_jetIdx']={
+    'name' : 'bjetBoosted_jetIdx',
+    'range':(30,0,30.),
+    'xaxis':'bjetBoosted_jetIdx',
+    'fold':3
+}
+
+
+variables['bjetResolved_jetIdx']={
+    'name' : 'bjetResolved_jetIdx',
+    'range':(30,0,30.),
+    'xaxis':'bjetResolved_jetIdx',
+    'fold':3
+}
+
+
+
+
+
+variables['bjet_etaBoosted']={
+    'name' : 'Jet_eta[bjetBoosted_jetIdx]',
+    'range':(50,-5,5),
+    'xaxis':'bjet_eta',
+    'fold':0
+}
+
+variables['bjet_etaResolved']={
+    'name' : 'Jet_eta[bjetResolved_jetIdx]',
+    'range':(50,-5,5),
+    'xaxis':'bjet_eta',
+    'fold':0
+}
+
+variables['bjet_ptBoosted']={
+    'name' : 'Jet_pt[bjetBoosted_jetIdx]',
+    'range':(50,0,600),
+    'xaxis':'bjet_pt',
+    'fold':0
+}
+variables['bjet_ptResolved']={
+    'name' : 'Jet_pt[bjetResolved_jetIdx]',
+    'range':(50,0,600),
+    'xaxis':'bjet_pt',
+    'fold':0
+}
+
+variables['bjet_'+bAlgo+'Boosted']={
+    'name' : 'Jet_btag'+bAlgo+'[bjetBoosted_jetIdx]',
+    'range':(50,0,1),
+    'xaxis':'bjet_'+bAlgo,
+    'fold':0
+
+}
+
+variables['bjet_'+bAlgo+'Resolved']={
+    'name' : 'Jet_btag'+bAlgo+'[bjetResolved_jetIdx]',
+    'range':(50,0,1),
+    'xaxis':'bjet_'+bAlgo,
+    'fold':0
+}
+
+
+
+
+
+variables['PuppiMet']={
+    'name' : 'PuppiMET_pt',
+    'range':(50,0,600),
     'xaxis':'MET [GeV]',
     'fold':0
 }
 
 variables['Wlep_pt']={
-    'name' : 'Wlep_pt_PF',
+    'name' : 'Wlep_pt_Puppi',
     'range':(50,50,1000),
     'xaxis':'W_{Lep} P_{T} [GeV]',
     'fold':0
@@ -243,3 +330,21 @@ variables['vbfjj_jj_mass']={
     'xaxis':'M(jj) [GeV]',
     'fold':0
 }
+
+
+
+variables['idx_j1'] = {
+    'name' : 'idx_j1',
+    'range':(10,-5,5),
+    'xaxis':'idx_j1',
+    'fold': 3
+}
+
+
+variables['idx_j2'] = {
+    'name' : 'idx_j2',
+    'range':(10,-5,5),
+    'xaxis':'idx_j2',
+    'fold': 3
+}
+

@@ -1,3 +1,4 @@
+
 plot['Wjets']  = {
                   'nameHR' : 'Wjets',
                   'isSignal' : 0,
@@ -17,14 +18,45 @@ plot['top']  = {
 
 
 
-plot['QCD']  = {
-                  'nameHR' : 'QCD',
+plot['QCD_MU']  = {
+                  'nameHR' : 'QCD_MU',
                   'isSignal' : 0,
                   'color': 851,
                   'isData'   : 0,
    
-                  'samples'  : ['QCD']
+                  'samples'  : ['QCD_MU']
               }
+
+#QCD_MU_170to300
+'''
+plot['QCD_MU_170to300']  = {
+                  'nameHR' : 'QCD_MU_170to300',
+                  'isSignal' : 0,
+                  'color': 951,
+                  'isData'   : 0,
+    'scale':0.0598,
+                  'samples'  : ['QCD_MU_170to300']
+              }
+'''
+plot['QCD_EM']  = {
+                  'nameHR' : 'QCD_EM',
+                  'isSignal' : 0,
+                  'color': 861,
+                  'isData'   : 0,
+   
+                  'samples'  : ['QCD_EM']
+              }
+
+plot['QCD_bcToE']  = {
+                  'nameHR' : 'QCD_bcToE',
+                  'isSignal' : 0,
+                  'color': 871,
+                  'isData'   : 0,
+   
+                  'samples'  : ['QCD_bcToE']
+              }
+
+
 
 plot['DY']  = {
                   'nameHR' : 'DY',
@@ -47,6 +79,7 @@ plot['DY']  = {
 #                  'scale'    : 30
 #}
 #
+'''
 plot['ggHWWlnuqq_M900']  = {
                   'nameHR' : 'ggHWWlnuqq_M900',
                   'isSignal' : 1,
@@ -55,6 +88,7 @@ plot['ggHWWlnuqq_M900']  = {
                   'samples'  : ['ggHWWlnuqq_M900'],
                   'scale'    : 120
 }
+'''
 '''
 plot['ggHWWlnuqq_M2500']  = {
                   'nameHR' : 'ggHWWlnuqq_M2500',
@@ -75,6 +109,7 @@ plot['ggHWWlnuqq_M5000']  = {
 }
 '''
 
+
 plot['DATA']  = {
                   'nameHR' : 'DATA',
                   'isSignal' : 0,
@@ -83,6 +118,7 @@ plot['DATA']  = {
 		  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
+
 legend['lumi'] = 'L = 41.5/fb'
 #legend['lumi'] = 'Simulation'
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
