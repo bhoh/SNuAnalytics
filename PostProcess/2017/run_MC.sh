@@ -234,9 +234,9 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i Prod -s MCl1loose2017v2 -b
 #--Corr--#
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST}
-#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s HMlnjjSelBWRew_Dev -b -n
-#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew -s HMlnjjVarsGen -b -n
-mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew -s HMlnjjVars_Dev -b -n
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017 -s HMlnjjSelBWRew_Dev -b
+mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev -s HMlnjjVarsGen -b
+#mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew -s HMlnjjVars_Dev -b -n
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v4 -i MCl1loose2017v2 -s MCCorr2017_SemiLep -b -T ${SAMPLE_LIST} -E ${EXCLUDE_LIST}
 #mkPostProc.py -p Fall2017_102X_nAODv4_Full2017v5 -i MCl1loose2017v5 -s MCCorr2017v5 -b -T ${SAMPLE_LIST}
 

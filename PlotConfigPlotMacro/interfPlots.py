@@ -17,7 +17,7 @@ from T800Tools  import *
 tdrStyle.setTDRStyle()
 
 
-inF = TakeFileHisto('plots900_Int_2017.root')
+inF = TakeFileHisto('~/Latino/CMSSW10215pch2/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/Cor_config/nanoAODv4v5_2017/Interference/rootFile_Int_2017/plots_Int_2017.root')
 
 #################
 # H + I(with H)   
@@ -70,6 +70,6 @@ leg.AddEntry(histo900_ggHWW_I_B, "ggI_HB","f");
 leg.AddEntry(histo900_ggHWW_I,"ggI_HB+Hh","f");
 leg.Draw("same")
 
-cnvs.SaveAs("GenResolvedH900HaIHhB.png")
-cnvs.SaveAs("GenResolvedH900HaIHhB.pdf")
+cnvs.SaveAs("plots/GenResolvedH900HaIHhB.png")
+cnvs.SaveAs("plots/GenResolvedH900HaIHhB.pdf")
 

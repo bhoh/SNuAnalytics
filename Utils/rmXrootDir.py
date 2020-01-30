@@ -1,7 +1,8 @@
 from os import *
 from os.path import *
 
-mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew__HMlnjjVarsGen'
+#mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev'
+mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev__HMlnjjVarsGen'
 #dataDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Run2017_102X_nAODv4_Full2017v5/DATAl1loose2017v5__Semilep2017__HMlnjjSel2017'
 
 targetDir = mcDir
