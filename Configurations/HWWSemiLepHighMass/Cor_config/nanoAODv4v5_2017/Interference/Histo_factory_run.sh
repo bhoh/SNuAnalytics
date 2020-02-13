@@ -7,8 +7,10 @@
 #mkShapes.py --pycfg=configuration.py --batchSplit=AsMuchAsPossible --treeName Events
 
 
-mkShapesMulti.py --pycfg=configuration_Int.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events  -n
+#mkShapesMulti.py --pycfg=configuration_Int.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events 
+
 ############
 #for hadd ##
 ############
-#mkShapesMulti.py --pycfg=configuration_Int.py --batchSplit=AsMuchAsPossible --doHadd=True --treeName Events
+
+mkShapesMulti.py --pycfg=configuration_Int.py --batchSplit=AsMuchAsPossible --doHadd=True --treeName Events

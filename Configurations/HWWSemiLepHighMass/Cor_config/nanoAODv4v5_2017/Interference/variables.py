@@ -14,15 +14,59 @@ else:
 #    'fold': 0
 #}
 
-variables['I_H_w_hBkkk'] = {
-    'name' : 'I_H_w_hB',
+variables['I_sigXh0_sigXww'] = {
+    'name' : 'I_sigXh0_sigXww',
     'range':(50,-10, 10),
     'xaxis':'1',
     'fold': 0
 }
-variables['I_H_w_B'] = {
-    'name' : 'I_H_w_B',
+variables['I_sigXh0'] = {
+    'name' : 'I_sigXh0',
     'range':(50,-10, 10),
+    'xaxis':'1',
+    'fold': 0
+}
+
+variables['I_sigXww'] = {
+    'name' : 'I_sigXww',
+    'range':(50,-0.5, 0.5),
+    'xaxis':'1',
+    'fold': 0
+}
+
+variables['I_h0Xww'] = {
+    'name' : 'I_h0Xww',
+    'range':(50,-1, 5),
+    'xaxis':'1',
+    'fold': 0
+}
+
+variables['wwOVsig'] = {
+    'name' : 'wwOVsig',
+    'range':(50,-0.01, 0.2),
+    'xaxis':'1',
+    'fold': 0
+}
+
+
+variables['h0OVsig'] = {
+    'name' : 'h0OVsig',
+    'range':(50,-10, 10),
+    'xaxis':'1',
+    'fold': 0
+}
+
+
+variables['GenRecH_m125'] = {
+    'name' : 'GenH_mass',
+    'range':(50,10, 300),
+    'xaxis':'1',
+    'fold': 0
+}
+
+variables['GenRecH_m_wide'] = {
+    'name' : 'GenH_mass',
+    'range':(100,300, 5500),
     'xaxis':'1',
     'fold': 0
 }
@@ -68,7 +112,6 @@ variables['Lep2_pt'] = {
     'xaxis':'1',
     'fold': 0
 }
-
 
 variables['Lep2_eta'] = {
     'name' : 'Lepton_eta[1]',

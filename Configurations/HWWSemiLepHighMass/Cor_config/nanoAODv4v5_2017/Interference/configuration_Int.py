@@ -2,7 +2,7 @@
 
 
 #tag='simple2017'
-tag='Int_M900'
+tag='Int_M125'
 
 
 variablesFile='variables.py' ##what variables to draw
@@ -18,6 +18,6 @@ outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
 aliasesFile='aliases.py'
-nuisancesFile = 'nuisances.py'
+#nuisancesFile = 'nuisances.py'
 
 
