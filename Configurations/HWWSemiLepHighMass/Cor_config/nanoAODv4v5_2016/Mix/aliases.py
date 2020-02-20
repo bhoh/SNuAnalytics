@@ -1,83 +1,70 @@
-aliases['nbjet'] = {
-    'expr': '(Sum$(Jet_jetId>0 && Jet_pt>20 && fabs(Jet_eta) < 2.4 && Jet_btagDeepB > 0.2217 &&  ( sqrt( pow(Jet_eta - PreselFatJet_eta[0],2) + pow(Jet_phi - PreselFatJet_phi[0],2)) > 0.8) ))'
+import os
+import copy
+import inspect
 
-}
+
+configurations = os.path.realpath(inspect.getfile(inspect.currentframe())) # this file
+configurations = os.path.dirname(configurations)
+
+mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
 
-aliases['wlep_mass']={
-    'expr':'(80.4)'
-}
-aliases['mu']    = {
-    'expr': '(pow(wlep_mass,2)/2 + Lepton_pt[0]*MET_pt*cos(Lepton_phi[0]-MET_phi))'
-}
+btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_94XSF_V2_B_F.csv' % os.getenv('CMSSW_BASE')
 
-#wlep_z = wlep_pz_part1 +- sqrt(wlep_pz_part2)
-
-aliases['Lepton_pz1'] = {
-    'expr': '(Lepton_pt[0]*sinh(Lepton_eta[0]))'
-}
-aliases['Lepton_E1'] = {
-    'expr': '(Lepton_pt[0]*cosh(Lepton_eta[0]))'
-}
-aliases['wlep_pz_part1'] =  {
-    'expr': '(mu*Lepton_pz1*/pow(Lepton_pt[0],2))'
-}
-
-aliases['wlep_pz_part2'] = {
-    'expr': '( pow(mu*Lepton_pz1/pow(Lepton_pt[0],2) ,2) -  ( (pow(Lepton_E1*MET_pt,2)-pow(mu,2))/pow(Lepton_pt[0],2)   ))'
+aliases['Jet_btagSF_shapeFix'] = {
+    'linesToAdd': [
+        'gSystem->Load("libCondFormatsBTauObjects.so");',
+        'gSystem->Load("libCondToolsBTau.so");',
+        'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
+        '.L %s/patches/btagsfpatch.cc+' % configurations
+    ],
+    'class': 'BtagSF',
+    'args': (btagSFSource,),
+    'samples': mc
 }
 
-aliases['iscomplex'] = {
-    'expr': '(wlep_pz_part2<0  )'
-}
-aliases['wlep_pz_sol1'] = {
-    'expr': '(wlep_pz_part1 + sqrt(wlep_pz_part2))'
-}
-aliases['wlep_pz_sol2'] = {
-    'expr': '(wlep_pz_part1 - sqrt(wlep_pz_part2))'
-}
-aliases['sol1_smaller'] = {
-    'expr': '(fabs(wlep_pz_sol1) < fabs(wlep_pz_sol2))'
-}
-aliases['wlep_pz']={
-    'expr': '( iscomplex*wlep_pz_part1 + (!iscomplex)*( sol1_smaller*wlep_pz_sol1 + (!sol1_smaller)*wlep_pz_sol2   ) )'
+
+
+
+
+aliases['btagSF'] = {
+    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>20 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<20 || abs(CleanJet_eta)>2.5))))',
+    'samples': mc
 }
 
-aliases['wlep_px']={
-    'expr':' (Lepton_pt[0]*cos(Lepton_phi[0]) + MET_pt*cos(MET_phi))'
+for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {
+    aliases['Jet_btagSF%sup_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'up_' + shift),
+        'samples': mc
+    }
+    aliases['Jet_btagSF%sdown_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'down_' + shift),
+        'samples': mc
+    }
+    '''
+    for targ in ['bVeto', 'bReq']:
+        alias = aliases['%sSF%sup' % (targ, shift)] = copy.deepcopy(aliases['%sSF' % targ])
+        alias['expr'] = alias['expr'].replace('btagSF_shapeFix', 'btagSF_shapeFix_up_%s' % shift)
+
+        alias = aliases['%sSF%sdown' % (targ, shift)] = copy.deepcopy(aliases['%sSF' % targ])
+        alias['expr'] = alias['expr'].replace('btagSF_shapeFix', 'btagSF_shapeFix_down_%s' % shift)
+    '''
+    
+
+    aliases['btagSF%sup' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'up'),
+        'samples': mc
+    }
+
+    aliases['btagSF%sdown' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'down'),
+        'samples': mc
+    }
+aliases['tau21SF']={
+    'expr' : '1.00*(IsBoostedSR || IsBoostedTopCR) + 1*(!IsBoostedSR && !IsBoostedTopCR)',
+    'samples' : mc
 }
 
-aliases['wlep_py']={
-    'expr':' (Lepton_pt[0]*sin(Lepton_phi[0]) + MET_pt*sin(MET_phi))'
-}
-aliases['wlep_E'] = {
-    'expr':' (sqrt( pow(wlep_px,2) + pow(wlep_py,2) + pow(wlep_pz,2)+pow(wlep_,mass,2)   ))'
-}
-
-aliases['whad_px']={
-    'expr': '(PreselFatJet_pt[0]*cos(PreselFatJet_phi[0]))'
-}
-aliases['whad_py']={
-    'expr': '(PreselFatJet_pt[0]*sin(PreselFatJet_phi[0]))'
-
-}
-aliases['whad_pz']={
-    'expr': '(PreselFatJet_pt[0]*sinh(PreselFatJet_eta[0]))'
-
-}
-aliases['whad_mass']={
-    'expr' : '(PreselFatJet_msoftdrop[0])'
-}
-aliases['whad_E'] = {
-    'expr': '( sqrt( pow(whad_px,2) + pow(whad_py,2) + pow(whad_pz,2)  + pow(whad_mass,2)    )  )'
-}
-
-aliaes['mww'] = {
-    'expr' : '( sqrt(  pow(whad_E+wlep_E,2) -pow(whad_px - wlep_px ,2) - pow(whad_py+wlep_py, 2) - pow(whad_pz+wlep_pz,2)  )    )'
-}
-aliases['whad_pt']={
-    'expr' = '(FelselFatJet_pt[0])'
-}
-aliases['wlep_pt']={
-    'sqrt( pow(wlep_px,2) + pow(wlep_py,2)  )'
-}
