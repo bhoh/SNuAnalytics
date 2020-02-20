@@ -11,9 +11,9 @@ plot['DY']  = {
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,
-                  'color': 418, 
+                  'color': 618, 
                   'isData'   : 0,
-                  'samples'  : ['DY']
+                  'samples'  : ['WW']
               }
 
 plot['top']  = {

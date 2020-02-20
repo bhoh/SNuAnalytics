@@ -8,14 +8,6 @@ plot['DY']  = {
                   'samples'  : ['DY']
               }
 
-plot['WW']  = {
-                  'nameHR' : 'WW',
-                  'isSignal' : 0,
-                  'color': 418, 
-                  'isData'   : 0,
-                  'samples'  : ['DY']
-              }
-
 plot['top']  = {
                   'nameHR' : 'Top',
                   'isSignal' : 0,
@@ -48,12 +40,22 @@ plot['QCD_EM']  = {
                   'samples'  : ['QCD_EM']
               }
 
+
+plot['ggHWWlnuqq_M__THIS_MASS__']  = {
+                  'nameHR' : 'ggHWWlnuqq_M__THIS_MASS__ x __THIS_SCALE__',
+                  'isSignal' : 1,
+                  'isData'   : 0,
+                  'color': 632,   
+                  'samples'  : ['ggHWWlnuqq_M__THIS_MASS__'],
+                  'scale'    : __THIS_SCALE__
+}
+
 plot['DATA']  = {
                   'nameHR' : 'DATA',
                   'isSignal' : 0,
                   'color': 1, 
                   'isData'   : 1 ,
-		  'isBlind'  : 0,
+		  'isBlind'  : 1,
                   'samples'  : ['DATA']
               }
 legend['lumi'] = 'L = 59.7/fb'
