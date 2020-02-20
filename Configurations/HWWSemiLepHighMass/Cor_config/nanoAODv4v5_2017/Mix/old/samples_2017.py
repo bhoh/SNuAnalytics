@@ -50,8 +50,7 @@ elif  'sdfarm' in SITE:
 
 CAMPAIGN='Fall2017_102X_nAODv4_Full2017v5'
 #STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSel2017"
-#STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__HMlnjjSel"
-STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR"
+STEP="MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__HMlnjjSel"
 
 
 
@@ -68,7 +67,7 @@ directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
-LepWPweight='(((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+')) + ((Lepton_isTightMuon_'+muWP+'[0]>0.5)*(Lepton_tightMuon_'+muWP+'_TotSF'+'[0]'+')))'
+LepWPweight='(((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_IdIsoSF'+'[0]'+')) + ((Lepton_isTightMuon_'+muWP+'[0]>0.5)*(Lepton_tightMuon_'+muWP+'_IdIsoSF'+'[0]'+')))'
 XSWeight      = 'XSWeight'
 #SFweight      = 'SFweight'+Nlep+'l*'+LepWPweight+'*'+LepWPCut
 #SFweight = 'puWeight*\
@@ -126,7 +125,7 @@ DataSets = ['SingleMuon',\
 
 DataTrig = {
             'SingleMuon'     : 'Trigger_sngMu' ,
-            'SingleElectron' : '!Trigger_sngMu && Trigger_sngEl' ,
+            'SingleElectron' : 'Trigger_sngEl' ,
            }
 
 ###########################################
@@ -134,87 +133,16 @@ DataTrig = {
 ###########################################
 
 #List_MX=[125,200,210,230,250,300,350,400,500,550,600,650,700,750,800,900,1500,2000,2500,3000,4000,5000]
-#List_MX=[200,210,250,300,350,400,500,550,600,650,700,750,800,900,1500,2000,2500,3000,4000,5000]
-#List_MX=[900]
-import sys
-sys.path.insert(0, "MassPoints")
-
-from List_MX import *
-from List_MX_VBF import *
-
-
-
-
-##--ggF X
+#List_MX=[125,200,500,900,2500,4000,5000]
+List_MX=[900]
 for MX in List_MX:
-  #continue
-  if MX==200:
-    samples['ggHWWlnuqq_M'+str(MX)+'_S_B_I'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                                 'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*(MSSModel+MSSModel_I+MSSModel_B+MSSModel_H+MSSModel_I_HB)',
-                                                 'FilesPerJob' : 50,
-                                               }
-  else:
-    samples['ggHWWlnuqq_M'+str(MX)+'_S_B_I'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_')
-                                                 +getSampleFiles(directory,'GluGluHToWWToLNuQQ_M200',False,'nanoLatino_'),
-                                                 'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                                                'FilesPerJob' : 50,
-                                               }
-    addSampleWeight(samples,'ggHWWlnuqq_M'+str(MX)+'_S_B_I','GluGluHToWWToLNuQQ_M'+str(MX),'MSSModel+MSSModel_I')
-    addSampleWeight(samples,'ggHWWlnuqq_M'+str(MX)+'_S_B_I','GluGluHToWWToLNuQQ_M200','MSSModel_B+MSSModel_H+MSSModel_I_HB')
-
-  samples['ggHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                 'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*MSSModel',
-                                 'FilesPerJob' : 50,
+  continue
+  samples['ggHWWlnuqq_M'+str(MX)] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
+                                 'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                                 #'weight' : XSWeight,
+                                 'FilesPerJob' : 40,
                                }
 
-  samples['ggHWWlnuqq_M'+str(MX)+'_B'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                           'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*(MSSModel_B+MSSModel_H+MSSModel_I_HB)',
-                                 'FilesPerJob' : 50,
-                               }
-##ggWW from MELA                                                                                                                               
-samples['ggWW_MELA']={
-  'name' : getSampleFiles(directory,'GluGluHToWWToLNuQQ_M200',False,'nanoLatino_'),
-  'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*(MSSModel_B+MSSModel_H+MSSModel_I_HB)',
-  'filesPerJob' : 50,
-}
-  
-
-
-##--VBF X                                                                                                                                      
-
-for MX in List_MX_VBF:
-  print MX
-  if MX==200:
-    samples['VBFHToWWToLNuQQ_M'+str(MX)+'_S_B_I'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                              'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*(MSSModel+MSSModel_I+MSSModel_B+MSSModel_H+MSSModel_I_HB)',
-                                              'FilesPerJob' : 50,
-                               }
-  else:
-    samples['VBFHToWWToLNuQQ_M'+str(MX)+'_S_B_I'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_')
-                                                      +getSampleFiles(directory,'VBFHToWWToLNuQQ_M200',False,'nanoLatino_')
-                                                      ,
-                                              'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                                              'FilesPerJob' : 50,
-                               }
-    addSampleWeight(samples,'VBFHToWWToLNuQQ_M'+str(MX)+'_S_B_I','GluGluHToWWToLNuQQ_M'+str(MX),'MSSModel+MSSModel_I')
-    addSampleWeight(samples,'VBFHToWWToLNuQQ_M'+str(MX)+'_S_B_I','VBFHToWWToLNuQQ_M200','MSSModel_B+MSSModel_H+MSSModel_I_HB')
-
-
-  samples['VBFHToWWToLNuQQ_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                              'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*MSSModel',
-                                              'FilesPerJob' : 50,
-                                            }
-    
-  samples['VBFHToWWToLNuQQ_M'+str(MX)+'_I'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                              'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*MSSModel_I',
-                                              'FilesPerJob' : 50,
-                                            }
-samples['qqWW_MELA']={
-  'name' : getSampleFiles(directory,'VBFHToWWToLNuQQ_M200',False,'nanoLatino_'),
-  'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*(MSSModel_B+MSSModel_H+MSSModel_I_HB)',
-  'filesPerJob' : 50,
-
-}
 
 
 
@@ -235,12 +163,12 @@ samples['Wjets'] = {    'name'   :
                         #+ getSampleFiles(directory,'WJetsToLNu_HT2500_inf',False,'nanoLatino_')
                         ,
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                        'FilesPerJob' : 10,
+                        'FilesPerJob' : 40,
                  }
 
-addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.915')
-addSampleWeight(samples, 'Wjets', 'WJetsToLNu-1J', '0.915')
-addSampleWeight(samples, 'Wjets', 'WJetsToLNu-2J', '0.915')
+#addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.0022')
+#addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.0022')
+#addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.0022')
 
 
 
@@ -262,7 +190,7 @@ samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50-LO',
 samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_t-channel_top',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_t-channel_antitop',False,'nanoLatino_')
-                      + getSampleFiles(directory,'ST_s-channel',False,'nanoLatino_')
+                      #+ getSampleFiles(directory,'ST_s-channel',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_antitop',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_') 
                       ,
@@ -314,14 +242,7 @@ samples['QCD_EM'] = {'name'   :
 }
 
 
-'''
-QCD_Pt_20to30_bcToE
-QCD_Pt_30to80_bcToE
-QCD_Pt_80to170_bcToE
-QCD_Pt_170to250_bcToE
-QCD_Pt_250toInf_bcToE
 
-'''
 samples['QCD_bcToE'] = {'name'   :
                   getSampleFiles(directory,'QCD_Pt_20to30_bcToE',False,'nanoLatino_')
                   +getSampleFiles(directory,'QCD_Pt_30to80_bcToE',False,'nanoLatino_')
@@ -335,7 +256,7 @@ samples['QCD_bcToE'] = {'name'   :
 
 
 
-#addSampleWeight(samples, 'QCD_bcToE', 'QCD_Pt_170to250_bcToE', '5')
+
 addSampleWeight(samples, 'QCD_MU', 'QCD_Pt-15to20_MuEnrichedPt5', '0.0022')
 addSampleWeight(samples, 'QCD_MU', 'QCD_Pt-20to30_MuEnrichedPt5', '0.0045')
 addSampleWeight(samples, 'QCD_MU', 'QCD_Pt-30to50_MuEnrichedPt5', '0.00974')
@@ -361,10 +282,6 @@ addSampleWeight(samples, 'QCD_EM', 'QCD_Pt-300toInf_EMEnriched', '0.15')
 
 
 
-
-samples['WW'] = {    'name'   :   getSampleFiles(directory,'WW-LO',False,'nanoLatino_') ,
-                            'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
-                 }
 
 #samples['WWToLNuQQ'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
 #                            'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,

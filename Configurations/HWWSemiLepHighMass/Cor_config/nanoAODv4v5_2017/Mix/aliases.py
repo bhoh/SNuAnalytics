@@ -3,6 +3,14 @@ import copy
 import inspect
 
 
+
+
+eleWP='mvaFall17V1Iso_WP90'
+muWP='cut_Tight_HWWW'
+
+
+
+
 configurations = os.path.realpath(inspect.getfile(inspect.currentframe())) # this file
 configurations = os.path.dirname(configurations)
 
@@ -24,33 +32,61 @@ aliases['Jet_btagSF_shapeFix'] = {
 }
 
 
-aliases['bVeto'] = {
-    'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) == 0'
-}
-
-aliases['bReq'] = {
-    'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.1522) >= 1'
-}
 
 
-aliases['bVetoSF'] = {
+
+aliases['btagSF'] = {
     'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>20 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<20 || abs(CleanJet_eta)>2.5))))',
     'samples': mc
 }
 
-aliases['bReqSF'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<30 || abs(CleanJet_eta)>2.5))))',
-    'samples': mc
-}
-aliases['zeroJet'] = {
-    'expr': 'Alt$(CleanJet_pt[0], 0) < 30.'
-}
-aliases['topcr'] = {
-    'expr': '((zeroJet && !bVeto) || bReq)'
+for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {
+    aliases['Jet_btagSF%sup_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'up_' + shift),
+        'samples': mc
+    }
+    aliases['Jet_btagSF%sdown_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'down_' + shift),
+        'samples': mc
+    }
+    '''
+    for targ in ['bVeto', 'bReq']:
+        alias = aliases['%sSF%sup' % (targ, shift)] = copy.deepcopy(aliases['%sSF' % targ])
+        alias['expr'] = alias['expr'].replace('btagSF_shapeFix', 'btagSF_shapeFix_up_%s' % shift)
+
+        alias = aliases['%sSF%sdown' % (targ, shift)] = copy.deepcopy(aliases['%sSF' % targ])
+        alias['expr'] = alias['expr'].replace('btagSF_shapeFix', 'btagSF_shapeFix_down_%s' % shift)
+    '''
+    
+
+    aliases['btagSF%sup' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'up'),
+        'samples': mc
+    }
+
+    aliases['btagSF%sdown' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'down'),
+        'samples': mc
+    }
+
+
+
+aliases['tau21SF']={
+    'expr' : '0.97*(IsBoostedSR || IsBoostedTopCR) + 1*(!IsBoostedSR && !IsBoostedTopCR)',
+    'samples' : mc
 }
 
 
-aliases['btagSF'] = {
-    'expr': '(bVeto || (topcr && zeroJet))*bVetoSF + (topcr && !zeroJet)*bReqSF',
-    'samples': mc
+aliases['tau21SFup']={
+    'expr' : '(0.97+0.06)*(IsBoostedSR || IsBoostedTopCR) + 1*(!IsBoostedSR && !IsBoostedTopCR)',
+    'samples' : mc
+}
+
+
+aliases['tau21SFdown']={
+    'expr' : '(0.97-0.06)*(IsBoostedSR || IsBoostedTopCR) + 1*(!IsBoostedSR && !IsBoostedTopCR)',
+    'samples' : mc
 }
