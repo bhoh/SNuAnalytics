@@ -53,18 +53,18 @@ plot['ggh125LNuQQ'] = {
       		'scale'    : 1,
       		}
 
-plot['ggh125LNuQQ_SI'] = {
-                      'nameHR' : 'ggh0lnqq_SandI',
-      		'isSignal' : 1,
-      		'color'    : 2,
-      		'isData'   : 0,
-      		'samples'  : ['ggh125LNuQQ_SI'],
-      		'scale'    : 1,
-      		}
-
+#plot['ggh125LNuQQ_SI'] = {
+#                      'nameHR' : 'h0+I',
+#      		'isSignal' : 1,
+#      		'color'    : 2,
+#      		'isData'   : 0,
+#      		'samples'  : ['ggh125LNuQQ_SI'],
+#      		'scale'    : 1,
+#      		}
+#
 plot['ggh125LNuQQ_I'] = {
-                      'nameHR' : 'ggh0lnqq_I',
-      		'isSignal' : 1,
+                      'nameHR' : 'Int',
+      		'isSignal' : 0,
       		'color'    : 3,
       		'isData'   : 0,
       		'samples'  : ['ggh125LNuQQ_I'],
@@ -74,7 +74,7 @@ plot['ggh125LNuQQ_I'] = {
 
 plot['ggWW'] = {
                       'nameHR' : 'ggWW',
-      		'isSignal' : 1,
+      		'isSignal' : 0,
       		'color'    : 4,
       		'isData'   : 0,
       		'samples'  : ['ggWW'],

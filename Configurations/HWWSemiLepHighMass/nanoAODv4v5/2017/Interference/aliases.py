@@ -40,8 +40,8 @@ aliases['I_sigXh0'] = {
     'samples': SigMcLNuQQ
 }
 
-aliases['I_sigXww'] = {
-    'expr': '('+model_I_sigXww+'>-4 && '+model_I_sigXww+' <4)*'+model_I_sigXww+' + ('+model_I_sigXww+' <=-4 ||'+model_I_sigXww+' >=4)* 0.01906',
+aliases['I_sigXww125'] = {
+    'expr': '('+model_I_sigXww+'>-1 && '+model_I_sigXww+' <1)*'+model_I_sigXww+' + ('+model_I_sigXww+' <=-1 ||'+model_I_sigXww+' >=1)* 0.002234',
     'samples': SigMcLNuQQ
 }
 
@@ -50,10 +50,11 @@ aliases['I_h0Xww'] = {
     'samples': SigMcLNuQQ
 }
 
-aliases['wwOVsig'] = {
-    'expr': '('+model_wwOVsig+' >-40 && '+model_wwOVsig+' <40)*'+model_wwOVsig+' + ('+model_wwOVsig+' <=-40 ||'+model_wwOVsig+'>=40)* 0.04423',
+aliases['wwOVsig125'] = {
+    'expr': '('+model_wwOVsig+' >0 && '+model_wwOVsig+' <1)*'+model_wwOVsig+' + ('+model_wwOVsig+' <0 ||'+model_wwOVsig+'>=1)* 0.002767',
     'samples': SigMcLNuQQ
 }
+# abnormal case to be average
 
 aliases['h0OVsig'] = {
     'expr': '('+model_h0OVsig+' >-40 && '+model_h0OVsig+' <40)*'+model_h0OVsig+' + ('+model_h0OVsig+' <=-40 ||'+model_h0OVsig+'>=40)* 0.04423',
