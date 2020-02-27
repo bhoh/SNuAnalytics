@@ -89,9 +89,7 @@ aliases['twoJet'] = {
 aliases['NJet'] = {
     'expr': 'Sum$(CleanJet_pt[CleanJetNotFat_jetIdx] > 30.)'
 }
-aliases['NBJet']={
-    'expr': 'Sum$( (Jet_btag'+bAlgo+'[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] >'+bWP+') && (Jet_pt[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] > 20 ) && (Jet_eta[CleanJet_jetIdx[CleanJetNotFat_jetIdx]] < 2.5)  )'
-}
+
 ##--MT--##
 aliases['Mt']={
     #'linesToAdd':['.L %s/functions/GetMt.C+' % configurations ],
@@ -101,7 +99,7 @@ aliases['Mt']={
 
 
 aliases['isResolved']={
-    'linesToAdd':['.L %s/functions/ResolvedRegion.C+' % configurations],
+    'linesToAdd':['.L %s/functions/ResolvedRegion.C++' % configurations],
     'expr':'Sum$(CleanFatJet_pt>200. && CleanFatJet_mass > 40. && CleanFatJet_mass < 250.)==0'
 }
 
@@ -164,6 +162,20 @@ aliases['VBF_Mjj']={
 
 ##--etc--##
 aliases['WptOverMWW']={
-    'expr':'min(WlepPuppi_pt,WResolved_mass)/WW_mass'
+    'expr':'min(WlepPuppi_pt,WResolved_pt)/WW_mass'
 }
 
+
+
+##--NBJet--##
+
+aliases['cjidx1']={ ##cleanjet index of not in whad
+    'expr':'Get_cjidx1(Entry$)'
+}
+aliases['cjidx2']={
+    'expr':'Get_cjidx2(Entry$)'
+}
+
+aliases['NBJet']={
+    'expr': 'Sum$( (Jet_btag'+bAlgo+'[CleanJet_jetIdx[Iteration$]] >'+bWP+') && (Jet_pt[CleanJet_jetIdx[Iteration$]] > 20 ) && (Jet_eta[CleanJet_jetIdx[Iteration$]] < 2.5) && (cjidx1!=Iteration$) && (cjidx2!=Iteration$) )'
+}
