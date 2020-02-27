@@ -88,21 +88,25 @@ TString f_FindPrimaryFatJet="";
 bool FindPrimaryFatJet(int entry, float maxtau21, int min_jetId, int max_jetId){
 
 
-  if( (f_FindPrimaryFatJet != multidraw::currentTree->GetCurrentFile()->GetName()) ){
-    init_FindPrimaryFatJet(multidraw::currentTree);  
+  if( (f_FindPrimaryFatJet != multidraw::currentTree->GetCurrentFile()->GetName()) ){//If this function's file is not matched to current file
+    init_FindPrimaryFatJet(multidraw::currentTree);  //Need to update branch address to current one
   }
 
-  else if( entry_FindPrimaryFatJet == entry ){ //if both file and entry are already set
-    return isFatJetEvent;
+  else if( entry_FindPrimaryFatJet == entry ){ //if both file and entry are already set -> This PrimaryFatJet selection was called before.
+    //No need to be recalled
+    return isFatJetEvent; //
   }
 
-  f_FindPrimaryFatJet=multidraw::currentTree->GetCurrentFile()->GetName(); 
+
+  //update function's file to current one
+  f_FindPrimaryFatJet=multidraw::currentTree->GetCurrentFile()->GetName();
+  //update function's entry to current one
   entry_FindPrimaryFatJet=entry;
 
-  multidraw::currentTree->GetEntry(entry);
+  multidraw::currentTree->GetEntry(entry); //read current entry
   //int nCleanFatJet = CleanFatJet_pt.size();
 
-  float this_pt = 200;
+  float pt_prifat = 200; // minimum pt for fatjet and last selected fatjet's pt
   
   cjidx=-1;
   for(unsigned int i=0; i < nCleanFatJet; i++){
@@ -110,20 +114,27 @@ bool FindPrimaryFatJet(int entry, float maxtau21, int min_jetId, int max_jetId){
     float pt    = CleanFatJet_pt[i];
     float jetId = FatJet_jetId[CleanFatJet_jetIdx[i]];
     float mass = CleanFatJet_mass[i];
-    if (mass < 40 ) continue;
-    if (mass > 250 ) continue;
-    if( tau21 > maxtau21 ) continue;
-    if(pt < this_pt) continue;
+    if (mass < 40 ) continue; // include SB / SR
+    if (mass > 250 ) continue;// include SB / SR
+    if( tau21 > maxtau21 ) continue; //tau21 maxcut
+    if(pt < pt_prifat) continue; //if pt < 200 OR pt(lastest selection FatJet)
+    //Not energetic enough, continue
     if(jetId<min_jetId) continue;
     if(jetId>max_jetId) continue;
-    cjidx=i;
+
+    //if passsed all cuts, this fatjet is the primary fatjet now.
+    pt_prifat=pt; //update pt_prifat to current fatjet
+
+    cjidx=i; //passed all criteria -> Primary fatjet. cjidx : cleanfatjet index of primary fatjet
   }
   
   //std::cout << "cjidx=>" << cjidx<<std::endl;
-  if(cjidx<0){
+
+  if(cjidx<0){// if there's no FatJet pass all cuts cjidx is not updated -> cjidx==-1
     isFatJetEvent=false;
     return false;
   }
+  //if not returned, there's a Fatjet passing the selection.(FatJetEvent)
   isFatJetEvent=true;
   return true;
 
@@ -131,7 +142,7 @@ bool FindPrimaryFatJet(int entry, float maxtau21, int min_jetId, int max_jetId){
 
 
 
-float WFatJet_pt(int entry,float maxtau21, int min_jetId, int max_jetId){
+float WFatJet_pt(int entry,float maxtau21, int min_jetId, int max_jetId){//Primary FatJet's pt
   FindPrimaryFatJet(entry,maxtau21,min_jetId,max_jetId);
   if(cjidx<0){
     return -999.;}
@@ -179,37 +190,37 @@ float WFatJet_tau21(int entry,float maxtau21, int min_jetId, int max_jetId){
 void init_WlepMaker(TTree* tree, TString METtype){
 
   //tree->ResetBranchAddresses();
-  tree->SetBranchAddress("Lepton_pt", &Lepton_pt);
+  tree->SetBranchAddress("Lepton_pt", &Lepton_pt); //need lepton's momentum
   tree->SetBranchAddress("Lepton_eta", &Lepton_eta);
   tree->SetBranchAddress("Lepton_phi", &Lepton_phi);
-  tree->SetBranchAddress(METtype+"MET_pt", &MET_pt);
+  tree->SetBranchAddress(METtype+"MET_pt", &MET_pt); //need MET pt and phi-direction
   tree->SetBranchAddress(METtype+"MET_phi", &MET_phi);
 
 }
 
 
-int entry_SetWlep=-999;
-TString f_SetWlep="";
+int entry_SetWlep=-999;//entry # of function
+TString f_SetWlep="";  // file name of function
 
 
 void SetWlep(int entry,TString METtype){
 
-  if( (f_SetWlep != multidraw::currentTree->GetCurrentFile()->GetName()) ){
-    init_WlepMaker(multidraw::currentTree, METtype);  
+  if( (f_SetWlep != multidraw::currentTree->GetCurrentFile()->GetName()) ){//if function's file is not match to current file 
+    init_WlepMaker(multidraw::currentTree, METtype);  //update address to current one
   }
-  else if( entry_SetWlep == entry ){ //if both file and entry are already set
+  else if( entry_SetWlep == entry ){ //if both file and entry are already matched->this function has been called before for this event
     return;
   }
 
-  f_SetWlep = multidraw::currentTree->GetCurrentFile()->GetName(); // 
-  entry_SetWlep= entry;
+  f_SetWlep = multidraw::currentTree->GetCurrentFile()->GetName(); //Set function's file to current one 
+  entry_SetWlep= entry; //entry of this function = current entry
 
-  multidraw::currentTree->GetEntry(entry);
+  multidraw::currentTree->GetEntry(entry); //Get entry
 
   //--Set W mass--//
   float wmass=80.4;
   //--Get the momentum of objects--//
-  float lep_pt  = Lepton_pt[0];
+  float lep_pt  = Lepton_pt[0]; //primary lepton's pt //need to update order of lepton ????
   float lep_phi = Lepton_phi[0];
   float lep_eta = Lepton_eta[0];
   float lep_pz  = lep_pt*sinh(lep_eta);
@@ -231,18 +242,19 @@ void SetWlep(int entry,TString METtype){
   else{
     sol1 = met_pz_1+sqrt(met_pz_2);
     sol2 = met_pz_1-sqrt(met_pz_2);
-    if(fabs(sol1) < fabs(sol2)){
+    if(fabs(sol1) < fabs(sol2)){ //choose one with smaller abs value
       met_pz = sol1;
     }
     else{
       met_pz = sol2;
     }
   }
+  //Now neutrino momentum is reco.
 
   float wlep_px = lep_pt*cos(lep_phi) + met_pt*cos(met_phi);
   float wlep_py = lep_pt*sin(lep_phi) + met_pt*sin(met_phi);
   float wlep_pz = lep_pz + met_pz;
-  float wlep_E  = lep_E  + sqrt(pow(met_pz,2) + pow(met_pt,2));
+  float wlep_E  = lep_E  + sqrt(pow(met_pz,2) + pow(met_pt,2)); //massless particle
 
   Wlep.SetPxPyPzE(wlep_px, wlep_py, wlep_pz, wlep_E);
 }
@@ -297,54 +309,61 @@ bool SetVBF(int entry){
   entry_SetVBF= entry;
 
   multidraw::currentTree->GetEntry(entry);
+
+  ///if # of addtional jet is less than 2 -> cannot make a forward pair 
   if(nCleanJetNotFat<2){
     return false;
   }
 
-  VBF_jjdEta = -9999.;
-  VBF_Mjj  = -9999.;
+  VBF_jjdEta = -9999.; //small enough initial value
+  VBF_Mjj  = -9999.; //small enought initial value
 
   int Njet=nCleanJetNotFat;
   for(int ci = 0; ci < Njet; ci++ ){
     //--momentum of 1st jet
     float pt1 = CleanJet_pt[ci];
-    if(pt1<30){
+    if(pt1<30){//pt cut
       continue;
     }
     float eta1 = CleanJet_eta[ci];
+    if (eta1 > 4.7){
+      continue;
+    }
     float phi1 = CleanJet_phi[ci];
-    float mass1 = Jet_mass[CleanJetNotFat_jetIdx[ci]];
+    float mass1 = Jet_mass[CleanJetNotFat_jetIdx[ci]];//no mass for cleanjet. Take mass for orig. jet collection
 
 
     for(int cj = 0; cj < Njet; cj++){
-      if(ci>=cj) continue;
+      if(ci>=cj) continue; // no need to check the same particle pair or already checked one
       
       float pt2 = CleanJet_pt[cj];
-      if(pt2<30) continue;
+      if(pt2 < 30) continue;
       float eta2 = CleanJet_eta[cj];
+      if(eta2 > 4.7) continue;
       float phi2 = CleanJet_phi[cj];
       float mass2 = Jet_mass[CleanJetNotFat_jetIdx[cj]];
 
 
-
+      //if each forward jet passes the cuts
       TLorentzVector v1,v2;
       v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1);
       v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2);
 
 
-      float this_dEta = fabs(eta1-eta2);
-      float this_Mjj  = (v1+v2).M();
+      float this_dEta = fabs(eta1-eta2);//dEta
+      float this_Mjj  = (v1+v2).M();//Forward jets going to opposite direction
 
-      if(this_Mjj < 500 ) continue;
-      if(this_dEta < 3.5 ) continue;
-      if(this_dEta > VBF_jjdEta){
+      if(this_Mjj < 500 ) continue;//Mjj cut
+      if(this_dEta < 3.5 ) continue; // back to back
+      if(this_dEta > VBF_jjdEta){// if current dEta is bigger than previous pair
+	//take the current one
         VBF_jjdEta=this_dEta;
         VBF_Mjj=this_Mjj;
       }
 
     }
   }
-  if(VBF_jjdEta < 3.5){
+  if(VBF_jjdEta < 3.5){//if not VBF event
     isVBFEvent=false;
     return false;
   }
@@ -353,26 +372,19 @@ bool SetVBF(int entry){
 
 }
 
-
-float Get_VBF_jjdEta(int entry){
-  isVBFEvent=SetVBF(entry);
-  if(!isVBFEvent){
-    return -9999;
+//To call VBF variables
+float Get_VBF_jjdEta(int entry){  isVBFEvent=SetVBF(entry);
+  if(!isVBFEvent){    return -9999;
   }
-  else{
-    return VBF_jjdEta;
+  else{    return VBF_jjdEta;
   }
-
 }
 
 
-float Get_VBF_Mjj(int entry){
-  isVBFEvent=SetVBF(entry);
-  if(!isVBFEvent){
-    return -9999;
+float Get_VBF_Mjj(int entry){  isVBFEvent=SetVBF(entry);
+  if(!isVBFEvent){    return -9999;
   }
-  else{
-    return VBF_Mjj;
+  else{    return VBF_Mjj;
   }
 
 }

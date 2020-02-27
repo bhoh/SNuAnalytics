@@ -4,38 +4,23 @@
 #include <TTree.h>
 
 
-//    'expr':'PrimaryFatJet_cjidx(Entry$,'+maxtau21+','+min_jetId+','+max_jetId+')',
+
 
 namespace multidraw {
 
   extern thread_local TTree* currentTree;
 
 }
-UInt_t nCleanFatJet;
 
-float CleanFatJet_pt[10];
-float CleanFatJet_eta[10];
-float CleanFatJet_phi[10];
-float CleanFatJet_mass[10];
-float CleanFatJet_tau21[10];
-int CleanFatJet_jetIdx[10];
 
-int FatJet_jetId[10];
+
 
 float CleanJet_pt[20];
 float CleanJet_eta[20];
 float CleanJet_phi[20];
 int CleanJet_jetIdx[20];
-
-
-
-UInt_t nCleanJetNotFat;
 UInt_t nCleanJet;
-int CleanJetNotFat_jetIdx[20];
-
 float Jet_mass[30];
-
-
 float MW=80.4;
 
 
@@ -51,7 +36,7 @@ float MET_phi;
 //float PuppiMET_pt;
 //float PuppiMET_phi;
 
-TLorentzVector Wlep,Whad,WWResolved;
+TLorentzVector Wlep,Whad;
 float sol1, sol2, met_pz_1, met_pz_2;
 
 
@@ -92,13 +77,11 @@ int entry_SetWlep=-999;
 TString f_SetWlep="";
 void SetWlep(int entry,TString METtype){
 
-
-
-  if( (f_SetWlep != multidraw::currentTree->GetCurrentFile()->GetName()) ){
-    init_WlepMaker(multidraw::currentTree, METtype);        
+  if( (f_SetWlep != multidraw::currentTree->GetCurrentFile()->GetName()) ){//if function's file != current file
+    init_WlepMaker(multidraw::currentTree, METtype);     //update address of variables   
   }
   
-  else if( entry_SetWlep == entry ){ //if both file and entry are already set
+  else if( entry_SetWlep == entry ){ //if both file and entry are already set 
     return;
   }
 
@@ -212,8 +195,8 @@ bool SetWhad(int entry){
 
 
 
-  whad_cjidx1=0;
-  whad_cjidx2=0;
+  whad_cjidx1=-1;
+  whad_cjidx2=-1;
 
 
   int Njet=nCleanJet;
@@ -227,6 +210,9 @@ bool SetWhad(int entry){
       continue;
     }
     float eta1 = CleanJet_eta[ci];
+    if(eta1>2.5){
+      continue;
+    }
     float phi1 = CleanJet_phi[ci];
     float mass1 = Jet_mass[CleanJet_jetIdx[ci]];
 
@@ -236,6 +222,7 @@ bool SetWhad(int entry){
       float pt2 = CleanJet_pt[cj];
       if(pt2<30) continue;
       float eta2 = CleanJet_eta[cj];
+      if(eta2>2.5) continue;
       float phi2 = CleanJet_phi[cj];
       float mass2 = Jet_mass[CleanJet_jetIdx[cj]];
 
@@ -253,7 +240,8 @@ bool SetWhad(int entry){
 
       //---Compare dM
 
-      if(this_dM < dM ){
+      if(this_dM < dM ){//if current dM is smaller than previous dM
+	//select this jet pair to Whadronic
 	dM=this_dM;
 	whad_cjidx1=ci;
 	whad_cjidx2=cj;
@@ -273,7 +261,8 @@ float Whad_pt(int entry){  SetWhad(entry);  return Whad.Pt();}
 float Whad_eta(int entry){  SetWhad(entry); return Whad.Eta();}
 float Whad_phi(int entry){  SetWhad(entry);return Whad.Phi();}
 float Whad_mass(int entry){  SetWhad(entry); return Whad.M();}
-
+float Get_cjidx1(int entry){ SetWhad(entry); return whad_cjidx1; }
+float Get_cjidx2(int entry){ SetWhad(entry); return whad_cjidx2; }
 
 
 //---4)VBF selection
@@ -284,8 +273,6 @@ void init_VBF(TTree* tree){
   tree->SetBranchAddress("CleanJet_eta", &CleanJet_eta);
   tree->SetBranchAddress("CleanJet_phi", &CleanJet_phi);
   tree->SetBranchAddress("CleanJet_jetIdx", &CleanJet_jetIdx);
-  tree->SetBranchAddress("CleanJetNotFat_jetIdx", &CleanJetNotFat_jetIdx);
-  tree->SetBranchAddress("nCleanJetNotFat", &nCleanJetNotFat);
   tree->SetBranchAddress("Jet_mass", &Jet_mass);
 
 
@@ -313,14 +300,14 @@ bool SetVBF(int entry){
 
   multidraw::currentTree->GetEntry(entry);
 
-  SetWhad(entry); //---get whad_cjidx1, whad_cjidx2
+  SetWhad(entry); //---to get whad_cjidx1, whad_cjidx2
 
   VBF_jjdEta = -9999.;
   VBF_Mjj  = -9999.;
 
   int Njet=nCleanJet;
   for(int ci = 0; ci < Njet; ci++ ){
-    if(ci==whad_cjidx1) continue;
+    if(ci==whad_cjidx1) continue; // first jet is not Whad
     if(ci==whad_cjidx2) continue;
     //--momentum of 1st jet
     float pt1 = CleanJet_pt[ci];
@@ -328,17 +315,21 @@ bool SetVBF(int entry){
       continue;
     }
     float eta1 = CleanJet_eta[ci];
+    if(eta1 > 4.7) continue;
     float phi1 = CleanJet_phi[ci];
-    float mass1 = Jet_mass[CleanJetNotFat_jetIdx[ci]];
+    float mass1 = Jet_mass[CleanJet_jetIdx[ci]];
 
 
     for(int cj = 0; cj < Njet; cj++){
       if(ci>=cj)continue;
+      if(cj==whad_cjidx1) continue; //second jet is not Whad
+      if(cj==whad_cjidx2) continue;
       float pt2 = CleanJet_pt[cj];
       if(pt2<30) continue;
       float eta2 = CleanJet_eta[cj];
+      if(eta2 > 4.7) continue;
       float phi2 = CleanJet_phi[cj];
-      float mass2 = Jet_mass[CleanJetNotFat_jetIdx[cj]];
+      float mass2 = Jet_mass[CleanJet_jetIdx[cj]];
 
 
 
@@ -391,3 +382,30 @@ float Get_VBF_Mjj(int entry){
     return VBF_Mjj;
   }
 }
+
+
+
+
+/*
+
+void init_BJet(TTree* tree){
+
+  //tree->ResetBranchAddresses();
+  tree->SetBranchAddress("CleanJet_pt", &CleanJet_pt);
+  tree->SetBranchAddress("CleanJet_eta", &CleanJet_eta);
+  tree->SetBranchAddress("CleanJet_phi", &CleanJet_phi);
+  tree->SetBranchAddress("CleanJet_jetIdx", &CleanJet_jetIdx);
+  tree->SetBranchAddress("CleanJetNotFat_jetIdx", &CleanJetNotFat_jetIdx);
+  tree->SetBranchAddress("nCleanJetNotFat", &nCleanJetNotFat);
+  tree->SetBranchAddress("Jet_mass", &Jet_mass);
+
+
+}
+
+int entry_SetVBF=-999;
+TString f_SetVBF="";
+
+
+bool SetBJet(int entry){
+
+*/
