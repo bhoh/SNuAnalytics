@@ -38,9 +38,9 @@ modcfg='--modcfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Steps_cfg.py'
 datacfg='--datacfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Productions_cfg.py'
 
 #--l1Prod--#
-#mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv4_Full2016v5 -i Prod -s MCl1loose2016v5 -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv5_Full2016v6 -i Prod -s MCl1loose2016v5 -b -T ${SAMPLE_LIST}
 #--Corr--#
-#mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5 -s MCCorr2016v5 -b -T ${SAMPLE_LIST} 
+#mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv5_Full2016v6 -i MCl1loose2016v5 -s MCCorr2016v5 -b -T ${SAMPLE_LIST} 
 
 
-mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv4_Full2016v5 -i MCl1loose2016v5__MCCorr2016v5 -s Semilep2016 -b -T ${SAMPLE_LIST}
+mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Summer16_102X_nAODv5_Full2016v6 -i MCl1loose2016v5__MCCorr2016v5 -s Semilep2016 -b -T ${SAMPLE_LIST}

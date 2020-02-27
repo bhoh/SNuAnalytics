@@ -527,6 +527,28 @@ Productions = {
 #
 ##################################### nAODv6 MC ##############################################
 
+ # -------- 2016 MC 102X nAODv5 + Full2016v6
+ 'Summer16_102X_nAODv5_Full2016v6': {
+                       'isData'  : False ,
+                       'samples' : 'SNuAnalytics/PostProcess/ChargedHiggsToCB/samples/Summer16_102X_nAODv5.py' ,
+                       'cmssw'   : 'Full2016v6' ,
+                       'year'    : '2016' ,
+                       'JESGT'   : 'Summer16_07Aug2017_V11_MC' ,
+                       'xsFile'  : 'SNuAnalytics/PostProcess/ChargedHiggsToCB/samples/samplesCrossSections2016.py' ,
+                       'YRver'   : ['YR4','13TeV'] ,
+                   },
+
+ # -------- 2017 MC 102X nAODv5 : Full2017v6 
+ 'Fall2017_102X_nAODv5_Full2017v6' : {
+                       'isData'  : False ,
+                       'samples' : 'SNuAnalytics/PostProcess/ChargedHiggsToCB/samples/fall17_102X_nAODv5.py' ,
+                       'cmssw'   : 'Full2017v6',
+                       'year'    : '2017' ,
+                       'JESGT'   : 'Fall17_17Nov2017_V32_MC' ,
+                       'xsFile'  : 'SNuAnalytics/PostProcess/ChargedHiggsToCB/samples/samplesCrossSections2017.py' ,
+                       'YRver'   : ['YR4','13TeV'] ,
+                   },
+
  # -------- 2018 MC 102X nAODv5
  'Autumn18_102X_nAODv6_Full2018v6':{
                        'isData'  : False ,
