@@ -27,8 +27,8 @@ variables['I_sigXh0'] = {
     'fold': 0
 }
 
-variables['I_sigXww'] = {
-    'name' : 'I_sigXww',
+variables['I_sigXww125'] = {
+    'name' : 'I_sigXww125',
     'range':(50,-0.5, 0.5),
     'xaxis':'1',
     'fold': 0
@@ -41,8 +41,8 @@ variables['I_h0Xww'] = {
     'fold': 0
 }
 
-variables['wwOVsig'] = {
-    'name' : 'wwOVsig',
+variables['wwOVsig125'] = {
+    'name' : 'wwOVsig125',
     'range':(50,-0.01, 0.2),
     'xaxis':'1',
     'fold': 0
