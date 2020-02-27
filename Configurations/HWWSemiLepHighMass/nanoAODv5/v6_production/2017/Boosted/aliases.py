@@ -173,6 +173,6 @@ aliases['VBF_Mjj']={
 
 ##--etc--##
 aliases['WptOverMWW']={
-    'expr':'min(WlepPuppi_pt,WFatJet_mass)/WW_mass'
+    'expr':'min(WlepPuppi_pt,WFatJet_pt)/WW_mass'
 }
 
