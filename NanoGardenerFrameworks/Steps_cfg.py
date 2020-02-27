@@ -50,7 +50,8 @@ def createJESchain(type, kind="Up"):
     typeShort = ""
   toreplace = typeShort+kind.lower()  
   #chainTemplate = ['do_JESVAR_suffix','l2Kin_JESVAR', 'l3Kin_JESVAR', 'l4Kin_JESVAR','DYMVA_JESVAR','MonoHiggsMVA_JESVAR','formulasMC_JESVAR'] 
-  chainTemplate = ['do_JESVAR_suffix','l2Kin_JESVAR', 'l3Kin_JESVAR', 'l4Kin_JESVAR','formulasMC_JESVAR'] 
+  #chainTemplate = ['do_JESVAR_suffix','l2Kin_JESVAR', 'l3Kin_JESVAR', 'l4Kin_JESVAR','formulasMC_JESVAR'] 
+  chainTemplate = ['do_JESVAR_suffix','formulasMC_JESVAR'] 
   chain = []
   for item in chainTemplate:
     chain.append(item.replace("VAR", toreplace))
@@ -797,7 +798,7 @@ Steps = {
 ## ------- HIGH MASS:
 
 
-  'HMSemilepSkimJH2016v6' : {
+  'HMSemilepSkimJH2016v6_2' : {
     'isChain'    : True  ,
     'do4MC'      : True  ,
     'do4Data'    : True  ,
@@ -806,13 +807,16 @@ Steps = {
     ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
     && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
     ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
-    ))"',    
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',    
 
-    'subTargets' : ['l1tightOR2016v6'],
+    'subTargets' : ['l1tightOR2016v6','BWReweight'],
 
   },
 
-  'HMSemilepSkimJH2017v6' : {
+  'HMSemilepSkimJH2017v6_2' : {
     'isChain'    : True  ,
     'do4MC'      : True  ,
     'do4Data'    : True  ,
@@ -821,13 +825,15 @@ Steps = {
     ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
     && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
     ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
-    ))"',    
-
-    'subTargets' : ['l1tightOR2017v6'],
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2017v6','BWReweight'], ##need MELA discriminator
 
   },
 
-  'HMSemilepSkimJH2018v6' : {
+  'HMSemilepSkimJH2018v6_2' : {
     'isChain'    : True  ,
     'do4MC'      : True  ,
     'do4Data'    : True  ,
@@ -836,9 +842,11 @@ Steps = {
     ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
     && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
     ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
-    ))"',    
-
-    'subTargets' : ['l1tightOR2018v6'],
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2018v6','BWReweight'],
 
   },
 
@@ -1333,7 +1341,7 @@ Steps = {
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.BWEwkSingletReweighter' ,
                   'declare'    : 'BWEwkSingRew = lambda : BWEwkSingletReweighter(year=RPLME_YEAR)',
                   'module'     : 'BWEwkSingRew()',
-                  #'onlySample' : TwoL2NuSamples + LNuQQSamples,
+                  'onlySample' : TwoL2NuSamples + LNuQQSamples,
                },
 
     'MelaDisc' : { 
@@ -2896,7 +2904,7 @@ Steps = {
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   #'subTargets' : ['do_METup_suffix','l2Kin_METup', 'l3Kin_METup', 'l4Kin_METup','DYMVA_METup','MonoHiggsMVA_METup','formulasMC_METup'],
-     'subTargets' : ['do_METup_suffix','l2Kin_METup', 'l3Kin_METup', 'l4Kin_METup','formulasMC_METup'],
+     'subTargets' : ['do_METup_suffix','formulasMC_METup'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
 
@@ -2921,7 +2929,7 @@ Steps = {
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   #'subTargets' : ['do_METdo_suffix','l2Kin_METdo', 'l3Kin_METdo', 'l4Kin_METdo','DYMVA_METdo','MonoHiggsMVA_METdo','formulasMC_METdo'],
-     'subTargets' : ['do_METdo_suffix','l2Kin_METdo', 'l3Kin_METdo', 'l4Kin_METdo','formulasMC_METdo'],
+     'subTargets' : ['do_METdo_suffix','formulasMC_METdo'],
      'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
 
@@ -2997,7 +3005,7 @@ Steps = {
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   #'subTargets' : ['do_ElepTup_suffix', 'trigMCKeepRun_ElepTup', 'LeptonSF_ElepTup', 'l2Kin_ElepTup', 'l3Kin_ElepTup', 'l4Kin_ElepTup', 'DYMVA_ElepTup', 'MonoHiggsMVA_ElepTup', 'formulasMC_ElepTup'],
-    'subTargets' : ['do_ElepTup_suffix', 'trigMCKeepRun_ElepTup', 'LeptonSF_ElepTup', 'l2Kin_ElepTup', 'l3Kin_ElepTup', 'l4Kin_ElepTup', 'formulasMC_ElepTup'],
+    'subTargets' : ['do_ElepTup_suffix', 'trigMCKeepRun_ElepTup', 'LeptonSF_ElepTup' 'formulasMC_ElepTup'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
 
@@ -3020,7 +3028,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_ElepTdo_suffix', 'trigMCKeepRun_ElepTdo', 'LeptonSF_ElepTdo', 'l2Kin_ElepTdo', 'l3Kin_ElepTdo', 'l4Kin_ElepTdo', 'DYMVA_ElepTdo', 'MonoHiggsMVA_ElepTdo', 'formulasMC_ElepTdo'],
+                  #'subTargets' : ['do_ElepTdo_suffix', 'trigMCKeepRun_ElepTdo', 'LeptonSF_ElepTdo', 'l2Kin_ElepTdo', 'l3Kin_ElepTdo', 'l4Kin_ElepTdo', 'DYMVA_ElepTdo', 'MonoHiggsMVA_ElepTdo', 'formulasMC_ElepTdo'],
+    'subTargets' : ['do_ElepTdo_suffix', 'trigMCKeepRun_ElepTdo', 'LeptonSF_ElepTdo', 'formulasMC_ElepTdo'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
  
@@ -3111,7 +3120,8 @@ Steps = {
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   #'subTargets' : ['do_MupTup_suffix', 'trigMCKeepRun_MupTup', 'LeptonSF_MupTup', 'l2Kin_MupTup', 'l3Kin_MupTup', 'l4Kin_MupTup', 'DYMVA_MupTup', 'MonoHiggsMVA_MupTup', 'formulasMC_MupTup'],
-    'subTargets' : ['do_MupTup_suffix', 'trigMCKeepRun_MupTup', 'LeptonSF_MupTup', 'l2Kin_MupTup', 'l3Kin_MupTup', 'l4Kin_MupTup', 'formulasMC_MupTup'],
+    #'subTargets' : ['do_MupTup_suffix', 'trigMCKeepRun_MupTup', 'LeptonSF_MupTup', 'l2Kin_MupTup', 'l3Kin_MupTup', 'l4Kin_MupTup', 'formulasMC_MupTup'],
+    'subTargets' : ['do_MupTup_suffix', 'trigMCKeepRun_MupTup', 'LeptonSF_MupTup', 'formulasMC_MupTup'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
 
@@ -3134,7 +3144,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_MupTdo_suffix', 'trigMCKeepRun_MupTdo', 'LeptonSF_MupTdo', 'l2Kin_MupTdo', 'l3Kin_MupTdo', 'l4Kin_MupTdo', 'DYMVA_MupTdo', 'MonoHiggsMVA_MupTdo', 'formulasMC_MupTdo'],
+                  #'subTargets' : ['do_MupTdo_suffix', 'trigMCKeepRun_MupTdo', 'LeptonSF_MupTdo', 'l2Kin_MupTdo', 'l3Kin_MupTdo', 'l4Kin_MupTdo', 'DYMVA_MupTdo', 'MonoHiggsMVA_MupTdo', 'formulasMC_MupTdo'],
+    'subTargets' : ['do_MupTdo_suffix', 'trigMCKeepRun_MupTdo', 'LeptonSF_MupTdo', 'formulasMC_MupTdo'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
                },
 
