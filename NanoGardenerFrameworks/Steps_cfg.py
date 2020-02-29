@@ -911,6 +911,14 @@ Steps = {
                   'subTargets' : ['HMlnjjVars'],
 		  },
 
+    'HMlnjjSelDev'  : {
+                  'isChain'    : True,
+                  'do4MC'      : True,
+                  'do4Data'    : True,
+                  'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
+                  'subTargets' : ['HMlnjjVarsDev'],
+		  },
+
     'HMlnjjSelBWRew_Dev'  : {
                   'isChain'    : True ,
 		  'do4MC'	: True ,
@@ -1380,7 +1388,7 @@ Steps = {
                   'module'     : 'HMlnjjVars()',
                },
 
-    'HMlnjjVars_Dev' : {
+    'HMlnjjVarsDev' : {
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True ,
