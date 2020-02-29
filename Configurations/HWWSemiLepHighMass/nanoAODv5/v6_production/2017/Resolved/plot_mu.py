@@ -22,7 +22,7 @@ scriptname=opt.plotFile
 plot['DY']  = {
                   'nameHR' : 'DY',
                   'isSignal' : 0,
-                  'color': dict_TColor['red'], 
+                  'color': dict_TColor['magenta'], 
                   'isData'   : 0,
                   'samples'  : ['DY']
               }

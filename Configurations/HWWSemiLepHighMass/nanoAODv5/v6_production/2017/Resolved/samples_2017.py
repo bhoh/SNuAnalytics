@@ -159,7 +159,7 @@ samples['Wjets'] = {    'name'   :
                         #+ getSampleFiles(directory,'WJetsToLNu_HT2500_inf',False,'nanoLatino_')
                         ,
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                        'FilesPerJob' : 10,
+                        'FilesPerJob' : 3,
                  }
 
 addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.915')
@@ -176,7 +176,7 @@ ptllDYW_LO = '((0.632927+0.0456956*gen_ptll-0.00154485*gen_ptll*gen_ptll+2.64397
 samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50',False,'nanoLatino_')
                      + getSampleFiles(directory,'DYJetsToLL_M-10to50-LO',False,'nanoLatino_'),
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+ptllDYW_LO,
-                     'FilesPerJob' : 40,
+                     'FilesPerJob' : 20,
 }
 #addSampleWeight(samples,'DY','DYJetsToLL_M-50',ptllDYW_NLO)
 #addSampleWeight(samples,'DY','DYJetsToLL_M-10to50-LO',ptllDYW_LO)
@@ -191,7 +191,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_') 
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                      'FilesPerJob' : 5,
+                      'FilesPerJob' : 3,
                       #'FilesPerJob' : 40,
                     }
 
@@ -251,31 +251,36 @@ samples['WW'] = {    'name'   :   getSampleFiles(directory,'WW-LO',False,'nanoLa
 
 samples['WZ'] = {    'name'   :   getSampleFiles(directory,'WZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
-                 }
+                     'FilesPerJob' : 2,                                  
+}
 
 samples['ZZ'] = {    'name'   :   getSampleFiles(directory,'ZZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
-                 }
+                     'FilesPerJob' : 2,                                  
+}
 
 
 samples['WWW'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
+                      'FilesPerJob' : 2,                 
                  }
 
 samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
-                 }
+'FilesPerJob' : 2,                                  
+}
 
 samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
-                 }
+'FilesPerJob' : 2,                                  
+}
 
 
 samples['DATA']  = {   'name': [ ] ,
                        'weight' : METFilter_DATA+'*'+LepWPCut ,
                        'weights' : [ ],
                        'isData': ['all'],
-                       'FilesPerJob' : 20,
+                       'FilesPerJob' : 7,
                   }
 
 #print samples['DATA']

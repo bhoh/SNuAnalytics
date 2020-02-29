@@ -99,7 +99,7 @@ aliases['Mt']={
 
 
 aliases['isResolved']={
-    'linesToAdd':['.L %s/functions/ResolvedRegion.C++' % configurations],
+    'linesToAdd':['gSystem->Load("%s/functions/ResolvedRegion_C.so")' % configurations],
     'expr':'Sum$(CleanFatJet_pt>200. && CleanFatJet_mass > 40. && CleanFatJet_mass < 250.)==0'
 }
 
