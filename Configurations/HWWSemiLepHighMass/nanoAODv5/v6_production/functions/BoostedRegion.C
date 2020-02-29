@@ -1,7 +1,11 @@
+//root -b -l
+//gSystem->Load("libLatinoAnalysisMultiDraw.so")
 #include <TFile.h>
 #include <iostream>
 #include <TLorentzVector.h>
 #include <TTree.h>
+
+
 
 
 //    'expr':'PrimaryFatJet_cjidx(Entry$,'+maxtau21+','+min_jetId+','+max_jetId+')',

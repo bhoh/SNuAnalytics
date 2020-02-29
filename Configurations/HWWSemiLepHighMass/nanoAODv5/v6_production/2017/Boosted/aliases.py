@@ -95,12 +95,14 @@ aliases['NBJet']={
 ##--MT--##
 aliases['Mt']={
     #'linesToAdd':['.L %s/functions/GetMt.C+' % configurations ],
+    # 'linesToAdd':['.L %s/functions/TLorentzVectorFunction.C+' % configurations ],
     'linesToAdd':['.L %s/functions/TLorentzVectorFunction.C+' % configurations ],
     'expr':'Combine2PtEtaPhiM_Mt(Lepton_pt[0],0, Lepton_phi[0], 0, PuppiMET_pt,0, PuppiMET_phi, 0)'
 }
 
 aliases['isFatJetEvent']={
-    'linesToAdd':['.L %s/functions/BoostedRegion.C+' % configurations],
+    #'linesToAdd':['.L %s/functions/BoostedRegion.C+' % configurations],
+    'linesToAdd':['gSystem->Load("%s/functions/BoostedRegion_C.so")' % configurations],
     'expr':'FindPrimaryFatJet(Entry$,'+maxtau21+','+min_jetId+','+max_jetId+')',
 }
 

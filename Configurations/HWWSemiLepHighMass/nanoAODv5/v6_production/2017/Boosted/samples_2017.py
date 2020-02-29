@@ -161,7 +161,7 @@ samples['Wjets'] = {    'name'   :
                         #+ getSampleFiles(directory,'WJetsToLNu_HT2500_inf',False,'nanoLatino_')
                         ,
                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                        'FilesPerJob' : 5,
+                        'FilesPerJob' : 3,
                  }
 
 addSampleWeight(samples, 'Wjets', 'WJetsToLNu-0J', '0.915')
@@ -193,7 +193,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_') 
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
-                      'FilesPerJob' : 3,
+                      'FilesPerJob' : 2,
                       #'FilesPerJob' : 40,
                     }
 
@@ -277,7 +277,7 @@ samples['DATA']  = {   'name': [ ] ,
                        'weight' : METFilter_DATA+'*'+LepWPCut ,
                        'weights' : [ ],
                        'isData': ['all'],
-                       'FilesPerJob' : 10,
+                       'FilesPerJob' : 6,
                   }
 
 #print samples['DATA']
