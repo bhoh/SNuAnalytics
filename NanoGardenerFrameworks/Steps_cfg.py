@@ -883,7 +883,8 @@ Steps = {
                   'isChain'    : True  ,
                   'do4MC'      : True  ,
                   'do4Data'    : True  ,
-                  'subTargets' : ['l1tightOR2017v5','PreselFatJet','whadJetSel','wlepMaker'],
+                  'subTargets' : ['PreselFatJet','whadJetSel','wlepMaker'],
+                  #'subTargets' : ['l1tightOR2017v5','PreselFatJet','whadJetSel','wlepMaker'],
                   #'onlySample' : LNuQQSamples,
                    },
 
@@ -1395,6 +1396,15 @@ Steps = {
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev' ,
                   'declare'    : 'HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev(RPLME_YEAR)',
                   'module'     : 'HMlnjjVars_Dev()',
+               },
+
+    'MelaHighMassKD' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.melaHighMassKD' ,
+                  'declare'    : 'MelaHighMassKD = lambda : MelaHighMassKDClass(RPLME_YEAR)',
+                  'module'     : 'MelaHighMassKD()',
                },
 
 

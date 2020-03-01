@@ -165,6 +165,9 @@ if os.getenv('CMSSW_BASE')=='':
 else :
     Latino_sampleDir=os.getenv('CMSSW_BASE')+'/src/LatinoAnalysis/NanoGardener/python/framework/samples/'
 Latino_sampleFile=''
+
+# As defined at LatinoAnalysis/NanoGardener/python/framework/Productions_cfg.py
+
 if 'Summer16_102X_nAODv4' in JOBDIR:
     Latino_sampleFile='Summer16_102X_nAODv4.py'
 elif 'Run2016_102X_nAODv4' in JOBDIR:
@@ -181,6 +184,8 @@ elif 'NanoGardening__Autumn18_102X_nAODv5_Full2018v5' in JOBDIR:
     Latino_sampleFile='Autumn18_102X_nAODv5.py'
 elif 'NanoGardening__Run2018_102X_nAODv5_Full2018v5' in JOBDIR:
     Latino_sampleFile='Run2018_102X_nAODv5.py'
+elif 'Fall2017_102X_nAODv5_Full2017v6' in JOBDIR:
+    Latino_sampleFile='fall17_102X_nAODv5.py'
 if Latino_sampleFile=='': 
     print "!!None matched sample python in Latino path!!"
     exit()
