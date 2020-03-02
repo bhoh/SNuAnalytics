@@ -169,6 +169,37 @@ def prepare_VBSjjlnu_Fatjet_syst(basename, selection):
 
 
 
+def prepare_HMsemilep_Fatjet_syst(basename):
+    dictionary = {}
+    for syst in ['JES', 'JMS']:
+      for j in ['up', 'do']:
+        dictionary[basename+ "_" + syst + j] = {
+          'isChain'    : True ,
+          'do4MC'      : True  ,
+          'do4Data'    : False  ,
+          'subTargets': ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK','trigMC','CorrFatJetMC', 'CleanFatJet_{0}{1}'.format(syst, j),]
+                       }
+    return dictionary
+
+def prepare_HMsemilep_syst(basename):
+  for syst in ["JES", "MupT", "ElepT", "MET"]:
+    for j in ['up', 'do']:
+      dictionary[basename+"_"+ syst + j] = {
+      'isChain'    : True ,
+      'do4MC'      : True  ,
+      'do4Data'    : False  ,
+      'selection'  : selection,
+      'subTargets': ['do_{0}{1}'.format(syst, j),
+                    'wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+                    'trigMC', 'CorrFatJetMC', 'CleanFatJet',]
+      }
+      if syst == "JES":
+        dictionary[basename+"_"+ syst + j]["subTargets"] = ['JESBaseTotal'] + dictionary[basename+"_"+ syst + j]["subTargets"]
+  return dictionary
+
+
+
+
 Steps = {
 
 # ------------------------------------------------ CHAINS ----------------------------------------------------
@@ -798,6 +829,114 @@ Steps = {
 ## ------- HIGH MASS:
 
 
+
+
+  'HMSemilepSkimJH2016v6_3' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+
+  ##
+#'CorrFatJetData', 'CleanFatJet'
+  'HMSemilepSkimJH2016v6_3_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','CorrFatJetData','CleanFatJet'],
+
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+
+
+ 'HMSemilepSkimJH2017v6_3' : {
+     'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+  },    
+
+ 'HMSemilepSkimJH2017v6_3_data' : {
+     'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2017v6','CorrFatJetData','CleanFatJet'],
+
+  },    
+ 
+  'HMSemilepSkimJH2018v6_3' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2018v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },
+
+  'HMSemilepSkimJH2018v6_3_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)&&\
+    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    "',
+    'subTargets' : ['l1tightOR2018v6','CorrFatJetData','CleanFatJet'],
+
+  },
+
   'HMSemilepSkimJH2016v6_2' : {
     'isChain'    : True  ,
     'do4MC'      : True  ,
@@ -814,10 +953,10 @@ Steps = {
 
     'subTargets' : ['l1tightOR2016v6','BWReweight'],
 
-  },
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
 
   'HMSemilepSkimJH2017v6_2' : {
-    'isChain'    : True  ,
+     'isChain'    : True  ,
     'do4MC'      : True  ,
     'do4Data'    : True  ,
     'selection'  :'"(  Lepton_pt[0]>20 \
@@ -909,14 +1048,6 @@ Steps = {
                   'do4Data'    : True,
                   'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
                   'subTargets' : ['HMlnjjVars'],
-		  },
-
-    'HMlnjjSelDev'  : {
-                  'isChain'    : True,
-                  'do4MC'      : True,
-                  'do4Data'    : True,
-                  'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
-                  'subTargets' : ['HMlnjjVarsDev'],
 		  },
 
     'HMlnjjSelBWRew_Dev'  : {
@@ -1388,7 +1519,7 @@ Steps = {
                   'module'     : 'HMlnjjVars()',
                },
 
-    'HMlnjjVarsDev' : {
+    'HMlnjjVars_Dev' : {
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True ,
@@ -1490,24 +1621,6 @@ Steps = {
                 'do4Data': False,
                 'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
                 'declare': 'corr_fatjet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="Total", redojec=True, jetType="AK8PFPuppi")',
-                'module':  'corr_fatjet_mc()'
-    },
-
-    'CorrFatJetMC_jesTotalDown' :  {
-                'isChain': False,
-                'do4MC': True,
-                'do4Data': False,
-                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
-                'declare': 'corr_fatjet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="jesTotalDown", redojec=True, jetType="AK8PFPuppi")',
-                'module':  'corr_fatjet_mc()'
-    },
-
-    'CorrFatJetMC_jesTotalUp' :  {
-                'isChain': False,
-                'do4MC': True,
-                'do4Data': False,
-                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
-                'declare': 'corr_fatjet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="jesTotalup", redojec=True, jetType="AK8PFPuppi")',
                 'module':  'corr_fatjet_mc()'
     },
 
@@ -3216,6 +3329,26 @@ Steps = {
                   'module'     : 'fatjetMaker_jesdo()'
     },
 
+'CleanFatJet_JERup' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.FatJetMaker',
+                  # The branch prefix needs to be used if the CleanFatJet module is run on top of CorrFatJet* modules
+                  'declare'    : 'fatjetMaker_jesup = lambda : FatJetMaker( branch_prefix="jerUp", jetid=0, minpt=200, maxeta=2.4, max_tau21=0.45, mass_range=[40, 250], over_lepR=0.8, over_jetR=0.8)',
+                  'module'     : 'fatjetMaker_jerup()'
+    },
+
+     'CleanFatJet_JERdo' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.FatJetMaker',
+                  # The branch prefix needs to be used if the CleanFatJet module is run on top of CorrFatJet* modules
+                  'declare'    : 'fatjetMaker_jesdo = lambda : FatJetMaker( branch_prefix="jesTotalDown", jetid=0, minpt=200, maxeta=2.4, max_tau21=0.45, mass_range=[40, 250], over_lepR=0.8, over_jetR=0.8)',
+                  'module'     : 'fatjetMaker_jerdo()'
+    },
+
     'CleanFatJet_JMSup' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
@@ -3232,7 +3365,7 @@ Steps = {
                   'do4Data'    : False  ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.FatJetMaker',
                   # The branch prefix needs to be used if the CleanFatJet module is run on top of CorrFatJet* modules
-                  'declare'    : 'fatjetMaker_jmsdo = lambda : FatJetMaker( branch_prefix="jmsDown", jetid=0, minpt=200, maxeta=2.4, max_tau21=0.45, mass_range=[40, 250], over_lepR=0.8, over_jetR=0.8)',
+                  'declare'    : 'fatjetMaker_jmsdo = lambda : FatJetMaker( branch_prefix="jerDown", jetid=0, minpt=200, maxeta=2.4, max_tau21=0.45, mass_range=[40, 250], over_lepR=0.8, over_jetR=0.8)',
                   'module'     : 'fatjetMaker_jmsdo()'
     },
 
@@ -4007,3 +4140,9 @@ Steps.update(prepare_VBSjjlnu_syst("VBSjjlnuSkim2018v5", vbsjjlnu_preselection_m
 Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2016v5_fatjet", vbsjjlnu_preselection_mc_2016))
 Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2017v5_fatjet", vbsjjlnu_preselection_mc_2017))
 Steps.update(prepare_VBSjjlnu_Fatjet_syst("VBSjjlnuSkim2018v5_fatjet", vbsjjlnu_preselection_mc_2018))
+
+## Add fatjet systemtics for High Mass Semilep analysis
+
+Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2016v6_fatjet"))
+Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2017v6_fatjet"))
+Steps.update(prepare_HMsemilep_Fatjet_syst("HMsemilep2018v6_fatjet"))
