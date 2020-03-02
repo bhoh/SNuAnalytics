@@ -174,14 +174,15 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 # Option: -R(redo)
 ######################
 
+modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
 
 #--l1Prod--#
-mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i Prod -s MCl1loose2017v6 -b -T ${SAMPLE_LIST}
-mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6 -s MCCorr2017v6 -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i Prod -s MCl1loose2017v6 -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6 -s MCCorr2017v6 -b -T ${SAMPLE_LIST}
 #
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6 -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6 -b -T ${SAMPLE_LIST}
 
-mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_2 -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_2 -b -T ${SAMPLE_LIST}
 
 
 #mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6 -s ElepTup_suffix -b -T ${SAMPLE_LIST} 
@@ -208,7 +209,7 @@ SYSLIST+=(METup_suffix METdo_suffix)
 for sys in ${SYSLIST[@]};do
     #continue ##skip
     echo "---$sys---"
-    mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_2 -s ${sys} -b -T ${SAMPLE_LIST}
+    mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_2 -s ${sys} -b -T ${SAMPLE_LIST}
 done
 
 
