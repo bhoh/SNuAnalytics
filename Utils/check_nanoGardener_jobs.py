@@ -259,8 +259,11 @@ for name in NAMES:
 
     if os.path.isfile(filepath) :
         if os.stat(filepath).st_size == 0 or not TFileOpen(filepath):
-            os.system('rm '+filepath.replace('/xrootd/store/user/jhchoi/','/xrootd_user/jhchoi/xrootd/'))
-            os.system('xrdfs root://cms-xrdr.private.lo:2094 rm '+filepath.replace('/xrootd/','//xrd/'))
+            #os.system('rm '+filepath.replace('/xrootd/store/user/jhchoi/','/xrootd_user/jhchoi/xrootd/'))
+            cmd='xrdfs root://cms-xrdr.private.lo:2094 rm '+filepath.replace('/xrootd/','//xrd/')
+	    #print cmd
+            #os.system('xrdfs root://cms-xrdr.private.lo:2094 rm '+filepath.replace('/xrootd/','//xrd/'))
+            os.system(cmd)
             print "0 size file!!!-->"+filepath
 
 
