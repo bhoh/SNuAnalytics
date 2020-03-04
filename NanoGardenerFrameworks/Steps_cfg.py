@@ -1634,6 +1634,15 @@ Steps = {
                 'module':  'corr_fatjet_mc()'
     },
 
+    'BinByBinFatJetMCJER' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.BinByBinJERMaker',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi")',
+                'module':  'bin_by_bin_JER_maker()'
+    },
+
     'CleanFatJet' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
