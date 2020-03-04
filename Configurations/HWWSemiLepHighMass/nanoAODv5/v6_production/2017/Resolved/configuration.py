@@ -2,7 +2,7 @@
 
 
 #tag='simple2017'
-tag='2017_Resolved'
+tag='2017_Resolved_add_iswhad_inclusivebjet'
 
 
 
@@ -20,7 +20,7 @@ outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
 aliasesFile='aliases.py'
-#nuisancesFile = 'nuisances.py'
+nuisancesFile = 'nuisances.py'
 
 #structureFile = 'structure.py'
 

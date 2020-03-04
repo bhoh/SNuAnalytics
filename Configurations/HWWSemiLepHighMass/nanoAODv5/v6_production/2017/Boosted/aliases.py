@@ -178,3 +178,7 @@ aliases['WptOverMWW']={
     'expr':'min(WlepPuppi_pt,WFatJet_pt)/WW_mass'
 }
 
+aliases['tau21SF']={
+    'expr' : '0.97',
+    'samples' : mc
+}

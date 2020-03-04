@@ -1,7 +1,7 @@
 StartTime=$(date +%s)
 
 
-mkPlot.py --pycfg=configuration.py --inputFile=rootFile_2017_Boosted/plots_2017.root --plotFile=plot_mu.py --outputDirPlots=plots_2017_Boosted_mu
+mkPlot.py --pycfg=configuration.py --inputFile=rootFile_2017_Boosted/hadd.root --plotFile=plot_mu.py --outputDirPlots=plots_2017_Boosted_mu
 
 
 

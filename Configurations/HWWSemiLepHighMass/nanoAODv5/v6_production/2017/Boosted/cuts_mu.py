@@ -1,5 +1,7 @@
 #-----Variable Deinition-----#
 from WPandCut2017 import *
+import sys
+#cuts={}
 
 
 scriptname=opt.cutsFile
@@ -53,7 +55,7 @@ METCats={
 
 MFatJCats={
     'MFat65To105':'( WFatJet_mass > 65 && WFatJet_mass < 105)',
-    'MFatSB':'(NBJet==0 &&( WFatJet_mass < 65 || WFatJet_mass > 105))',
+    'MFatSB':'(( WFatJet_mass < 65 || WFatJet_mass > 105))',
     
    
 }

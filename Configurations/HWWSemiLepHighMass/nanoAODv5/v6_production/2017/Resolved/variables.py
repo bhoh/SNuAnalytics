@@ -7,6 +7,7 @@ from WPandCut2017 import *
 
 
 ##---VBF---##
+'''
 variables['VBF_jjdEta']={
     'name':'VBF_jjdEta',
     'range':(100,0,10),
@@ -24,6 +25,18 @@ variables['VBF_Mjj']={
 
 
 }
+
+'''
+
+variables['WW_Mt']={
+    'name' : 'WW_Mt',
+    'range':(50,0,500),
+    'xaxis':'WW_mass',
+    'fold' : 0,
+    
+}
+
+
 
 
 variables['WW_mass']={
@@ -57,7 +70,7 @@ variables['NBJet']={
     'xaxis':'NBJet',
     'fold':0,
 }
-
+'''
 variables['lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
@@ -71,7 +84,7 @@ variables['lepton_eta[0]']={
     'xaxis':'lepton #eta',
     'fold':0
 }
-
+'''
 
 
 variables['bjet_'+bAlgo]={
@@ -80,6 +93,14 @@ variables['bjet_'+bAlgo]={
     'xaxis':'bjet_'+bAlgo,
     'fold':0
 
+}
+
+variables['WlepPuppi_pt']={
+    'name' : 'WlepPuppi_pt',
+    'range':(100,0,1000),
+    'xaxis':'WlepPuppi_pt',
+    'fold':0
+    
 }
 
 
@@ -115,6 +136,7 @@ variables['WResolved_pt']={
 }
 
 
+'''
 variables['WResolved_eta']={
     'name':'WResolved_eta',
     'range':(60,-3,3),
@@ -128,7 +150,7 @@ variables['WResolved_phi']={
     'xaxis' : 'WResolved_phi',
     'fold':0
 }
-
+'''
 
 variables['WResolved_mass']={
     'name':'WResolved_mass',

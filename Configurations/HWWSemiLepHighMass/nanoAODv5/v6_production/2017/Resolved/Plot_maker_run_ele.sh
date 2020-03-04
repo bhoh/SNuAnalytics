@@ -1,6 +1,6 @@
 StartTime=$(date +%s)
 
-mkPlot.py --pycfg=configuration.py --inputFile=rootFile_2017_Resolved/plots_2017.root --plotFile=plot_ele.py --outputDirPlots=plots_2017_Resolved_ele
+mkPlot.py --pycfg=configuration.py --inputFile=rootFile_2017_Resolved_add_iswhad/hadd.root --plotFile=plot_ele.py --outputDirPlots=plots_2017_Resolved_ele
 
 
 

@@ -1,5 +1,7 @@
 #-----Variable Deinition-----#
 from WPandCut2017 import *
+import sys
+#cuts={}
 
 
 scriptname=opt.cutsFile

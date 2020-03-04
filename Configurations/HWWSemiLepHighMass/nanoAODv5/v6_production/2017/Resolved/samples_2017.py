@@ -189,6 +189,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_s-channel',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_antitop',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_') 
+                      + getSampleFiles(directory,'TTTo2L2Nu_PSWeights',False,'nanoLatino_') 
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       'FilesPerJob' : 3,
@@ -242,7 +243,7 @@ samples['QCD_bcToE'] = {'name'   :
                   'FilesPerJob' : 20,
 }
 ##--MultiBoson
-samples['WW'] = {    'name'   :   getSampleFiles(directory,'WW-LO',False,'nanoLatino_') ,
+samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
                      'FilesPerJob' : 2,                 
 }
@@ -265,12 +266,17 @@ samples['WWW'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLat
                       'FilesPerJob' : 2,                 
                  }
 
-samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
+samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WZZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
 'FilesPerJob' : 2,                                  
 }
 
-samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
+samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWZ',False,'nanoLatino_') ,
+                            'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
+'FilesPerJob' : 2,                                  
+}
+
+samples['ZZZ'] = {    'name'   :   getSampleFiles(directory,'ZZZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
 'FilesPerJob' : 2,                                  
 }

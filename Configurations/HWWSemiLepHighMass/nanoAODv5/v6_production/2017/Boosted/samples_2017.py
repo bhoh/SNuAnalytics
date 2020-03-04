@@ -64,7 +64,7 @@ GenLepMatch = 'Lepton_genmatched[0]'
 ################################################
 
 
-SFweight=SFweight+'*btagSF'
+SFweight=SFweight+'*btagSF*tau21SF'
 
 
 ################################################
@@ -190,7 +190,8 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_t-channel_antitop',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_s-channel',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_antitop',False,'nanoLatino_')
-                      + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_') 
+                      + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_')
+                      + getSampleFiles(directory,'TTTo2L2Nu_PSWeights',False,'nanoLatino_') 
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       'FilesPerJob' : 2,
@@ -244,7 +245,7 @@ samples['QCD_bcToE'] = {'name'   :
                   'FilesPerJob' : 20,
 }
 ##--MultiBoson
-samples['WW'] = {    'name'   :   getSampleFiles(directory,'WW-LO',False,'nanoLatino_') ,
+samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
                      'FilesPerJob' : 2,                 
 }
@@ -264,11 +265,14 @@ samples['WWW'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLat
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
                  }
 
-samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
+samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WZZ',False,'nanoLatino_') ,
+                            'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
+                 }
+samples['ZZZ'] = {    'name'   :   getSampleFiles(directory,'ZZZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
                  }
 
-samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
+samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWZ',False,'nanoLatino_') ,
                             'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+LepWPweight ,
                  }
 

@@ -12,7 +12,7 @@ elif  'cern' in SITE :
 
 elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
-  treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
+  treeBaseDir = "/xrd/store/user/jhchoi/Latino/HWWNano/"
 
 
 
@@ -110,6 +110,9 @@ nuisances['prefire'] = {
 
 
 #eff_e_syst = ['Lepton_tightElectron_'+eleWP+'_IdIsoSF_Up'+'[0]/Lepton_tightElectron_'+eleWP+'_IdIsoSF'+'[0]','Lepton_tightElectron_'+eleWP+'_IdIsoSF_Down'+'[0]/Lepton_tightElectron_'+eleWP+'_IdIsoSF'+'[0]']
+
+
+
 eff_e_syst = ['Lepton_tightElectron_'+eleWP+'_TotSF_Up'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]','Lepton_tightElectron_'+eleWP+'_TotSF_Down'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]']
 
 nuisances['eff_e'] = {
@@ -119,19 +122,9 @@ nuisances['eff_e'] = {
     'samples': dict((skey, eff_e_syst) for skey in mc),
 }
 
-#MCl1loose2017v5__MCCorr2017v5__METup__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR
-nuisances['electronpt'] = {
-    'name': 'CMS_scale_e_2017',
-    'kind': 'tree',
-    'type': 'shape',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__ElepTup__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__ElepTdo__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    
-}
+
 
 eff_m_syst = ['Lepton_tightMuon_'+muWP+'_TotSF_Up'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]','Lepton_tightMuon_'+muWP+'_TotSF_Down'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]']
-
 
 nuisances['eff_m'] = {
     'name': 'CMS_eff_m_2017',
@@ -141,105 +134,20 @@ nuisances['eff_m'] = {
 }
 
 
-
-nuisances['muonpt'] = {
-    'name': 'CMS_scale_m_2017',
-    'kind': 'tree',
-    'type': 'shape',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__MupTup__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__MupTdo__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    
-}
-
+'''
 nuisances['jes'] = {
     'name': 'CMS_scale_j_2017',
-    'kind': 'tree',
+    'kind': 'suffix',
     'type': 'shape',
+    'mapUp': 'JESup',
+    'mapDown': 'JESdo',
     'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__JESup__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__JESdo__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    
+  'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__JESdo_suffix_total',
+  'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__JESdo_suffix_total',
+  #'folderUp': makeMCDirectory('JESup_suffix'),
+  #'folderDown': makeMCDirectory('JESdo_suffix'),
+
 }
 
 
-nuisances['fatjes'] = {
-    'name': 'CMS_scale_fatj_2017',
-    'kind': 'tree',
-    'type': 'shape',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__FatJetMass_up__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__FatJetMass_do__HMlnjjSelBWR/',
-    
-}
-
-nuisances['fatjer'] = {
-    'name': 'CMS_scale_fatjres_2017',
-    'kind': 'tree',
-    'type': 'shape',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__FatJetMassRes_up__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017_whad30__CorrFatJetMass__FatJetMassRes_do__HMlnjjSelBWR/',
-    
-}
-
-nuisances['met'] = {
-    'name': 'CMS_scale_met_2017',
-    'kind': 'tree',
-    'type': 'shape',
-    'samples': dict((skey, ['1', '1']) for skey in mc),
-    'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__METup__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__METdo__Semilep2017_whad30__CorrFatJetMass__HMlnjjSelBWR/',
-    
-}
-
-pu_syst=['puWeightUp/puWeight','puWeightDown/puWeight']
-
-
-nuisances['PU'] = {
-    'name': 'CMS_PU_2017',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, pu_syst) for skey in mc),
-    
-}
-
-
-
-
-nuisances['tau21'] = {
-  'name': 'CMS_eff_vtag_tau21_sf_13TeV',
-  'type': 'lnN',
-  'samples': dict((skey, '1.04') for skey in mc )
-  
-  #'Samples': dict((skey, tau21_syst) for skey in mc )
-}
-
-
-
-'''
-nuisances['dummy'] = {
-  'name': 'dummy',
-  'type': 'lnN',
-  'samples': dict((skey, '1.0000000000000000001') for skey in mc )
-  
-  #'Samples': dict((skey, tau21_syst) for skey in mc )
-}
-
-'''
-
-
-
-
-'''
-##Need to investigate which sample has this weight.
-ps_syst=['PSWeight[0]', 'PSWeight[1]', 'PSWeight[2]', 'PSWeight[3]']
-
-nuisances['PS']  = {
-    'name': 'PS',
-    'type': 'shape',
-    'kind': 'weight_envelope',
-    'samples':dict((skey, ps_syst) for skey in mc),
-    'AsLnN': '1'
-}
 '''

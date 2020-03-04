@@ -100,7 +100,8 @@ aliases['Mt']={
 
 aliases['isResolved']={
     'linesToAdd':['gSystem->Load("%s/functions/ResolvedRegion_C.so")' % configurations],
-    'expr':'Sum$(CleanFatJet_pt>200. && CleanFatJet_mass > 40. && CleanFatJet_mass < 250.)==0'
+    'expr':'(Sum$( (CleanFatJet_pt>200.) && (CleanFatJet_mass > 40.) && (CleanFatJet_mass < 250.) && (abs(CleanFatJet_eta)<2.4) )==0) && SetWhad(Entry$) '
+    #'expr':'nCleanFatJet==0'
 }
 
 ##--Whad--##
@@ -144,6 +145,11 @@ aliases['WW_pt']={
     'expr':'Combine2PtEtaPhiM_Pt(WlepPuppi_pt, WlepPuppi_eta, WlepPuppi_phi,WlepPuppi_mass, WResolved_pt,WResolved_eta,WResolved_phi,WResolved_mass)',
 }
 
+
+aliases['WW_Mt']={
+    'expr':'sqrt(pow(WW_mass,2)+pow(WW_pt,2))'
+}
+
 ##--VBF conf--##
 aliases['isVBF']={
      'expr':'SetVBF(Entry$)',
@@ -176,6 +182,8 @@ aliases['cjidx2']={
     'expr':'Get_cjidx2(Entry$)'
 }
 
+
 aliases['NBJet']={
-    'expr': 'Sum$( (Jet_btag'+bAlgo+'[CleanJet_jetIdx[Iteration$]] >'+bWP+') && (Jet_pt[CleanJet_jetIdx[Iteration$]] > 20 ) && (Jet_eta[CleanJet_jetIdx[Iteration$]] < 2.5) && (cjidx1!=Iteration$) && (cjidx2!=Iteration$) )'
+    #'expr': 'Sum$( (Jet_btag'+bAlgo+'[CleanJet_jetIdx[Iteration$]] >'+bWP+') && (Jet_pt[CleanJet_jetIdx[Iteration$]] > 20 ) && (Jet_eta[CleanJet_jetIdx[Iteration$]] < 2.5) && (cjidx1!=Iteration$) && (cjidx2!=Iteration$) )'
+    'expr': 'Sum$( (Jet_btag'+bAlgo+'[CleanJet_jetIdx] >'+bWP+') && (CleanJet_pt > 20 ) && (CleanJet_eta < 2.5))'
 }

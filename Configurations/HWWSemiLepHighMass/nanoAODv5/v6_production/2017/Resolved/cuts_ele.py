@@ -93,29 +93,36 @@ PtOverMWWCats={
 MTCats={
     '_':'1',
     #'MT0To40':'(Mt[0]<=40)',
-    'MT040ToInf':'(Mt[0]>40)',
+    'MT40ToInf':'(Mt[0]>40)',
 }
 
-
+MTXCats={
+    '_':'1',
+    'MTX60ToInf':'(WW_Mt[0]>60)'
+}
 
 
 for Boost in BoostedCats:
     for Lep in LepCats: 
         for METcut in METCats:
-            for NJcut in NjetCats:
-                for Mjjcut in MjjCats:
-                    for NBJcut in BTAGCats:
-                        for VBFcut in VBFCats:
-                            for PtOvMWWcut in PtOverMWWCats:
-                                cuts[Boost+'__'+Lep+'__'+METcut+'__'+NJcut+'__'+Mjjcut+'__'+NBJcut+'__'+VBFcut+'__'+PtOvMWWcut]=\
+            for MTcut in MTCats:
+                for NJcut in NjetCats:
+                    for Mjjcut in MjjCats:
+                        for NBJcut in BTAGCats:
+                            for VBFcut in VBFCats:
+                                for PtOvMWWcut in PtOverMWWCats:
+                                    for MTXcut in MTXCats:
+                                        cuts[Boost+'__'+Lep+'__'+METcut+'__'+MTcut+'__'+NJcut+'__'+Mjjcut+'__'+NBJcut+'__'+VBFcut+'__'+PtOvMWWcut+'__'+MTXcut]=\
                                 BoostedCats[Boost]\
                                 +'&&'+LepCats[Lep]\
                                 +'&&'+METCats[METcut]\
+                                +'&&'+MTCats[MTcut]\
                                 +'&&'+NjetCats[NJcut]\
                                 +'&&'+MjjCats[Mjjcut]\
                                 +'&&'+BTAGCats[NBJcut]\
                                 +'&&'+VBFCats[VBFcut]\
-                                +'&&'+PtOverMWWCats[PtOvMWWcut]
+                                +'&&'+PtOverMWWCats[PtOvMWWcut]\
+                                +'&&'+MTXCats[MTXcut]
 
 
 print "Ncuts=",len(cuts)
