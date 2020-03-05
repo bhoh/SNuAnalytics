@@ -1634,12 +1634,21 @@ Steps = {
                 'module':  'corr_fatjet_mc()'
     },
 
+    'CorrJetMC' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
+                'declare': 'corr_jet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="Total", redojec=True, jetType="AK4PFchs")',
+                'module':  'corr_jet_mc()'
+    },
+
     'BinByBinFatJetMCJER' :  {
                 'isChain': False,
                 'do4MC': True,
                 'do4Data': False,
                 'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.BinByBinJERMaker',
-                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi")',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi", jer_bin_list=[0,1])',
                 'module':  'bin_by_bin_JER_maker()'
     },
 
