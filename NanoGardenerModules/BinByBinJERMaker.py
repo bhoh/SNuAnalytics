@@ -43,19 +43,7 @@ class BinByBinJERMaker(Module):
     
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        #jets  = Collection(event, self.jetBranchName)
-        jets_pt  = Collection(event, self.jetBranchName+"_pt")
-        jets_eta = Collection(event, self.jetBranchName+"_eta")
-        jets_mass  = Collection(event, self.jetBranchName+"_mass")
-        if self.doGroomed:
-          jets_msoftdrop  = Collection(event, self.jetBranchName+"_msoftdrop")
-
-        #jets_pt_nom = Collection(event, self.jetBranchName+"_pt_nom")
-        #jets_pt_jerUp = Collection(event, self.jetBranchName+"_pt_jerUp")
-        #jets_pt_jerDown = Collection(event, self.jetBranchName+"_pt_jerDown")
-        #jets_mass_nom = Collection(event, self.jetBranchName+"_mass_nom")
-        #jets_mass_jerUp = Collection(event, self.jetBranchName+"_mass_jerUp")
-        #jets_mass_jerDown = Collection(event, self.jetBranchName+"_mass_jerDown")
+        jets  = Collection(event, self.jetBranchName)
 
         OutBranchs = {}
         for shift in [ "Up", "Down" ]:
@@ -67,25 +55,25 @@ class BinByBinJERMaker(Module):
               OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
 
 
-        for iJet in range(jets_pt._len):
-          eta = jets_eta[iJet]['']
-          pt  = jets_pt[iJet]['']
+        for jet in jets:
+          eta = jet['eta']
+          pt  = jet['pt']
           jerSystBinIdx = self.GetJERSystBin(eta, pt)
           #
           for shift in [ "Up", "Down" ]:
             for binIdx in self.jer_bin_list:
               if binIdx == jerSystBinIdx:
-                pt_jer   = jets_pt[iJet]['jer%s'%shift]
-                mass_jer = jets_mass[iJet]['jer%s'%shift]
+                pt_jer   = jet['pt_jer%s'%shift]
+                mass_jer = jet['mass_jer%s'%shift]
                 if self.doGroomed:
-                  msoftdrop_jer          = jets_msoftdrop[iJet]['jer%s'%shift]
-                  msoftdrop_tau21DDT_jer = jets_msoftdrop[iJet]['tau21DDT_jer%s'%shift]
+                  msoftdrop_jer          = jet['msoftdrop_jer%s'%shift]
+                  msoftdrop_tau21DDT_jer = jet['msoftdrop_tau21DDT_jer%s'%shift]
               else:
-                pt_jer   = jets_pt[iJet]['nom']
-                mass_jer = jets_mass[iJet]['nom']
+                pt_jer   = jet['pt_nom']
+                mass_jer = jet['mass_nom']
                 if self.doGroomed:
-                  msoftdrop_jer          = jets_msoftdrop[iJet]['nom']
-                  msoftdrop_tau21DDT_jer = jets_msoftdrop[iJet]['tau21DDT_nom']
+                  msoftdrop_jer          = jet['msoftdrop_nom']
+                  msoftdrop_tau21DDT_jer = jet['msoftdrop_tau21DDT_nom']
 
               OutBranchs["%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(pt_jer)
               OutBranchs["%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(mass_jer)
@@ -123,7 +111,8 @@ class BinByBinJERMaker(Module):
           else:
             jerSystBinIdx = 5
         else:
-          raise ValueError("GetJERSystBin : eta range out of bound")
+            jerSystBinIdx = -1
+            print(" [WARNING] GetJERSystBin : eta range out of bound, eta : %.2f"%eta)
 
         return jerSystBinIdx
 
