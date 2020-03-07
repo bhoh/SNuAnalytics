@@ -118,9 +118,11 @@ bool FindPrimaryFatJet(int entry, float maxtau21, int min_jetId, int max_jetId){
     float pt    = CleanFatJet_pt[i];
     float jetId = FatJet_jetId[CleanFatJet_jetIdx[i]];
     float mass = CleanFatJet_mass[i];
+    float eta = CleanFatJet_eta[i];
     if (mass < 40 ) continue; // include SB / SR
     if (mass > 250 ) continue;// include SB / SR
     if( tau21 > maxtau21 ) continue; //tau21 maxcut
+    if (fabs(eta) > 2.4 ) continue;
     if(pt < pt_prifat) continue; //if pt < 200 OR pt(lastest selection FatJet)
     //Not energetic enough, continue
     if(jetId<min_jetId) continue;
@@ -330,7 +332,7 @@ bool SetVBF(int entry){
       continue;
     }
     float eta1 = CleanJet_eta[ci];
-    if (eta1 > 4.7){
+    if (fabs(eta1) > 4.7){
       continue;
     }
     float phi1 = CleanJet_phi[ci];
@@ -343,7 +345,7 @@ bool SetVBF(int entry){
       float pt2 = CleanJet_pt[cj];
       if(pt2 < 30) continue;
       float eta2 = CleanJet_eta[cj];
-      if(eta2 > 4.7) continue;
+      if(fabs(eta2) > 4.7) continue;
       float phi2 = CleanJet_phi[cj];
       float mass2 = Jet_mass[CleanJetNotFat_jetIdx[cj]];
 
