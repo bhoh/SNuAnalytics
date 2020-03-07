@@ -126,7 +126,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         
         self.out.branch('Whad_cjidx1','I')
         self.out.branch('Whad_cjidx2','I')
-        self.out.branch('BJetResolved_cjidx','I',lenVar='nBJetResolved_cjidx')
+        self.out.branch('BJetResolved_cjidx','I',lenVar='nBJetResolved')
         self.out.branch('isVBF_Resolved','O')
         self.out.branch('VBFjjResolved_dEta','F')
         self.out.branch('VBFjjResolved_mjj','F')
