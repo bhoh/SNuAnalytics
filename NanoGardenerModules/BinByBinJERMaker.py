@@ -1,24 +1,30 @@
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
-import re
+import math, re
 
-from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from LatinoAnalysis.NanoGardener.data.common_cfg import Type_dict
 
 
 class BinByBinJERMaker(Module):
-    def __init__(self, jetType = "AK8PFPuppi", noGroom = False, jer_bin_list = [ 0, 1 ] ):
+    def __init__(self, jetType = "AK8PFPuppi", noGroom = False, jer_bin_list = [ 0, 1 ], metBranchName="MET" ):
       if "AK4" in jetType : 
         self.jetBranchName = "Jet"
+        self.doGroomed = noGroom
+        self.doMET = True
       elif "AK8" in jetType :
         self.jetBranchName = "FatJet"
         self.doGroomed = not noGroom
+        self.doMET = False
       else:
         raise ValueError("ERROR: Invalid jet type = '%s'!" % jetType)
       self.lenVar = "n" + self.jetBranchName
 
       self.jer_bin_list = jer_bin_list
+      if self.doMET : 
+        self.metBranchName = metBranchName
+        self.unclEnThreshold = 15.
 
     def beginJob(self):
         pass
@@ -36,7 +42,13 @@ class BinByBinJERMaker(Module):
             if self.doGroomed:
               self.out.branch("%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
               self.out.branch("%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
-              
+
+            if self.doMET : 
+              self.out.branch("%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift), "F")
+              self.out.branch("%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift), "F")
+
+        self.isV5NanoAOD = hasattr(inputTree, "Jet_muonSubtrFactor")
+        print "nanoAODv5?", self.isV5NanoAOD
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -44,6 +56,14 @@ class BinByBinJERMaker(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         jets  = Collection(event, self.jetBranchName)
+        if self.doMET : 
+          muons     = Collection(event, "Muon" ) # to subtract out of the jets for proper type-1 MET corrections
+          met_pt_jer   = event.getattr(self.metBranchName+"_pt_jer")
+          met_phi_jer  = event.getattr(self.metBranchName+"_phi_jer")
+          met_px_jer   = met_pt_jer*math.cos(met_phi_jer)
+          met_py_jer   = met_pt_jer*math.sin(met_phi_jer)
+          met_px_jer_shift   = met_px_jer
+          met_py_jer_shift   = met_py_jer
 
         OutBranchs = {}
         for shift in [ "Up", "Down" ]:
@@ -54,11 +74,49 @@ class BinByBinJERMaker(Module):
               OutBranchs["%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)]          = []
               OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
 
+            if self.doMET : 
+              OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = met_pt_jer
+              OutBranchs["%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift)] = met_phi_jer
 
         for jet in jets:
-          eta = jet['eta']
-          pt  = jet['pt']
-          jerSystBinIdx = self.GetJERSystBin(eta, pt)
+          jet_eta     = jet['eta']
+          jet_pt      = jet['pt']
+
+          if self.doMET : 
+            jet_rawpt   = jet['pt_raw']
+            jet_pt_orig = jet_pt
+
+            jec   = jet_pt/jet_rawpt
+
+            # get the jet for type-1 MET
+            newjet = ROOT.TLorentzVector()
+            if self.isV5NanoAOD:
+                newjet.SetPtEtaPhiM(jet_pt_orig*(1-jet.rawFactor)*(1-jet.muonSubtrFactor), jet.eta, jet.phi, jet.mass )
+                muon_pt = jet_pt_orig*(1-jet.rawFactor)*jet.muonSubtrFactor
+            else:
+                newjet.SetPtEtaPhiM(jet_pt_orig*(1-jet.rawFactor), jet.eta, jet.phi, jet.mass )
+                muon_pt = 0
+                if hasattr(jet, 'muonIdx1'):
+                  if jet.muonIdx1>-1:
+                      if muons[jet.muonIdx1].isGlobal:
+                        newjet = newjet - muons[jet.muonIdx1].p4()
+                        muon_pt += muons[jet.muonIdx1].pt
+                  if jet.muonIdx2>-1:
+                      if muons[jet.muonIdx2].isGlobal:
+                        newjet = newjet - muons[jet.muonIdx2].p4()
+                        muon_pt += muons[jet.muonIdx2].pt
+
+            # set the jet pt to the muon subtracted raw pt
+            jet.pt = newjet.Pt()
+            # get the proper jet pts for type-1 MET. only correct the non-mu fraction of the j
+            jet_pt_noMuL1L2L3 = jet.pt*jec    if jet.pt*jec > self.unclEnThreshold else jet.pt
+             
+            ## setting jet back to central values
+            jet.pt          = jet_pt
+
+            jet_pt_L1L2L3   = jet_pt_noMuL1L2L3 + muon_pt
+
+          jerSystBinIdx = self.GetJERSystBin(jet_eta, jet_pt)
           #
           for shift in [ "Up", "Down" ]:
             for binIdx in self.jer_bin_list:
@@ -81,6 +139,24 @@ class BinByBinJERMaker(Module):
                 OutBranchs["%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_jer)
                 OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_tau21DDT_jer)
 
+
+              if self.doMET : 
+                if jet_pt_L1L2L3 > self.unclEnThreshold and (jet.neEmEF+jet.chEmEF) < 0.9:
+                    if not ( self.metBranchName == 'METFixEE2017' and 2.65<abs(jet_eta)<3.14 and jet_pt*(1-jet.rawFactor)<50 ): # do not re-correct for jets that aren't included in METv2 recipe
+                        jet_cosPhi = math.cos(jet.phi)
+                        jet_sinPhi = math.sin(jet.phi)
+
+                        if binIdx == jerSystBinIdx:
+                          met_px_jer_shift += jet_pt_L1L2L3*(1 - pt_jer/(jet["corr_JEC"]*jet_rawpt) )*jet_cosPhi 
+                          met_py_jer_shift += jet_pt_L1L2L3*(1 - pt_jer/(jet["corr_JEC"]*jet_rawpt) )*jet_sinPhi 
+                        else:
+                          pass
+
+        if self.doMET : 
+          OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = math.sqrt(met_px_jer_shift**2+met_py_jer_shift**2)
+          OutBranchs["%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift)] = math.atan2(met_py_jer_shift, met_px_jer_shift)
+
+        #
         for OutBranchName, OutBranch in OutBranchs.iteritems():
           self.out.fillBranch(OutBranchName, OutBranch)
 
