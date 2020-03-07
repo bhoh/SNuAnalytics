@@ -1634,6 +1634,38 @@ Steps = {
                 'module':  'corr_fatjet_mc()'
     },
 
+    'CorrJetMC' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
+                'declare': 'corr_jet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="Total", redojec=True, jetType="AK4PFchs")',
+                'module':  'corr_jet_mc()'
+    },
+
+    'BinByBinFatJetMCJER' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi", jer_bin_list=[0,1])',
+                'module':  'bin_by_bin_JER_maker()'
+    },
+    'BinByBinJetMCJER' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK4PFchs", jer_bin_list=[0,1,2,3,4,5])',
+                'module':  'bin_by_bin_JER_maker()'
+    },
+    'BinByBinJetMCJERChain' :  {
+                'isChain': True,
+                'do4MC': True,
+                'do4Data': False,
+                'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
+    },
+
     'CleanFatJet' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
