@@ -1647,9 +1647,23 @@ Steps = {
                 'isChain': False,
                 'do4MC': True,
                 'do4Data': False,
-                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.BinByBinJERMaker',
+                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
                 'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi", jer_bin_list=[0,1])',
                 'module':  'bin_by_bin_JER_maker()'
+    },
+    'BinByBinJetMCJER' :  {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK4PFchs", jer_bin_list=[0,1])',
+                'module':  'bin_by_bin_JER_maker()'
+    },
+    'BinByBinJetMCJERChain' :  {
+                'isChain': True,
+                'do4MC': True,
+                'do4Data': False,
+                'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
     },
 
     'CleanFatJet' : {
