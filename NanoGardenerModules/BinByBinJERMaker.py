@@ -58,12 +58,12 @@ class BinByBinJERMaker(Module):
         jets  = Collection(event, self.jetBranchName)
         if self.doMET : 
           muons     = Collection(event, "Muon" ) # to subtract out of the jets for proper type-1 MET corrections
-          met_pt_jer   = event.getattr(self.metBranchName+"_pt_jer")
-          met_phi_jer  = event.getattr(self.metBranchName+"_phi_jer")
+          met_pt_jer   = getattr(event, self.metBranchName+"_pt_jer")
+          met_phi_jer  = getattr(event, self.metBranchName+"_phi_jer")
           met_px_jer   = met_pt_jer*math.cos(met_phi_jer)
           met_py_jer   = met_pt_jer*math.sin(met_phi_jer)
-          met_px_jer_shift   = met_px_jer
-          met_py_jer_shift   = met_py_jer
+          met_px_jer_shift = {}
+          met_py_jer_shift = {}
 
         OutBranchs = {}
         for shift in [ "Up", "Down" ]:
@@ -77,6 +77,10 @@ class BinByBinJERMaker(Module):
             if self.doMET : 
               OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = met_pt_jer
               OutBranchs["%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift)] = met_phi_jer
+              met_px_jer_shift[binIdx, shift] = met_px_jer
+              met_py_jer_shift[binIdx, shift] = met_py_jer
+
+
 
         for jet in jets:
           jet_eta     = jet['eta']
@@ -121,20 +125,20 @@ class BinByBinJERMaker(Module):
           for shift in [ "Up", "Down" ]:
             for binIdx in self.jer_bin_list:
               if binIdx == jerSystBinIdx:
-                pt_jer   = jet['pt_jer%s'%shift]
-                mass_jer = jet['mass_jer%s'%shift]
+                jet_pt_jer   = jet['pt_jer%s'%shift]
+                jet_mass_jer = jet['mass_jer%s'%shift]
                 if self.doGroomed:
                   msoftdrop_jer          = jet['msoftdrop_jer%s'%shift]
                   msoftdrop_tau21DDT_jer = jet['msoftdrop_tau21DDT_jer%s'%shift]
               else:
-                pt_jer   = jet['pt_nom']
-                mass_jer = jet['mass_nom']
+                jet_pt_jer   = jet['pt_nom']
+                jet_mass_jer = jet['mass_nom']
                 if self.doGroomed:
                   msoftdrop_jer          = jet['msoftdrop_nom']
                   msoftdrop_tau21DDT_jer = jet['msoftdrop_tau21DDT_nom']
 
-              OutBranchs["%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(pt_jer)
-              OutBranchs["%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(mass_jer)
+              OutBranchs["%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_pt_jer)
+              OutBranchs["%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_mass_jer)
               if self.doGroomed:
                 OutBranchs["%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_jer)
                 OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_tau21DDT_jer)
@@ -142,19 +146,25 @@ class BinByBinJERMaker(Module):
 
               if self.doMET : 
                 if jet_pt_L1L2L3 > self.unclEnThreshold and (jet.neEmEF+jet.chEmEF) < 0.9:
-                    if not ( self.metBranchName == 'METFixEE2017' and 2.65<abs(jet_eta)<3.14 and jet_pt*(1-jet.rawFactor)<50 ): # do not re-correct for jets that aren't included in METv2 recipe
-                        jet_cosPhi = math.cos(jet.phi)
-                        jet_sinPhi = math.sin(jet.phi)
+                  if not ( self.metBranchName == 'METFixEE2017' and 2.65<abs(jet_eta)<3.14 and jet_pt*(1-jet.rawFactor)<50 ): # do not re-correct for jets that aren't included in METv2 recipe
+                    jet_cosPhi = math.cos(jet.phi)
+                    jet_sinPhi = math.sin(jet.phi)
 
-                        if binIdx == jerSystBinIdx:
-                          met_px_jer_shift += jet_pt_L1L2L3*(1 - pt_jer/(jet["corr_JEC"]*jet_rawpt) )*jet_cosPhi 
-                          met_py_jer_shift += jet_pt_L1L2L3*(1 - pt_jer/(jet["corr_JEC"]*jet_rawpt) )*jet_sinPhi 
-                        else:
-                          pass
+                    if binIdx == jerSystBinIdx:
+                      jet_pt_jerNomVal = jet["corr_JER"]
+                      jet_pt_jerShiftVal = jet_pt_jer/(jet["corr_JEC"]*jet_rawpt)
+                      met_px_jer_shift[binIdx, shift] += jet_pt_L1L2L3*( jet_pt_jerNomVal - jet_pt_jerShiftVal )*jet_cosPhi 
+                      met_py_jer_shift[binIdx, shift] += jet_pt_L1L2L3*( jet_pt_jerNomVal - jet_pt_jerShiftVal )*jet_sinPhi 
+                    else:
+                      pass
 
         if self.doMET : 
-          OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = math.sqrt(met_px_jer_shift**2+met_py_jer_shift**2)
-          OutBranchs["%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift)] = math.atan2(met_py_jer_shift, met_px_jer_shift)
+          for shift in [ "Up", "Down" ]:
+            for binIdx in self.jer_bin_list:
+              out_met_pt_jer  = math.sqrt(met_px_jer_shift[binIdx,shift]**2+met_py_jer_shift[binIdx,shift]**2)
+              out_met_phi_jer = math.atan2(met_py_jer_shift[binIdx,shift], met_px_jer_shift[binIdx,shift])
+              OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = out_met_pt_jer
+              OutBranchs["%s_phi_jer%s%s" % (self.metBranchName, binIdx, shift)] = out_met_phi_jer
 
         #
         for OutBranchName, OutBranch in OutBranchs.iteritems():
@@ -174,14 +184,14 @@ class BinByBinJERMaker(Module):
 
         if absEta < 1.93:
           jerSystBinIdx = 0
-        elif 1.93 < absEta < 2.50:
+        elif absEta < 2.50:
           jerSystBinIdx = 1
-        elif 2.50 < absEta < 3.00:
+        elif absEta < 3.00:
           if pt < 50:
             jerSystBinIdx = 2
           else:
             jerSystBinIdx = 3
-        elif 3.00 < absEta < 5.00:
+        elif absEta < 5.00:
           if pt < 50:
             jerSystBinIdx = 4
           else:
