@@ -75,7 +75,7 @@ void TKinFitterDriver::SetDataYear(int i){
 }
 
 
-void TKinFitterDriver::SetAllObjects(std::vector<Jet> jet_vector_,
+void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
                                      std::vector<bool> btag_vector_,
                                      TLorentzVector lepton_,
                                      TLorentzVector met_){
@@ -84,7 +84,7 @@ void TKinFitterDriver::SetAllObjects(std::vector<Jet> jet_vector_,
   //cout << "btag vector size " << btag_vector_.size() << endl; 
   jet_vector.clear();
   for(UInt_t i=0; i<jet_vector_.size(); i++){
-    jet_vector.push_back((TLorentzVector)jet_vector_.at(i));
+    jet_vector.push_back(jet_vector_.at(i));
   }
   btag_vector.clear();
   for(UInt_t i=0; i<btag_vector_.size(); i++){

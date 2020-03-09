@@ -15,7 +15,6 @@
 #include "TKinFitter.h"
 #include "TSCorrection.h"
 
-#include "Jet.h"
 
 using namespace std;
 
@@ -30,7 +29,7 @@ public:
   int DataYear;
   void SetDataYear(int i);
 
-  void SetAllObjects(std::vector<Jet> jet_vector_,
+  void SetAllObjects(std::vector<TLorentzVector> jet_vector_,
                      std::vector<bool> btag_vector_,
                      TLorentzVector lepton_,
                      TLorentzVector met_);
