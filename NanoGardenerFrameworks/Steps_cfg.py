@@ -1902,6 +1902,16 @@ Steps = {
         
                 },
 
+  'btagReshapeNorm': {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.BTagReshapeNormProducer' ,
+                  'declare'    : 'BTagReshapeNorm = lambda : BTagReshapeNormProducer()', # will add RPLME_YEAR argument
+                  'module'     : 'BTagReshapeNorm()',
+        
+                },
+
 
   'LeptonSF' : {
                   'isChain'    : False ,
