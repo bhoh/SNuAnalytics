@@ -1548,6 +1548,17 @@ Steps = {
                   'module'     : 'assignRun()',
             },
 
+## ------- ChargedHiggsToCB
+
+    'kinFitTTSemiLep': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+               },
+
 ## ------- MODULES: Object Handling
 
   'Dummy' : {
