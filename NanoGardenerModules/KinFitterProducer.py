@@ -24,7 +24,7 @@ import os.path
 
 
 class KinFitterProducer(Module):
-    def __init__(self, branch_map=''):
+    def __init__(self, Year, branch_map=''):
 
         # change this part into correct path structure... 
         cmssw_base = os.getenv('CMSSW_BASE')
@@ -70,7 +70,8 @@ class KinFitterProducer(Module):
             ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/TSCorrection++g')
             ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/TKinFitterDriver++g')
 
-        self._branch_map = branch_map  
+        self._branch_map = branch_map
+        self._fitter = ROOT.TKinFitterDriver(int(Year)) #TODO will add year variable
       
     def beginJob(self):
         pass
@@ -106,41 +107,39 @@ class KinFitterProducer(Module):
 
         #leptons = electrons
         nLep = len(leptons)
-        
-        
-        lep_pt      = ROOT.std.vector(float)(0)
-        lep_eta     = ROOT.std.vector(float)(0)
-        lep_phi     = ROOT.std.vector(float)(0)
-        
-        for lep in leptons :
-          lep_pt. push_back(lep.pt)
-          lep_eta.push_back(lep.eta)
-          lep_phi.push_back(lep.phi)
-          
+        lepton = ROOT.TLorentzVector()
+        lepton.SetPtEtaPhiM(leptons[0].pt, leptons[0].eta, leptons[0].phi, 0.)
+         
+        #
         Jet   = Collection(event, "CleanJet")
         #auxiliary jet collection to access the mass
         OrigJet   = Collection(event, "Jet")
 
         nJet = len(Jet)
+        if nJet < 4:
+          return False
 
-        jet_pt     = ROOT.std.vector(float)(0)
-        jet_eta    = ROOT.std.vector(float)(0)
-        jet_phi    = ROOT.std.vector(float)(0)
-        jet_mass   = ROOT.std.vector(float)(0)
+        jets     = ROOT.std.vector(ROOT.TLorentzVector)(0)
 
         for jet in Jet :
-          jet_pt. push_back(jet.pt)
-          jet_eta.push_back(jet.eta)
-          jet_phi.push_back(jet.phi)
-          jet_mass.push_back(OrigJet[jet.jetIdx].mass)
+          tmp_jet = ROOT.TLorentzVector()
+          tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
+          jets.push_back(tmp_jet)
 
-        MET_phi   = event.PuppiMET_phi
-        MET_pt    = event.PuppiMET_pt
+        btag_vector = ROOT.std.vector(bool)(0)
+        #XXX will update later
+        for idx, jet in enumerate(Jet) :
+          if idx < 2:
+            btag_vector.push_back(True)
+          else:
+            btag_vector.push_back(False)
         
-            
+        MET = ROOT.TLorentzVector()
+        MET.SetPtEtaPhiM(event.PuppiMET_pt, 0., event.PuppiMET_phi, 0.)
+        
+        self._fitter.SetAllObjects(jets, btag_vector, lepton, MET)       
         #for nameBranches in self.newbranches :
         #  self.out.fillBranch(nameBranches  ,  getattr(ZWW, nameBranches)());
-
 
         return True
 
