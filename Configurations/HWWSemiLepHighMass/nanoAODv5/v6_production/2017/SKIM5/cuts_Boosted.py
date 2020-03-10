@@ -14,7 +14,7 @@ LepCut="(  Lepton_pt[0]>30 \
 ||   ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
 )\
 )"
-LepPtCut='(Lepton_pt[0] > (38*(abs(Lepton_pdgId[0])==11) + 27*(abs(Lepton_pdgId[0])==13)) )'
+LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'
 
 
 

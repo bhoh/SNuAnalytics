@@ -13,3 +13,5 @@ max_jetId='10'
 
 FatSel=['MW','PT']
 
+elePtCut='38'
+muPtCut='30'

@@ -9,7 +9,7 @@ from WPandCut2017 import *
 ##-End WP--##
 
 
-configurations = '%s/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/nanoAODv5/v6_production/' % os.getenv('CMSSW_BASE')
+configurations = '%s/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/' % os.getenv('CMSSW_BASE')
 print configurations
 
 
