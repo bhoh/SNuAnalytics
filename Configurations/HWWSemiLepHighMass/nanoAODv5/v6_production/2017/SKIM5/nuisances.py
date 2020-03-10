@@ -134,7 +134,7 @@ nuisances['eff_m'] = {
 }
 
 
-eff_tau21_syst = ['(0.97-0.06)','(0.97+0.06)']
+eff_tau21_syst = ['(0.97-0.06)*isBoosted+1*(!isBoosted)','(0.97+0.06)*isBoosted+1*(!isBoosted)']
 
 nuisances['eff_tau21'] = {
 

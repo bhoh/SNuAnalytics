@@ -70,12 +70,19 @@ for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2',
 
 
 aliases['Wlep_Mt']={
-    'expr':'sqrt(pow(Wlep_mass,2) + pow(Wlep_pt, 2))'
-
+    'linesToAdd':[ '.L %s/functions/GetMt.C+' % configurations], ##float GetMt(float pt1, float phi1, float m1, float pt2, float phi2, float m2 )
+    'expr':'GetMt(Lepton_pt[0],Lepton_phi[0],0,PuppiMET_pt,PuppiMET_phi,0)'
 }
 
+aliases['lnjj_Mt_alt']={
+    'expr':'GetMt(Lepton_pt[0],Lepton_phi[0],0,PuppiMET_pt,PuppiMET_phi,0,Whad_pt,Whad_phi,Whad_mass)'
+}
+
+
+
+
 aliases['tau21SF']={
-    'expr' : '0.97*(isBoosted)',
+    'expr' : '0.97*(isBoosted) + 1*(!isBoosted)',
     'samples' : mc
 }
 

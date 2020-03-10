@@ -277,6 +277,15 @@ samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWZ',False,'nanoLat
                  }
 
 
+samples['ggHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M125',False,'nanoLatino_'),
+                                    'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                                    'FilesPerJob' : 10,
+                            }
+
+samples['vbfHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M125',False,'nanoLatino_'),
+                                     'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                                     'FilesPerJob' : 10,
+                              }
 samples['DATA']  = {   'name': [ ] ,
                        'weight' : METFilter_DATA+'*'+LepWPCut ,
                        'weights' : [ ],

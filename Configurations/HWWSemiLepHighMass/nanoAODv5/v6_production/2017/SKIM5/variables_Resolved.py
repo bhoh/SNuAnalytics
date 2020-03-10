@@ -20,7 +20,7 @@ variables['Whad_pt']={
 }
 variables['Whad_mass']={
     'name':'Whad_mass',
-    'range':(100,40,250),
+    'range':(42,40,250),
     'xaxis':'Whad_mass',
     'fold': 0,
 
@@ -34,17 +34,17 @@ variables['nBJetResolved']={
     'fold':0,
 }
 
-variables['lepton_pt[0]']={
+variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
-    'xaxis':'lepton P_{T} [GeV]',
+    'xaxis':'Lepton P_{T} [GeV]',
     'fold':0
 
 }
-variables['lepton_eta[0]']={
+variables['Lepton_eta[0]']={
     'name' : 'Lepton_eta[0]',
     'range':(100,-5,5),
-    'xaxis':'lepton #eta',
+    'xaxis':'Lepton #eta',
     'fold':0
 }
 
@@ -89,6 +89,13 @@ variables ['PV_npvs']={
     'fold':0
 }
 
+
+variables['lnjj_Mt_alt']={
+    'name': 'lnjj_Mt_alt',
+    'range':(100,0.,500.),
+    'xaxis': 'lnjj_Mt_alt',
+    'fold':1
+}
 variables['lnjj_mass']={
     'name': 'lnjj_mass',
     'range':([0,200,210,230,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
@@ -96,6 +103,42 @@ variables['lnjj_mass']={
     'xaxis': 'lnjj_mass',
     'fold':1
 }
+
+variables['minPtWOverMlnjj']={
+    'name':'minPtWOverMlnjj',
+    'range':(20,0,1),
+    'xaxis':'minPtWOverMlnjj',
+    'fold':0
+}
+
+variables['dR_l_Whad']={
+    'name':'dR_l_Whad',
+    'range':(50,0,5),
+    'xaxis':'dR_l_Whad',
+    'fold':0,
+}
+variables['dR_Wlep_Whad']={
+    'name':'dR_Wlep_Whad',
+    'range':(50,0,5),
+    'xaxis':'dR_Wlep_Whad',
+    'fold':0,
+}
+
+
+variables['dPhi_l_Whad']={
+    'name':'dPhi_l_Whad',
+    'range':(50,0,5),
+    'xaxis':'dPhi_l_Whad',
+    'fold':0,
+}
+variables['dPhi_Wlep_Whad']={
+    'name':'dPhi_Wlep_Whad',
+    'range':(50,0,5),
+    'xaxis':'dPhi_Wlep_Whad',
+    'fold':0,
+}
+
+
 
 
 print "len(variables)=",len(variables)

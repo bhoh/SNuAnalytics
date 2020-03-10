@@ -127,6 +127,34 @@ plot['DATA']  = {
                   'samples'  : ['DATA']
               }
 
+
+import sys
+sys.path.insert(0, "MassPoints")
+from List_MX import *
+from List_MX_VBF import *
+
+
+for MX in List_MX:
+
+    plot['ggHWWlnuqq_M'+str(MX)]={
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
+        'scale' : 100,
+        'isData'   : 0,
+        'isSignal' : 1,
+        'color':dict_TColor['red'],
+        'samples' : ['ggHWWlnuqq_M'+str(MX)]
+    }
+
+for MX in List_MX_VBF:
+    plot['vbfHWWlnuqq_M'+str(MX)]={
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
+        'isData'   : 0,
+        'isSignal' : 1,
+        'scale' : 100,
+        'color':dict_TColor['blue'],
+        'samples' : ['ggHWWlnuqq_M'+str(MX)]
+    }
+
 legend['lumi'] = 'L = 41.5/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'

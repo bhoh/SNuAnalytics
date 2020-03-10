@@ -42,17 +42,17 @@ variables['nBJetBoosted']={
     'fold':0,
 }
 
-variables['lepton_pt[0]']={
+variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
-    'xaxis':'lepton P_{T} [GeV]',
+    'xaxis':'Lepton P_{T} [GeV]',
     'fold':0
 
 }
-variables['lepton_eta[0]']={
+variables['Lepton_eta[0]']={
     'name' : 'Lepton_eta[0]',
     'range':(100,-5,5),
-    'xaxis':'lepton #eta',
+    'xaxis':'Lepton #eta',
     'fold':0
 }
 
@@ -96,6 +96,50 @@ variables ['PV_npvs']={
     'xaxis' : 'PV_npvs',
     'fold':0
 }
+
+
+variables['minPtWOverMlnJ_MW']={
+    'name':'minPtWOverMlnJ_MW',
+    'range':(20,0,100),
+    'xaxis':'minPtWOverMlnJ_MW',
+    'fold':0
+}
+
+variables['lnJ_mass_MW']={
+    'name': 'lnJ_mass_MW',
+    'range':([0,200,210,230,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
+    'divideByBinWidth':1,
+    'xaxis': 'lnJ_mass_MW',
+    'fold':1
+}
+
+##--For cut stury
+variables['dR_l_F_MW']={
+    'name': 'dR_l_F_MW',
+    'range':(50,0,5),
+    'xaxis': 'dR_l_F_MW',
+    'fold':1
+}
+variables['dR_Wlep_F_MW']={
+    'name': 'dR_Wlep_F_MW',
+    'range':(50,0,5),
+    'xaxis': 'dR_Wlep_F_MW',
+    'fold':1
+}
+variables['dPhi_l_F_MW']={
+    'name': 'dPhi_l_F_MW',
+    'range':(50,0,5),
+    'xaxis': 'dR_l_F_MW',
+    'fold':1
+}
+variables['dPhi_Wlep_F_MW']={
+    'name': 'dR_Wlep_F_MW',
+    'range':(50,0,5),
+    'xaxis': 'dR_Wlep_F_MW',
+    'fold':1
+}
+
+'''
 for sel in FatSel:
     #CleanFatJet_mass[FinalFatJet_'+sel+'_cfjidx]
     variables['CleanFatJet_pt[FinalFatJet_'+sel+'_cfjidx']={
@@ -127,6 +171,8 @@ for sel in FatSel:
         'xaxis': 'lnJ_mass_'+sel,
         'fold':1
     }
+'''
+
 
 
 print "len(variables)=",len(variables)
