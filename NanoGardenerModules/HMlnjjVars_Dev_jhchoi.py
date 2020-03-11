@@ -25,29 +25,29 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
 
 
-        ##---Boosted Region---## Tag a AK8Jet with largest pT. 
+        ##---Boost Region---## Tag a AK8Jet with largest pT. 
         self._FinalFatJet_4v=ROOT.TLorentzVector()
         self._FinalFatJet_cfjidx=-1
-        self._BJetBoosted_cjidx=[]
-        self._VBFjjBoosted_dEta=-999.
-        self._VBFjjBoosted_mjj=-999.
-        self._VBFjjBoosted_cjdix1=-1
-        self._VBFjjBoosted_cjdix2=-1
+        self._BJetBoost_cjidx=[]
+        self._VBFjjBoost_dEta=-999.
+        self._VBFjjBoost_mjj=-999.
+        self._VBFjjBoost_cjdix1=-1
+        self._VBFjjBoost_cjdix2=-1
 
-        ##---Resolved Region---##
+        ##---Resol Region---##
         self._Whad_4v=ROOT.TLorentzVector()
         self._Whad_cjidx1=-1
         self._Whad_cjidx2=-1
-        self._BJetResolved_cjidx=[]
-        self._VBFjjResolved_dEta=-999.
-        self._VBFjjResolved_mjj=-999.
-        self._VBFjjResolved_cjidx1=-999.
-        self._VBFjjResolved_cjidx2=-999.
+        self._BJetResol_cjidx=[]
+        self._VBFjjResol_dEta=-999.
+        self._VBFjjResol_mjj=-999.
+        self._VBFjjResol_cjidx1=-999.
+        self._VBFjjResol_cjidx2=-999.
         '''
         self.doSkim = doSkim
         self.METtype = METtype
-        self.METcut_Boosted=40.
-        self.METcut_Resolved=30.
+        self.METcut_Boost=40.
+        self.METcut_Resol=30.
 
         ##--How to select primary fatjet
         self.cfjidx_FatSel={}
@@ -87,14 +87,14 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
 
-        ##---Boosted Region kinematics
+        ##---Boost Region kinematics
         for var in ['pt','eta','phi','mass']:
             self.out.branch("Wlep_"+var  , "F")
         self.out.branch(self.METtype+'_pz1', "F")
         self.out.branch(self.METtype+'_pz2', "F")
         
 
-        self.out.branch("isBoosted","O")
+        self.out.branch("isBoost","O")
         self.out.branch("WtaggerFatjet_cfjidx","I",lenVar='nWtaggerFatjet')
         for var in ['pt','eta','phi','mass','tau21']:
             self.out.branch("WtaggerFatjet_"+var,"F",lenVar='nWtaggerFatjet')
@@ -112,26 +112,26 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             self.out.branch('dPhi_l_F_'+sel,"F")
             self.out.branch('dPhi_Wlep_F'+sel,"F")
         
-        self.out.branch('BJetBoosted_cjidx','I',lenVar='nBJetBoosted')
+        self.out.branch('BJetBoost_cjidx','I',lenVar='nBJetBoost')
 
-        self.out.branch('isVBF_Boosted','O')
-        self.out.branch('VBFjjBoosted_mjj','F')
-        self.out.branch('VBFjjBoosted_dEta','F')
-        self.out.branch('max_mjj_Boosted','F')
+        self.out.branch('isVBF_Boost','O')
+        self.out.branch('VBFjjBoost_mjj','F')
+        self.out.branch('VBFjjBoost_dEta','F')
+        self.out.branch('max_mjj_Boost','F')
 
-        ##---Resolved Region kinemaics
-        self.out.branch('isResolved',"O")
+        ##---Resol Region kinemaics
+        self.out.branch('isResol',"O")
         for var in ['pt','eta','phi','mass','Mt']:
             self.out.branch('Whad_'+var,'F')
         
         self.out.branch('Whad_cjidx1','I')
         self.out.branch('Whad_cjidx2','I')
-        self.out.branch('BJetResolved_cjidx','I',lenVar='nBJetResolved')
-        self.out.branch('isVBF_Resolved','O')
-        self.out.branch('VBFjjResolved_dEta','F')
-        self.out.branch('VBFjjResolved_mjj','F')
-        self.out.branch('VBFjjResolved_dEta','F')
-        self.out.branch('max_mjj_Resolved','F')
+        self.out.branch('BJetResol_cjidx','I',lenVar='nBJetResol')
+        self.out.branch('isVBF_Resol','O')
+        self.out.branch('VBFjjResol_dEta','F')
+        self.out.branch('VBFjjResol_mjj','F')
+        self.out.branch('VBFjjResol_dEta','F')
+        self.out.branch('max_mjj_Resol','F')
 
         self.out.branch('lnjj_pt', 'F')
         self.out.branch('lnjj_mass', 'F')
@@ -161,7 +161,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 	self._Wlep_METpz1=-1
 	self._Wlep_METpz2=-1
 	
-        self._isBoosted=False
+        self._isBoost=False
         self._cfatjet_MW_idx=-1 ##select fatjet whose mass is closest to MW
         self._cfatjet_PT_idx=-1 ## select fatjet whose pt is largest one
         self._cfatjet_idx_list=[]
@@ -170,29 +170,29 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         self._cfatjet_phi_list=[]
         self._cfatjet_mass_list=[]
         self._cfatjet_tau21_list=[]
-        self._BJetBoosted_cjidx=[]
-        self._isVBF_Boosted=False
-        self._VBFjjBoosted_dEta=-999.
-        self._VBFjjBoosted_mjj=-999.
-        self._VBFjjBoosted_cjidx1=-1
-        self._VBFjjBoosted_cjidx2=-1
-        self._max_mjj_Boosted=-1.
+        self._BJetBoost_cjidx=[]
+        self._isVBF_Boost=False
+        self._VBFjjBoost_dEta=-999.
+        self._VBFjjBoost_mjj=-999.
+        self._VBFjjBoost_cjidx1=-1
+        self._VBFjjBoost_cjidx2=-1
+        self._max_mjj_Boost=-1.
 
         self.cfjidx_FatSel['MW']=-1 ## FatJet_mass ~ MW
         self.cfjidx_FatSel['PT']=-1## largest PT
 
 
-        self._isResolved = False
+        self._isResol = False
         self._Whad_4v.SetPtEtaPhiM(0,0,0,0)
         self._Whad_cjidx1=-1
         self._Whad_cjidx2=-1
-        self._BJetResolved_cjidx=[]
-        self._isVBF_Resolved=False
-        self._VBFjjResolved_dEta=-999.
-        self._VBFjjResolved_mjj=-999.
-        self._VBFjjResolved_cjidx1=-1
-        self._VBFjjResolved_cjidx2=-1
-        self._max_mjj_Resolved = -1. 
+        self._BJetResol_cjidx=[]
+        self._isVBF_Resol=False
+        self._VBFjjResol_dEta=-999.
+        self._VBFjjResol_mjj=-999.
+        self._VBFjjResol_cjidx1=-1
+        self._VBFjjResol_cjidx2=-1
+        self._max_mjj_Resol = -1. 
         ##--End of initialization
 
         
@@ -213,7 +213,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         
         
 
-        #<<<<<<<Boosted>>>>>>>#
+        #<<<<<<<Boost>>>>>>>#
         
         ##---Step.1.Set Wlep
         #print "Start WlepMaker"
@@ -231,32 +231,32 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##-> set         self._cfatjet_PT_idx -> select FatJet whose PT is the largest one
         
         
-        ##---Step.3 Btag in Boosted region
-        self.GetBJetsBoosted()
-        ##->Set self._BJetBoosted_cjidx
+        ##---Step.3 Btag in Boost region
+        self.GetBJetsBoost()
+        ##->Set self._BJetBoost_cjidx
 
 
-        ##---Step.4 VBF Boosted
-        self.VBF_Boosted()
+        ##---Step.4 VBF Boost
+        self.VBF_Boost()
         ##Set values of 
-        ##->self._isVBF_Boosted
-        ##->self._VBFjjBoosted_dEta
-        ##->self._VBFjjBoosted_mjj
-        ##->self._VBFjjBoosted_cjidx1
-        ##->self._VBFjjBoosted_cjidx2
-        #print "End of Boosted"
-        ##---Now Objects for Boosted Region are defined
-        if (len(self._cfatjet_idx_list) > 0) and ( self.MET_pt > self.METcut_Boosted): 
-            self._isBoosted=True
+        ##->self._isVBF_Boost
+        ##->self._VBFjjBoost_dEta
+        ##->self._VBFjjBoost_mjj
+        ##->self._VBFjjBoost_cjidx1
+        ##->self._VBFjjBoost_cjidx2
+        #print "End of Boost"
+        ##---Now Objects for Boost Region are defined
+        if (len(self._cfatjet_idx_list) > 0) and ( self.MET_pt > self.METcut_Boost): 
+            self._isBoost=True
 
 
         ##--Fill Branch for object ##
         ###-->_cfatjet_idx_list/_cfatjet_MW_idx//_cfatjet_PT_idx/
-        ###-->_isBoosted, Wlep momentum, solution 1,2/ _VBFjjBoosted_dEta, _VBFjjBoosted_mjj,_BJetBoosted_cjidx,_max_mjj_Boosted
+        ###-->_isBoost, Wlep momentum, solution 1,2/ _VBFjjBoost_dEta, _VBFjjBoost_mjj,_BJetBoost_cjidx,_max_mjj_Boost
         ##---Check whether they are initialized at the starting of this analyze loop function
         
         ##---Wlep
-        #print "fillBranchBoosted"
+        #print "fillBranchBoost"
         self.out.fillBranch( 'Wlep_pt',self._Wlep_4v.Pt())
         self.out.fillBranch( 'Wlep_eta',self._Wlep_4v.Eta())
         self.out.fillBranch('Wlep_phi',self._Wlep_4v.Phi())
@@ -265,7 +265,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         self.out.fillBranch(self.METtype+'_pz2',self._Wlep_METpz2)
         
 
-        self.out.fillBranch('isBoosted',self._isBoosted)
+        self.out.fillBranch('isBoost',self._isBoost)
         self.out.fillBranch('WtaggerFatjet_cfjidx',self._cfatjet_idx_list)
         self.out.fillBranch('WtaggerFatjet_pt',self._cfatjet_pt_list)
         self.out.fillBranch('WtaggerFatjet_eta',self._cfatjet_eta_list)
@@ -330,17 +330,17 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##End of fatjet selection choice
         
         ##---Btagged Jet
-        self.out.fillBranch('BJetBoosted_cjidx', self._BJetBoosted_cjidx)
-        ##---VBF Boosted
-        self.out.fillBranch('isVBF_Boosted', self._isVBF_Boosted)
-        self.out.fillBranch('VBFjjBoosted_mjj', self._VBFjjBoosted_mjj)
-        self.out.fillBranch('VBFjjBoosted_dEta', self._VBFjjBoosted_dEta)
-        self.out.fillBranch('max_mjj_Boosted', self._max_mjj_Boosted)
+        self.out.fillBranch('BJetBoost_cjidx', self._BJetBoost_cjidx)
+        ##---VBF Boost
+        self.out.fillBranch('isVBF_Boost', self._isVBF_Boost)
+        self.out.fillBranch('VBFjjBoost_mjj', self._VBFjjBoost_mjj)
+        self.out.fillBranch('VBFjjBoost_dEta', self._VBFjjBoost_dEta)
+        self.out.fillBranch('max_mjj_Boost', self._max_mjj_Boost)
 
-        #<<<<< End of Boosted
-        #print "fillBranchBoosted end"
+        #<<<<< End of Boost
+        #print "fillBranchBoost end"
         
-        #<<<<<<<Resolved>>>>>>>#
+        #<<<<<<<Resol>>>>>>>#
         #print "if not boosted"
         
 
@@ -349,26 +349,26 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##set      self._Whad_4v
         ##set      self._Whad_cjidx1
         ##set      self._Whad_cjidx2
-        ##set      self._isResolved
+        ##set      self._isResol
             
         ##Step.2 Get Btag
-        self.GetBJetsResolved()
-        ##set      self._BJetResolved_cjidx
+        self.GetBJetsResol()
+        ##set      self._BJetResol_cjidx
         
 
-        ##Step.3 VBF_Resolved
-        self.VBF_Resolved()
-        ##set      self._VBFjjResolved_mjj
-        ##set      self._VBFjjResolved_dEta
-        ##set      self._VBFjjResolved_cjidx1
-        ##set      self._VBFjjResolved_cjidx2
-        ##set      self._isVBF_Resolved
-        ##set      self._VBFjjResolved_mjj
+        ##Step.3 VBF_Resol
+        self.VBF_Resol()
+        ##set      self._VBFjjResol_mjj
+        ##set      self._VBFjjResol_dEta
+        ##set      self._VBFjjResol_cjidx1
+        ##set      self._VBFjjResol_cjidx2
+        ##set      self._isVBF_Resol
+        ##set      self._VBFjjResol_mjj
             
         #print "fill resolved"
 
         ##Fill branch
-        self.out.fillBranch('isResolved',self._isResolved)
+        self.out.fillBranch('isResol',self._isResol)
 
         ##Hadronic W
         self.out.fillBranch('Whad_pt', self._Whad_4v.Pt())
@@ -379,14 +379,14 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
         self.out.fillBranch('Whad_cjidx1', self._Whad_cjidx1)
         self.out.fillBranch('Whad_cjidx2', self._Whad_cjidx2)
-        self.out.fillBranch('BJetResolved_cjidx', self._BJetResolved_cjidx)
+        self.out.fillBranch('BJetResol_cjidx', self._BJetResol_cjidx)
 
         ###VBF
-        self.out.fillBranch('isVBF_Resolved', self._isVBF_Resolved)
-        self.out.fillBranch('VBFjjResolved_dEta', self._VBFjjResolved_dEta)
-        self.out.fillBranch('VBFjjResolved_mjj', self._VBFjjResolved_mjj)
-        self.out.fillBranch('VBFjjResolved_dEta', self._VBFjjResolved_dEta)
-        self.out.fillBranch('max_mjj_Resolved', self._max_mjj_Resolved)
+        self.out.fillBranch('isVBF_Resol', self._isVBF_Resol)
+        self.out.fillBranch('VBFjjResol_dEta', self._VBFjjResol_dEta)
+        self.out.fillBranch('VBFjjResol_mjj', self._VBFjjResol_mjj)
+        self.out.fillBranch('VBFjjResol_dEta', self._VBFjjResol_dEta)
+        self.out.fillBranch('max_mjj_Resol', self._max_mjj_Resol)
 
         ##Hlnjj
         H_4v=self._Wlep_4v + self._Whad_4v
@@ -417,12 +417,12 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         #print "End of fllbranch"
 
 
-        #print "self._isBoosted",self._isBoosted
-        #print "self._isResolved",self._isResolved
+        #print "self._isBoost",self._isBoost
+        #print "self._isResol",self._isResol
         
-        ##<<<<End of Resolved
+        ##<<<<End of Resol
 
-        if (not self._isBoosted) and (not self._isResolved) and self.doSkim: return False
+        if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
 
         
         
@@ -543,8 +543,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             if pt > max_pt : self._cfatjet_PT_idx = i_fj
             if abs(Wmass - mass) < min_dM : self._cfatjet_MW_idx = i_fj
         
-    def GetBJetsBoosted(self):
-        ##->Set self._BJetBoosted_cjidx
+    def GetBJetsBoost(self):
+        ##->Set self._BJetBoost_cjidx
         #self.CleanJetNotFat_col
         bWP=self.bWP
         N=self.CleanJetNotFat_col._len
@@ -557,9 +557,9 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             if bAlgo < bWP:continue
             if pt < 20 :continue
             if abs(eta) > 2.5:continue
-            self._BJetBoosted_cjidx.append(cj_idx) ## fill index of CleanJet 
-    def GetBJetsResolved(self):
-        ##->Set self._BJetResolved_cjidx
+            self._BJetBoost_cjidx.append(cj_idx) ## fill index of CleanJet 
+    def GetBJetsResol(self):
+        ##->Set self._BJetResol_cjidx
         #self.CleanJet_col
         bWP=self.bWP
         N=self.CleanJet_col._len
@@ -574,16 +574,16 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             if bAlgo < bWP:continue
             if pt < 20 :continue
             if abs(eta) > 2.5:continue
-            self._BJetResolved_cjidx.append(i_cj) ## fill index of CleanJet
+            self._BJetResol_cjidx.append(i_cj) ## fill index of CleanJet
             
 
 
 
-    def VBF_Boosted(self):
+    def VBF_Boost(self):
         N=self.CleanJetNotFat_col._len
         if N < 2 :
             #print "NCleanJet < 2"
-            self._isVBF_Boosted = False
+            self._isVBF_Boost = False
             return
         
         #max_mjj=-9999.
@@ -601,26 +601,26 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
                 if abs(eta2) > 4.7 : continue
 
                 ##Set momentum##
-                #print "Boosted forward pair, "
+                #print "Boost forward pair, "
                 this_dEta=abs(eta1-eta2)
                 this_mjj = self.InvMassCalc(pt1,eta1,phi1,mass1,pt2,eta2,phi2,mass2)
                 #print "this_dEta=",this_dEta
                 #print "this_mjj=",this_mjj
-                if (this_dEta > 3.5) and (this_mjj > self._VBFjjBoosted_mjj) : 
-                    self._VBFjjBoosted_dEta = this_dEta
-                    self._VBFjjBoosted_mjj = this_mjj
-                    self._VBFjjBoosted_cjidx1 = cjidx1
-                    self._VBFjjBoosted_cjidx2 = cjidx2
-                if this_mjj > self._max_mjj_Boosted:
-                    self._max_mjj_Boosted = this_mjj
+                if (this_dEta > 3.5) and (this_mjj > self._VBFjjBoost_mjj) : 
+                    self._VBFjjBoost_dEta = this_dEta
+                    self._VBFjjBoost_mjj = this_mjj
+                    self._VBFjjBoost_cjidx1 = cjidx1
+                    self._VBFjjBoost_cjidx2 = cjidx2
+                if this_mjj > self._max_mjj_Boost:
+                    self._max_mjj_Boost = this_mjj
 
         ##--End of jet pair loop
-        if self._VBFjjBoosted_mjj > 500. : self._isVBF_Boosted = True
+        if self._VBFjjBoost_mjj > 500. : self._isVBF_Boost = True
 
-    def VBF_Resolved(self):
+    def VBF_Resol(self):
         N = self.CleanJetNotFat_col._len
         if N < 2 : ## could it be 4 ?
-            self._isVBF_Resolved = False
+            self._isVBF_Resol = False
             return
 
         #max_mjj=-9999.
@@ -641,16 +641,16 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
                 this_dEta=abs(eta1-eta2)
                 this_mjj = self.InvMassCalc(pt1,eta1,phi1,mass1,pt2,eta2,phi2,mass2)
-                if (this_dEta > 3.5) and (this_mjj > self._VBFjjResolved_mjj) :
-                    self._VBFjjResolved_dEta = this_dEta
-                    self._VBFjjResolved_mjj = this_mjj
-                    self._VBFjjResolved_cjidx1 = i_cj
-                    self._VBFjjResolved_cjidx2 = j_cj
-                if this_mjj > self._max_mjj_Resolved:
-                    self._max_mjj_Resolved = this_mjj
+                if (this_dEta > 3.5) and (this_mjj > self._VBFjjResol_mjj) :
+                    self._VBFjjResol_dEta = this_dEta
+                    self._VBFjjResol_mjj = this_mjj
+                    self._VBFjjResol_cjidx1 = i_cj
+                    self._VBFjjResol_cjidx2 = j_cj
+                if this_mjj > self._max_mjj_Resol:
+                    self._max_mjj_Resol = this_mjj
 
         ##--End of jet pair loop
-        if self._VBFjjResolved_mjj > 500. : self._isVBF_Resolved = True
+        if self._VBFjjResol_mjj > 500. : self._isVBF_Resol = True
 
 
     def WhadMaker(self):
@@ -679,9 +679,9 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
                     self._Whad_cjidx2 = j_cj
                     self._Whad_4v = v1+v2
         Whad_mass=self._Whad_4v.M()
-        if Whad_mass > 40 and Whad_mass < 250 : self._isResolved = True
-        if self._Whad_cjidx1 < 0 : self._isResolved = False #for safty
-        if self._Whad_cjidx2 < 0 : self._isResolved = False #for safty
+        if Whad_mass > 40 and Whad_mass < 250 : self._isResol = True
+        if self._Whad_cjidx1 < 0 : self._isResol = False #for safty
+        if self._Whad_cjidx2 < 0 : self._isResol = False #for safty
 
 
 
