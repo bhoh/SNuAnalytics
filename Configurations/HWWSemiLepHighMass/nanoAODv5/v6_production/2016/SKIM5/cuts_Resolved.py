@@ -1,5 +1,5 @@
 #-----Variable Deinition-----#
-from WPandCut2017 import *
+from WPandCut2016 import *
 import sys
 #cuts={}
 
@@ -49,9 +49,9 @@ ResolvedProdCats={
 }
 ResolvedRegionCats={}
 ##--type in kin var module
-ResolvedRegionCats['SR'] = '(nBJetResolved_cjidx == 0) && (Whad_mass > 65) && (Whad_mass < 105)'
-ResolvedRegionCats['SB'] = '(nBJetResolved_cjidx == 0) && ((Whad_mass < 65) || (Whad_mass > 105))'
-ResolvedRegionCats['Top'] = '(nBJetResolved_cjidx > 0)'
+ResolvedRegionCats['SR'] = '(nBJetResolved == 0) && (Whad_mass > 65) && (Whad_mass < 105)'
+ResolvedRegionCats['SB'] = '(nBJetResolved == 0) && ((Whad_mass < 65) || (Whad_mass > 105))'
+ResolvedRegionCats['Top'] = '(nBJetResolved > 0)'
 
 ResolvedPtOverMCats = {}
 ResolvedPtOverMCats['NoPtOverMcut'] = '1'

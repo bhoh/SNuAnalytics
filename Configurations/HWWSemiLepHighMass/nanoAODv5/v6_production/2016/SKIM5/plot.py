@@ -139,7 +139,7 @@ for MX in [900]:
 
     plot['ggHWWlnuqq_M'+str(MX)]={
         'nameHR':'ggHWWlnuqq_M'+str(MX),
-        'scale' : 100,
+        #'scale' : 100,
         'isData'   : 0,
         'isSignal' : 1,
         'color':dict_TColor['red'],
@@ -152,11 +152,11 @@ for MX in [900]:
         'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 1,
-        'scale' : 100,
+        #'scale' : 100,
         'color':dict_TColor['blue'],
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
 
-legend['lumi'] = 'L = 41.5/fb'
+legend['lumi'] = 'L = 35.9/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'

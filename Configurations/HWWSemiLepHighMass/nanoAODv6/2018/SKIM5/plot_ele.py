@@ -27,6 +27,7 @@ plot['DY']  = {
                   'samples'  : ['DY']
               }
 
+'''
 plot['WZZ']  = {
                   'nameHR' : 'WZZ',
                   'isSignal' : 0,
@@ -57,6 +58,7 @@ plot['WZ']  = {
                   'isData'   : 0,
                   'samples'  : ['WZ']
               }
+'''
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,
@@ -139,24 +141,24 @@ for MX in [900]:
 
     plot['ggHWWlnuqq_M'+str(MX)]={
         'nameHR':'ggHWWlnuqq_M'+str(MX),
-        'scale' : 100,
+        #'scale' : 100,
         'isData'   : 0,
         'isSignal' : 1,
         'color':dict_TColor['red'],
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
-
+    
 #for MX in List_MX_VBF:
 for MX in [900]:
     plot['vbfHWWlnuqq_M'+str(MX)]={
         'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 1,
-        'scale' : 100,
+        #'scale' : 100,
         'color':dict_TColor['blue'],
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
 
-legend['lumi'] = 'L = 41.5/fb'
+legend['lumi'] = 'L = 59.7/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
