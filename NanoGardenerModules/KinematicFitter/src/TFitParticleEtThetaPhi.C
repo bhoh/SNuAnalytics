@@ -19,7 +19,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticleEtThetaPhi.h"
 
-ClassImp(TFitParticleEtThetaPhi)
 
 #include "TMath.h"
 #include <cmath>

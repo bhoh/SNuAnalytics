@@ -12,6 +12,7 @@
 #include "TFitParticlePt.h"
 #include "TFitParticlePz.h"
 #include "TFitParticlePxPy.h"
+#include "TFitParticleEtPhi.h"
 #include "TKinFitter.h"
 #include "TSCorrection.h"
 
@@ -39,6 +40,8 @@ public:
   void SetWCHDownTypeJets(TLorentzVector jet_); // d/s/b jet from W(H+)
   void SetLepton(TLorentzVector lepton_);
   void SetMET(TLorentzVector met_);
+  void SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down);
+  void SetMETShift(double met_shiftX, double met_shiftY);
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
 
   void Fit();
@@ -139,6 +142,8 @@ private:
   std::vector<TLorentzVector> jet_vector;
   std::vector<bool> btag_vector;
   TLorentzVector METv;
+  double MET_pt_shift;
+  double MET_phi_shift;
   TLorentzVector recal_METv;
 
   int njets;
@@ -165,6 +170,7 @@ private:
   TFitParticlePt *fit_extra_jet;
   //std::vector<TFitParticlePt*> fit_extra_jets;
   TFitParticlePt *fit_lepton;
+  //TFitParticleEtPhi *fit_neutrino_etphi;
   TFitParticlePxPy *fit_neutrino_pxpy;
   TFitParticlePz *fit_neutrino_pz;
 

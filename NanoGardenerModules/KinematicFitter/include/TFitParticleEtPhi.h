@@ -36,7 +36,6 @@ protected :
 
 private:
   Double_t _iniEta; 
-  ClassDef(TFitParticleEtPhi,1)
 
 };
 

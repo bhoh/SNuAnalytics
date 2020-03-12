@@ -44,8 +44,6 @@ public :
   virtual TString getInfoString();
   virtual void print(); 
 
-  //BHO
-  void Clear(){ _ParList1.clear(); _ParList2.clear(); }
 
 protected :
   
@@ -53,7 +51,6 @@ protected :
   std::vector<TAbsFitParticle*> _ParList2;   // Vector containing second list of constrained particles ( sum[ m_i ] - sum[ m_j ] == 0 )
   Double_t _TheMassConstraint;
   
-  ClassDef(TFitConstraintM,1)
 
 };
 

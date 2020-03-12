@@ -12,7 +12,6 @@
 
 #include "TAbsFitParticle.h"
 
-ClassImp(TAbsFitParticle)
 
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include <iostream>

@@ -33,10 +33,9 @@ TKinFitterDriver::TKinFitterDriver(int DataYear_){
   fit_leptonic_top_b_jet = new TFitParticlePt();
   fit_hadronic_w_ch_jet1 = new TFitParticlePt();
   fit_hadronic_w_ch_jet2 = new TFitParticlePt();
-  fit_extra_jet = new TFitParticlePt();
   fit_lepton = new TFitParticlePt();
   fit_neutrino_pxpy =  new TFitParticlePxPy();
-  fit_neutrino_pz =  new TFitParticlePz();
+  //fit_neutrino_pz =  new TFitParticlePz();
 
   constrain_hadronic_top_M = new TFitConstraintM("hadronic_top_mass_constraint", "hadronic_top_mass_constraint", 0, 0, 172.5);
   //constrain_hadronic_top_MGaus = new TFitConstraintMGaus("hadronic_top_mass_constraint", "hadronic_top_mass_constraint", 0, 0, 172.5, 1.5);
@@ -55,10 +54,9 @@ TKinFitterDriver::~TKinFitterDriver(){
   delete fit_leptonic_top_b_jet;
   delete fit_hadronic_w_ch_jet1;
   delete fit_hadronic_w_ch_jet2;
-  delete fit_extra_jet;
   delete fit_lepton;
   delete fit_neutrino_pxpy;
-  delete fit_neutrino_pz;
+  //delete fit_neutrino_pz;
 
   delete constrain_hadronic_top_M;
   //delete constrain_hadronic_top_MGaus;
@@ -202,38 +200,54 @@ void TKinFitterDriver::SetMET(TLorentzVector met_){
 }
 
 
+void TKinFitterDriver::SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down){
+  
+  double met_pt = METv.Pt();
+  double met_phi = METv.Phi();
+  MET_pt_shift = std::max(fabs(met_pt_up-met_pt), fabs(met_pt-met_pt_down));
+  MET_phi_shift = std::max(fabs(met_phi_up-met_phi), fabs(met_phi-met_phi_down));
+}
+
+
+void TKinFitterDriver::SetMETShift(double met_shiftX, double met_shiftY){
+  
+  double met_px = METv.Px();
+  double met_py = METv.Py();
+  double met_phi = METv.Phi();
+
+  MET_pt_shift = met_shiftX; //XXX pt->px, phi->py
+  MET_phi_shift = met_shiftY; //XXX pt->px, phi->py
+  //MET_pt_shift = met_shiftX*TMath::Cos(met_phi) - met_shiftY*TMath::Sin(met_phi);
+  //MET_phi_shift = met_shiftX*TMath::Sin(met_phi) + met_shiftY*TMath::Cos(met_phi);
+  //
+  //cout << "debug" << endl;
+  //cout << MET_pt_shift << endl;
+  //cout << MET_phi_shift << endl;
+}
+
+
 void TKinFitterDriver::SetNeutrino(TLorentzVector met_, int i){
 
   double Pz = neutrino_pz_sol[i];
-  neutrino_pxpy.SetPxPyPzE(met_.Px(),met_.Py(), 0., met_.E());
-  neutrino_pz.SetPxPyPzE(0., 0., Pz, fabs(Pz));
+  neutrino_pxpy.SetPxPyPzE(met_.Px(),met_.Py(), Pz, TMath::Sqrt(met_.E()*met_.E()+Pz*Pz));
+  //neutrino_pz.SetPxPyPzE(0., 0., Pz, fabs(Pz));
 
-  double error_neutrino_px=0., error_neutrino_py=0.;
-  for(auto &x : jet_vector){
-    double Pt = x.Pt();
-    double Px = x.Px();
-    double Py = x.Py();
-    double Eta = x.Eta();
-    double error_ts_corr = this->JetErrorPt(Pt, Eta, "udscb");
-    error_neutrino_px+=(error_ts_corr*Px)*(error_ts_corr*Px);
-    error_neutrino_py+=(error_ts_corr*Py)*(error_ts_corr*Py);
-  }
-  error_neutrino_pxpy(0,0) = error_neutrino_px;
-  error_neutrino_pxpy(1,1) = error_neutrino_py;
-  //this->SetUnclError(&error_neutrino_pxpy, met_);
+  error_neutrino_pxpy(0,0) = std::max(0.0001, MET_pt_shift*MET_pt_shift);  //XXX pt->px, phi->py
+  error_neutrino_pxpy(1,1) = std::max(0.0001, MET_phi_shift*MET_phi_shift); //XXX pt->px, phi->py
   fit_neutrino_pxpy->~TFitParticlePxPy();
   new(fit_neutrino_pxpy) TFitParticlePxPy("neutrino_pxpy",
                                           "neutrino_pxpy",
                                           &neutrino_pxpy,
                                           &error_neutrino_pxpy
                                          );
-  
+  /*
   fit_neutrino_pz->~TFitParticlePz();
   new(fit_neutrino_pz) TFitParticlePz("neutrino_pz",
 		                      "neutrino_pz",
 				      &neutrino_pz,
 				      NULL
 				      );
+  */
   //cout << "TKinFitterDriver::SetNeutrino : " << endl;
 }
 
@@ -296,11 +310,11 @@ void TKinFitterDriver::SetConstraint(){
   //constrain_hadronic_top_MGaus->Clear();
   //constrain_hadronic_top_MGaus->addParticles1(fit_hadronic_top_b_jet, fit_hadronic_w_ch_jet1, fit_hadronic_w_ch_jet2);
   constrain_leptonic_top_M->Clear();
-  constrain_leptonic_top_M->addParticles1(fit_leptonic_top_b_jet, fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);
+  constrain_leptonic_top_M->addParticles1(fit_leptonic_top_b_jet, fit_lepton, fit_neutrino_pxpy);
   //constrain_leptonic_top_MGaus->Clear();
   //constrain_leptonic_top_MGaus->addParticles1(fit_leptonic_top_b_jet, fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);
   constrain_leptonic_W_M->Clear();
-  constrain_leptonic_W_M->addParticles1(fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);
+  constrain_leptonic_W_M->addParticles1(fit_lepton, fit_neutrino_pxpy);
   //constrain_leptonic_W_MGaus->Clear();
   //constrain_leptonic_W_MGaus->addParticles1(fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);
 }
@@ -314,12 +328,10 @@ void TKinFitterDriver::SetFitter(){
   fitter->addMeasParticle( fit_hadronic_w_ch_jet1 );
   fitter->addMeasParticle( fit_hadronic_w_ch_jet2 );
   //add UnmeasParticles not to vary Et,Eta,Phi
-  // TODO: currently, fitter dose not fit MET.
-  // To fit MET, it is required to know uncertainty of MET
   // Also, Px, Py should be constrained
   fitter->addMeasParticle( fit_lepton );
   fitter->addMeasParticle( fit_neutrino_pxpy );
-  fitter->addUnmeasParticle( fit_neutrino_pz );
+  //fitter->addUnmeasParticle( fit_neutrino_pz );
   //fitter->addUnmeasParticle( fit_lepton );
   //fitter->addUnmeasParticle( fit_neutrino_pxpy );
   //add Constraint
@@ -351,7 +363,7 @@ void TKinFitterDriver::SaveResults(){
   fit_result.status = fitter->fit();
   // save kinematic variable before fit
   TLorentzVector hadronic_top = hadronic_top_b_jet + hadronic_w_ch_jet1 + hadronic_w_ch_jet2;
-  TLorentzVector leptonic_W = lepton + neutrino_pxpy + neutrino_pz;
+  TLorentzVector leptonic_W = lepton + neutrino_pxpy;
   TLorentzVector leptonic_top = leptonic_top_b_jet + leptonic_W;
   fit_result.hadronic_top_M = hadronic_top.M();
   fit_result.leptonic_top_M = leptonic_top.M();

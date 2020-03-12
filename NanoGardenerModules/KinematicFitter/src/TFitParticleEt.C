@@ -20,7 +20,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticleEt.h"
 
-ClassImp(TFitParticleEt)
 
 #include "TMath.h"
 #include <cmath>

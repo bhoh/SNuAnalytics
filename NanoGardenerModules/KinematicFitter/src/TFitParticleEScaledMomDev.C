@@ -26,7 +26,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticleEScaledMomDev.h"
 
-ClassImp(TFitParticleEScaledMomDev)
 
 #include "TMath.h"
 

@@ -15,7 +15,6 @@
 #include <sstream>
 #include "TFitConstraintM.h"
 
-ClassImp(TFitConstraintM)
 
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TLorentzVector.h"

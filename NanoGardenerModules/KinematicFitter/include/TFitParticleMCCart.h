@@ -33,7 +33,6 @@ protected :
 
   
 private:
-  ClassDef(TFitParticleMCCart,1)
 
 };
 

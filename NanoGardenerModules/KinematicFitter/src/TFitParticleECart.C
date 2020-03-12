@@ -19,7 +19,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticleECart.h"
 
-ClassImp(TFitParticleECart)
 
 
 

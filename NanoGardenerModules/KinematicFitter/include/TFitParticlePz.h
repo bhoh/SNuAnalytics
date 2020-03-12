@@ -37,7 +37,6 @@ protected :
 private:
   Double_t _iniPx;
   Double_t _iniPy;
-  ClassDef(TFitParticlePz,1)
 
 };
 

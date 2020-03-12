@@ -12,7 +12,6 @@
 
 #include "TFitConstraintEp.h"
 
-ClassImp(TFitConstraintEp)
 
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include <iostream>

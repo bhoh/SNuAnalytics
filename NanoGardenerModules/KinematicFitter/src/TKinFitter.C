@@ -15,7 +15,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TKinFitter.h"
 
-ClassImp(TKinFitter)
 
 #include "TAbsFitParticle.h"
 #include "TAbsFitConstraint.h"
@@ -662,12 +661,12 @@ Bool_t TKinFitter::calcV() {
 
   _Vinv.ResizeTo( _V );
   _Vinv = _V;
-  //try {
+  try {
     _Vinv.Invert();
-  //} catch (cms::Exception& e) {
-    //edm::LogInfo ("KinFitter") << "Failed to invert covariance matrix V. Fit will be aborted.";
-  //  _status = -10;
-  //}
+  } catch (std::exception& e) {
+     std::cout << e.what() << std::endl;
+    _status = -10;
+  }
 
   return true;
 
@@ -790,12 +789,12 @@ Bool_t TKinFitter::calcVB() {
 
   _VB.ResizeTo( _VBinv );
   _VB = _VBinv;
-  //try {
+  try {
     _VB.Invert();
-  //} catch (cms::Exception& e) {
-    //edm::LogInfo ("KinFitter") << "Failed to invert matrix VB. Fit will be aborted.";
-  //  _status = -10;
-  //}
+  } catch (std::exception& e) {
+     std::cout << e.what() << std::endl;
+    _status = -10;
+  }
 
   return true;
 
@@ -811,12 +810,12 @@ Bool_t TKinFitter::calcVA() {
 
   _VAinv.ResizeTo( _VA );
   _VAinv = _VA;
-  //try {
+  try {
     _VAinv.Invert();
-  //} catch (cms::Exception& e) {
-    //edm::LogInfo ("KinFitter") << "Failed to invert matrix VA. Fit will be aborted.";
-  //  _status = -10;
-  //}
+  } catch (std::exception& e) {
+     std::cout << e.what() << std::endl;
+    _status = -10;
+  }
 
   return true;
 

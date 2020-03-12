@@ -32,8 +32,6 @@ public :
   virtual TString getInfoString();
   virtual void print(); 
 
-  //BHO
-  void Clear(){ _ParList1.clear(); _ParList2.clear(); }
   double getWidth(){ return _width; }
 
 protected :
@@ -42,7 +40,6 @@ protected :
 
   void init();
 
-  ClassDef(TFitConstraintMGaus,1)
 
 };
 

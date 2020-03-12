@@ -19,7 +19,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticleESpher.h"
 
-ClassImp(TFitParticleESpher)
 
 #include "TMath.h"
 

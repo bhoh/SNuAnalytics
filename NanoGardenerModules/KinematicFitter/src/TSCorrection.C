@@ -24,8 +24,8 @@ TSCorrection::~TSCorrection(){
 void TSCorrection::ReadFittedError(TString fileName){
 
   TString datapath = getenv("CMSSW_BASE");
-  datapath += "/SNuAnalytics/data/";
-  datapath = datapath+"TSCorrection/"+TString::Itoa(DataYear,10);
+  datapath += "/src/SNuAnalytics/data/";
+  datapath = datapath+"TSCorrection/"+TString::Itoa(DataYear,10)+"/";
   std::ifstream reader(datapath + fileName);
 
   TString key, formula;
@@ -38,8 +38,8 @@ void TSCorrection::ReadFittedError(TString fileName){
 void TSCorrection::ReadFittedMean(TString fileName){
 
   TString datapath = getenv("CMSSW_BASE");
-  datapath += "/SNuAnalytics/data/";
-  datapath = datapath+"TSCorrection/"+TString::Itoa(DataYear,10);
+  datapath += "/src/SNuAnalytics/data/";
+  datapath = datapath+"TSCorrection/"+TString::Itoa(DataYear,10)+"/";
   std::ifstream reader(datapath + fileName);
 
   TString key, formula;
@@ -87,6 +87,9 @@ double TSCorrection::GetFittedError(TString response_key, TString flavour_key, d
       exit(EXIT_FAILURE);
     }
   }
+  //debug
+  //std::cout << "Test: TSCorrection::GetFittedError"<< std::endl;
+  //std::cout << mapit->second->EvalError(x, eta) << std::endl;
   return std::max(0.01, mapit->second->EvalError(x, eta));
 }
 

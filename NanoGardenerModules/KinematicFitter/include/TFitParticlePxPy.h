@@ -38,7 +38,6 @@ protected :
   
 private:
   Double_t _pZ;
-  ClassDef(TFitParticlePxPy,1)
 
 };
 

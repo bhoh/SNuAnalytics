@@ -19,7 +19,6 @@
 //#include "FWCore/MessageLogger/interface/MessageLogger.h"
 #include "TFitParticlePxPy.h"
 
-ClassImp(TFitParticlePxPy)
 
 #include "TMath.h"
 

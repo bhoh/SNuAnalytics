@@ -155,7 +155,6 @@ private :
  
   //BHO
   Double_t _deltaS; 
-  ClassDef(TKinFitter,1)
 
 };
 
