@@ -1548,6 +1548,18 @@ Steps = {
                   'module'     : 'assignRun()',
             },
 
+## ------- ChargedHiggsToCB
+
+    'kinFitTTSemiLep': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+               },
+
 ## ------- MODULES: Object Handling
 
   'Dummy' : {
@@ -1655,6 +1667,7 @@ Steps = {
                 'isChain': False,
                 'do4MC': True,
                 'do4Data': False,
+                #'selection'  : '"Entry$<100"', #XXX 
                 'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
                 'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK4PFchs", jer_bin_list=[0,1,2,3,4,5])',
                 'module':  'bin_by_bin_JER_maker()'
