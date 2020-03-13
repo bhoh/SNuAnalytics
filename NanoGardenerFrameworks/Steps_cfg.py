@@ -1679,6 +1679,26 @@ Steps = {
                 'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
     },
 
+    'HEMvetoMC' : {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMveto',
+                'declare': 'HEMvetoMC = lambda : HEMveto(isData=False,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMvetoMC()'
+
+    },
+
+    'HEMvetoData' : {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMveto',
+                'declare': 'HEMvetoData = lambda : HEMveto(isData=True,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMvetoData()'
+
+    },
+
     'CleanFatJet' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
