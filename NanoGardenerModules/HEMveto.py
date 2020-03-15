@@ -64,7 +64,7 @@ class HEMveto(Module):
 
           if run_period == 3 or run_period == 4:
             jet_coll = Collection(event, self.jetColl )
-            for jet in jet_coll
+            for jet in jet_coll:
               pt  = jet["pt"]
               eta = jet["eta"]
               phi = jet["phi"]
