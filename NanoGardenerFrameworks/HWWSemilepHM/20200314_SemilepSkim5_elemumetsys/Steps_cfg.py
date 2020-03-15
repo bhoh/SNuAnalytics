@@ -829,7 +829,13 @@ Steps = {
 ## ------- HIGH MASS:
 
 
+'SemilepNJetSkim':{
+  'isChain'    : True  ,
+  'do4MC'      : True  ,
+  'do4Data'    : False  ,
+  'selection'  : '"((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))"' 
 
+},
 
   'HMSemilepSkimJH2016v6_3' : {
     'isChain'    : True  ,
@@ -849,6 +855,94 @@ Steps = {
 
   },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
 
+
+
+  'HMSemilepSkimJH2016v6_4' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+
+
+  'HMSemilepSkimJH2016v6_5' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',     
+
+    'subTargets' : ['l1tightOR2016v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+
+
+  'HMSemilepSkimJH2016v6_4' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
+
+  'HMSemilepSkimJH2016v6_4_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','CorrFatJetData','CleanFatJet'],
+},
+
+  'HMSemilepSkimJH2016v6_5_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',    
+
+    'subTargets' : ['l1tightOR2016v6','CorrFatJetData','CleanFatJet'],
+},
   ##
 #'CorrFatJetData', 'CleanFatJet'
   'HMSemilepSkimJH2016v6_3_data' : {
@@ -880,11 +974,44 @@ Steps = {
     && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
     ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
     ))&&\
-    (Trigger_sngMu || Trigger_sngEl)&&\
-    ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
+    (Trigger_sngMu || Trigger_sngEl)\
     "',
     'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
   },    
+
+ 'HMSemilepSkimJH2017v6_4' : {
+     'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',
+    'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+  },    
+
+ 'HMSemilepSkimJH2017v6_5' : {
+     'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',
+    'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+  },    
+
+
+
 
  'HMSemilepSkimJH2017v6_3_data' : {
      'isChain'    : True  ,
@@ -902,7 +1029,44 @@ Steps = {
     'subTargets' : ['l1tightOR2017v6','CorrFatJetData','CleanFatJet'],
 
   },    
- 
+
+ 'HMSemilepSkimJH2017v6_4_data' : {
+     'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',
+    'subTargets' : ['l1tightOR2017v6','CorrFatJetData','CleanFatJet'],
+
+  },    
+
+
+ 'HMSemilepSkimJH2017v6_5_data' : {
+     'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',
+    'subTargets' : ['l1tightOR2017v6','CorrFatJetData','CleanFatJet'],
+
+  },    
+  ##((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))
+
+
+
   'HMSemilepSkimJH2018v6_3' : {
     'isChain'    : True  ,
     'do4MC'      : True  ,
@@ -917,6 +1081,71 @@ Steps = {
     ((Sum$(CleanJet_pt > 20) > 1) || (nCleanFatJet > 0 ))\
     "',
     'subTargets' : ['l1tightOR2018v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },
+
+  'HMSemilepSkimJH2018v6_4' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',
+    'subTargets' : ['l1tightOR2018v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },
+
+  'HMSemilepSkimJH2018v6_5' : {
+    'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',
+    'subTargets' : ['l1tightOR2018v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+
+  },
+
+  'HMSemilepSkimJH2018v6_4_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    "',
+    'subTargets' : ['l1tightOR2018v6','CorrFatJetData','CleanFatJet'],
+
+  },
+  'HMSemilepSkimJH2018v6_5_data' : {
+    'isChain'    : True  ,
+    'do4MC'      : False  ,
+    'do4Data'    : True  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11)\
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',
+    'subTargets' : ['l1tightOR2018v6','CorrFatJetData','CleanFatJet'],
 
   },
 
@@ -936,6 +1165,7 @@ Steps = {
     'subTargets' : ['l1tightOR2018v6','CorrFatJetData','CleanFatJet'],
 
   },
+
 
   'HMSemilepSkimJH2016v6_2' : {
     'isChain'    : True  ,
@@ -1022,8 +1252,7 @@ Steps = {
                   'isChain'    : True  ,
                   'do4MC'      : True  ,
                   'do4Data'    : True  ,
-                  'subTargets' : ['PreselFatJet','whadJetSel','wlepMaker'],
-                  #'subTargets' : ['l1tightOR2017v5','PreselFatJet','whadJetSel','wlepMaker'],
+                  'subTargets' : ['l1tightOR2017v5','PreselFatJet','whadJetSel','wlepMaker'],
                   #'onlySample' : LNuQQSamples,
                    },
 
@@ -1042,30 +1271,21 @@ Steps = {
                   'subTargets' : ['HMvars','BWReweight'],
                    },
    
- 'HMSemilepSkimJH2017v6_5' : {
-     'isChain'    : True  ,
-    'do4MC'      : True  ,
-    'do4Data'    : False  ,
-    'selection'  :'"(  Lepton_pt[0]>20 \
-    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
-    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
-    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
-    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
-    ))&&\
-    (Trigger_sngMu || Trigger_sngEl)\
-    &&(PuppiMET_pt > 20)\
-    "',
-    'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
-  },    
 
-    'HMlnjjLepVetoBWRew'  : {
+    'HMlnjjSel'  : {
                   'isChain'    : True,
                   'do4MC'      : True,
                   'do4Data'    : True,
                   'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
-                  'subTargets' : ['BWReweight'],
+                  'subTargets' : ['HMlnjjVars'],
 		  },
 
+    'HMlnjjSelBWRew_Dev'  : {
+                  'isChain'    : True ,
+		  'do4MC'	: True ,
+		  'do4Data'	: True,
+                  'subTargets' : ['HMlnjjLepSel','BWReweight'],
+		  },
      #'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
      #'subTargets' : ['BWReweight'],
 
@@ -1097,6 +1317,17 @@ Steps = {
                   'module'     : 'fatjetMaker()'
     },
 
+    'HMlnjjLepSel': {
+    	          'isChain'	: False	,
+		  'do4MC'	: True	,
+		  'do4Data'	: True	,
+                  'selection'  :'"(  Lepton_pt[0]>30 \
+		  	&& ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+		  	||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+		  	&& ( ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+		  	||   ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+		  		)"',
+		  },
 		  #	|| Alt$( !Lepton_isLoose[1],1 ) )
 
 
@@ -1523,20 +1754,30 @@ Steps = {
                   'do4MC'      : True ,
                   'do4Data'    : True ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev' ,
-                  'declare'    : 'HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev(RPLME_YEAR,METtype="PuppiMET")',
+                  'declare'    : 'HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev(RPLME_YEAR)',
                   'module'     : 'HMlnjjVars_Dev()',
                },
+  'HMlnjjVars_Dev_jhchoi' : {
+    'isChain'    : False ,
+    'do4MC'      : True ,
+    'do4Data'    : True ,
+    'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi',
+    'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
+    'module' : 'HMlnjjVars_Dev_jhchoi()'
+##    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
 
-    'MelaHighMassKD' : {
-                  'isChain'    : False ,
-                  'do4MC'      : True ,
-                  'do4Data'    : True ,
-                  'import'     : 'LatinoAnalysis.NanoGardener.modules.melaHighMassKD' ,
-                  'declare'    : 'MelaHighMassKD = lambda : MelaHighMassKDClass(RPLME_YEAR)',
-                  'module'     : 'MelaHighMassKD()',
-               },
+  },
 
+  'HMlnjjVars_Dev_jhchoi2' : {
+    'isChain'    : False ,
+    'do4MC'      : True ,
+    'do4Data'    : True ,
+    'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi2',
+    'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
+    'module' : 'HMlnjjVars_Dev_jhchoi()'
+##    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
 
+  },
     'assignRun': {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
@@ -1545,18 +1786,6 @@ Steps = {
                   'declare'    : 'assignRun = lambda: RunAssigner("RPLME_CMSSW")',
                   'module'     : 'assignRun()',
             },
-
-## ------- ChargedHiggsToCB
-
-    'kinFitTTSemiLep': {
-                  'isChain'    : False ,
-                  'do4MC'      : True ,
-                  'do4Data'    : True ,
-                  #'selection'  : '"Entry$<1000"',
-                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
-                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
-                  'module'     : 'kinFitting()',
-               },
 
 ## ------- MODULES: Object Handling
 
@@ -1642,39 +1871,6 @@ Steps = {
                 'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
                 'declare': 'corr_fatjet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="Total", redojec=True, jetType="AK8PFPuppi")',
                 'module':  'corr_fatjet_mc()'
-    },
-
-    'CorrJetMC' :  {
-                'isChain': False,
-                'do4MC': True,
-                'do4Data': False,
-                'import': 'PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetmetHelperRun2',
-                'declare': 'corr_jet_mc = createJMECorrector(isMC=True,dataYear=RPLME_YEAR, jesUncert="Total", redojec=True, jetType="AK4PFchs")',
-                'module':  'corr_jet_mc()'
-    },
-
-    'BinByBinFatJetMCJER' :  {
-                'isChain': False,
-                'do4MC': True,
-                'do4Data': False,
-                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
-                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi", jer_bin_list=[0,1])',
-                'module':  'bin_by_bin_JER_maker()'
-    },
-    'BinByBinJetMCJER' :  {
-                'isChain': False,
-                'do4MC': True,
-                'do4Data': False,
-                #'selection'  : '"Entry$<100"', #XXX 
-                'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
-                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK4PFchs", jer_bin_list=[0,1,2,3,4,5])',
-                'module':  'bin_by_bin_JER_maker()'
-    },
-    'BinByBinJetMCJERChain' :  {
-                'isChain': True,
-                'do4MC': True,
-                'do4Data': False,
-                'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
     },
 
     'CleanFatJet' : {
@@ -3070,7 +3266,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_METup','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  #'subTargets' : ['do_METup','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+     'subTargets' : ['do_METup','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                },
 
    'METup_suffix' :   {
@@ -3095,7 +3292,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_METdo','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  #'subTargets' : ['do_METdo','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+     'subTargets' : ['do_METdo','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                },
 
    'METdo_suffix' :   {
@@ -3171,7 +3369,7 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_ElepTup','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  'subTargets' : ['do_ElepTup','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                },
 
   'ElepTup_suffix' :   {
@@ -3195,7 +3393,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_ElepTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  #'subTargets' : ['do_ElepTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+    'subTargets' : ['do_ElepTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                 },
  
   'ElepTdo_suffix' :   {
@@ -3286,7 +3485,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_MupTup','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  #'subTargets' : ['do_MupTup','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+    'subTargets' : ['do_MupTup','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                },
 
   'MupTup_suffix' :   {
@@ -3311,7 +3511,8 @@ Steps = {
                   'isChain'    : True ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'subTargets' : ['do_MupTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+                  #'subTargets' : ['do_MupTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','DYMVA','MonoHiggsMVA','formulasMC'],
+    'subTargets' : ['do_MupTdo','trigMCKeepRun','LeptonSF','l2Kin', 'l3Kin', 'l4Kin','formulasMC'],
                },
 
   'MupTdo_suffix' :   {
