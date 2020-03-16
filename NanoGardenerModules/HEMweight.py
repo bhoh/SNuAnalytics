@@ -7,6 +7,8 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from LatinoAnalysis.NanoGardener.data.TrigMaker_cfg import Trigger
 
 class HEMweight(Module):
+    #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/1995/2.html
+    #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
 
     def __init__(self, isData, dataYear, jetColl="CleanJet", cmssw = 'Full2016', seed=65539):
         #self.TriggerCfg = Trigger[cmssw] #2018 period range not available
