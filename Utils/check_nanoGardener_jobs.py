@@ -440,6 +440,9 @@ print "NOT_STARTED="+str(len(LIST_NOT_STARTED))
 print "FAIL="+str(len(LIST_FAIL))
 print "ZOMBIE="+str(len(LIST_ZOMBIE))
 print "ZOMBIEINPUT="+str(len(LIST_ZOMBIEINPUT))
+print "ZOMBIEINPUT List================="
+for akey in LIST_ZOMBIEINPUT:
+  print akey
 
 print " --- kill zombie---"
 for a in LIST_ZOMBIE:

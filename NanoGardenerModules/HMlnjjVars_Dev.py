@@ -1,39 +1,100 @@
 import ROOT
-import math
 ROOT.PyConfig.IgnoreCommandLineOptions = True
+import math
+import numpy
 import re
 import os
 from math import sqrt
 
-from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
+from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection,Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 Wmass=80.4
+MaxLimit =  99999.
+MinLimit = -1.
 
 class HMlnjjVarsClass_Dev(Module):
-    def __init__(self,year):
-	self.HlnFat_4v  = ROOT.TLorentzVector()
-	self.Hlnjj_4v   = ROOT.TLorentzVector()
-	self.Wlep_4v   = ROOT.TLorentzVector()
-	self.Wfat_4v   = ROOT.TLorentzVector()
-	self.Wjj_4v   = ROOT.TLorentzVector()
+    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
+
+        self.cmssw_base = os.getenv('CMSSW_BASE')
+        cmssw_arch = os.getenv('SCRAM_ARCH')
+
+        self._lepton_4v     = ROOT.TLorentzVector()
+        self._Wlep_4v       = ROOT.TLorentzVector()
+        self._FinalFatJet_4v= ROOT.TLorentzVector()
+        self._Whad_4v       = ROOT.TLorentzVector()
+	self._lnJ_4v        = ROOT.TLorentzVector()
+	self._lnjj_4v       = ROOT.TLorentzVector()
+
+        self.doSkim = doSkim
+        self.METtype = METtype
+
+        ##--How to select primary fatjet
+        self._FatSel_cfjidx={}
+        self._FatSel_cfjidx['mindM']=-1 ## FatJet_mass ~ mindM
+        self._FatSel_cfjidx['mxPT']=-1 ## largest mxPT
+       
+        #####################################
+	# Cuts
+        #####################################
+	self.Wmass_CRlow  = 40
+	self.Wmass_CRhigh = 250
+	self.Wmass_SRlow  = 65
+	self.Wmass_SRhigh = 105 
+
+        self.METcut_Boost = 40.
+        self.METcut_Resol = 30.
+
+	self.cut_fjet_eta = 2.4
+	self.cut_fjet_pt  = 200
+	self.cut_jet_eta  = 2.4
+	self.cut_jet_pt   = 30
+	self.cut_bjet_pt  = 20
+	self.cut_bjet_eta = 2.5
+
+	self.cut_VBFjet_pt = 30
+	self.cut_VBFjet_eta= 4.7 
+	self.cut_VBF_dEta  = 3.5
+	self.cut_VBF_mjj   = 500
+
+	self.cut_minPtWOverMlnJ  = 0.4
+	self.cut_minPtWOverMlnjj = 0.35
+
+        ###---Year dependent cut----##
         print "@@Year->",year
         self.year=year
         # b-tag WP && tau21 (Wtag)
         self.bWP=0.2217 ##2016legacy
-        self.tau21WP=0.4 ##2016 legacy
+        self.tau21WP= 0.4 ##2016 legacy
+        self.min_fatjetid = 1
         if '2016' in str(self.year): 
             self.bWP=0.2217   ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation2016Legacy
             self.tau21WP=0.4  ##2016 scale factors and corrections
+            self.min_fatjetid = 1
         elif '2017' in str(self.year): 
             self.bWP=0.1522    ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation94X
             self.tau21WP=0.45  ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetWtagging#tau21_0_45
+            self.min_fatjetid = 2
         elif '2018' in str(self.year):
             self.bWP=0.1241    ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/BtagRecommendation102X
             self.tau21WP=0.45  ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetWtagging#tau21_0_45_HP_0_45_tau21_0_75_LP
+            self.min_fatjetid = 4 
+        # Tau21 cut (High purity)
 
-        # tau21 cut (High purity)
-        
+        # MELA 
+        # Directory ZZMatrixElement: https://github.com/cms-analysis/HiggsAnalysis-ZZMatrixElement.git / https://twiki.cern.ch/twiki/bin/view/CMS/MELAProject
+        # Directory MelaAnalytics: https://github.com/usarica/MelaAnalytics.git
+        ROOT.gSystem.AddIncludePath("-I"+self.cmssw_base+"/interface/")
+        ROOT.gSystem.AddIncludePath("-I"+self.cmssw_base+"/src/")
+        ROOT.gSystem.Load("libZZMatrixElementMELA.so")
+        ROOT.gSystem.Load("libMelaAnalyticsCandidateLOCaster.so")
+        ROOT.gSystem.Load(self.cmssw_base+"/src/ZZMatrixElement/MELA/data/"+cmssw_arch+"/libmcfm_706.so")
+        #try:
+        #    ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C+g')
+        #except RuntimeError:
+        #    ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C++g')
+
+        self.MakeMassVsGamma()
 
     def beginJob(self):
         pass
@@ -44,54 +105,72 @@ class HMlnjjVarsClass_Dev(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
 
-        #New Branches ##For Event
+	# ME
+	self.MEbranches = [
+	    'hm', 'me_vbf_hsm'
+	    ]
+	for brName in self.MEbranches:
+	  self.out.branch(brName, "F")
 
-        self.out.branch("Flavlnjj" , "I")
-
-        list_myvar=['IsBoostedSR','IsBoostedSB','IsBoostedTopCR','IsResolvedSR','IsResolvedSB','IsResolvedTopCR']
-        self.out.branch("IsBoostedTopCR" , "O")
-        self.out.branch("IsBoostedSR" , "O")
-        self.out.branch("IsBoostedSB"  , "O")
-
-        self.out.branch("IsResolvedTopCR" , "O")
-        self.out.branch("IsResolvedSR" , "O")
-        self.out.branch("IsResolvedSB"  , "O")
-
-
-        ##For Boosted Selection ##For FatJet
-        list_myvar=['pt','eta','phi','mass','tau21','WptOvHfatM','HlnFat_mass']
-        for myvar in list_myvar: 
-            
-            self.out.branch("CleanFatJetPassMBoostedSR_"+myvar, 'F', lenVar='nCleanFatJetPassMBoostedSR')
-            self.out.branch("CleanFatJetPassMBoostedSB_"+myvar, 'F', lenVar='nCleanFatJetPassMBoostedSB')
-            
+        # Wlep
+        for var in ['pt','eta','phi','mass']:
+            self.out.branch("Wlep_"+var  , "F")
+        self.out.branch(self.METtype+'_pz1', "F")
+        self.out.branch(self.METtype+'_pz2', "F")
         
 
+        ##---Boost Region kinematics
+        self.out.branch("isBoost","O")
+        self.out.branch("isBoostSR","O")
+        self.out.branch("WtagFatjet_cfjidx","I",lenVar='nWtagFatjet')
+        for var in ['pt','eta','phi','mass','tau21']:
+            self.out.branch("WtagFatjet_"+var,"F",lenVar='nWtagFatjet')
+        self.out.branch("FinalFatJet_mindM_cfjidx","I")
+        self.out.branch("FinalFatJet_mxPT_cfjidx","I")
         
-
+        for sel in self._FatSel_cfjidx:
+            self.out.branch('lnJ_pt_'+sel,"F")
+            self.out.branch('lnJ_mass_'+sel,"F")
+            self.out.branch('minPtWOverMlnJ_'+sel,"F")
+            self.out.branch('maxPtWOverMlnJ_'+sel,"F")
+            self.out.branch('dR_l_F_'+sel,"F")
+            self.out.branch('dR_Wlep_F_'+sel,"F")
+            self.out.branch('dPhi_l_F_'+sel,"F")
+            self.out.branch('dPhi_Wlep_F'+sel,"F")
         
+        self.out.branch('BJetBoost_cjidx','I',lenVar='nBJetBoost')
+        self.out.branch('BJetBoostVBF_cjidx','I',lenVar='nBJetBoostVBF')
+
+        self.out.branch('isVBF_Boost','O')
+        self.out.branch('VBFjjBoost_mjj','F')
+        self.out.branch('VBFjjBoost_dEta','F')
+        self.out.branch('max_mjj_Boost','F')
+
+        ##---Resol Region kinemaics
+        self.out.branch('isResol',"O")
+        self.out.branch('isResolSR',"O")
+        for var in ['pt','eta','phi','mass','Mt']:
+            self.out.branch('Whad_'+var,'F')
         
-        
+        self.out.branch('Whad_cjidx1','I')
+        self.out.branch('Whad_cjidx2','I')
+        self.out.branch('BJetResol_cjidx','I',lenVar='nBJetResol')
+        self.out.branch('isVBF_Resol','O')
+        self.out.branch('VBFjjResol_dEta','F')
+        self.out.branch('VBFjjResol_mjj','F')
+        self.out.branch('VBFjjResol_dEta','F')
+        self.out.branch('max_mjj_Resol','F')
 
+        self.out.branch('lnjj_pt', 'F')
+        self.out.branch('lnjj_mass', 'F')
+        self.out.branch('lnjj_Mt', 'F')
+        self.out.branch('minPtWOverMlnjj','F')
+        self.out.branch('maxPtWOverMlnjj','F')
+        self.out.branch('dR_l_Whad','F')
+        self.out.branch('dR_Wlep_Whad','F')
+        self.out.branch('dPhi_l_Whad','F')
+        self.out.branch('dPhi_Wlep_Whad','F')
 
-        self.out.branch("WptOvHak4M", "F")        
-        self.out.branch("Hlnjj_mass" , "F")
-        self.out.branch("Wlep_mt" , "F")
-        self.out.branch("Hlnjj_mt" , "F")
-
-        self.out.branch("vbfFat_jj_dEta" , "F")
-        self.out.branch("vbfFat_jj_mass" , "F")
-        self.out.branch("vbfjj_jj_dEta" , "F")
-        self.out.branch("vbfjj_jj_mass" , "F")
-
-        self.out.branch("IsVbfFat" , "O")
-        self.out.branch("IsVbfjj" , "O")
-
-        #self.out.branch("GenDrAk8Ak4", "F", lenVar="nGenDrAk8Ak4")
-        
-        #BJet Info
-        self.out.branch("bjetBoosted_jetIdx","I",lenVar='nbjetBoosted_jetIdx')
-        self.out.branch("bjetResolved_jetIdx","I",lenVar='nbjetResolved_jetIdx')
         
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -102,367 +181,278 @@ class HMlnjjVarsClass_Dev(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        # do this check at every event, as other modules might have read further branches
-        #if event._tree._ttreereaderversion > self._ttreereaderversion: 
-        #    self.initReaders(event._tree)
-        #nOrgJets = getattr(event, "nJet")
-        #OrgJets = Collection(event, "Jet")
+	# Wlep ############################3
+        self._lepton_4v.SetPtEtaPhiM(0,0,0,0)
+	self._Wlep_4v.SetPtEtaPhiM(0,0,0,0)
 
-	# initialize
-	self.HlnFat_4v.SetPtEtaPhiM(0,0,0,0)
-	self.Hlnjj_4v.SetPtEtaPhiM(0,0,0,0)
-	self.Wlep_4v.SetPtEtaPhiM(0,0,0,0)
-	self.Wfat_4v.SetPtEtaPhiM(0,0,0,0)
-	self.Wjj_4v.SetPtEtaPhiM(0,0,0,0)
-
-        ##--For FatJet Collection in SR/SB/TopCR
-        list_myvar=['pt','eta','phi','mass','tau21','WptOvHfatM','HlnFat_mass']
-        CleanFatJetPassMBoostedSR={}
-        CleanFatJetPassMBoostedSB={}
-        #CleanFatJetPassBoostedTopCR={}
-        for myvar in list_myvar:
-            CleanFatJetPassMBoostedSR[myvar]=[]
-            CleanFatJetPassMBoostedSB[myvar]=[]
-        bjetBoosted_jetIdx=[]
-        bjetResolved_jetIdx=[]
-
-
-        Wfat_SR = False
-        Wfat_SB = False
-        Wfat_Btop = False
-        Wjj_Btop = False
-	
-	Hlnjj_mass = -999.
-	WptOvHak4M = -999
-
-	Wjj_SR     = False
-	Wjj_SB      = False
-	Wjj_Btop    = False
-
-	Wlep_mt = -999
-	Hlnjj_mt = -999
-
-        ##Event variable
-        EventVar={}
-        list_myvar=['IsBoostedSR','IsBoostedSB','IsBoostedTopCR','IsResolvedSR','IsResolvedSB','IsResolvedTopCR','IsVbfFat','IsVbfjj']
-        for myvar in list_myvar:
-            EventVar[myvar]=False
-
-	vbfFat_jj_dEta = -999
-	vbfFat_jj_mass = -999
-	vbfjj_jj_dEta = -999
-	vbfjj_jj_mass = -999
-
-        IsFatSig = False
-        IsFatSB = False
-        IsFatTop = False
+        # Boost ########################
+        self._isBoost=False
+        self._isBoostSB=False
+        self._isBoostSR=False
+        self._Wfatjet_mindM_cfjidx=-1 ##select fatjet whose mass is closest to MW
+        self._Wfatjet_mxPT_cfjidx=-1 ## select fatjet whose pt is largest one
+        self._FinalFatJet_4v.SetPtEtaPhiM(0,0,0,0)
+        self._Wfatjet_cfjidx_list=[]
+        self._Wfatjet_pt_list=[]
+        self._Wfatjet_eta_list=[]
+        self._Wfatjet_phi_list=[]
+        self._Wfatjet_mass_list=[]
+        self._Wfatjet_tau21_list=[]
+        self._BJetBoost_cjidx=[]
+        self._BJetBoostVBF_cjidx=[]
+        self._isVBF_Boost=False
+        self._VBFjjBoost_dEta = MinLimit
+        self._VBFjjBoost_mjj  = MinLimit
+        self._VBFjjBoost_cjidx1=-1
+        self._VBFjjBoost_cjidx2=-1
+        self._max_mjj_Boost=-1.
+        self._FatSel_cfjidx['mindM']=-1 ## FatJet_mass ~ mindM
+        self._FatSel_cfjidx['mxPT']=-1## largest mxPT
+        self._lnJ_4v.SetPtEtaPhiM(0,0,0,0)
         
-        IsJjSig = False
-        IsJjSB = False
-        IsJjTop = False
+	# Resol #########################3
+        self._isResol = False
+        self._isResolSR = False
+        self._isResolSB = False
+        self._Whad_4v.SetPtEtaPhiM(0,0,0,0)
+        self._Whad_cjidx1=-1
+        self._Whad_cjidx2=-1
+        self._BJetResol_cjidx=[]
+        self._isVBF_Resol=False
+        self._VBFjjResol_dEta= MinLimit
+        self._VBFjjResol_mjj = MinLimit
+        self._VBFjjResol_cjidx1=-1
+        self._VBFjjResol_cjidx2=-1
+        self._max_mjj_Resol = -1.
+	self._minPtWOverMlnjj = MinLimit
+	self._maxPtWOverMlnjj = MinLimit
+        self._lnjj_4v.SetPtEtaPhiM(0,0,0,0)
+	self._lnjj_pt   = MinLimit
+	self._lnjj_mass = MinLimit
+	self._lnjj_Mt   = MinLimit
 
-        IsVbfFat = False
-        IsVbfjj = False
-        
-
-
-        ##--read vars
-
-        Lept_col        = Collection(event, 'Lepton')
-
-        CFatJet_col		= Collection(event, 'CleanFatJet')
-
-	CJet_col		= Collection(event, 'CleanJet')
-
-        CleanJetNotFat_col      = Collection(event, "CleanJetNotFat")
-
-
-	Jet_col		= Collection(event, 'Jet')
-
-        #met_pt         = getattr(event, "MET_pt")
-        met_pt         = getattr(event, "PuppiMET_pt")
-
-        Wlep_pt_Puppi    = getattr(event, "Wlep_pt_Puppi")
-        Wlep_eta_Puppi   = getattr(event, "Wlep_eta_Puppi")
-        Wlep_phi_Puppi   = getattr(event, "Wlep_phi_Puppi")
-        Wlep_mass_Puppi  = getattr(event,"Wlep_mass_Puppi")
-
-        Wjj_pt	= getattr(event,"Whad_pt")
-        Wjj_eta	= getattr(event,"Whad_eta")
-        Wjj_phi	= getattr(event,"Whad_phi")
-        Wjj_mass	= getattr(event,"Whad_mass")
-        
-        Wjj_ClJet0_idx= getattr(event, "idx_j1")
-        Wjj_ClJet1_idx= getattr(event, "idx_j2")
+	self._dR_l_Whad = -1
+	self._dR_Wlep_Whad = -1
+	self._dPhil_Whad = -1
+	self._dPhiWlep_Whad = -1
 
 
+        ##--End of initialization
 
         
+        ##--Get object collections--##
+        self._Lepton = Object(event, 'Lepton', index=0)
+        self._CleanFatJet_col = Collection(event, 'CleanFatJet')
+        self._FatJet_col = Collection(event, 'FatJet')
+        self._CleanJet_col = Collection(event, 'CleanJet')
+        self._CleanJetNotFat_col = Collection(event, 'CleanJetNotFat')
+        self._Jet_col = Collection(event,"Jet")
 
-
-	if Lept_col._len < 1: return False
-	Flavlnjj  = -999
-	if abs(Lept_col[0]['pdgId']) == 11 : Flavlnjj = 1
-	if abs(Lept_col[0]['pdgId']) == 13 : Flavlnjj = 2
-
-
-	self.Wlep_4v.SetPtEtaPhiM(Wlep_pt_Puppi,
-	                           Wlep_eta_Puppi,
-	                           Wlep_phi_Puppi,
-	                           Wlep_mass_Puppi
-				   )
-
-        ##Check btagged event or not
-
-        bWP=self.bWP  
+        ##---MET
+        self._MET = Object(event, self.METtype)
+        self._MET_pt = self._MET.pt
+        self._MET_phi = self._MET.phi
+	self._MET_pz1 = -1
+	self._MET_pz2 = -1
+	self._MET_pz  = -1
+        #self._MET=ROOT.TLorentzVector()
+        #self._MET.SetPtEtaPhiM(self._MET_pt, 0., self._MET_phi, 0.)
         
-        for jdx in range( len(CleanJetNotFat_col) ):
+        
+
+        #<<<<<<<Boost>>>>>>>#
+        
+        ##---Step.1.Set Wlep
+        #print "Start WlepMaker"
+        self.WlepMaker()  #self._Wlep_4v , self._MET_pz1, self._MET_pz2
+        #print "End WlepMaker"
+        ##set           self._Wlep_4v
+        
+        
+        
+        ##---Step.2 Get Wtagger fatjet
+        
+        self.FindWtaggerFatJet() ##Fill self._Wfatjet_cfjidx_list
+        ##-> Fill        cleanfatjet index     to       self._Wfatjet_cfjidx_list=[]
+        ##-> set         self._Wfatjet_mindM_cfjidx -> select FatJet whose Msoftdrop is closest to MW
+        ##-> set         self._Wfatjet_mxPT_cfjidx -> select FatJet whose mxPT is the largest one
+	##-> set	self._isBoost after WfatJet selection
+
+        #---Two kinds of choice for FatJets 
+        ##self._Wfatjet_mindM_idx
+        ##self._Wfatjet_mxPT_idx
+        
+	self.CookLnJ() #cut for minPtWOverMlnJ, MET 
+	# giving lnJ_4v, FinalFatJet_4v
+	# isBoostSB, isBoostSR
+
+        ##End of fatjet selection choice
+       
+        ##---Step.4 VBF Boost
+        self.VBF_Boost()
+        ##Set values of 
+        ##->self._isVBF_Boost
+	## variables for the maximum mjj
+        ##->self._VBFjjBoost_dEta
+        ##->self._VBFjjBoost_mjj
+        ##->self._VBFjjBoost_cjidx1
+        ##->self._VBFjjBoost_cjidx2
+        #print "End of Boost"
+
+        ##--- should be after VBF_Boost for BJetBoostVBF_cjidx
+        self.GetBJetsBoost()
+        ##->Set self._BJetBoost_cjidx
+        ##->Set self._BJetBoostVBF_cjidx
+
+
+        ##--Fill Branch for object ##
+        ###-->Wfatjet_idx_list/Wfatjet_mindM_cfjidx//Wfatjet_mxPT_cfjidx/
+        ###-->_isBoost, Wlep momentum, solution 1,2/ _VBFjjBoost_dEta, _VBFjjBoost_mjj,_BJetBoost_cjidx,_max_mjj_Boost
+        ##---Check whether they are initialized at the starting of this analyze loop function
+        #<<<<< End of Boost
+        #print "fillBranchBoost end"
+        
+        #<<<<<<<Resol>>>>>>>#
+        
+        ##Step.1 Get hadronic W using ak4 jet pair, choosing min(Wmass -Mjj)
+        self.WhadMaker()
+        ##set      self._Whad_4v
+        ##set      self._Whad_cjidx1
+        ##set      self._Whad_cjidx2
+        ##set      self._isResol
+	self.CookLnjj()
+	#cut for minPtWOverMlnJ, MET 
+        # isResolSB, isResolSR
+
+        ##Step.2 Get Btag
+        self.GetBJetsResol()
+        ##set      self._BJetResol_cjidx
+        
+
+        ##Step.3 VBF_Resol
+        self.VBF_Resol()
+        ##set      self._isVBF_Resol
+	# variables for maximum mjj
+        ##set      self._VBFjjResol_mjj
+        ##set      self._VBFjjResol_dEta
+        ##set      self._VBFjjResol_cjidx1
+        ##set      self._VBFjjResol_cjidx2
+        ##set      self._VBFjjResol_mjj
+
+
+	self.CookME()
             
-            clj_idx = CleanJetNotFat_col[jdx]['jetIdx']
-            if not clj_idx in CJet_col:continue
-            jet_idx = CJet_col[ clj_idx ]['jetIdx']
-            if not jet_idx in Jet_col:continue
-
-	    if Jet_col[ jet_idx ]['btagDeepB'] > bWP:
-	      if Jet_col[ jet_idx ]['pt'] > 20:
-                  if abs(Jet_col[ jet_idx ]['eta']) < 2.5:
-                  
-                      Wfat_Btop = True 
-                      bjetBoosted_jetIdx.append(jet_idx)
+        ##################
+        ##Fill branch ####
+        ##################
 
 
-
-
-
-	# FatJet evet from FatJet module , but need to apply cut further
-
-        
-	for ix in range( CFatJet_col._len ):
-
-	  Wfat_mass = CFatJet_col[ix]['mass']
-	  Wfat_pt   = CFatJet_col[ix]['pt']
-	  Wfat_eta  = CFatJet_col[ix]['eta']
-	  Wfat_phi  = CFatJet_col[ix]['phi']
-	  Wfat_tau21= CFatJet_col[ix]['tau21']
-
-	  self.Wfat_4v.SetPtEtaPhiM(Wfat_pt, Wfat_eta, Wfat_phi, Wfat_mass)
-
-	  self.HlnFat_4v = self.Wfat_4v + self.Wlep_4v 
-	  thisHlnFat_mass = self.HlnFat_4v.M()
-
-	  thisWptOvHfatM = min(Wlep_pt_Puppi, Wfat_pt)/thisHlnFat_mass
-
-	  # FatJet Evt Cuts
-          # These are already selected in postproduction but to make sure
-	  # N-subjettiness tau21 = tau2/tau1
-          ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetWtagging#2016_scale_factors_and_correctio , high purity cut
-	  cutJ_base = [ Wfat_pt > 200,abs(Wfat_eta)<2.4, Wfat_tau21 < self.tau21WP, thisWptOvHfatM > 0.4]
-          #cutJ_base = [ Wfat_pt > 200 abs(Wfat_eta)<2.4, Wfat_mass < 250, Wfat_mass > 40]
-	  if not all(cutJ_base) : continue
-	  # Let's stop the loop here, passing cutJ_base, then it become a Sig or a SB for a event.
-	  cutJ_SB   = [ Wfat_mass > 40, Wfat_mass < 250]
-	  cutJ_SR  = [ Wfat_mass >= 65, Wfat_mass <= 105]
-          if all(cutJ_SR): ##pass SR msoftdrop cut
-              ##Need to use dic type
-              CleanFatJetPassMBoostedSR['pt'].append(Wfat_pt)
-              CleanFatJetPassMBoostedSR['mass'].append(Wfat_mass)
-              CleanFatJetPassMBoostedSR['eta'].append(Wfat_eta)
-              CleanFatJetPassMBoostedSR['phi'].append(Wfat_phi)
-              CleanFatJetPassMBoostedSR['tau21'].append(Wfat_tau21)
-              CleanFatJetPassMBoostedSR['WptOvHfatM'].append(thisWptOvHfatM)
-              CleanFatJetPassMBoostedSR['HlnFat_mass'].append(thisHlnFat_mass)
-              
-          elif all(cutJ_SB): ##pass SB msoftdrop cut
-              
-              CleanFatJetPassMBoostedSB['pt'].append(Wfat_pt)
-              CleanFatJetPassMBoostedSB['mass'].append(Wfat_mass)
-              CleanFatJetPassMBoostedSB['eta'].append(Wfat_eta)
-              CleanFatJetPassMBoostedSB['phi'].append(Wfat_phi)
-              CleanFatJetPassMBoostedSB['tau21'].append(Wfat_tau21)
-              CleanFatJetPassMBoostedSB['WptOvHfatM'].append(thisWptOvHfatM)
-              CleanFatJetPassMBoostedSB['HlnFat_mass'].append(thisHlnFat_mass)
-
-        Wfat_SR=(len(CleanFatJetPassMBoostedSR['pt']) > 0 )
-        Wfat_SB=(len(CleanFatJetPassMBoostedSB['pt']) > 0 )
-        # W_Ak4 Event ----------------------------
-	#if (Wfat_SR == False or Wfat_Btop == True) and (Wjj_mass > -1):
-        if ( ( not Wfat_SR ) and ((Wjj_ClJet0_idx != -1) or (Wjj_ClJet1_idx != -1)) and Wjj_ClJet0_idx in CJet_col and Wjj_ClJet1_idx in CJet_col ) : ##No FatJet passing final boosted cut and has resolved Whad candidate
-	  # Now it is Wjj event, initialize as all is true
-
-	  self.Wjj_4v.SetPtEtaPhiM(Wjj_pt, Wjj_eta, Wjj_phi, Wjj_mass)
-	  self.Hlnjj_4v = self.Wlep_4v + self.Wjj_4v
-
-	  Hlnjj_mass = self.Hlnjj_4v.M()
-	  Hlnjj_mt = self.Hlnjj_4v.Mt()
-	  WptOvHak4M = min(Wlep_pt_Puppi, Wjj_pt)/Hlnjj_mass
-
-          Wlep_mt =  self.Wlep_4v.Mt()
-
-          #cutjj_Base = [ met_pt>30, Wlep_mt>50, Hlnjj_mt > 60, WptOvHak4M > 0.35 ]
-          cutjj_Base = [ Wlep_mt>50, Wjj_mass > 40 and Wjj_mass < 250, Hlnjj_mt > 60, WptOvHak4M > 0.35 ]
-	  cutjj_SR  = [ Wjj_mass > 65 and Wjj_mass < 105 ]
-          cutjj_SB  = [ ( Wjj_mass > 40 and Wjj_mass < 65) or (Wjj_mass > 105 and Wjj_mass < 250 ) ]
-            
-          if all(cutjj_Base) and all(cutjj_SR) : Wjj_SR = True
-	  if all(cutjj_Base) and all(cutjj_SB) : Wjj_SB = True
-
-          JetIdx0 = CJet_col[Wjj_ClJet0_idx]['jetIdx']
-          JetIdx1 = CJet_col[Wjj_ClJet1_idx]['jetIdx']
-          for jdx in range(Jet_col._len):
-	    if jdx == JetIdx0: continue
-	    if jdx == JetIdx1: continue
-	    if Jet_col[jdx]['pt'] < 20: continue
-	    if abs(Jet_col[jdx]['eta']) > 2.4: continue
-	    if Jet_col[jdx]['btagDeepB'] > bWP: 
-                Wjj_Btop = True
-                bjetResolved_jetIdx.append(jdx)
-
-
-
-
-
-
-	# Save Event ---------------------------------
-	# Evet Catagory
-        Cat_Fat_Btop= [Wfat_SR == True, Wfat_Btop == True, met_pt > 40]
-        Cat_Fat_Sig = [Wfat_SR == True, Wfat_Btop == False, met_pt > 40]
-        Cat_Fat_SB  = [Wfat_SB  == True, Wfat_Btop == False, met_pt > 40]
+        ##---Wlep
+        #print "fillBranchBoost"
+        self.out.fillBranch('Wlep_pt',self._Wlep_4v.Pt())
+        self.out.fillBranch('Wlep_eta',self._Wlep_4v.Eta())
+        self.out.fillBranch('Wlep_phi',self._Wlep_4v.Phi())
+        self.out.fillBranch('Wlep_mass',self._Wlep_4v.M())
+        self.out.fillBranch(self.METtype+'_pz1',self._MET_pz1) ##MET_pz = pz1+-sqrt(pz2)
+        self.out.fillBranch(self.METtype+'_pz2',self._MET_pz2)
         
 
-	if all(Cat_Fat_Sig) : IsFatSig = True
-	if all(Cat_Fat_SB)  : IsFatSB  = True
-	if all(Cat_Fat_Btop): IsFatTop = True
-
-        Cat_AK4_Btop= [Wjj_SR == True, Wjj_Btop == True, met_pt >30]
-        Cat_AK4_Sig = [Wjj_SR == True, Wjj_Btop == False, met_pt > 30]
-        Cat_AK4_SB  = [Wjj_SB  == True, Wjj_Btop == False, met_pt > 30]
-
-	if all(Cat_AK4_Sig) : IsJjSig = True
-	if all(Cat_AK4_SB)  : IsJjSB  = True
-	if all(Cat_AK4_Btop): IsJjTop = True
-        if (IsJjSig or IsJjSB) and  len(bjetResolved_jetIdx)!=0:
-            print "[jhchoi] IsJjSig or IsJjSB && len(bjetResolved_jetIdx)!=0, len(bjetResolved_jetIdx)=",len(bjetResolved_jetIdx)
-            print bjetResolved_jetIdx
-            
-        EventVar['IsBoostedSR'] = IsFatSig
-        EventVar['IsBoostedSB'] = IsFatSB
-        EventVar['IsBoostedTopCR'] = IsFatTop
-
-        EventVar['IsResolvedSR'] = IsJjSig
-        EventVar['IsResolvedSB'] = IsJjSB
-        EventVar['IsResolvedTopCR'] = IsJjTop
+        self.out.fillBranch('isBoost'  ,self._isBoost)
+        self.out.fillBranch('isBoostSR',self._isBoostSR)
+        self.out.fillBranch('WtagFatjet_cfjidx',self._Wfatjet_cfjidx_list)
+        self.out.fillBranch('WtagFatjet_pt',self._Wfatjet_pt_list)
+        self.out.fillBranch('WtagFatjet_eta',self._Wfatjet_eta_list)
+        self.out.fillBranch('WtagFatjet_phi',self._Wfatjet_phi_list)
+        self.out.fillBranch('WtagFatjet_mass',self._Wfatjet_mass_list)
+        self.out.fillBranch('WtagFatjet_tau21',self._Wfatjet_tau21_list)
 
 
-	# VBF tag ---------------------------------------
-	# Requiring two additional jets with pt > 30 gev, |eta| < 4.7
-	# and VBF cuts
+
+        ## choice for final fatjet
+        self.out.fillBranch('FinalFatJet_mindM_cfjidx',self._Wfatjet_mindM_cfjidx)
+        self.out.fillBranch('FinalFatJet_mxPT_cfjidx',self._Wfatjet_mxPT_cfjidx)
+
+
         
-	# lnJ case--------
-        lnJ_addJet_pt = []
-        lnJ_addJet_eta = []
-        lnJ_addJet_phi = []
-        lnJ_addJet_mass = []
-        lnJ_addJet_jid = []
-
-	nlnJ_addJet = 0
-	if IsFatSig or IsFatSB or IsFatTop:
-	  for jdx in range(CleanJetNotFat_col._len):
-	    clj_i = CleanJetNotFat_col[jdx]['jetIdx']
-	    if ( CJet_col[clj_i]['pt'] < 30 ) or ( abs(CJet_col[clj_i]['eta'])>4.7 ): continue
-	    lnJ_addJet_pt.append(CJet_col[clj_i]['pt'])
-	    lnJ_addJet_eta.append(CJet_col[clj_i]['eta'])
-	    lnJ_addJet_phi.append(CJet_col[clj_i]['phi'])
-	    lnJ_addJet_mass.append(Jet_col[CJet_col[clj_i]['jetIdx']]['mass'])
-	    lnJ_addJet_jid.append(Jet_col[CJet_col[clj_i]['jetIdx']]['jetId'])
-	    nlnJ_addJet +=1
-
-	  if nlnJ_addJet > 1:
-	    for i in range(nlnJ_addJet):
-	      for j in range(nlnJ_addJet):
-	        dEta_tmp = abs(lnJ_addJet_eta[i] - lnJ_addJet_eta[j])
-		mass_tmp = self.InvMassCalc(lnJ_addJet_pt[i],lnJ_addJet_eta[i],lnJ_addJet_phi[i],lnJ_addJet_mass[i],
-		  lnJ_addJet_pt[j],lnJ_addJet_eta[j],lnJ_addJet_phi[j],lnJ_addJet_mass[j])
-		if dEta_tmp > 3.5:
-		  if mass_tmp > vbfFat_jj_mass:
-		    vbfFat_jj_dEta = dEta_tmp
-		    vbfFat_jj_mass = mass_tmp
-	    if vbfFat_jj_mass > 500:
-	      IsVbfFat = True
-
-	# lnjj case ---------
-        lnjj_addJet_pt = []
-        lnjj_addJet_eta = []
-        lnjj_addJet_phi = []
-        lnjj_addJet_mass = []
-        lnjj_addJet_jid = []
-	nlnjj_addJet = 0
-	if IsJjSig or IsJjSB or IsJjTop:
-	  for ci in range(CJet_col._len):
-	    # check if it is used
-	    if ci == Wjj_ClJet0_idx : continue
-	    if ci == Wjj_ClJet1_idx : continue
-	    if ( CJet_col[ci]['pt'] < 30 ) or ( abs(CJet_col[ci]['eta'])>4.7 ): continue
-	    lnjj_addJet_pt.append  (CJet_col[ci]['pt'])
-	    lnjj_addJet_eta.append (CJet_col[ci]['eta'])
-	    lnjj_addJet_phi.append (CJet_col[ci]['phi'])
-	    lnjj_addJet_mass.append(Jet_col[CJet_col[ci]['jetIdx']]['mass'])
-	    lnjj_addJet_jid.append (Jet_col[CJet_col[ci]['jetIdx']]['jetId'])
-	    nlnjj_addJet +=1
-
-	  if nlnjj_addJet > 1:
-	    for i in range(nlnjj_addJet):
-	      for j in range(nlnjj_addJet):
-	        dEta_tmp = abs(lnjj_addJet_eta[i] - lnjj_addJet_eta[j])
-		mass_tmp = self.InvMassCalc(lnjj_addJet_pt[i],lnjj_addJet_eta[i],lnjj_addJet_phi[i],lnjj_addJet_mass[i],
-		                       lnjj_addJet_pt[j],lnjj_addJet_eta[j],lnjj_addJet_phi[j],lnjj_addJet_mass[j])
-		if dEta_tmp > 3.5:
-		  if mass_tmp > vbfjj_jj_mass:
-		    vbfjj_jj_dEta = dEta_tmp
-		    vbfjj_jj_mass = mass_tmp
-	    if vbfjj_jj_mass > 500:
-	      IsVbfjj = True
-
-        EventVar['IsVbfFat'] = IsVbfFat
-        EventVar['IsVbfjj'] = IsVbfjj
         
+        ##---Btagged Jet
+        self.out.fillBranch('BJetBoost_cjidx', self._BJetBoost_cjidx)
+        self.out.fillBranch('BJetBoostVBF_cjidx', self._BJetBoostVBF_cjidx)
+        ##---VBF Boost
+        self.out.fillBranch('isVBF_Boost', self._isVBF_Boost)
 
+        self.out.fillBranch('VBFjjBoost_mjj', self._VBFjjBoost_mjj)
+        self.out.fillBranch('VBFjjBoost_dEta', self._VBFjjBoost_dEta)
 
-	if IsFatSig==False and IsFatSB==False and IsFatTop==False and IsJjSig==False and IsJjSB==False and IsJjTop==False:
-	  return False
+        self.out.fillBranch('max_mjj_Boost', self._max_mjj_Boost)
+        self.out.fillBranch('isResol',self._isResol)
+        self.out.fillBranch('isResolSR',self._isResolSR)
+
+        ##Hadronic W
+        self.out.fillBranch('Whad_pt',   self._Whad_4v.Pt())
+        self.out.fillBranch('Whad_eta',  self._Whad_4v.Eta())
+        self.out.fillBranch('Whad_phi',  self._Whad_4v.Phi())
+        self.out.fillBranch('Whad_mass', self._Whad_4v.M())
+        self.out.fillBranch('Whad_Mt',   self._Whad_4v.Mt())
+
+        self.out.fillBranch('Whad_cjidx1', self._Whad_cjidx1)
+        self.out.fillBranch('Whad_cjidx2', self._Whad_cjidx2)
+        self.out.fillBranch('BJetResol_cjidx', self._BJetResol_cjidx)
+
+        ###VBF
+        self.out.fillBranch('isVBF_Resol',     self._isVBF_Resol)
+        self.out.fillBranch('VBFjjResol_dEta', self._VBFjjResol_dEta)
+        self.out.fillBranch('VBFjjResol_mjj',  self._VBFjjResol_mjj)
+        self.out.fillBranch('VBFjjResol_dEta', self._VBFjjResol_dEta)
+        self.out.fillBranch('max_mjj_Resol',   self._max_mjj_Resol)
+
         
-
-
-        self.out.fillBranch( 'Flavlnjj' , Flavlnjj)
-        ##--Event Categorization--##
-        list_myvar=['IsBoostedSR','IsBoostedSB','IsBoostedTopCR','IsResolvedSR','IsResolvedSB','IsResolvedTopCR','IsVbfFat','IsVbfjj']
-        for myvar in list_myvar:
-            self.out.fillBranch( myvar, EventVar[myvar] )
-
-        ##--Boosted FatJet--##
-        list_myvar=['pt','eta','phi','mass','tau21','WptOvHfatM','HlnFat_mass']
-        for myvar in list_myvar:
-            self.out.fillBranch( "CleanFatJetPassMBoostedSR_"+myvar , CleanFatJetPassMBoostedSR[myvar])
-            self.out.fillBranch( "CleanFatJetPassMBoostedSB_"+myvar , CleanFatJetPassMBoostedSB[myvar])
+        self.out.fillBranch('lnjj_pt',   self._lnjj_pt)
+        self.out.fillBranch('lnjj_mass', self._lnjj_mass)
+        self.out.fillBranch('lnjj_Mt',   self._lnjj_Mt)
+        self.out.fillBranch('minPtWOverMlnjj',self._minPtWOverMlnjj)
+        self.out.fillBranch('maxPtWOverMlnjj',self._maxPtWOverMlnjj)
+        self.out.fillBranch('dR_l_Whad',     self._dR_l_Whad)
+        self.out.fillBranch('dR_Wlep_Whad',  self._dR_Wlep_Whad)
+        self.out.fillBranch('dPhi_l_Whad',   self._dPhil_Whad)
+        self.out.fillBranch('dPhi_Wlep_Whad',self._dPhiWlep_Whad)
 
 
 
 
-        self.out.fillBranch( 'Wlep_mt'   , Wlep_mt)
-        self.out.fillBranch( 'Hlnjj_mt'  , Hlnjj_mt)
-
-        self.out.fillBranch( 'vbfFat_jj_dEta'    , vbfFat_jj_dEta)
-        self.out.fillBranch( 'vbfFat_jj_mass'  , vbfFat_jj_mass)
-        self.out.fillBranch( 'vbfjj_jj_dEta'    , vbfjj_jj_dEta)
-        self.out.fillBranch( 'vbfjj_jj_mass'  , vbfjj_jj_mass)
-
-        self.out.fillBranch( 'Hlnjj_mass', Hlnjj_mass )
-        self.out.fillBranch( 'WptOvHak4M', WptOvHak4M )
+        #print "End of fllbranch"
 
 
-        self.out.fillBranch('bjetBoosted_jetIdx',bjetBoosted_jetIdx)
-        self.out.fillBranch('bjetResolved_jetIdx',bjetResolved_jetIdx)
+        #print "self._isBoost",self._isBoost
+        #print "self._isResol",self._isResol
+        
+        ##<<<<End of Resol
+
+
+	########################
+	# Event Save Decision
+	########################
+
+        if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
 
         return True
+
+
+    def CookME(self):
+        boostMasses = [400, 1500]
+        resolMasses = [400, 1500]
+	for mH in boostMasses:
+	  gsm = self.g.GetBinContent(self.g.FindBin(mH))
+          self.melaBoost = ROOT.MelaHighMassKDwCalc(13, mH, gsm)
+	  allCut_VBFBoostSR = [
+	      self._isBoostSR and self._isVBF_Boost and len(self._BJetBoostVBF_cjidx) ==0
+	      ]
+	  if all(allCut_VBFBoostSR):
+	    daughter_coll = ROOT.SimpleParticleCollection_t()
+	    accociated_coll = ROOT.SimpleParticleCollection_t()
+	    daughter = ROOT.SimpleParticle_t(25, self._lnJ_4v)
+	    associated1 = ROOT.SimpleParticle_t(0,
+
 
 
     def getDeltaR(self, phi1, eta1, phi2, eta2):
@@ -499,6 +489,525 @@ class HMlnjjVarsClass_Dev(Module):
 
         return metPz
  
+
+
+    def WlepMaker(self):
+        lepton_pt  = self._Lepton.pt
+        lepton_eta = self._Lepton.eta
+        lepton_phi = self._Lepton.phi
+        lepton_pz  = lepton_pt*math.sinh(lepton_eta)
+        lepton_E   = lepton_pt*math.cosh(lepton_eta)
+        self._lepton_4v.SetPtEtaPhiM(lepton_pt,lepton_eta,lepton_phi,0)
+        met_pt  = self._MET_pt
+        met_phi = self._MET_phi
+        #print 'Wmass=',type(Wmass)
+        #print 'lepton_pt=',type(lepton_pt)
+        #print 'lepton_phi=',type(lepton_pt)
+        #print 'met_pt=',type(met_pt)
+        #print 'met_phi=',type(met_phi)
+        mu = (Wmass*Wmass)/2 + lepton_pt*met_pt*math.cos(met_phi-lepton_phi)
+        self._MET_pz1 = mu*lepton_pz/pow(lepton_pt,2)
+        self._MET_pz2 = (  mu*lepton_pz/(lepton_pt**2)  )**2 - ( (lepton_E*met_pt)**2 - mu**2 )/(lepton_pt**2)
+
+        #met_pz solution = met_pz_1 +-sqrt(met_pz_2)
+
+        ##complex case
+        if self._MET_pz2 < 0:
+            self._MET_pz = self._MET_pz1
+        else:
+            sol1 = self._MET_pz1 + math.sqrt(self._MET_pz2)
+            sol2 = self._MET_pz1 - math.sqrt(self._MET_pz2)
+            if abs(sol1) < abs(sol2):
+                self._MET_pz = sol1
+            else:
+                self._MET_pz = sol2
+
+        wlep_px = lepton_pt*math.cos(lepton_phi) + met_pt*math.cos(met_phi)
+        wlep_py = lepton_pt*math.sin(lepton_phi) + met_pt*math.sin(met_phi)
+        wlep_pz = lepton_pz + self._MET_pz
+        wlep_E  = lepton_E  + math.sqrt(self._MET_pz**2 + met_pt**2)
+        self._Wlep_4v.SetPxPyPzE(wlep_px,wlep_py,wlep_pz,wlep_E)
+        
+
+    def FindWtaggerFatJet(self):
+        ##self._CleanFatJet
+        self._Wfatjet_cfjidx_list=[]
+        self._Wfatjet_pt_list=[]
+        self._Wfatjet_eta_list=[]
+        self._Wfatjet_phi_list=[]
+        self._Wfatjet_mass_list=[]
+        self._Wfatjet_mindM_cfjidx=-1
+        self._Wfatjet_mxPT_cfjidx=-1
+        
+        min_dM = MaxLimit
+        max_pt = MinLimit
+        N=self._CleanFatJet_col._len
+        for i_fj in range(0,N):
+            pt,eta,phi,mass=self.CleanFatJet_PtEtaPhiM(i_fj)
+            tau21=self._CleanFatJet_col[i_fj].tau21
+            cfatjet_jetIdx=self._CleanFatJet_col[i_fj].jetIdx
+            fatjetid = self._FatJet_col[cfatjet_jetIdx].jetId
+
+            if mass < self.Wmass_CRlow : continue
+            if mass > self.Wmass_CRhigh : continue
+            if tau21 > self.tau21WP : continue
+            if abs(eta) > self.cut_fjet_eta : continue
+            if pt < self.cut_fjet_pt : continue
+            if fatjetid < self.min_fatjetid : continue
+            self._Wfatjet_cfjidx_list.append(i_fj)
+            self._Wfatjet_pt_list.append(pt)
+            self._Wfatjet_eta_list.append(eta)
+            self._Wfatjet_phi_list.append(phi)
+            self._Wfatjet_mass_list.append(mass)
+            self._Wfatjet_tau21_list.append(tau21)
+            ##PT ordering
+            if pt > max_pt :
+	      max_pt = pt
+	      self._Wfatjet_mxPT_cfjidx = i_fj
+
+            tmp_dM = abs(Wmass - mass)
+            if tmp_dM < min_dM :
+	      min_dM = tmp_dM
+	      self._Wfatjet_mindM_cfjidx = i_fj
+	if min_dM  < MaxLimit: self._isBoost = True
+        
+    def GetBJetsBoost(self):
+        ##->Set self._BJetBoost_cjidx
+        #self._CleanJetNotFat_col
+        bWP=self.bWP
+        N = self._CleanJetNotFat_col._len
+        for i_cj in range(0,N): ##-- i_cj = idx of self._CleanJetNotFat_col
+            cj_idx=self._CleanJetNotFat_col[i_cj].jetIdx
+            pt=self._CleanJet_col[cj_idx].pt
+            eta=self._CleanJet_col[cj_idx].eta
+            jet_idx=self._CleanJet_col[cj_idx].jetIdx
+            bAlgo=self._Jet_col[jet_idx].btagDeepB
+            if bAlgo < bWP:continue
+            if pt < 20 :continue
+            if abs(eta) > 2.5:continue
+            self._BJetBoost_cjidx.append(cj_idx) ## fill index of CleanJet 
+	    if self._isVBF_Boost:
+	      if cj_idx not in [ self._VBFjjBoost_cjidx1, self._VBFjjBoost_cjidx2]:
+		self._BJetBoostVBF_cjidx.append(cj_idx)
+
+    def GetBJetsResol(self):
+        ##->Set self._BJetResol_cjidx
+        #self._CleanJet_col
+        bWP=self.bWP
+        N=self._CleanJet_col._len
+        for i_cj in range(0,N):
+            if i_cj == self._Whad_cjidx1 : continue
+            if i_cj == self._Whad_cjidx2 : continue
+            
+            pt   = self._CleanJet_col[i_cj].pt
+            eta  = self._CleanJet_col[i_cj].eta
+            j_idx= self._CleanJet_col[i_cj].jetIdx ##Jet Object index
+            bAlgo= self._Jet_col[j_idx].btagDeepB
+            if bAlgo < bWP:continue
+            if pt < self.cut_bjet_pt  :continue
+            if abs(eta) > self.cut_bjet_eta:continue
+            self._BJetResol_cjidx.append(i_cj) ## fill index of CleanJet
+            
+
+
+
+    def VBF_Boost(self):
+        N=self._CleanJetNotFat_col._len
+        if N < 2 :
+            #print "NCleanJet < 2"
+            self._isVBF_Boost = False
+            return
+        
+        for i_cj in range(0,N):
+            cjidx1 = self._CleanJetNotFat_col[i_cj].jetIdx ##index of CleanJet
+            pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(cjidx1)
+            if pt1 < self.cut_VBFjet_pt : continue
+            if abs(eta1) > self.cut_VBFjet_eta : continue
+            
+            for j_cj in range(0,N):
+                if j_cj <= i_cj : continue ##aviod doubly checked or the same one
+                cjidx2 = self._CleanJetNotFat_col[j_cj].jetIdx ##index of CleanJet
+                pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(cjidx2)
+                if pt2 < self.cut_VBFjet_pt: continue
+                if abs(eta2) > self.cut_VBFjet_eta : continue
+
+                ##Set momentum##
+                #print "Boost forward pair, "
+                this_dEta=abs(eta1-eta2)
+                this_mjj = self.InvMassCalc(pt1,eta1,phi1,mass1,pt2,eta2,phi2,mass2)
+                #print "this_dEta=",this_dEta
+                #print "this_mjj=",this_mjj
+		# Select the biggest mjj as VBFjj
+                if (this_dEta > self.cut_VBF_dEta) and (this_mjj > self._VBFjjBoost_mjj) : 
+                    self._VBFjjBoost_dEta = this_dEta
+                    self._VBFjjBoost_mjj = this_mjj
+                    self._VBFjjBoost_cjidx1 = cjidx1
+                    self._VBFjjBoost_cjidx2 = cjidx2
+		# the biggest mjj for either VBF or non-VBF
+                if this_mjj > self._max_mjj_Boost:
+                    self._max_mjj_Boost = this_mjj
+
+        ##--End of jet pair loop
+        if self._VBFjjBoost_mjj > self.cut_VBF_mjj : self._isVBF_Boost = True
+
+    def VBF_Resol(self):
+        if not self._isResol:
+            self._isVBF_Resol = False
+	    return
+        #N = self._CleanJetNotFat_col._len bug?
+        N=self._CleanJet_col._len
+        #if N < 2 : ## could it be 4 ? bug?
+        if N < 4 : 
+            self._isVBF_Resol = False
+            return
+
+        for i_cj in range(0,N):
+	    if i_cj in [self._Whad_cjidx1, self._Whad_cjidx2]:
+	      #print "cjet id", i_cj,"is in",self._Whad_cjidx1, self._Whad_cjidx2
+	      continue 
+            pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
+            if pt1 < self.cut_VBFjet_pt : continue
+            if abs(eta1) > self.cut_VBFjet_eta : continue
+
+            for j_cj in range(0,N):
+                if j_cj <= i_cj : continue ##doubly checked or the same one
+	        if j_cj in [self._Whad_cjidx1, self._Whad_cjidx2]: continue
+                
+                pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
+                if pt2 < self.cut_VBFjet_pt: continue
+                if abs(eta2) > self.cut_VBFjet_eta : continue
+
+                ##Set momentum##
+
+                this_dEta=abs(eta1-eta2)
+                this_mjj = self.InvMassCalc(pt1,eta1,phi1,mass1,pt2,eta2,phi2,mass2)
+                if (this_dEta > self.cut_VBF_dEta) and (this_mjj > self._VBFjjResol_mjj) :
+                    self._VBFjjResol_dEta = this_dEta
+                    self._VBFjjResol_mjj = this_mjj
+                    self._VBFjjResol_cjidx1 = i_cj
+                    self._VBFjjResol_cjidx2 = j_cj
+                if this_mjj > self._max_mjj_Resol:
+                    self._max_mjj_Resol = this_mjj
+
+        ##--End of jet pair loop
+        if self._VBFjjResol_mjj > self.cut_VBF_mjj : self._isVBF_Resol = True
+
+
+    def WhadMaker(self):
+        N = self._CleanJet_col._len
+        dM = MaxLimit
+        Whad_mass = MinLimit
+        v1=ROOT.TLorentzVector()
+        v2=ROOT.TLorentzVector()
+        for i_cj in range(0,N):
+            pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
+            if pt1 < self.cut_jet_pt : continue
+            if abs(eta1) > self.cut_jet_eta : continue 
+            for j_cj in range(0,N):
+                if j_cj <= i_cj : continue
+                pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
+                if pt2 < self.cut_jet_pt  : continue
+                if abs(eta2) > self.cut_jet_eta : continue
+                v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+                v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
+                
+                this_M=(v1+v2).M()
+                this_dM=abs(Wmass-this_M)
+                if this_dM < dM:
+                    dM = this_dM
+                    self._Whad_cjidx1 = i_cj
+                    self._Whad_cjidx2 = j_cj
+                    self._Whad_4v = v1+v2
+        if dM < MaxLimit:
+	  self._isResol = True
+          ##DeltaR, DeltaPhi between l - Whad OR Wlep - Whad
+          self._dR_l_Whad      = self._Whad_4v.DeltaR(self._lepton_4v)
+          self._dR_Wlep_Whad   = self._Whad_4v.DeltaR(self._Wlep_4v)
+          self._dPhil_Whad     = self._Whad_4v.DeltaPhi(self._lepton_4v)
+          self._dPhiWlep_Whad  = self._Whad_4v.DeltaPhi(self._Wlep_4v)
+
+        if self._Whad_cjidx1 < 0 :
+	  self._isResol   = False #for safty
+        if self._Whad_cjidx2 < 0 :
+	  self._isResol   = False #for safty
+ 
+    def CookLnJ(self):
+        if not self._isBoost: return
+        self._FatSel_cfjidx['mindM']=self._Wfatjet_mindM_cfjidx
+        self._FatSel_cfjidx['mxPT']=self._Wfatjet_mxPT_cfjidx
+
+        tmp_FatJet_4v= ROOT.TLorentzVector()
+
+        for sel in self._FatSel_cfjidx:# loop twice for mindM and mxPT
+            cfatjet_idx=self._FatSel_cfjidx[sel]
+            if cfatjet_idx >= 0:
+                
+                WfatPt, WfatEta, WfatPhi, WfatMass = self.CleanFatJet_PtEtaPhiM(cfatjet_idx)
+                tmp_FatJet_4v.SetPtEtaPhiM(WfatPt,WfatEta,WfatPhi,WfatMass) ##FatJet vector
+                H_4v=self._Wlep_4v + tmp_FatJet_4v ## sum Wlep + Whad
+                lnJ_pt=H_4v.Pt()
+                lnJ_mass=H_4v.M()
+                ##--additional cut
+                minPtWOverMlnJ = min(self._Wlep_4v.Pt(), tmp_FatJet_4v.Pt())/lnJ_mass
+                maxPtWOverMlnJ = max(self._Wlep_4v.Pt(), tmp_FatJet_4v.Pt())/lnJ_mass
+                ##DeltaR, DeltaPhi between l - Fat OR Wlep - Fat
+                
+                dR_l_F    = tmp_FatJet_4v.DeltaR(self._lepton_4v)
+                dR_Wlep_F = tmp_FatJet_4v.DeltaR(self._Wlep_4v)
+                
+                dPhi_l_F    = tmp_FatJet_4v.DeltaPhi(self._lepton_4v)
+                dPhi_Wlep_F = tmp_FatJet_4v.DeltaPhi(self._Wlep_4v)
+		########################
+		#### Event Catagory ####
+		########################
+		if sel == "mindM":
+		  #print "mindM case"
+                  self._lnJ_4v = H_4v
+		  self._FinalFatJet_4v = tmp_FatJet_4v
+	          cut_Boost_Base  = [ \
+		      self._MET_pt    > self.METcut_Boost and \
+		      minPtWOverMlnJ > self.cut_minPtWOverMlnJ ]
+		  cut_Boost_SB = [ \
+		      WfatMass < self.Wmass_CRhigh and \
+		      WfatMass > self.Wmass_CRlow]
+		  cut_Boost_SR = [ \
+		      WfatMass < self.Wmass_SRhigh and \
+		      WfatMass > self.Wmass_SRlow]
+		  if all(cut_Boost_Base) and all(cut_Boost_SB):
+                    self._isBoostSB = True
+		  if all(cut_Boost_Base) and all(cut_Boost_SR):
+                    self._isBoostSR = True
+            else:
+                lnJ_pt =  MinLimit
+                lnJ_mass= MinLimit
+                minPtWOverMlnJ = MinLimit
+                maxPtWOverMlnJ = MinLimit
+                dR_l_F    = MinLimit
+                dR_Wlep_F = MinLimit
+                dR_l_F    = MinLimit
+                dR_Wlep_F = MinLimit
+
+            self.out.fillBranch('lnJ_pt_'+sel, lnJ_pt)
+            self.out.fillBranch('lnJ_mass_'+sel, lnJ_mass)
+            self.out.fillBranch('minPtWOverMlnJ_'+sel, minPtWOverMlnJ)##additional cut
+            self.out.fillBranch('maxPtWOverMlnJ_'+sel, maxPtWOverMlnJ)
+            self.out.fillBranch('dR_l_F_'+sel, dR_l_F)
+            self.out.fillBranch('dR_Wlep_F_'+sel, dR_Wlep_F)
+            self.out.fillBranch('dPhi_l_F_'+sel, dR_l_F)
+            self.out.fillBranch('dPhi_Wlep_F'+sel, dR_Wlep_F)
+
+
+    def CookLnjj(self):
+        if not self._isResol : return
+        self._lnjj_4v = self._Wlep_4v + self._Whad_4v
+        self._lnjj_pt   = self._lnjj_4v.Pt()
+        self._lnjj_mass = self._lnjj_4v.M()
+        self._lnjj_Mt   = self._lnjj_4v.Mt()
+        self._minPtWOverMlnjj = min(self._Wlep_4v.Pt(), self._Whad_4v.Pt())/self._lnjj_mass
+        self._maxPtWOverMlnjj = max(self._Wlep_4v.Pt(), self._Whad_4v.Pt())/self._lnjj_mass
+
+        Whad_mass=self._Whad_4v.M()
+
+	cut_Resol_Base = [ \
+	    self._MET_pt           > self.METcut_Resol and  \
+	    self._minPtWOverMlnjj > self.cut_minPtWOverMlnjj ]
+	cut_Resol_SB = [ \
+	    Whad_mass > self.Wmass_CRlow and \
+	    Whad_mass < self.Wmass_CRhigh ]
+	cut_Resol_SR = [ \
+	    Whad_mass > self.Wmass_SRlow and \
+	    Whad_mass < self.Wmass_SRhigh ]
+	if all(cut_Resol_Base) and all(cut_Resol_SB):
+          self._isResolSB = True
+	if all(cut_Resol_Base) and all(cut_Resol_SR):
+          self._isResolSR = True
+
+
+
+    def CleanJet_PtEtaPhiM(self,cjidx):
+        pt=self._CleanJet_col[cjidx].pt
+        eta=self._CleanJet_col[cjidx].eta
+        phi=self._CleanJet_col[cjidx].phi
+        jidx=self._CleanJet_col[cjidx].jetIdx
+        mass=self._Jet_col[jidx].mass
+        return pt,eta,phi,mass
+
+    def CleanFatJet_PtEtaPhiM(self,cfjidx):
+        pt=self._CleanFatJet_col[cfjidx].pt
+        eta=self._CleanFatJet_col[cfjidx].eta
+        phi=self._CleanFatJet_col[cfjidx].phi
+        mass=self._CleanFatJet_col[cfjidx].mass
+        
+        return pt,eta,phi,mass
+
+    def MakeMassVsGamma(self):
+        # Non-CPS values from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR2014 for up to 1000 GeV
+        Hmass = [80.0, 81.0, 82.0, 83.0, 84.0, 85.0, 86.0, 87.0, 88.0, 89.0,
+                 90.0, 91.0, 92.0, 93.0, 94.0, 95.0, 96.0, 97.0, 98.0, 99.0,
+                 100.0, 101.0, 102.0, 103.0, 104.0, 105.0, 106.0, 107.0, 108.0, 109.0,
+                 110.0, 110.5, 111.0, 111.5, 112.0, 112.5, 113.0, 113.5, 114.0, 114.5,
+                 115.0, 115.5, 116.0, 116.5, 117.0, 117.5, 118.0, 118.5, 119.0, 119.5,
+
+                 120.0, 120.1, 120.2, 120.3, 120.4, 120.5, 120.6, 120.7, 120.8, 120.9,
+                 121.0, 121.1, 121.2, 121.3, 121.4, 121.5, 121.6, 121.7, 121.8, 121.9,
+                 122.0, 122.1, 122.2, 122.3, 122.4, 122.5, 122.6, 122.7, 122.8, 122.9,
+                 123.0, 123.1, 123.2, 123.3, 123.4, 123.5, 123.6, 123.7, 123.8, 123.9,
+                 124.0, 124.1, 124.2, 124.3, 124.4, 124.5, 124.6, 124.7, 124.8, 124.9,
+
+                 125.0, 125.1, 125.2, 125.3, 125.4, 125.5, 125.6, 125.7, 125.8, 125.9,
+                 126.0, 126.1, 126.2, 126.3, 126.4, 126.5, 126.6, 126.7, 126.8, 126.9,
+                 127.0, 127.1, 127.2, 127.3, 127.4, 127.5, 127.6, 127.7, 127.8, 127.9,
+                 128.0, 128.1, 128.2, 128.3, 128.4, 128.5, 128.6, 128.7, 128.8, 128.9,
+                 129.0, 129.1, 129.2, 129.3, 129.4, 129.5, 129.6, 129.7, 129.8, 129.9,
+
+                 130.0, 130.5, 131.0, 131.5, 132.0, 132.5, 133.0, 133.5, 134.0, 134.5,
+                 135.0, 135.5, 136.0, 136.5, 137.0, 137.5, 138.0, 138.5, 139.0, 139.5,
+                 140.0, 140.5, 141.0, 141.5, 142.0, 142.5, 143.0, 143.5, 144.0, 144.5,
+                 145.0, 145.5, 146.0, 146.5, 147.0, 147.5, 148.0, 148.5, 149.0, 149.5,
+                 150.0, 152.0, 154.0, 156.0, 158.0, 160.0, 162.0, 164.0, 165.0, 166.0,
+
+                 168.0, 170.0, 172.0, 174.0, 175.0, 176.0, 178.0, 180.0, 182.0, 184.0,
+                 185.0, 186.0, 188.0, 190.0, 192.0, 194.0, 195.0, 196.0, 198.0, 200.0,
+                 202.0, 204.0, 206.0, 208.0, 210.0, 212.0, 214.0, 216.0, 218.0, 220.0,
+                 222.0, 224.0, 226.0, 228.0, 230.0, 232.0, 234.0, 236.0, 238.0, 240.0,
+                 242.0, 244.0, 246.0, 248.0, 250.0, 252.0, 254.0, 256.0, 258.0, 260.0,
+
+                 262.0, 264.0, 266.0, 268.0, 270.0, 272.0, 274.0, 276.0, 278.0, 280.0,
+                 282.0, 284.0, 286.0, 288.0, 290.0, 292.0, 294.0, 296.0, 298.0, 300.0,
+                 305.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0, 345.0, 350.0,
+                 360.0, 370.0, 380.0, 390.0, 400.0, 420.0, 440.0, 450.0, 460.0, 480.0,
+                 500.0, 520.0, 540.0, 550.0, 560.0, 580.0, 600.0, 620.0, 640.0, 650.0,
+
+                 660.0, 680.0, 700.0, 720.0, 740.0, 750.0, 760.0, 780.0, 800.0, 820.0,
+                 840.0, 850.0, 860.0, 880.0, 900.0, 920.0, 940.0, 950.0, 960.0, 980.0,
+                 1000.0, 1050.0, 1100.0, 1150.0, 1200.0, 1250.0, 1300.0, 1350.0, 1400.0, 1450.0,
+                 1500.0, 1550.0, 1600.0, 1650.0, 1700.0, 1750.0, 1800.0, 1850.0, 1900.0, 1950.0,
+                 2000.0, 2050.0, 2100.0, 2150.0, 2200.0, 2250.0, 2300.0, 2350.0, 2400.0, 2450.0,
+
+                 2500.0, 2550.0, 2600.0, 2650.0, 2700.0, 2750.0, 2800.0, 2850.0, 2900.0, 2950.0,
+                 3000.0, 3050.0, 3100.0, 3150.0, 3200.0, 3250.0, 3300.0, 3350.0, 3400.0, 3450.0,
+                 3500.0, 3550.0, 3600.0, 3650.0, 3700.0, 3750.0, 3800.0, 3850.0, 3900.0, 3950.0,
+                 4000.0, 4050.0, 4100.0, 4150.0, 4200.0, 4250.0, 4300.0, 4350.0, 4400.0, 4450.0,
+                 4500.0, 4550.0, 4600.0, 4650.0, 4700.0, 4750.0, 4800.0, 4850.0, 4900.0, 4950.0, 5000.0]
+
+        Hwidth = [0.00199, 0.00201, 0.00204, 0.00206, 0.00208, 0.00211, 0.00213, 0.00215, 0.00218, 0.0022,
+                  0.00222, 0.00225, 0.00227, 0.0023, 0.00232, 0.00235, 0.00237, 0.0024, 0.00243, 0.00246,
+                  0.00248, 0.00251, 0.00254, 0.00258, 0.00261, 0.00264, 0.00268, 0.00272, 0.00276, 0.0028,
+                  0.00285, 0.00287, 0.00289, 0.00292, 0.00295, 0.00297, 0.003, 0.00303, 0.00306, 0.00309,
+                  0.00312, 0.00315, 0.00319, 0.00322, 0.00326, 0.0033, 0.00333, 0.00338, 0.00342, 0.00346,
+
+                  0.00351, 0.00352, 0.00352, 0.00353, 0.00354, 0.00355, 0.00356, 0.00357, 0.00358, 0.00359,
+                  0.0036, 0.00361, 0.00362, 0.00363, 0.00364, 0.00365, 0.00366, 0.00367, 0.00368, 0.00369,
+                  0.00371, 0.00372, 0.00373, 0.00374, 0.00375, 0.00376, 0.00377, 0.00378, 0.00379, 0.00381,
+                  0.00382, 0.00383, 0.00384, 0.00385, 0.00386, 0.00388, 0.00389, 0.0039, 0.00391, 0.00393,
+                  0.00394, 0.00395, 0.00396, 0.00398, 0.00399, 0.004, 0.00402, 0.00403, 0.00404, 0.00406,
+
+                  0.00407, 0.00408, 0.0041, 0.00411, 0.00412, 0.00414, 0.00415, 0.00417, 0.00418, 0.0042,
+                  0.00421, 0.00423, 0.00424, 0.00426, 0.00427, 0.00429, 0.0043, 0.00432, 0.00433, 0.00435,
+                  0.00436, 0.00438, 0.0044, 0.00441, 0.00443, 0.00445, 0.00446, 0.00448, 0.0045, 0.00451,
+                  0.00453, 0.00455, 0.00457, 0.00458, 0.0046, 0.00462, 0.00464, 0.00465, 0.00467, 0.00469,
+                  0.00471, 0.00473, 0.00475, 0.00477, 0.00479, 0.00481, 0.00483, 0.00485, 0.00487, 0.00489,
+
+                  0.00491, 0.00501, 0.00512, 0.00523, 0.00535, 0.00548, 0.0056, 0.00574, 0.00588, 0.00603,
+                  0.00618, 0.00634, 0.00651, 0.00669, 0.00687, 0.00706, 0.00726, 0.00747, 0.0077, 0.00793,
+                  0.00817, 0.00843, 0.0087, 0.00898, 0.00928, 0.00959, 0.00992, 0.0103, 0.0106, 0.011,
+                  0.0114, 0.0119, 0.0123, 0.0128, 0.0133, 0.0139, 0.0145, 0.0151, 0.0158, 0.0165,
+                  0.0173, 0.0211, 0.0266, 0.0351, 0.0502, 0.0831, 0.147, 0.215, 0.246, 0.276,
+
+                  0.33, 0.38, 0.429, 0.477, 0.501, 0.525, 0.575, 0.631, 0.7, 0.788,
+                  0.832, 0.876, 0.96, 1.04, 1.12, 1.2, 1.24, 1.28, 1.35, 1.43,
+                  1.51, 1.59, 1.68, 1.76, 1.85, 1.93, 2.02, 2.12, 2.21, 2.31,
+                  2.40, 2.50, 2.61, 2.71, 2.82, 2.93, 3.04, 3.16, 3.27, 3.40,
+                  3.52, 3.64, 3.77, 3.91, 4.04, 4.18, 4.32, 4.46, 4.61, 4.76,
+
+                  4.91, 5.07, 5.23, 5.39, 5.55, 5.72, 5.89, 6.07, 6.25, 6.43,
+                  6.61, 6.80, 6.99, 7.19, 7.39, 7.59, 7.79, 8.00, 8.22, 8.43,
+                  8.99, 9.57, 10.20, 10.80, 11.40, 12.10, 12.80, 13.50, 14.20, 15.20,
+                  17.60, 20.20, 23.10, 26.10, 29.20, 35.90, 43.00, 46.80, 50.80, 59.10,
+                  68.00, 77.50, 87.70, 93.00, 98.60, 110.00, 123.00, 136.00, 150.00, 158.00,
+
+                  165.00, 182.00, 199.00, 217.00, 237.00, 247.00, 258.00, 280.00, 304.00, 330.00,
+                  357.00, 371.00, 386.00, 416.00, 449.00, 484.00, 521.00, 540.00, 560.00, 602.00,
+                  647.00, 525, 550, 575, 600, 625, 650, 675, 700, 725,
+                  750, 775, 800, 825, 850, 875, 900, 925, 950, 975,
+                  1000, 1025, 1050, 1075, 1100, 1125, 1150, 1175, 1200, 1225,
+
+                  1250, 1275, 1300, 1325, 1350, 1375, 1400, 1425, 1450, 1475,
+                  1500, 1525, 1550, 1575, 1600, 1625, 1650, 1675, 1700, 1725,
+                  1750, 1775, 1800, 1825, 1850, 1875, 1900, 1925, 1950, 1975,
+                  2000, 2025, 2050, 2075, 2100, 2125, 2150, 2175, 2200, 2225,
+                  2250, 2275, 2300, 2325, 2350, 2375, 2400, 2425, 2450, 2475, 2500]
+
+        # CPS values from https://github.com/latinos/LatinoAnalysis/blob/master/Gardener/python/variables/pwhg_cpHTO_reweight.f
+        HmassCPS = [80.0, 82.0, 84.0, 86.0, 88.0, 90.0, 92.0, 94.0, 96.0, 98.0,
+                    100.0, 102.0, 104.0, 106.0, 108.0, 110.0, 112.0, 114.0, 116.0, 118.0,
+                    120.0, 122.0, 124.0, 125.0, 126.0, 128.0, 130.0, 132.0, 134.0, 136.0,
+                    138.0, 140.0, 142.0, 144.0, 146.0, 148.0, 150.0, 152.0, 154.0, 156.0,
+                    158.0, 160.0, 162.0, 164.0, 166.0, 168.0, 170.0, 172.0, 174.0, 176.0,
+
+                    178.0, 180.0, 182.0, 184.0, 186.0, 188.0, 190.0, 192.0, 194.0, 196.0,
+                    198.0, 200.0, 202.0, 204.0, 206.0, 208.0, 210.0, 212.0, 214.0, 216.0,
+                    218.0, 220.0, 222.0, 224.0, 226.0, 228.0, 230.0, 232.0, 234.0, 236.0,
+                    238.0, 240.0, 242.0, 244.0, 246.0, 248.0, 250.0, 252.0, 254.0, 256.0,
+                    258.0, 260.0, 262.0, 264.0, 266.0, 268.0, 270.0, 272.0, 274.0, 276.0,
+
+                    278.0, 280.0, 282.0, 284.0, 286.0, 288.0, 290.0, 292.0, 294.0, 296.0,
+                    298.0, 300.0, 305.0, 310.0, 315.0, 320.0, 325.0, 330.0, 335.0, 340.0,
+                    345.0, 350.0, 360.0, 370.0, 380.0, 390.0, 400.0, 420.0, 440.0, 450.0,
+                    460.0, 480.0, 500.0, 520.0, 540.0, 550.0, 560.0, 580.0, 600.0, 620.0,
+                    640.0, 650.0, 660.0, 680.0, 700.0, 720.0, 740.0, 750.0, 760.0, 780.0,
+
+                    800.0, 820.0, 840.0, 850.0, 860.0, 880.0, 900.0, 920.0, 940.0, 950.0,
+                    960.0, 980.0, 1000.0, 1050.0, 1100.0, 1150.0, 1200.0, 1250.0, 1300.0, 1350.0,
+                    1400.0, 1450.0, 1500.0, 1550.0, 1600.0, 1650.0, 1700.0, 1750.0, 1800.0, 1850.0,
+                    1900.0, 1950.0, 2000.0, 2050.0, 2100.0, 2150.0, 2200.0, 2250.0, 2300.0, 2350.0,
+                    2400.0, 2450.0, 2500.0, 2550.0, 2600.0, 2650.0, 2700.0, 2750.0, 2800.0, 2850.0,
+
+                    2900.0, 2950.0, 3000.0, 3050.0, 3100.0, 3150.0, 3200.0, 3250.0, 3300.0, 3350.0,
+                    3400.0, 3450.0, 3500.0, 3550.0, 3600.0, 3650.0, 3700.0, 3750.0, 3800.0, 3850.0,
+                    3900.0, 3950.0, 4000.0, 4050.0, 4100.0, 4150.0, 4200.0, 4250.0, 4300.0, 4350.0,
+                    4400.0, 4450.0, 4500.0, 4550.0, 4600.0, 4650.0, 4700.0, 4750.0, 4800.0, 4850.0, 4900.0, 4950.0, 5000.0]
+
+        HwidthCPS = [0.00202, 0.00205, 0.00208, 0.00212, 0.00216, 0.00220, 0.00225, 0.00229, 0.00235, 0.00240,
+                     0.00246, 0.00252, 0.00259, 0.00266, 0.00273, 0.00282, 0.00292, 0.00303, 0.00316, 0.00330,
+                     0.00347, 0.00367, 0.00390, 0.00403, 0.00417, 0.00449, 0.00487, 0.00532, 0.00584, 0.00646,
+                     0.00721, 0.00812, 0.00924, 0.0106, 0.0123, 0.0144, 0.0173, 0.0214, 0.0268, 0.0342,
+                     0.0493, 0.0828, 0.141, 0.211, 0.276, 0.330, 0.379, 0.427, 0.475, 0.521,
+
+                     0.570, 0.629, 0.702, 0.786, 0.870, 0.953, 1.03, 1.12, 1.19, 1.27,
+                     1.35, 1.42, 1.5, 1.57, 1.65, 1.73, 1.81, 1.89, 1.97, 2.05,
+                     2.14, 2.23, 2.32, 2.41, 2.5, 2.6, 2.7, 2.8, 2.9, 3.01,
+                     3.12, 3.24, 3.36, 3.48, 3.61, 3.74, 3.87, 4.0, 4.13, 4.27,
+                     4.42, 4.56, 4.71, 4.86, 5.01, 5.17, 5.33, 5.5, 5.66, 5.83,
+
+                     6.01, 6.18, 6.36, 6.55, 6.73, 6.92, 7.12, 7.31, 7.51, 7.72,
+                     7.93, 8.14, 8.68, 9.25, 9.83, 10.45, 11.08, 11.74, 12.43, 13.14,
+                     13.88, 14.89, 17.08, 19.31, 21.63, 24.06, 26.6, 32.03, 37.94, 41.08,
+                     44.35, 51.27, 58.7, 66.67, 75.16, 79.62, 84.2, 93.79, 103.93, 114.63,
+                     125.88, 131.72, 137.69, 150.06, 162.97, 176.43, 190.43, 197.63, 204.96, 220.01,
+
+                     235.57, 251.63, 268.17, 276.62, 285.18, 302.65, 320.55, 338.88, 357.62, 367.14,
+                     376.75, 396.26, 416.12, 467.24, 520.26, 574.94, 631.07, 688.46, 746.93, 806.33,
+                     866.54, 927.43, 988.91, 1050.9, 1113.3, 1176.1, 1239.2, 1302.5, 1366.1, 1429.9,
+                     1493.9, 1558.0, 1622.2, 1686.6, 1751.0, 1815.5, 1880.2, 1944.8, 2009.6, 2074.4,
+                     2139.2, 2204.1, 2269.1, 2334.0, 2399.1, 2464.1, 2529.2, 2594.4, 2659.6, 2724.8,
+
+                     2790.1, 2855.4, 2920.7, 2986.1, 3051.7, 3117.4, 3183.1, 3248.9, 3314.7, 3380.5,
+                     3446.4, 3512.3, 3578.3, 3644.4, 3710.5, 3776.6, 3831.6, 3883.5, 3935.3, 3987.2,
+                     4039.0, 4090.8, 4142.6, 4194.3, 4246.1, 4297.9, 4349.7, 4401.5, 4453.3, 4505.0,
+                     4547.8, 4599.5, 4651.2, 4702.8, 4754.5, 4806.2, 4857.9, 4909.6, 4961.2, 5012.9, 5064.6, 5116.3, 5168.0]
+
+        #g_graph = ROOT.TGraph(len(Hmass), numpy.array(Hmass), numpy.array(Hwidth))
+        #gCPS_graph = ROOT.TGraph(len(HmassCPS), numpy.array(HmassCPS), numpy.array(HwidthCPS))
+
+        self.g = ROOT.TH1D("g","SM Higgs width",len(Hmass)-1,numpy.array(Hmass))
+        self.gCPS = ROOT.TH1D("gCPS","SM Higgs width CPS",len(HmassCPS)-1,numpy.array(HmassCPS))
+        for k,v in enumerate(Hwidth):
+          self.g.SetBinContent(k+1,v)
+
+        for k,v in enumerate(HwidthCPS):
+          self.gCPS.SetBinContent(k+1,v)
+
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed                    
 HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev()
 

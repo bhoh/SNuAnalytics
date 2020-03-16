@@ -1042,21 +1042,30 @@ Steps = {
                   'subTargets' : ['HMvars','BWReweight'],
                    },
    
+ 'HMSemilepSkimJH2017v6_5' : {
+     'isChain'    : True  ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'selection'  :'"(  Lepton_pt[0]>20 \
+    && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
+    ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
+    && ( ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
+    ||   ( Alt$( Lepton_pt[1],-1) < 20*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+    ))&&\
+    (Trigger_sngMu || Trigger_sngEl)\
+    &&(PuppiMET_pt > 20)\
+    "',
+    'subTargets' : ['l1tightOR2017v6','wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK', 'trigMC', 'CorrFatJetMC', 'CleanFatJet' ],
+  },    
 
-    'HMlnjjSel'  : {
+    'HMlnjjLepVetoBWRew'  : {
                   'isChain'    : True,
                   'do4MC'      : True,
                   'do4Data'    : True,
                   'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
-                  'subTargets' : ['HMlnjjVars'],
+                  'subTargets' : ['BWReweight'],
 		  },
 
-    'HMlnjjSelBWRew_Dev'  : {
-                  'isChain'    : True ,
-		  'do4MC'	: True ,
-		  'do4Data'	: True,
-                  'subTargets' : ['HMlnjjLepSel','BWReweight'],
-		  },
      #'selection'  : '"(Lepton_pt[0] > 30 && (Alt$(Lepton_pt[1], 0) < 10))"',
      #'subTargets' : ['BWReweight'],
 
@@ -1088,17 +1097,6 @@ Steps = {
                   'module'     : 'fatjetMaker()'
     },
 
-    'HMlnjjLepSel': {
-    	          'isChain'	: False	,
-		  'do4MC'	: True	,
-		  'do4Data'	: True	,
-                  'selection'  :'"(  Lepton_pt[0]>30 \
-		  	&& ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
-		  	||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
-		  	&& ( ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
-		  	||   ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
-		  		)"',
-		  },
 		  #	|| Alt$( !Lepton_isLoose[1],1 ) )
 
 
@@ -1525,7 +1523,7 @@ Steps = {
                   'do4MC'      : True ,
                   'do4Data'    : True ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev' ,
-                  'declare'    : 'HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev(RPLME_YEAR)',
+                  'declare'    : 'HMlnjjVars_Dev = lambda : HMlnjjVarsClass_Dev(RPLME_YEAR,METtype="PuppiMET")',
                   'module'     : 'HMlnjjVars_Dev()',
                },
 
