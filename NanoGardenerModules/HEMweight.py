@@ -31,8 +31,10 @@ class HEMweight(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
-
+        
         self.out.branch('HEMweight', 'F')
+        if not self.isData and int(self.dataYear) == 2018:
+          self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -68,8 +70,11 @@ class HEMweight(Module):
               HEMweight_ = self.lumiFrac12
             else:
               pass
+            HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
 
         self.out.fillBranch('HEMweight', HEMweight_)
+        if not self.isData and int(self.dataYear) == 2018:
+          self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
 
         return True
 
@@ -83,3 +88,19 @@ class HEMweight(Module):
             hasHEMJet = True
             break
         return hasHEMJet
+
+    def _scaleHEMJetPt(self, jet_coll_):
+        HEMJetPtScale = []
+        for jet in jet_coll_:
+          pt  = jet["pt"]
+          eta = jet["eta"]
+          phi = jet["phi"]
+          if pt > 15. and -1.57 < phi < -0.87:
+            if -2.5 < eta < -1.3:
+              HEMJetPtScale.append(0.8) # scale down 20% 
+            elif -3.0 < eta <= -2.5:
+              HEMJetPtScale.append(0.65) # scale down 35%
+          else:
+            HEMJetPtScale.append(1.)
+
+        return HEMJetPtScale
