@@ -12,10 +12,10 @@ class HEMweight(Module):
         #self.TriggerCfg = Trigger[cmssw] #2018 period range not available
         #ref : https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2018Analysis
         self.TriggerCfg = {
-                            '1' : {'begin':315252 , 'end':316995, 'lumi':13.48},
-                            '2' : {'begin':317080 , 'end':319310, 'lumi':6.785},
-                            '3' : {'begin':319337 , 'end':320065, 'lumi':6.612},
-                            '4' : {'begin':320673 , 'end':325175, 'lumi':31.95},
+                            1 : {'begin':315252 , 'end':316995, 'lumi':13.48},
+                            2 : {'begin':317080 , 'end':319310, 'lumi':6.785},
+                            3 : {'begin':319337 , 'end':320065, 'lumi':6.612},
+                            4 : {'begin':320673 , 'end':325175, 'lumi':31.95},
                           }
         self.random = ROOT.TRandom3(seed)
         self.isData = isData
@@ -43,13 +43,13 @@ class HEMweight(Module):
         for RunCfg in self.TriggerCfg.itervalues():
             self.lumi += RunCfg['lumi']
             self.RunRange.append((RunCfg['begin'],RunCfg['end']))
-        self.lumiFrac12 = self.TriggerCfg['1']['lumi'] + self.TriggerCfg['2']['lumi']
+        self.lumiFrac12 = self.TriggerCfg[1]['lumi'] + self.TriggerCfg[2]['lumi']
         self.lumiFrac12 /= self.lumi
 
        
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        HEMweight = 1
+        HEMweight_ = 1
         if not int(self.dataYear) == 2018:
           pass
         else:
@@ -59,18 +59,17 @@ class HEMweight(Module):
             if run_period == 3 or run_period == 4:
               jet_coll = Collection(event, self.jetColl )
               if self._hasHEMJet(jet_coll):
-                HEMweight = 0
+                HEMweight_ = 0
               else:
                 pass
           else:
             jet_coll = Collection(event, self.jetColl )
             if self._hasHEMJet(jet_coll):
-              HEMweight = self.lumiFrac12
+              HEMweight_ = self.lumiFrac12
             else:
               pass
 
-
-        self.out.fillBranch('HEMweight', HEMweight)
+        self.out.fillBranch('HEMweight', HEMweight_)
 
         return True
 

@@ -12,10 +12,10 @@ class HEMveto(Module):
         #self.TriggerCfg = Trigger[cmssw] #2018 period range not available
         #ref : https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2018Analysis
         self.TriggerCfg = {
-                            '1' : {'begin':315252 , 'end':316995, 'lumi':13.48},
-                            '2' : {'begin':317080 , 'end':319310, 'lumi':6.785},
-                            '3' : {'begin':319337 , 'end':320065, 'lumi':6.612},
-                            '4' : {'begin':320673 , 'end':325175, 'lumi':31.95},
+                            1 : {'begin':315252 , 'end':316995, 'lumi':13.48},
+                            2 : {'begin':317080 , 'end':319310, 'lumi':6.785},
+                            3 : {'begin':319337 , 'end':320065, 'lumi':6.612},
+                            4 : {'begin':320673 , 'end':325175, 'lumi':31.95},
                           }
         self.random = ROOT.TRandom3(seed)
         self.isData = isData
