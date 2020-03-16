@@ -1,10 +1,11 @@
 import ROOT
-import os
+import os, re
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from LatinoAnalysis.NanoGardener.data.TrigMaker_cfg import Trigger
+from LatinoAnalysis.NanoGardener.data.common_cfg import Type_dict
 
 class HEMweight(Module):
 
