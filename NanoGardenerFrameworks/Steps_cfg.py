@@ -1677,6 +1677,26 @@ Steps = {
                 'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
     },
 
+    'HEMweightMC' : {
+                'isChain': False,
+                'do4MC': True,
+                'do4Data': False,
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMweight',
+                'declare': 'HEMweightMC = lambda : HEMweight(isData=False,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMweightMC()'
+
+    },
+
+    'HEMweightData' : {
+                'isChain': False,
+                'do4MC': False,
+                'do4Data': True,
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMweight',
+                'declare': 'HEMweightData = lambda : HEMweight(isData=True,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMweightData()'
+
+    },
+
     'CleanFatJet' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
