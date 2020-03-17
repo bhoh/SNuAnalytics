@@ -24,7 +24,7 @@ MYALGO={
 'dMchi2rawFqgl':'',
 'dMchi2Resolution':'',
 'dMchi2Resolutionqgl':'',
-
+'HighPTjj':'', ##require jj pair making highest pt(jj)
 }
 
 class HMlnjjVarsClass_Dev_jhchoi(Module):
@@ -791,6 +791,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
                 elif algo=="dMchi2Resolutionqgl":
                     thisScore = self.CalcChi2DMReolsutionQgl(i_cj, j_cj,self.rho)
+                elif algo=="HighPT":
+                    thisScore = self.CalcHighPTjj(i_cj, j_cj)
                 
                 ##Go to CalcAlgo
 
@@ -875,14 +877,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         #print "this_chi2=",this_chi2
         this_MLL = math.log(math.sqrt(this_Msigma))+this_chi2/2
         #print 'before=',this_MLL
-        #if qgl1*qgl2<=0.:
-        
-        try:
-            this_MLL += -1*math.log(qgl1*qgl2)
-        except ValueError:
-            print "qgl1=",qgl1
-            print "qgl2=",qgl2
-            this_MLL = sys.float_info.max
+        this_MLL += -1*math.log(qgl1*qgl2)
         #print 'after=',this_MLL
         return this_MLL
 
@@ -949,18 +944,29 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         this_Msigma=math.sqrt(sigma2)
         this_chi2=(M-Wmass)**2/sigma2
         this_MLL = math.log(math.sqrt(this_Msigma))+this_chi2/2
-
-        try:
-            this_MLL += -1*math.log(qgl1*qgl2)
-        except ValueError:
-            print "qgl1=",qgl1
-            print "qgl2=",qgl2
-            this_MLL = sys.float_info.max
-
         #print 'before=',this_MLL
-        #this_MLL += -1*math.log(qgl1*qgl2)
+        this_MLL += -1*math.log(qgl1*qgl2)
         #print 'after=',this_MLL
         return this_MLL
+
+
+        return this_Chi2
+
+    def CalcHighPTjj(self, i_cj, j_cj):
+        pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
+        pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
+
+        v1=ROOT.TLorentzVector()
+        v2=ROOT.TLorentzVector()
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
+
+        ptjj=(v1+v2).Pt()
+        Mjj=(v1+v2).M()
+        if Mjj <40 : return sys.float_info.max
+        if Mjj >250 : return sys.float_info.max
+        return -1*ptjj
+
 
 
     def WhadMakerdM(self):
