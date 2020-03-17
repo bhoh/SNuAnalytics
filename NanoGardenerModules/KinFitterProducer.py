@@ -132,6 +132,7 @@ class KinFitterProducer(Module):
         
         for nameBranches in self.newbranches :
           self.out.branch(nameBranches  ,  "F");
+        self.out.branch("nbtagsCleanJet" ,  "I");
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -163,7 +164,7 @@ class KinFitterProducer(Module):
           return False
 
         jets            = ROOT.std.vector(ROOT.TLorentzVector)(0)
-        #jetPtResolution = ROOT.std.vector(float)(0)
+        jetPtResolution = ROOT.std.vector(float)(0)
         btag_vector     = ROOT.std.vector(bool)(0)
 
         nbtags = 0
@@ -177,9 +178,7 @@ class KinFitterProducer(Module):
           tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
           jets.push_back(tmp_jet)
           jetPtResolution_ = self.getJetPtResolution(tmp_jet, event.fixedGridRhoFastjetAll)
-          print("jetPtResolution :", jetPtResolution_)
-          #jetPtResolution.push_back(self.)
-          #print(jet.pt,"   ",jet.eta,"    ",jet.phi)
+          jetPtResolution.push_back(jetPtResolution_)
           if OrigJet[jet.jetIdx].btagDeepB > self._DeepB_WP_M:
             btag_vector.push_back(True)
             nbtags += 1
@@ -199,6 +198,7 @@ class KinFitterProducer(Module):
         
         fitter = ROOT.TKinFitterDriver(int(self._Year))
         fitter.SetAllObjects(jets, btag_vector, lepton, MET)
+        fitter.SetJetPtResolution(jetPtResolution)
         fitter.SetMETShift(METShiftX, METShiftY)
         fitter.FindBestChi2Fit()
 
@@ -211,6 +211,7 @@ class KinFitterProducer(Module):
 
         for nameBranches in self.newbranches :
           self.out.fillBranch(nameBranches  ,  variables[nameBranches]);
+        self.out.fillBranch("nbtagsCleanJet" ,  nbtags);
 
         return True
 

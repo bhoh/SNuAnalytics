@@ -106,6 +106,12 @@ void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
   //cout <<"TKinFitterDriver::SetAllObjects : " << endl;
 }
 
+void TKinFitterDriver::SetJetPtResolution(std::vector<float> jetPtResolution_){
+  jet_pt_resolution_vector.clear();
+  for(auto& x : jetPtResolution_){
+    jet_pt_resolution_vector.push_back(x);
+  }
+}
 
 void TKinFitterDriver::SetHadronicTopBJets(TLorentzVector jet_){
   hadronic_top_b_jet = jet_;
@@ -176,6 +182,66 @@ void TKinFitterDriver::SetWCHDownTypeJets(TLorentzVector jet_){
   //cout << "TKinFitterDriver::SetWCHDownTypeJets : " << endl;
 }
 
+void TKinFitterDriver::SetHadronicTopBJets(TLorentzVector jet_, double resolution_){
+  hadronic_top_b_jet = jet_;
+  double Pt = hadronic_top_b_jet.Pt();
+  error_hadronic_top_b_jet(0,0) = resolution_*resolution_*Pt*Pt;
+  corr_hadronic_top_b_jet = hadronic_top_b_jet;
+  fit_hadronic_top_b_jet->~TFitParticlePt();
+  new(fit_hadronic_top_b_jet) TFitParticlePt("hadronic_top_b_jet",
+                                                    "hadronic_top_b_jet",
+                                                    &corr_hadronic_top_b_jet,
+                                                    &error_hadronic_top_b_jet
+                                                   );
+  //cout <<"TKinFitterDriver::SetHadronicTopBJets : " << endl;
+
+}
+
+
+void TKinFitterDriver::SetLeptonicTopBJets(TLorentzVector jet_, double resolution_){
+  leptonic_top_b_jet=jet_;
+  double Pt = leptonic_top_b_jet.Pt();
+  error_leptonic_top_b_jet(0,0) = resolution_*resolution_*Pt*Pt;
+  corr_leptonic_top_b_jet = leptonic_top_b_jet;
+  fit_leptonic_top_b_jet->~TFitParticlePt();
+  new(fit_leptonic_top_b_jet) TFitParticlePt("leptonic_top_b_jet",
+                                                    "leptonic_top_b_jet",
+                                                    &corr_leptonic_top_b_jet,
+                                                    &error_leptonic_top_b_jet
+                                                   );
+  //cout <<"TKinFitterDriver::SetLeptonicTopBJets : " << endl;
+}
+
+
+void TKinFitterDriver::SetWCHUpTypeJets(TLorentzVector jet_, double resolution_){
+  hadronic_w_ch_jet1=jet_;
+  double Pt = hadronic_w_ch_jet1.Pt();
+  error_hadronic_w_ch_jet1(0,0) = resolution_*resolution_*Pt*Pt;
+  corr_hadronic_w_ch_jet1 = hadronic_w_ch_jet1;
+  fit_hadronic_w_ch_jet1->~TFitParticlePt();
+  new(fit_hadronic_w_ch_jet1) TFitParticlePt("hadronic_w_ch_jet1",
+                                                    "hadronic_w_ch_jet1",
+                                                    &corr_hadronic_w_ch_jet1,
+                                                    &error_hadronic_w_ch_jet1
+                                                   );
+  //cout <<"TKinFitterDriver::SetWCHUpTypeJets : " << endl;
+}
+
+
+void TKinFitterDriver::SetWCHDownTypeJets(TLorentzVector jet_, double resolution_){
+  hadronic_w_ch_jet2=jet_;
+  double Pt = hadronic_w_ch_jet2.Pt();
+  error_hadronic_w_ch_jet2(0,0) = resolution_*resolution_*Pt*Pt;
+  corr_hadronic_w_ch_jet2 = hadronic_w_ch_jet2;
+  fit_hadronic_w_ch_jet2->~TFitParticlePt();
+  new(fit_hadronic_w_ch_jet2) TFitParticlePt("hadronic_w_ch_jet2",
+                                                    "hadronic_w_ch_jet2",
+                                                    &corr_hadronic_w_ch_jet2,
+                                                    &error_hadronic_w_ch_jet2
+                                                   );
+  //cout << "TKinFitterDriver::SetWCHDownTypeJets : " << endl;
+}
+
 
 void TKinFitterDriver::SetLepton(TLorentzVector lepton_){
   lepton=lepton_;
@@ -232,8 +298,19 @@ void TKinFitterDriver::SetNeutrino(TLorentzVector met_, int i){
   neutrino_pxpy.SetPxPyPzE(met_.Px(),met_.Py(), Pz, TMath::Sqrt(met_.E()*met_.E()+Pz*Pz));
   //neutrino_pz.SetPxPyPzE(0., 0., Pz, fabs(Pz));
 
-  error_neutrino_pxpy(0,0) = std::max(0.0001, MET_pt_shift*MET_pt_shift);  //XXX pt->px, phi->py
-  error_neutrino_pxpy(1,1) = std::max(0.0001, MET_phi_shift*MET_phi_shift); //XXX pt->px, phi->py
+  double MET_error_px2=0., MET_error_py2=0.;
+  for(unsigned int i(0); i<jet_pt_resolution_vector.size(); i++){
+    double jet_pt_resolution = jet_pt_resolution_vector.at(i);
+    double jet_pt  = jet_vector.at(i).Pt();
+    double jet_phi = jet_vector.at(i).Phi();
+    MET_error_px2 += TMath::Power(jet_pt_resolution*jet_pt*TMath::Cos(jet_phi), 2);
+    MET_error_py2 += TMath::Power(jet_pt_resolution*jet_pt*TMath::Sin(jet_phi), 2);
+  }
+
+  error_neutrino_pxpy(0,0) = std::max(0.0001, MET_error_px2);  
+  error_neutrino_pxpy(1,1) = std::max(0.0001, MET_error_py2);
+  //error_neutrino_pxpy(0,0) = std::max(0.0001, MET_pt_shift*MET_pt_shift);  //XXX pt->px, phi->py
+  //error_neutrino_pxpy(1,1) = std::max(0.0001, MET_phi_shift*MET_phi_shift); //XXX pt->px, phi->py
   fit_neutrino_pxpy->~TFitParticlePxPy();
   new(fit_neutrino_pxpy) TFitParticlePxPy("neutrino_pxpy",
                                           "neutrino_pxpy",
@@ -263,10 +340,17 @@ void TKinFitterDriver::SetCurrentPermutationJets(){
     else if( jet_assignment_idx == W_CH_DOWN_TYPE ) n=i;
   }
   //cout << k << l << m << n << endl;
-  this->SetHadronicTopBJets( jet_vector.at(k) );
-  this->SetLeptonicTopBJets( jet_vector.at(l) );
-  this->SetWCHUpTypeJets( jet_vector.at(m) );
-  this->SetWCHDownTypeJets( jet_vector.at(n) );
+  // using ts-correction
+  //this->SetHadronicTopBJets( jet_vector.at(k) );
+  //this->SetLeptonicTopBJets( jet_vector.at(l) );
+  //this->SetWCHUpTypeJets( jet_vector.at(m) );
+  //this->SetWCHDownTypeJets( jet_vector.at(n) );
+
+  // using jetMET POG jer
+  this->SetHadronicTopBJets( jet_vector.at(k), jet_pt_resolution_vector.at(k) );
+  this->SetLeptonicTopBJets( jet_vector.at(l), jet_pt_resolution_vector.at(l) );
+  this->SetWCHUpTypeJets( jet_vector.at(m), jet_pt_resolution_vector.at(m) );
+  this->SetWCHDownTypeJets( jet_vector.at(n), jet_pt_resolution_vector.at(n) );
 
 }
 
@@ -463,7 +547,7 @@ void TKinFitterDriver::FindBestChi2Fit(bool UseLeading4Jets, bool IsHighMassFitt
   do{
     if(this->Check_BJet_Assignment() == false) continue;
     this->SetCurrentPermutationJets();
-    //if(this->Kinematic_Cut() == false) continue;
+    if(this->Kinematic_Cut() == false) continue;
       this->Sol_Neutrino_Pz();
       for(int i(0); i<2; i++){
 	//if(!IsRealNeuPz && i==1) break;
