@@ -1,5 +1,13 @@
 import os
 Steps={
+  'formulasMC' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.GenericFormulaAdder' ,
+                  'declare'    : '',
+                  'module'     : 'GenericFormulaAdder(\'data/formulasToAdd_MC_RPLME_YEAR.py\')' ,
+                 },
 
     
     'JESBase' : {
@@ -38,22 +46,29 @@ orQCD", "HF", "HF_RPLME_YEAR", "RelativeBal", "RelativeSample_RPLME_YEAR"], jetF
 }
 
 
-for jes_source in ['Total', 'Absolute', 'Absolute_RPLME_YEAR', 'BBEC1', 'BBEC1_RPLME_YEAR', 'EC2', 'EC2_RPLME_YEAR', 'FlavorQCD', 'HF', 'HF_RPLME_YEAR', 'RelativeBal', 'RelativeSample_RPLME_YEAR']:
+##JES sources##
+LIST_JES_SOURCE=['Total', 'Absolute',  'BBEC1', 'EC2',  'FlavorQCD', 'HF',  'RelativeBal']
+for yr in ['2016','2017','2018']:
+    LIST_JES_SOURCE+=['Absolute_'+yr, 'BBEC1_'+yr, 'EC2_'+yr, 'HF_'+yr, 'RelativeSample_'+yr ]
+##End of defining JES sources## 
+
+##--up/down steps--##
+for jes_source in LIST_JES_SOURCE:
     for var in ['up','do']:
-        Steps['JES'+var+'_'+sys]={
+        Steps['JES'+var+'_'+jes_source]={
             'isChain'    : True ,
             'do4MC'      : True  ,
             'do4Data'    : False  ,
-            'subTargets' : ['JESBase','do_JES'+var+'_'+sys,'formulasMC'],
+            'subTargets' : ['JESBase','do_JES'+var+'_'+jes_source,'formulasMC'],
             'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
         }
 
-        Steps['do_JES'+var+'_'+sys] = { ##do means execute
+        Steps['do_JES'+var+'_'+jes_source] = { ##do means execute
             'isChain'    : False ,
             'do4MC'      : True  ,
             'do4Data'    : False  ,
             'import'     : 'LatinoAnalysis.NanoGardener.modules.PtCorrApplier',
-            'declare'    : 'JES'+sys+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+sys+', kind="'+var+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"])',
-            'module'     : 'JES'+sys+var+'()',
+            'declare'    : 'JES'+jes_source+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+jes_source+'", kind="'+var+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"])',
+            'module'     : 'JES'+jes_source+var+'()',
 
         }
