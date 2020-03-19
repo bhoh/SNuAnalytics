@@ -1,0 +1,33 @@
+1)Add 
+        'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+
+to Systematic updown step
+2)To avoid BufferFile size error of LeptonSFMaker.py, Use AutoSave() method of TTree
+
+====In your module(LeptonSFMaker)===
+beginFile
+        self.out._tree.SetAutoSave()
+
+
+endFile && endJob
+         self.out._tree.AutoSave("FlushBaskets")
+
+endJob
+
+in analyze loop
+        if event.event % 10000 ==1 :##To flush memory of ttree
+            self.out._tree.AutoSave("FlushBaskets")
+        #
+
+
+
+####--in NanoAODTool , framework/output.py###
+
+instead of self._tree.Write()
+
+        if self._tree.GetAutoSave() == 0:
+            print "AutoSave is off. Start write"
+            self._tree.Write()
+
+
+ 
