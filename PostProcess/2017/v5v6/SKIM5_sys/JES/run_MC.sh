@@ -3,6 +3,14 @@
 # changed to /xrd/store/user/jhchoi/Latino/HWWNano/
 # L1Loose
 
+if [ -f GetNJOB.py ]; then
+        echo "GetNJOB.py"
+else
+    wget https://raw.githubusercontent.com/soarnsoar/python_tool/456613c5aa5e5c028c056b741a2d5db2d8211462/GetNJOB.py
+
+fi
+
+
 #source TurnOnDryRun.sh
 
 
@@ -206,21 +214,38 @@ SYSLIST=()
 
 
 
-SAMPLE_LIST="ZZZ"  ##For Test
+#SAMPLE_LIST="ZZZ"  ##For Test
 
 
-#JES_SOURCE_LIST=(Total Absolute Absolute_RPLME_YEAR BBEC1 BBEC1_RPLME_YEAR EC2 EC2_RPLME_YEAR FlavorQCD HF HF_2017 RelativeBal RelativeSample_RPLME_YEAR)
-JES_SOURCE_LIST=(Absolute_2017)
-#VAR_LIST=(up do)
-VAR_LIST=(up)
+JES_SOURCE_LIST=(Total Absolute Absolute_RPLME_YEAR BBEC1 BBEC1_RPLME_YEAR EC2 EC2_RPLME_YEAR FlavorQCD HF HF_2017 RelativeBal RelativeSample_RPLME_YEAR)
+#JES_SOURCE_LIST=(Total)
+VAR_LIST=(up do)
+#VAR_LIST=(up)
 JEScfg=SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/JES/Step_JES.py
 for source in ${JES_SOURCE_LIST[@]};do
     for var in ${VAR_LIST[@]};do
+
+	###----Check number of jobs-----###
+	
+	NJOB=`python GetNJOB.py`
+	while [ $NJOB -gt 800 ];do
+	    
+	    echo "NJOB="${NJOB}
+	    sleep 2000
+	    NJOB=`python GetNJOB.py`
+	done
+	echo "NJOB = $NJOB < 800"
+
+
+
 	#continue ##skip
 	sys=JES${var}_${source}
 	echo "---$sys---"
 	#mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -b -T ${SAMPLE_LIST}
-	mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -T ${SAMPLE_LIST}
+
+
+	##--For Test
+	#mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -T ${SAMPLE_LIST}
     done
 done
 
@@ -238,6 +263,6 @@ EXCLUDE=()
 
 
 
-unset -f condor_submit
+#unset -f condor_submit
 
 
