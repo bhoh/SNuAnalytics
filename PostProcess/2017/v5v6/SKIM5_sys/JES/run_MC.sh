@@ -209,15 +209,18 @@ SYSLIST=()
 SAMPLE_LIST="ZZZ"  ##For Test
 
 
-JES_SOURCE_LIST=(Total Absolute Absolute_2017 BBEC1 BBEC1_2017 EC2 EC2_2017 FlavorQCD HF HF_2017 RelativeBal RelativeSample_2017)
-VAR_LIST=(up do)
+#JES_SOURCE_LIST=(Total Absolute Absolute_RPLME_YEAR BBEC1 BBEC1_RPLME_YEAR EC2 EC2_RPLME_YEAR FlavorQCD HF HF_2017 RelativeBal RelativeSample_RPLME_YEAR)
+JES_SOURCE_LIST=(Absolute_2017)
+#VAR_LIST=(up do)
+VAR_LIST=(up)
 JEScfg=SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/JES/Step_JES.py
 for source in ${JES_SOURCE_LIST[@]};do
     for var in ${VAR_LIST[@]};do
 	#continue ##skip
-	sys=${source}${var}
+	sys=JES${var}_${source}
 	echo "---$sys---"
-	mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -b -T ${SAMPLE_LIST}
+	#mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -b -T ${SAMPLE_LIST}
+	mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -T ${SAMPLE_LIST}
     done
 done
 
