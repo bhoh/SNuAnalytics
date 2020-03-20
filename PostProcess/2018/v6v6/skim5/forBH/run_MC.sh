@@ -162,12 +162,15 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 ######################
 # Option: -R(redo)
 ######################
+
+modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
+
 #--l1Prod--#
 #mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i Prod -s MCl1loose2018v6 -b -T ${SAMPLE_LIST} 
 #mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6 -s MCCorr2018v6 -b -T ${SAMPLE_LIST} 
 #mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6 -s HMSemilepSkimJH2018v6_5 -b -T ${SAMPLE_LIST} 
 #mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5 -s HMlnjjVars_Dev_jhchoi -b -T ${SAMPLE_LIST} 
-mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5 -s HEMweightMC -b -T ${SAMPLE_LIST} 
+mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5 -s HEMvetoMC -b -T ${SAMPLE_LIST} -R
 #mkPostProc.py -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5 -s HMlnjjVars_Dev_jhchoi2 -b -T ${SAMPLE_LIST} 
 
 
