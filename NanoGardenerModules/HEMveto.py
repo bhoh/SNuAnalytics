@@ -6,7 +6,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from LatinoAnalysis.NanoGardener.data.TrigMaker_cfg import Trigger
 
-class HEMweight(Module):
+class HEMveto(Module):
     #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/1995/2.html
     #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
 
@@ -34,7 +34,7 @@ class HEMweight(Module):
         self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
         
-        self.out.branch('HEMweight', 'F')
+        self.out.branch('HEMveto', 'F')
         if not self.isData and int(self.dataYear) == 2018:
           self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
 
@@ -43,42 +43,47 @@ class HEMweight(Module):
 
     def initReaders(self,tree): # this function gets the pointers to Value and ArrayReaders and sets them in the C++ worker class
         self.RunRange = []
+        self.RunFrac = []
         self.lumi = 0.
         for RunCfg in self.TriggerCfg.itervalues():
             self.lumi += RunCfg['lumi']
+            self.RunFrac.append(self.lumi)
             self.RunRange.append((RunCfg['begin'],RunCfg['end']))
-        self.lumiFrac12 = self.TriggerCfg[1]['lumi'] + self.TriggerCfg[2]['lumi']
-        self.lumiFrac12 /= self.lumi
+        
+        for i in range(len(self.RunFrac)):
+            self.RunFrac[i] /= self.lumi
 
        
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        HEMweight_ = 1
+        HEMveto_ = 1
+        HEMJetPtScale_ = [1. for _ in range(getattr(event,'n'+self.jetColl))]
         if not int(self.dataYear) == 2018:
           pass
         else:
           if self.isData:
             run = event.run
             run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
-            if run_period == 3 or run_period == 4:
-              jet_coll = Collection(event, self.jetColl )
-              if self._hasHEMJet(jet_coll):
-                HEMweight_ = 0
-              else:
-                pass
           else:
+            x = self.random.Rndm()
+            run_period = next(i + 1 for i in range(len(self.RunFrac)) if self.RunFrac[i] >= x)
+
+          if run_period == 3 or run_period == 4:
             jet_coll = Collection(event, self.jetColl )
             if self._hasHEMJet(jet_coll):
-              HEMweight_ = self.lumiFrac12
+              HEMveto_ = 0
             else:
               pass
-            HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
 
-        self.out.fillBranch('HEMweight', HEMweight_)
+            if not self.isData:
+              HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
+
+        self.out.fillBranch('HEMveto', HEMveto_)
         if not self.isData and int(self.dataYear) == 2018:
           self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
 
         return True
+
 
     def _hasHEMJet(self, jet_coll_):
         hasHEMJet = False
