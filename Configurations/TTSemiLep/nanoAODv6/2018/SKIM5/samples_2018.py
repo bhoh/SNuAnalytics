@@ -62,7 +62,7 @@ SFweight=SFweight+'*'+LepWPweight+'*'+LepWPCut
 
 GenLepMatch = 'Lepton_genmatched[0]'
 
-
+SFweight=SFweight+'*HEMweight'
 
 ################################################
 ############### B-Tag  WP ######################
@@ -72,6 +72,11 @@ GenLepMatch = 'Lepton_genmatched[0]'
 #SFweight=SFweight+'*btagSF*HEMweight'
 SFweight=SFweight+'*btagSF'
 
+################################################
+############### TT specific SF  ################
+################################################
+
+TTSFweight = 'btagSFNorm'
 
 ################################################                                                                                             
 ############   MET  FILTERS  ###################                                                                                             
@@ -177,13 +182,20 @@ samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50-LO',
 
                  
 
-samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_')
-                      + getSampleFiles(directory,'ST_t-channel_top',False,'nanoLatino_')
+samples['TT'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_')
+                      + getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_') 
+                      ,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                      #'FilesPerJob' : 4,
+                      'FilesPerJob' : 40,
+                    }
+
+
+samples['ST'] = {    'name'   :   getSampleFiles(directory,'ST_t-channel_top',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_t-channel_antitop',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_s-channel_ext1',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_antitop_ext1',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_top_ext1',False,'nanoLatino_')
-                      + getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_') 
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       'FilesPerJob' : 4,
