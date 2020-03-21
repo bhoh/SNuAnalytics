@@ -34,9 +34,10 @@ class HEMveto(Module):
         self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
         
-        self.out.branch('HEMveto', 'F')
-        if not self.isData and int(self.dataYear) == 2018:
-          self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
+        if int(self.dataYear) == 2018:
+          self.out.branch('HEMveto', 'F')
+          if not self.isData:
+            self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -78,9 +79,10 @@ class HEMveto(Module):
             if not self.isData:
               HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
 
-        self.out.fillBranch('HEMveto', HEMveto_)
-        if not self.isData and int(self.dataYear) == 2018:
-          self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
+        if int(self.dataYear) == 2018:
+          self.out.fillBranch('HEMveto', HEMveto_)
+          if not self.isData:
+            self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
 
         return True
 
