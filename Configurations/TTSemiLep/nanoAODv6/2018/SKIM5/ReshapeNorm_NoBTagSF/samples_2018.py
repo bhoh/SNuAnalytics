@@ -1,17 +1,21 @@
-#-----Variable Deinition-----#
-from WPandCut2018 import *
-
 #------End of Variable Definition-----#
 
 
-import os
+import os, sys
 import glob
 import copy
 import subprocess
 import string
 from LatinoAnalysis.Tools.commonTools import *
 
-
+#-----Variable Deinition-----#
+try:
+  from WPandCut2018 import *
+except ImportError:
+  CMSSW     = os.environ["CMSSW_BASE"]
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  sys.path.append(BASE_PATH)
+  from WPandCut2018 import *
 
 samples={}
 
@@ -59,6 +63,11 @@ SFweight=SFweight+'*'+LepWPweight+'*'+LepWPCut
 GenLepMatch = 'Lepton_genmatched[0]'
 
 SFweight=SFweight+'*HEMweight'
+
+################################################
+############### B-Tag  WP ######################
+################################################
+
 
 ################################################                                                                                             
 ############   MET  FILTERS  ###################                                                                                             

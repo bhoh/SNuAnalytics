@@ -1,5 +1,12 @@
 #-----Variable Deinition-----#
-from WPandCut2018 import *
+try:
+  from WPandCut2018 import *
+except ImportError:
+  import os, sys
+  CMSSW     = os.environ["CMSSW_BASE"]
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  sys.path.append(BASE_PATH)
+  from WPandCut2018 import *
 
 
 #------End of Variable Definition-----#
