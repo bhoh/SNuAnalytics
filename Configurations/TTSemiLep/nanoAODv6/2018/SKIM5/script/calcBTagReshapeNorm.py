@@ -88,6 +88,7 @@ def WriteRatio(key_list, ratio_list):
     #print(np.asarray(pt_bin["b"]))
     #print(np.asarray(abseta_bin["b"]))
     ratio_hist["b"] = ROOT.TH2D("b","b",len(pt_bin["b"])-1,np.asarray(pt_bin["b"]),len(abseta_bin["b"])-1,np.asarray(abseta_bin["b"]))
+    ratio_hist["c"] = ROOT.TH2D("c","c",1,np.asarray([20.,1000.]),1,np.asarray([0.,2.5]))
     ratio_hist["udsg"] = ROOT.TH2D("udsg","udsg",len(pt_bin["udsg"])-1,np.asarray(pt_bin["udsg"]),len(abseta_bin["udsg"])-1,np.asarray(abseta_bin["udsg"]))
 
     for i, key in enumerate(key_list):
@@ -96,6 +97,8 @@ def WriteRatio(key_list, ratio_list):
       abseta_bin_idx = getBinIdx(key,"abseta",abseta_bin[flavour])
       ratio = ratio_list[i]
       ratio_hist[flavour].SetBinContent(pt_bin_idx, abseta_bin_idx, ratio)
+    #dummy
+    ratio_hist["c"].SetBinContent(1,1, 1.)
 
     for key in ratio_hist:
       ratio_hist[key].Write()

@@ -97,16 +97,22 @@ if not 'mu' in scriptname:
     }
 
 
-plot['top']  = {
-                  'nameHR' : 'Top',
+plot['TT']  = {
+                  'nameHR' : 'TT',
                   'isSignal' : 0,
                   'color': dict_TColor['orange'],
                   'isData'   : 0,                 
-                  'samples'  : ['top']
+                  'samples'  : ['TT']
               }
 
 
-
+plot['ST']  = {
+                  'nameHR' : 'ST',
+                  'isSignal' : 0,
+                  'color': dict_TColor['magenta'],
+                  'isData'   : 0,                 
+                  'samples'  : ['ST']
+              }
 
 
 plot['Wjets']  = {
