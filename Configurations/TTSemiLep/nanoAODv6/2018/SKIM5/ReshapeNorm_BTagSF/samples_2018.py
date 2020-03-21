@@ -67,9 +67,10 @@ SFweight=SFweight+'*HEMweight'
 ################################################
 ############### B-Tag  WP ######################
 ################################################
+btagSF = "(CleanJet_pt>20 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<=20 || abs(CleanJet_eta)>=2.5)"
 
 #pfCombinedInclusiveSecondaryVertexV2BJetTags (CSV) algorithm [26] loose working point.
-SFweight=SFweight+'*btagSF'
+SFweight=SFweight+'*'+btagSF
 
 
 ################################################                                                                                             
