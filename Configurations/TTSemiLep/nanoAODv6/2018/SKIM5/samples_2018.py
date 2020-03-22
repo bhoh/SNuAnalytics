@@ -33,13 +33,13 @@ elif  'sdfarm' in SITE:
 
 
 CAMPAIGN='Autumn18_102X_nAODv6_Full2018v6'
-STEP="MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5__HEMweightMC"
-
+#STEP="MCl1loose2018v6__MCCorr2018v6__HMSemilepSkimJH2018v6_5__HEMweightMC"
+STEP='MCl1loose2018v6__MCCorr2018v6'
 
 
 CAMPAIGN_DATA='Run2018_102X_nAODv6_Full2018v6'
-STEP_DATA="DATAl1loose2018v6__HMSemilepSkimJH2018v6_5_data__HEMweightData"
-
+#STEP_DATA="DATAl1loose2018v6__HMSemilepSkimJH2018v6_5_data__HEMweightData"
+STEP_DATA='DATAl1loose2018v6'
 
 #directory=treeBaseDir+CAMPAIGN+'/'+STEP
 directory=xrootdPath+'//xrd/store/user/jhchoi/Latino/HWWNano/'+CAMPAIGN+'/'+STEP
@@ -62,7 +62,7 @@ SFweight=SFweight+'*'+LepWPweight+'*'+LepWPCut
 
 GenLepMatch = 'Lepton_genmatched[0]'
 
-SFweight=SFweight+'*HEMweight'
+#SFweight=SFweight+'*HEMweight'
 
 ################################################
 ############### B-Tag  WP ######################
@@ -71,6 +71,13 @@ SFweight=SFweight+'*HEMweight'
 #pfCombinedInclusiveSecondaryVertexV2BJetTags (CSV) algorithm [26] loose working point.
 #SFweight=SFweight+'*btagSF*HEMweight'
 SFweight=SFweight+'*btagSF'
+
+
+################################################
+###############  PU ID SF  ######################
+################################################
+
+SFweight+="*Jet_PUID_SF_L"
 
 ################################################
 ############### TT specific SF  ################
@@ -187,7 +194,7 @@ samples['TT'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext
                       ,
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       #'FilesPerJob' : 4,
-                      'FilesPerJob' : 40,
+                      'FilesPerJob' : 2,
                     }
 
 

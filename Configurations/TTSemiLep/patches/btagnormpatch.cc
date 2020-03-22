@@ -307,12 +307,12 @@ double BTagReshapeNormReader::eval_auto_bounds(std::string syst, int flav, float
     out = hist2D->GetBinContent(binx,biny);
 
   }
-  std::cout << "pt : " << pt << std::endl;
-  std::cout << "ptbin : " << binx << std::endl;
-  std::cout << "absEta : " << absEta << std::endl;
-  std::cout << "absEtabin : " << biny << std::endl;
-  std::cout << "flav : " << flav << std::endl;
-  std::cout << "out : " << out << std::endl;
+  //std::cout << "pt : " << pt << std::endl;
+  //std::cout << "ptbin : " << binx << std::endl;
+  //std::cout << "absEta : " << absEta << std::endl;
+  //std::cout << "absEtabin : " << biny << std::endl;
+  //std::cout << "flav : " << flav << std::endl;
+  //std::cout << "out : " << out << std::endl;
   return out;
 }
 
