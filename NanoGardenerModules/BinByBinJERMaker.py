@@ -45,9 +45,15 @@ class BinByBinJERMaker(Module):
           for binIdx in self.jer_bin_list:
             self.out.branch("%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
             self.out.branch("%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
+            if self.isCleanBranch:
+              self.out.branch("Clean%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
+              self.out.branch("Clean%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
             if self.doGroomed:
               self.out.branch("%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
               self.out.branch("%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
+              if self.isCleanBranch:
+                self.out.branch("Clean%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
+                self.out.branch("Clean%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift), "F", lenVar=self.lenVar)
 
             if self.doMET : 
               self.out.branch("%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift), "F")
@@ -63,7 +69,8 @@ class BinByBinJERMaker(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         jets  = Collection(event, self.jetBranchName)
         if self.isCleanBranch:
-          clean_jetIdxs = getattr(event, "Clean%s_jetIdx"%self.jetBranchName) 
+          clean_jets = Collection(event, "Clean"+self.jetBranchName)
+          clean_jetIdxs = [ clean_jet["jetIdx"] for clean_jet in clean_jets ]
         if self.doMET : 
           muons     = Collection(event, "Muon" ) # to subtract out of the jets for proper type-1 MET corrections
           met_pt_jer   = getattr(event, self.metBranchName+"_pt_jer")
