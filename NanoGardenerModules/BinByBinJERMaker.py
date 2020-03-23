@@ -100,11 +100,12 @@ class BinByBinJERMaker(Module):
         for jet_idx, jet in enumerate(jets):
           jet_eta     = jet['eta']
           jet_pt      = jet['pt']
-
-          if jet_idx in clean_jetIdxs:
-            isClean = True
-          else:
-            isClean = False
+          
+          if self.isCleanBranch:
+            if jet_idx in clean_jetIdxs:
+              isClean = True
+            else:
+              isClean = False
 
           if self.doMET : 
             jet_rawpt   = jet['pt_raw']
