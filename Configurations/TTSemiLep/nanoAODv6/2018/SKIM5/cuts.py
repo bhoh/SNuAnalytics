@@ -24,6 +24,7 @@ LepCut="(  Lepton_pt[0]>30 \
 )"
 LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'
 
+
 JetCut='nCleanJet30_2p5 >=4'
 
 #------End of Variable Definition-----#
@@ -55,18 +56,12 @@ TopRegionCats['Top4j'] = '1'
 TopRegionCats['Top4j2b'] = '( nBJets_WP_M == 2)'
 TopRegionCats['Top4j3b'] = '( nBJets_WP_M >= 3)'
 
-HEMweight={}
-HEMweight['HEMnoWeight'] = '( 1 )'
-HEMweight['HEMWeight']   = '( HEMweight )'
-
 for LepCut in LepCats:
     for TopCut in TopRegionCats:
-        for HEMCut in HEMweight:
-            cuts[LepCut+'__'+TopCut+'__'+HEMCut] = "(%s && %s)*%s"%(
-                                                                      LepCats[LepCut],
-                                                                      TopRegionCats[TopCut],
-                                                                      HEMweight[HEMCut]
-                                                                   )
+        cuts[LepCut+'__'+TopCut] = "(%s && %s)"%(
+                                                  LepCats[LepCut],
+                                                  TopRegionCats[TopCut]
+                                                )
 
 #cuts['isVBF']='isVBF'
 print "Ncuts=",len(cuts)

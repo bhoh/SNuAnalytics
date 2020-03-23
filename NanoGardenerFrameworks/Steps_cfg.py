@@ -1677,23 +1677,23 @@ Steps = {
                 'subTargets' : ['CorrJetMC','BinByBinJetMCJER'],
     },
 
-    'HEMvetoMC' : {
+    'HEMweightMC' : {
                 'isChain': False,
                 'do4MC': True,
                 'do4Data': False,
-                'import': 'LatinoAnalysis.NanoGardener.modules.HEMveto',
-                'declare': 'HEMvetoMC = lambda : HEMveto(isData=False,dataYear=RPLME_YEAR,jetColl="CleanJet")',
-                'module':  'HEMvetoMC()'
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMweight',
+                'declare': 'HEMweightMC = lambda : HEMweight(isData=False,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMweightMC()'
 
     },
 
-    'HEMvetoData' : {
+    'HEMweightData' : {
                 'isChain': False,
                 'do4MC': False,
                 'do4Data': True,
-                'import': 'LatinoAnalysis.NanoGardener.modules.HEMveto',
-                'declare': 'HEMvetoData = lambda : HEMveto(isData=True,dataYear=RPLME_YEAR,jetColl="CleanJet")',
-                'module':  'HEMvetoData()'
+                'import': 'LatinoAnalysis.NanoGardener.modules.HEMweight',
+                'declare': 'HEMweightData = lambda : HEMweight(isData=True,dataYear=RPLME_YEAR,jetColl="CleanJet")',
+                'module':  'HEMweightData()'
 
     },
 

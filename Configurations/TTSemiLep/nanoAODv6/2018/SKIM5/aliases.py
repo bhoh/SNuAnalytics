@@ -105,4 +105,17 @@ aliases['btagSFNorm'] = {
 #}
 #
 
+### -- PU ID SF -- ###
+PUIDSFSource = '%s/src/LatinoAnalysis/NanoGardener/python/data/JetPUID_effcyandSF.root' % os.getenv('CMSSW_BASE')
 
+aliases['Jet_PUID_SF_L'] = {
+    'linesToAdd': [
+        'gSystem->Load("");',
+        'gSystem->Load("");',
+        'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
+        '.L %s/patches/pujetidsf_event.cc+' % configurations
+    ],
+    'class': 'PUJetIdEventSF',
+    'args': (PUIDSFSource,"2018","loose"),
+    'samples': mc
+}

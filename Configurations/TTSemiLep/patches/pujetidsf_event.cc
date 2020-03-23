@@ -117,7 +117,8 @@ PUJetIdEventSF::setValues(long long _iEntry)
     double pt{Jet_pt->At(iJ)};
     double eta{Jet_eta->At(iJ)};
 
-    if (pt < 30. || std::abs(eta) > 4.7)
+    //XXX
+    if (pt < 30. || pt > 50. || std::abs(eta) > 2.5)
       continue;
 
     unsigned mapType{};
