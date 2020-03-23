@@ -8,17 +8,23 @@ from LatinoAnalysis.NanoGardener.data.common_cfg import Type_dict
 
 
 class BinByBinJERMaker(Module):
-    def __init__(self, jetType = "AK8PFPuppi", noGroom = False, jer_bin_list = [ 0, 1 ], metBranchName="MET" ):
-      if "AK4" in jetType : 
-        self.jetBranchName = "Jet"
-        self.doGroomed = noGroom
-        self.doMET = True
-      elif "AK8" in jetType :
-        self.jetBranchName = "FatJet"
+    def __init__(self, jetColl="CleanJet", noGroom = False, jer_bin_list = [ 0, 1 ], metBranchName="MET" ):
+      if "Clean" in jetColl:
+        self.isCleanBranch = True
+      else:
+        self.isCleanBranch = False
+
+      if "FatJet" in jetColl :
+        self.jetBranchName = jetColl.replace("Clean","")
         self.doGroomed = not noGroom
         self.doMET = False
+      else "Jet" in jetColl : 
+        self.jetBranchName = jetColl.replace("Clean","")
+        self.doGroomed = noGroom
+        self.doMET = True
       else:
-        raise ValueError("ERROR: Invalid jet type = '%s'!" % jetType)
+        raise ValueError("ERROR: Invalid jet type = '%s'!" % jetColl)
+
       self.lenVar = "n" + self.jetBranchName
 
       self.jer_bin_list = jer_bin_list
@@ -56,6 +62,8 @@ class BinByBinJERMaker(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         jets  = Collection(event, self.jetBranchName)
+        if self.isCleanBranch:
+          clean_jetIdxs = getattr(event, "Clean%s_jetIdx"%self.jetBranchName) 
         if self.doMET : 
           muons     = Collection(event, "Muon" ) # to subtract out of the jets for proper type-1 MET corrections
           met_pt_jer   = getattr(event, self.metBranchName+"_pt_jer")
@@ -70,9 +78,16 @@ class BinByBinJERMaker(Module):
           for binIdx in self.jer_bin_list:
             OutBranchs["%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)]   = []
             OutBranchs["%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
+            if self.isCleanBranch:
+              OutBranchs["Clean%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)]   = []
+              OutBranchs["Clean%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
+
             if self.doGroomed:
               OutBranchs["%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)]          = []
               OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
+              if self.isCleanBranch:
+                OutBranchs["Clean%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)]          = []
+                OutBranchs["Clean%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)] = []
 
             if self.doMET : 
               OutBranchs["%s_pt_jer%s%s" % (self.metBranchName, binIdx, shift)]  = met_pt_jer
@@ -82,9 +97,14 @@ class BinByBinJERMaker(Module):
 
 
 
-        for jet in jets:
+        for jet_idx, jet in enumerate(jets):
           jet_eta     = jet['eta']
           jet_pt      = jet['pt']
+
+          if jet_idx in clean_jetIdxs:
+            isClean = True
+          else:
+            isClean = False
 
           if self.doMET : 
             jet_rawpt   = jet['pt_raw']
@@ -139,9 +159,17 @@ class BinByBinJERMaker(Module):
 
               OutBranchs["%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_pt_jer)
               OutBranchs["%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_mass_jer)
+              if self.isCleanBranch:
+                if isClean:
+                  OutBranchs["Clean%s_pt_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_pt_jer)
+                  OutBranchs["Clean%s_mass_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(jet_mass_jer)
               if self.doGroomed:
                 OutBranchs["%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_jer)
                 OutBranchs["%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_tau21DDT_jer)
+                if self.isCleanBranch:
+                  if isClean:
+                    OutBranchs["Clean%s_msoftdrop_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_jer)
+                    OutBranchs["Clean%s_msoftdrop_tau21DDT_jer%s%s" % (self.jetBranchName, binIdx, shift)].append(msoftdrop_tau21DDT_jer)
 
 
               if self.doMET : 
