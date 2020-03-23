@@ -22,6 +22,9 @@ class HEMweight(Module):
         self.dataYear   = dataYear
         self.jetColl = jetColl
 
+        self.doHEMweight = int(self.dataYear) == 2018
+        getattr(self,'HEM%sPtScale'%self.jetColl) = self.doHEMweight and not self.isData
+
     def beginJob(self): 
         pass
 
@@ -31,50 +34,65 @@ class HEMweight(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
-        
-        self.out.branch('HEMweight', 'F')
-        if not self.isData and int(self.dataYear) == 2018:
+
+        if self.doHEMweight:
+          self.out.branch('HEMweight', 'F')
+          self.out.branch('RunPeriod_HEM', 'I')
+        if getattr(self,'HEM%sPtScale'%self.jetColl):
           self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
+          # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
+          # so RunPeriod_HEM should be already created in "if self.doHEMweight:"
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     def initReaders(self,tree): # this function gets the pointers to Value and ArrayReaders and sets them in the C++ worker class
         self.RunRange = []
+        self.RunFrac = []
         self.lumi = 0.
         for RunCfg in self.TriggerCfg.itervalues():
             self.lumi += RunCfg['lumi']
+            self.RunFrac.append(self.lumi)
             self.RunRange.append((RunCfg['begin'],RunCfg['end']))
         self.lumiFrac12 = self.TriggerCfg[1]['lumi'] + self.TriggerCfg[2]['lumi']
         self.lumiFrac12 /= self.lumi
+        for i in range(len(self.RunFrac)):
+            self.RunFrac[i] /= self.lumi
 
        
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        HEMweight_ = 1
-        if not int(self.dataYear) == 2018:
-          pass
-        else:
-          if self.isData:
-            run = event.run
-            run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
-            if run_period == 3 or run_period == 4:
-              jet_coll = Collection(event, self.jetColl )
-              if self._hasHEMJet(jet_coll):
-                HEMweight_ = 0
-              else:
-                pass
-          else:
+        if not self.doHEMweight:
+          return True
+
+        HEMweight_ = 1.
+        if self.isData:
+          run = event.run
+          run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
+          if run_period == 3 or run_period == 4:
             jet_coll = Collection(event, self.jetColl )
             if self._hasHEMJet(jet_coll):
-              HEMweight_ = self.lumiFrac12
+              HEMweight_ = 0.
             else:
               pass
+        else:
+          x = self.random.Rndm()
+          run_period = next(i + 1 for i in range(len(self.RunFrac)) if self.RunFrac[i] >= x)
+          jet_coll = Collection(event, self.jetColl )
+          if self._hasHEMJet(jet_coll):
+            HEMweight_ = self.lumiFrac12
+          else:
+            pass
+          if run_period == 3 or run_period == 4:
             HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
 
-        self.out.fillBranch('HEMweight', HEMweight_)
-        if not self.isData and int(self.dataYear) == 2018:
+        if self.doHEMweight:
+          self.out.fillBranch('HEMweight', HEMweight_)
+          self.out.fillBranch('RunPeriod_HEM',run_period)
+        if getattr(self,'HEM%sPtScale'%self.jetColl):
           self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
+          # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
+          # so RunPeriod_HEM should be already stored in "if self.doHEMweight:"
 
         return True
 
