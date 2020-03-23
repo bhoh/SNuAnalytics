@@ -18,7 +18,7 @@ class BinByBinJERMaker(Module):
         self.jetBranchName = jetColl.replace("Clean","")
         self.doGroomed = not noGroom
         self.doMET = False
-      else "Jet" in jetColl : 
+      elif "Jet" in jetColl : 
         self.jetBranchName = jetColl.replace("Clean","")
         self.doGroomed = noGroom
         self.doMET = True
