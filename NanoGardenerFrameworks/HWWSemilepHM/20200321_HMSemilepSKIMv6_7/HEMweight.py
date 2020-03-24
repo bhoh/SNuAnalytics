@@ -23,7 +23,7 @@ class HEMweight(Module):
         self.jetColl = jetColl
 
         self.doHEMweight = int(self.dataYear) == 2018
-        self.HEMPtScale = self.doHEMweight and not self.isData
+        getattr(self,'HEM%sPtScale'%self.jetColl) = self.doHEMweight and not self.isData
 
     def beginJob(self): 
         pass
@@ -38,7 +38,7 @@ class HEMweight(Module):
         if self.doHEMweight:
           self.out.branch('HEMweight', 'F')
           self.out.branch('RunPeriod_HEM', 'I')
-        if self.HEMPtScale:
+        if getattr(self,'HEM%sPtScale'%self.jetColl):
           self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
           # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
           # so RunPeriod_HEM should be already created in "if self.doHEMweight:"
@@ -64,8 +64,8 @@ class HEMweight(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         if not self.doHEMweight:
           return True
+
         HEMweight_ = 1.
-        HEMJetPtScale_ = [1. for _ in range(getattr(event,'n'+self.jetColl))]
         if self.isData:
           run = event.run
           run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
@@ -89,7 +89,7 @@ class HEMweight(Module):
         if self.doHEMweight:
           self.out.fillBranch('HEMweight', HEMweight_)
           self.out.fillBranch('RunPeriod_HEM',run_period)
-        if self.HEMPtScale:
+        if getattr(self,'HEM%sPtScale'%self.jetColl):
           self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
           # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
           # so RunPeriod_HEM should be already stored in "if self.doHEMweight:"

@@ -6,7 +6,9 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from LatinoAnalysis.NanoGardener.data.TrigMaker_cfg import Trigger
 
-class HEMweight(Module):
+class HEMveto(Module):
+    #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/1995/2.html
+    #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
 
     def __init__(self, isData, dataYear, jetColl="CleanJet", cmssw = 'Full2016', seed=65539):
         #self.TriggerCfg = Trigger[cmssw] #2018 period range not available
@@ -22,9 +24,6 @@ class HEMweight(Module):
         self.dataYear   = dataYear
         self.jetColl = jetColl
 
-        self.doHEMweight = int(self.dataYear) == 2018
-        self.HEMPtScale = self.doHEMweight and not self.isData
-
     def beginJob(self): 
         pass
 
@@ -34,14 +33,11 @@ class HEMweight(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.initReaders(inputTree) # initReaders must be called in beginFile
         self.out = wrappedOutputTree
-
-        if self.doHEMweight:
-          self.out.branch('HEMweight', 'F')
-          self.out.branch('RunPeriod_HEM', 'I')
-        if self.HEMPtScale:
-          self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
-          # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
-          # so RunPeriod_HEM should be already created in "if self.doHEMweight:"
+        
+        if int(self.dataYear) == 2018:
+          self.out.branch('HEMveto', 'F')
+          if not self.isData:
+            self.out.branch('HEM%sPtScale'%self.jetColl, 'F', lenVar='n'+self.jetColl)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -54,47 +50,42 @@ class HEMweight(Module):
             self.lumi += RunCfg['lumi']
             self.RunFrac.append(self.lumi)
             self.RunRange.append((RunCfg['begin'],RunCfg['end']))
-        self.lumiFrac12 = self.TriggerCfg[1]['lumi'] + self.TriggerCfg[2]['lumi']
-        self.lumiFrac12 /= self.lumi
+        
         for i in range(len(self.RunFrac)):
             self.RunFrac[i] /= self.lumi
 
        
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        if not self.doHEMweight:
-          return True
-        HEMweight_ = 1.
+        HEMveto_ = 1
         HEMJetPtScale_ = [1. for _ in range(getattr(event,'n'+self.jetColl))]
-        if self.isData:
-          run = event.run
-          run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
+        if not int(self.dataYear) == 2018:
+          pass
+        else:
+          if self.isData:
+            run = event.run
+            run_period = next(i + 1 for i in range(len(self.RunRange)) if self.RunRange[i][0] <= run <=self.RunRange[i][1] )
+          else:
+            x = self.random.Rndm()
+            run_period = next(i + 1 for i in range(len(self.RunFrac)) if self.RunFrac[i] >= x)
+
           if run_period == 3 or run_period == 4:
             jet_coll = Collection(event, self.jetColl )
             if self._hasHEMJet(jet_coll):
-              HEMweight_ = 0.
+              HEMveto_ = 0
             else:
               pass
-        else:
-          x = self.random.Rndm()
-          run_period = next(i + 1 for i in range(len(self.RunFrac)) if self.RunFrac[i] >= x)
-          jet_coll = Collection(event, self.jetColl )
-          if self._hasHEMJet(jet_coll):
-            HEMweight_ = self.lumiFrac12
-          else:
-            pass
-          if run_period == 3 or run_period == 4:
-            HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
 
-        if self.doHEMweight:
-          self.out.fillBranch('HEMweight', HEMweight_)
-          self.out.fillBranch('RunPeriod_HEM',run_period)
-        if self.HEMPtScale:
-          self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
-          # getattr(self,'HEM%sPtScale'%self.jetColl) is self.doHEMweight and not self.isData
-          # so RunPeriod_HEM should be already stored in "if self.doHEMweight:"
+            if not self.isData:
+              HEMJetPtScale_ = self._scaleHEMJetPt(jet_coll)
+
+        if int(self.dataYear) == 2018:
+          self.out.fillBranch('HEMveto', HEMveto_)
+          if not self.isData:
+            self.out.fillBranch('HEM%sPtScale'%self.jetColl, HEMJetPtScale_)
 
         return True
+
 
     def _hasHEMJet(self, jet_coll_):
         hasHEMJet = False

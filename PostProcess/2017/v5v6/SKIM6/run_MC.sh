@@ -3,14 +3,6 @@
 # changed to /xrd/store/user/jhchoi/Latino/HWWNano/
 # L1Loose
 
-if [ -f GetNJOB.py ]; then
-        echo "GetNJOB.py"
-else
-    wget https://raw.githubusercontent.com/soarnsoar/python_tool/456613c5aa5e5c028c056b741a2d5db2d8211462/GetNJOB.py
-
-fi
-
-
 #source TurnOnDryRun.sh
 
 
@@ -188,69 +180,38 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 #--l1Prod--#
 #mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i Prod -s MCl1loose2017v6 -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6 -s MCCorr2017v6 -b -T ${SAMPLE_LIST}
-#
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6 -b -T ${SAMPLE_LIST}
-
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_2 -b -T ${SAMPLE_LIST}
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_5 -b -T ${SAMPLE_LIST}
 
 
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6 -s ElepTup_suffix -b -T ${SAMPLE_LIST} 
+mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_6 -b -T ${SAMPLE_LIST}
+
+
+
 
 
 ##--Systematics
 SYSLIST=()
 ##--Lepton momentum Scale--##
 
-#SYSLIST+=(ElepTup ElepTdo)
+SYSLIST+=(ElepTup_suffix ElepTdo_suffix)
+SYSLIST+=(MupTup_suffix MupTdo_suffix)
 
+##--ak4 Jet Energy Scale--##
+SYSLIST+=(JESup_suffix_total JESdo_suffix_total)
+##--ak8 Jet Energy Scale--##
+SYSLIST+=(FATJESup_suffix_total FATJESdo_suffix_total)
 ##--MET--##
-
-#SYSLIST+=(ElepTup)
-#SYSLIST+=(ElepTdo)
-#SYSLIST+=(METup METdo)
-#SYSLIST+=(MupTup MupTdo)
+SYSLIST+=(METup_suffix METdo_suffix)
 
 
 
 
-#SAMPLE_LIST="ZZZ"  ##For Test
 
-
-JES_SOURCE_LIST=(Total Absolute Absolute_2017 BBEC1 BBEC1_2017 EC2 EC2_2017 FlavorQCD HF HF_2017 RelativeBal RelativeSample_2017)
-#JES_SOURCE_LIST=(Total)
-VAR_LIST=(up do)
-#VAR_LIST=(up)
-JEScfg=SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/JES/Step_JES.py
-for source in ${JES_SOURCE_LIST[@]};do
-    for var in ${VAR_LIST[@]};do
-	condor_rm -const "jobstatus==5"
-	###----Check number of jobs-----###
-	
-	NJOB=`python GetNJOB.py`
-	
-	while [ $NJOB -gt 800 ];do
-	    condor_rm -const "jobstatus==5"
-	    echo "NJOB="${NJOB}
-	    date
-	    sleep 600
-	    NJOB=`python GetNJOB.py`
-
-	done
-	echo "NJOB = $NJOB < 800"
-
-
-
-	#continue ##skip
-	sys=JES${var}_${source}
-	echo "---$sys---"
-	mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -b -T ${SAMPLE_LIST}
-
-
-	##--For Test
-	#mkPostProc.py --modcfg ${JEScfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s ${sys} -T ${SAMPLE_LIST}
-    done
+for sys in ${SYSLIST[@]};do
+    continue ##skip
+    echo "---$sys---"
+    mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_2 -s ${sys} -b -T ${SAMPLE_LIST}
 done
+
 
 ##--Test
 #mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6 -s ElepTup_suffix -b -T WW-LO
@@ -266,6 +227,6 @@ EXCLUDE=()
 
 
 
-#unset -f condor_submit
+unset -f condor_submit
 
 
