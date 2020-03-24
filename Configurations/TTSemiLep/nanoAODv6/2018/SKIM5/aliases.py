@@ -110,8 +110,6 @@ PUIDSFSource = '%s/src/LatinoAnalysis/NanoGardener/python/data/JetPUID_effcyandS
 
 aliases['Jet_PUID_SF_L'] = {
     'linesToAdd': [
-        'gSystem->Load("");',
-        'gSystem->Load("");',
         'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
         '.L %s/patches/pujetidsf_event.cc+' % configurations
     ],
