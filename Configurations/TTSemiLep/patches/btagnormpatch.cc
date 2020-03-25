@@ -23,7 +23,7 @@ class BTagReshapeNormReader;
 
 class BtagReshapeNorm : public multidraw::TTreeFunction {
 public:
-  BtagReshapeNorm(char const* filename, char const* shift = "central", char const* algo = "deepcsv");
+  BtagReshapeNorm(char const* filename, char const* samplename,char const* shift = "central", char const* algo = "deepcsv");
 
   char const* getName() const override { return "BtagReshapeNorm"; }
   TTreeFunction* clone() const override { return new BtagReshapeNorm(filename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
@@ -60,6 +60,7 @@ protected:
   };
 
   std::string filename_{};
+  std::string samplename_{};
 
   std::string shiftStr_{};
   unsigned shift_{nShiftTypes};
@@ -139,9 +140,10 @@ std::array<std::string, BtagReshapeNorm::nShiftTypes> BtagReshapeNorm::shiftName
 
 std::array<std::vector<unsigned>, 3> BtagReshapeNorm::relevantShifts{};
 
-BtagReshapeNorm::BtagReshapeNorm(char const* filename, char const* shift/* = "central"*/, char const* algo/* = "deepcsv"*/) :
+BtagReshapeNorm::BtagReshapeNorm(char const* filename, char const* samplename, char const* shift/* = "central"*/, char const* algo/* = "deepcsv"*/) :
   TTreeFunction(),
   filename_{filename},
+  samplename_{samplename},
   shiftStr_{shift},
   shift_{static_cast<unsigned>(std::find(shiftNames.begin(), shiftNames.end(), shiftStr_) - shiftNames.begin())},
   algo_{algo}
@@ -324,13 +326,13 @@ void BTagReshapeNormReader::load(std::string fileName, std::string algo, int fla
   std::cout << "         flav : " << flav << std::endl;
   tfile = new TFile(fileName.c_str(),"READ");
   if(flav == BTagEntry::FLAV_B){
-    mapNorm["b"] = (TH2D*)(tfile->Get("b"));
+    mapNorm["b"] = (TH2D*)(tfile->Get(samplename_+"/b"));
   }
   else if(flav == BTagEntry::FLAV_C){
-    mapNorm["c"] = (TH2D*)(tfile->Get("c"));
+    mapNorm["c"] = (TH2D*)(tfile->Get(samplename_+"/c"));
   }
   else if(flav == BTagEntry::FLAV_UDSG){
-    mapNorm["udsg"] = (TH2D*)(tfile->Get("udsg"));
+    mapNorm["udsg"] = (TH2D*)(tfile->Get(samplename_+"/udsg"));
   }
   return;
 }
