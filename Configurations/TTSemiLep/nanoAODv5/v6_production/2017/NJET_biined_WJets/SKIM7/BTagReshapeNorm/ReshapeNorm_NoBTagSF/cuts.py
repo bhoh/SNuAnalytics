@@ -12,8 +12,6 @@ except ImportError:
 #cuts={}
 
 
-scriptname=opt.cutsFile
-
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 LepCut="(  Lepton_pt[0]>30 \
 && ( fabs(Lepton_eta[0])  < 2.1*(abs(Lepton_pdgId[0])==11) \

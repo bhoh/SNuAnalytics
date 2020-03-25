@@ -62,7 +62,7 @@ SFweight=SFweight+'*'+LepWPweight+'*'+LepWPCut
 
 GenLepMatch = 'Lepton_genmatched[0]'
 
-SFweight=SFweight+'*HEMweight'
+#SFweight=SFweight+'*HEMweight'
 
 ################################################
 ############### B-Tag  WP ######################

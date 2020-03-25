@@ -38,12 +38,12 @@ elif  'sdfarm' in SITE:
 
 
 CAMPAIGN='Fall2017_102X_nAODv5_Full2017v6'
-STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7/"
+STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7"
 
 
 
 CAMPAIGN_DATA='Run2017_102X_nAODv5_Full2017v6'
-STEP_DATA="DATAl1loose2017v6__HMSemilepSkimJHv6_7_data/"
+STEP_DATA="DATAl1loose2017v6__HMSemilepSkimJHv6_7_data"
 
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
