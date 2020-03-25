@@ -10,6 +10,7 @@
 #include "TSystem.h"
 #include "TFile.h"
 #include "TH2D.h"
+#include "TString.h"
 
 #include <string>
 #include <unordered_map>
@@ -89,7 +90,7 @@ protected:
 
 class BTagReshapeNormReader{
 public:
-  BTagReshapeNormReader(std::string central, std::vector<std::string> shifts);
+  BTagReshapeNormReader(std::string central, std::vector<std::string> shifts, std::string samplename);
   ~BTagReshapeNormReader();
 
   double eval_auto_bounds(std::string syst, int flav, float absEta, float pt);
@@ -97,6 +98,7 @@ public:
 protected:
   std::string central_;
   std::string algo_;
+  TString samplename_;
   int flav_;
   std::vector<std::string> shifts_;
   TFile *tfile;
@@ -226,7 +228,7 @@ BtagReshapeNorm::bindTree_(multidraw::FunctionLibrary& _library)
       std::vector<std::string> shiftsToRead;
       for (auto s : relevantShifts[flav])
         shiftsToRead.push_back(shiftNames[s]);
-      readers[flav].reset(new BTagReshapeNormReader("central", shiftsToRead));
+      readers[flav].reset(new BTagReshapeNormReader("central", shiftsToRead, samplename_));
       readers[flav]->load(filename_, algo_, flav);
     }
 
@@ -267,9 +269,11 @@ BtagReshapeNorm::bindTree_(multidraw::FunctionLibrary& _library)
 /////////////////////////////////////////////////////////////////////
 
 
-BTagReshapeNormReader::BTagReshapeNormReader(std::string central, std::vector<std::string> shifts):
+BTagReshapeNormReader::BTagReshapeNormReader(std::string central, std::vector<std::string> shifts, std::string samplename):
   central_{central},
-  shifts_{shifts}
+  shifts_{shifts},
+  samplename_{samplename}
+  
 {
   //
 }

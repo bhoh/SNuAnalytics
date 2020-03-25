@@ -19,6 +19,10 @@ mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
 # Jet cut
 
+aliases['nCleanJet20_2p5'] = {
+            'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5)'
+            }
+
 aliases['nCleanJet30_2p5'] = {
             'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5)'
             }
