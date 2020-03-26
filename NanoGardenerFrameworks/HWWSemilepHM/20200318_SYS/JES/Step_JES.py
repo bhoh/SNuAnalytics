@@ -44,7 +44,10 @@ Steps={
 
 }
 
-
+VAR_KIND_DICT={
+'do':'Do',
+'up':'Up'
+}
 ##JES sources##
 LIST_JES_SOURCE=['Total', 'Absolute',  'BBEC1', 'EC2',  'FlavorQCD', 'HF',  'RelativeBal']
 for yr in ['2016','2017','2018']:
@@ -67,7 +70,8 @@ for jes_source in LIST_JES_SOURCE:
             'do4MC'      : True  ,
             'do4Data'    : False  ,
             'import'     : 'LatinoAnalysis.NanoGardener.modules.PtCorrApplier',
-            'declare'    : 'JES'+jes_source+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+jes_source+'", kind="'+var+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"])',
+            'declare'    : 'JES'+jes_source+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+jes_source+'", kind="'+VAR_KIND_DICT[var]+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"])',
             'module'     : 'JES'+jes_source+var+'()',
 
         }
+

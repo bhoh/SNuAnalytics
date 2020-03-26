@@ -11,6 +11,8 @@ class HEMveto(Module):
     #ref: https://hypernews.cern.ch/HyperNews/CMS/get/JetMET/2000.html
 
     def __init__(self, isData, dataYear, jetColl="CleanJet", cmssw = 'Full2016', seed=65539):
+        print "isData=",isData
+        print "dataYear=",dataYear
         #self.TriggerCfg = Trigger[cmssw] #2018 period range not available
         #ref : https://twiki.cern.ch/twiki/bin/view/CMS/PdmV2018Analysis
         self.TriggerCfg = {

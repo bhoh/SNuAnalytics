@@ -19,6 +19,7 @@ drop SoftActivityJet*
 drop Switch_MHTrig*
 drop LeptonGen*
 drop *VetoLepton*
+drop CleanJet_jecUncert*
 keep Flag*
 keep Electron*RelIso*
 keep Muon*RelIso*

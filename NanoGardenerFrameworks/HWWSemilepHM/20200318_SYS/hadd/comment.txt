@@ -1,0 +1,1 @@
+hadd if a pair of files has no common branch.
