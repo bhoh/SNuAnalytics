@@ -3,17 +3,16 @@ import numpy as np
 import os
 
 CMSSW     = os.environ["CMSSW_BASE"]
-
-BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5/"
+BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/v6_production/2017/NJET_biined_WJets/SKIM7/BTagReshapeNorm"
 
 variables_BTag   = BASE_PATH + "/ReshapeNorm_BTagSF/variables.py"
 variables_NoBTag = BASE_PATH + "/ReshapeNorm_NoBTagSF/variables.py"
 
-samples_BTag     = BASE_PATH + "/ReshapeNorm_BTagSF/samples_2018.py"
-samples_NoBTag   = BASE_PATH + "/ReshapeNorm_NoBTagSF/samples_2018.py"
+samples_BTag     = BASE_PATH + "/ReshapeNorm_BTagSF/samples_2017.py"
+samples_NoBTag   = BASE_PATH + "/ReshapeNorm_NoBTagSF/samples_2017.py"
 
-rootfile_BTag   = BASE_PATH + "/rootFile_2018_ReshapeNorm_BTagSF/hadd.root"
-rootfile_NoBTag = BASE_PATH + "/rootFile_2018_ReshapeNorm_NoBTagSF/hadd.root"
+rootfile_BTag   = BASE_PATH + "/rootFile_2017_ReshapeNorm_BTagSF/hadd.root"
+rootfile_NoBTag = BASE_PATH + "/rootFile_2017_ReshapeNorm_NoBTagSF/hadd.root"
 
 tfile_BTag   = ROOT.TFile(rootfile_BTag,  "READ")
 tfile_NoBTag = ROOT.TFile(rootfile_NoBTag,"READ")

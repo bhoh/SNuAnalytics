@@ -83,7 +83,7 @@ SFweight+="*Jet_PUID_SF_L"
 ############### TT specific SF  ################
 ################################################
 
-TTSFweight = 'btagSFNorm'
+TTSFweight = 'btagSFNorm_top'
 
 ################################################                                                                                             
 ############   MET  FILTERS  ###################                                                                                             
@@ -189,12 +189,14 @@ samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50-LO',
 
                  
 
-samples['TT'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_')
-                      + getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_') 
-                      ,
+samples['TTLJ'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 2,
+                    }
+samples['TTLL'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
+                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                      'FilesPerJob' : 4,
                     }
 
 
