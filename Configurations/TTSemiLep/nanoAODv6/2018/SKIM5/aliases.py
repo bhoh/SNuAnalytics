@@ -51,7 +51,7 @@ aliases['Jet_btagSF_shapeFix'] = {
     'samples': mc
 }
 
-aliases['Jet_btagSF_shapeFixNorm_ttlj'] = {
+aliases['Jet_btagSF_shapeFixNorm_top'] = {
     'linesToAdd': [
         'gSystem->Load("libCondFormatsBTauObjects.so");',
         'gSystem->Load("libCondToolsBTau.so");',
@@ -59,7 +59,7 @@ aliases['Jet_btagSF_shapeFixNorm_ttlj'] = {
         '.L %s/patches/btagnormpatch.cc+' % configurations
     ],
     'class': 'BtagReshapeNorm',
-    'args': (btagNormSource,"ttlj"),
+    'args': (btagNormSource,"top"),
     'samples': mc
 }
 
@@ -69,11 +69,12 @@ aliases['btagSF'] = {
     'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
-aliases['btagSFNorm_ttlj'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_ttlj[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
-    'samples': ["TTToSemiLeptonic_ext3"]
+
+aliases['btagSFNorm_top'] = {
+    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
+    'samples': mc
 }
-#
+
 #for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
 #    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
 #    aliases['Jet_btagSF%sup_shapeFix' % shift] = {

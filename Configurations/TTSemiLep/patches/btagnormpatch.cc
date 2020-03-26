@@ -27,7 +27,7 @@ public:
   BtagReshapeNorm(char const* filename, char const* samplename,char const* shift = "central", char const* algo = "deepcsv");
 
   char const* getName() const override { return "BtagReshapeNorm"; }
-  TTreeFunction* clone() const override { return new BtagReshapeNorm(filename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
+  TTreeFunction* clone() const override { return new BtagReshapeNorm(filename_.c_str(), samplename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
 
   void beginEvent(long long) override;
   int getMultiplicity() override { return 1; }
