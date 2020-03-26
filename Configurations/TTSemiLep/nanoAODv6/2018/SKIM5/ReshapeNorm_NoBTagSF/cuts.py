@@ -24,10 +24,11 @@ LepCut="(  Lepton_pt[0]>30 \
 )"
 LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'
 
+JetCut='(nCleanJet20_2p5 >=4)'
 
 #------End of Variable Definition-----#
-#supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
+supercut += "&&"+JetCut
 #METtype="PuppiMET"
 #supercut +='&&'+"( %s_pt > 20 )"%METtype
 

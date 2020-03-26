@@ -1,7 +1,7 @@
 ##Just set below things##
 
 
-tag='2017_SKIM7_HMVar5'
+tag='2017_ReshapeNorm_NoBTagSF'
 
 variablesFile='ReshapeNorm_NoBTagSF/variables.py' ##what variables to draw
 cutsFile='ReshapeNorm_NoBTagSF/cuts.py' ## event selection##region selection

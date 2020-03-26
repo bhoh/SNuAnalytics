@@ -19,6 +19,10 @@ mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
 # Jet cut
 
+aliases['nCleanJet20_2p5'] = {
+            'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5)'
+            }
+
 aliases['nCleanJet30_2p5'] = {
             'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5)'
             }
@@ -47,7 +51,7 @@ aliases['Jet_btagSF_shapeFix'] = {
     'samples': mc
 }
 
-aliases['Jet_btagSF_shapeFixNorm'] = {
+aliases['Jet_btagSF_shapeFixNorm_top'] = {
     'linesToAdd': [
         'gSystem->Load("libCondFormatsBTauObjects.so");',
         'gSystem->Load("libCondToolsBTau.so");',
@@ -55,7 +59,7 @@ aliases['Jet_btagSF_shapeFixNorm'] = {
         '.L %s/patches/btagnormpatch.cc+' % configurations
     ],
     'class': 'BtagReshapeNorm',
-    'args': (btagNormSource,),
+    'args': (btagNormSource,"top"),
     'samples': mc
 }
 
@@ -65,11 +69,12 @@ aliases['btagSF'] = {
     'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
-aliases['btagSFNorm'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
+
+aliases['btagSFNorm_top'] = {
+    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
-#
+
 #for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
 #    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
 #    aliases['Jet_btagSF%sup_shapeFix' % shift] = {
@@ -110,8 +115,6 @@ PUIDSFSource = '%s/src/LatinoAnalysis/NanoGardener/python/data/JetPUID_effcyandS
 
 aliases['Jet_PUID_SF_L'] = {
     'linesToAdd': [
-        'gSystem->Load("");',
-        'gSystem->Load("");',
         'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
         '.L %s/patches/pujetidsf_event.cc+' % configurations
     ],

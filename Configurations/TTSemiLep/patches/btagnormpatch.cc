@@ -10,6 +10,7 @@
 #include "TSystem.h"
 #include "TFile.h"
 #include "TH2D.h"
+#include "TString.h"
 
 #include <string>
 #include <unordered_map>
@@ -23,10 +24,10 @@ class BTagReshapeNormReader;
 
 class BtagReshapeNorm : public multidraw::TTreeFunction {
 public:
-  BtagReshapeNorm(char const* filename, char const* shift = "central", char const* algo = "deepcsv");
+  BtagReshapeNorm(char const* filename, char const* samplename,char const* shift = "central", char const* algo = "deepcsv");
 
   char const* getName() const override { return "BtagReshapeNorm"; }
-  TTreeFunction* clone() const override { return new BtagReshapeNorm(filename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
+  TTreeFunction* clone() const override { return new BtagReshapeNorm(filename_.c_str(), samplename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
 
   void beginEvent(long long) override;
   int getMultiplicity() override { return 1; }
@@ -60,6 +61,7 @@ protected:
   };
 
   std::string filename_{};
+  std::string samplename_{};
 
   std::string shiftStr_{};
   unsigned shift_{nShiftTypes};
@@ -88,7 +90,7 @@ protected:
 
 class BTagReshapeNormReader{
 public:
-  BTagReshapeNormReader(std::string central, std::vector<std::string> shifts);
+  BTagReshapeNormReader(std::string central, std::vector<std::string> shifts, std::string samplename);
   ~BTagReshapeNormReader();
 
   double eval_auto_bounds(std::string syst, int flav, float absEta, float pt);
@@ -96,6 +98,7 @@ public:
 protected:
   std::string central_;
   std::string algo_;
+  TString samplename_;
   int flav_;
   std::vector<std::string> shifts_;
   TFile *tfile;
@@ -139,9 +142,10 @@ std::array<std::string, BtagReshapeNorm::nShiftTypes> BtagReshapeNorm::shiftName
 
 std::array<std::vector<unsigned>, 3> BtagReshapeNorm::relevantShifts{};
 
-BtagReshapeNorm::BtagReshapeNorm(char const* filename, char const* shift/* = "central"*/, char const* algo/* = "deepcsv"*/) :
+BtagReshapeNorm::BtagReshapeNorm(char const* filename, char const* samplename, char const* shift/* = "central"*/, char const* algo/* = "deepcsv"*/) :
   TTreeFunction(),
   filename_{filename},
+  samplename_{samplename},
   shiftStr_{shift},
   shift_{static_cast<unsigned>(std::find(shiftNames.begin(), shiftNames.end(), shiftStr_) - shiftNames.begin())},
   algo_{algo}
@@ -224,7 +228,7 @@ BtagReshapeNorm::bindTree_(multidraw::FunctionLibrary& _library)
       std::vector<std::string> shiftsToRead;
       for (auto s : relevantShifts[flav])
         shiftsToRead.push_back(shiftNames[s]);
-      readers[flav].reset(new BTagReshapeNormReader("central", shiftsToRead));
+      readers[flav].reset(new BTagReshapeNormReader("central", shiftsToRead, samplename_));
       readers[flav]->load(filename_, algo_, flav);
     }
 
@@ -265,9 +269,11 @@ BtagReshapeNorm::bindTree_(multidraw::FunctionLibrary& _library)
 /////////////////////////////////////////////////////////////////////
 
 
-BTagReshapeNormReader::BTagReshapeNormReader(std::string central, std::vector<std::string> shifts):
+BTagReshapeNormReader::BTagReshapeNormReader(std::string central, std::vector<std::string> shifts, std::string samplename):
   central_{central},
-  shifts_{shifts}
+  shifts_{shifts},
+  samplename_{samplename}
+  
 {
   //
 }
@@ -324,13 +330,13 @@ void BTagReshapeNormReader::load(std::string fileName, std::string algo, int fla
   std::cout << "         flav : " << flav << std::endl;
   tfile = new TFile(fileName.c_str(),"READ");
   if(flav == BTagEntry::FLAV_B){
-    mapNorm["b"] = (TH2D*)(tfile->Get("b"));
+    mapNorm["b"] = (TH2D*)(tfile->Get(samplename_+"/b"));
   }
   else if(flav == BTagEntry::FLAV_C){
-    mapNorm["c"] = (TH2D*)(tfile->Get("c"));
+    mapNorm["c"] = (TH2D*)(tfile->Get(samplename_+"/c"));
   }
   else if(flav == BTagEntry::FLAV_UDSG){
-    mapNorm["udsg"] = (TH2D*)(tfile->Get("udsg"));
+    mapNorm["udsg"] = (TH2D*)(tfile->Get(samplename_+"/udsg"));
   }
   return;
 }
