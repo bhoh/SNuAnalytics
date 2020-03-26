@@ -8,7 +8,7 @@ from LatinoAnalysis.NanoGardener.data.common_cfg import Type_dict
 
 
 class BinByBinJERMaker(Module):
-    def __init__(self, jetColl="CleanJet", noGroom = False, jer_bin_list = [ 0, 1, 2, 3, 4, 5 ], metBranchName="MET" ):
+    def __init__(self, jetColl="CleanJet", noGroom = False, jer_bin_list = [ 0, 1, 2, 3, 4, 5 ], metBranchName="PuppiMET" ):
       if "Clean" in jetColl:
         self.isCleanBranch = True
       else:
