@@ -25,6 +25,7 @@ MYALGO={
 'dMchi2Resolution':'',
 'dMchi2Resolutionqgl':'',
 'HighPTjj':'', ##require jj pair making highest pt(jj)
+'LowPTjj':'', ##require jj pair making lowest pt(jj)
 }
 
 class HMlnjjVarsClass_Dev_jhchoi(Module):
@@ -516,6 +517,12 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             
             ##<<<<End of Resolved
 
+
+        if event.event % 10000 ==1 :##To flush memory of ttree
+            print >> sys.stderr, "[jhchoi]AutoSave, #event=",event.event
+            self.out._tree.AutoSave("FlushBaskets")
+
+
         if (not self._isBoosted) and (not any( self._isResolved.values())) and self.doSkim: return False
 
         
@@ -723,10 +730,10 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
     def VBF_Resolved(self,algo_):
         algo=algo_
         N = self.CleanJet_col._len ##->change to CleanJetColl
-        if N < 4 : ## could it be 4 ?
+        if N < 2 : ## could it be 4 ?
             self._isVBF_Resolved[algo] = False
             return
-
+        #print "--pass Njet>=4"
         #max_mjj=-9999.
         for i_cj in range(0,N):
             ##->add not whad
@@ -744,12 +751,17 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
                 pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
                 if pt2 < 30: continue
                 if abs(eta2) > 4.7 : continue
-
+                #print "-pass whad jet idx- "
                 ##Set momentum##
 
                 this_dEta=abs(eta1-eta2)
                 this_mjj = self.InvMassCalc(pt1,eta1,phi1,mass1,pt2,eta2,phi2,mass2)
-                if (this_dEta > 3.5) and (this_mjj > self._VBFjjResolved_mjj) :
+                #print "this_mjj",this_mjj
+                #print "this_dEta",this_dEta
+                #print "self._VBFjjResolved_mjj",self._VBFjjResolved_mjj
+                if (this_dEta > 3.5) and (this_mjj > self._VBFjjResolved_mjj[algo]) :
+                    #print "=define values-"
+                    
                     self._VBFjjResolved_dEta[algo] = this_dEta
                     self._VBFjjResolved_mjj[algo] = this_mjj
                     self._VBFjjResolved_cjidx1[algo] = i_cj
@@ -759,7 +771,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
         ##--End of jet pair loop
         if self._VBFjjResolved_mjj[algo] > 500. : self._isVBF_Resolved[algo] = True
-
+        #print "_VBFjjResolved_mjj=",self._VBFjjResolved_mjj
 
     def WhadMaker(self,algo_):
         algo=algo_
@@ -791,9 +803,11 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
                 elif algo=="dMchi2Resolutionqgl":
                     thisScore = self.CalcChi2DMReolsutionQgl(i_cj, j_cj,self.rho)
-                elif algo=="HighPT":
+                elif algo=="HighPTjj":
                     thisScore = self.CalcHighPTjj(i_cj, j_cj)
-                
+                elif algo=="LowPTjj":
+                    thisScore = self.CalcLowPTjj(i_cj, j_cj)
+                    
                 ##Go to CalcAlgo
 
                 #v1=ROOT.TLorentzVector()
@@ -971,7 +985,23 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         Mjj=(v1+v2).M()
         if Mjj <40 : return sys.float_info.max
         if Mjj >250 : return sys.float_info.max
+        #print ptjj
         return -1*ptjj
+    def CalcLowPTjj(self, i_cj, j_cj):
+        pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
+        pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
+
+        v1=ROOT.TLorentzVector()
+        v2=ROOT.TLorentzVector()
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
+
+        ptjj=(v1+v2).Pt()
+        Mjj=(v1+v2).M()
+        if Mjj <40 : return sys.float_info.max
+        if Mjj >250 : return sys.float_info.max
+        #print ptjj
+        return ptjj
 
 
 

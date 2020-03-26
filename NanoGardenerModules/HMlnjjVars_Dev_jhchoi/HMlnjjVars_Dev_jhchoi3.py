@@ -452,7 +452,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             self.out.fillBranch('Whad_phi'+_algo, self._Whad_4v[algo].Phi())
             self.out.fillBranch('Whad_mass'+_algo, self._Whad_4v[algo].M())
             self.out.fillBranch('Whad_Mt'+_algo, self._Whad_4v[algo].Mt())
-            self.out.fillBranch('Whad_ScoreToLeast'+_algo, self._Whad_4v[algo].Mt())
+            self.out.fillBranch('Whad_ScoreToLeast'+_algo, self._Whad_ScoreToLeast[algo])
 
             self.out.fillBranch('Whad_cjidx1'+_algo, self._Whad_cjidx1[algo])
             self.out.fillBranch('Whad_cjidx2'+_algo, self._Whad_cjidx2[algo])
