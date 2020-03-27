@@ -517,6 +517,12 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             
             ##<<<<End of Resolved
 
+
+        if event.event % 10000 ==1 :##To flush memory of ttree
+            print >> sys.stderr, "[jhchoi]AutoSave, #event=",event.event
+            self.out._tree.AutoSave("FlushBaskets")
+
+
         if (not self._isBoosted) and (not any( self._isResolved.values())) and self.doSkim: return False
 
         
