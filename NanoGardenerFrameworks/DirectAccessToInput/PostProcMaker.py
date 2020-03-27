@@ -348,7 +348,10 @@ class PostProcMaker():
        for iFile in self._targetDic[iSample] :
          iTarget = os.path.basename(self._targetDic[iSample][iFile]).replace(self._treeFilePrefix,'').replace('.root','')
          if JOB_DIR_SPLIT :
-           pidFile=jDir+'/'+iSample+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
+           #pidFile=jDir+'/'+iSample+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
+           subDirExtra = '/' + "__".join([(iTarget+bpostFix).split('__')[0]]+(iTarget+bpostFix).split('__')[2:])
+           pidFile=jDir+'/'+subDirExtra+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
+
          else:
            pidFile=jDir+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
          if os.path.isfile(pidFile) :
@@ -375,7 +378,7 @@ class PostProcMaker():
        self._jobs.Add2All('cp '+self._cmsswBasedir+'/src/'+self._haddnano+' .')
        self._jobs.Add2All(preBash)
        self._jobs.AddPy2Sh()
-       self._jobs.Add2All('ls -l')
+       #self._jobs.Add2All('ls -l')
      # CRAB3 Init
      elif self._jobMode == 'Crab':
        print "INFO: Using CRAB3"
@@ -390,7 +393,11 @@ class PostProcMaker():
          if iTarget in targetList :
            # Create python
            if JOB_DIR_SPLIT :
-             pyFile=jDir+'/'+iSample+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.py'
+             #pyFile=jDir+'/'+iSample+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.py'
+             subDirExtra = '/' + "__".join([(iTarget+bpostFix).split('__')[0]]+(iTarget+bpostFix).split('__')[2:])
+             print 'subDirExtra=',subDirExtra
+             os.system('mkdir -p '+jDir+'/'+subDirExtra)
+             pyFile=jDir+'/'+subDirExtra+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.py'
            else:
              pyFile=jDir+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.py'
            if os.path.isfile(pyFile) : os.system('rm '+pyFile)
@@ -403,7 +410,7 @@ class PostProcMaker():
            # Interactive
            if   self._jobMode == 'Interactive' :
              command = 'cd '+wDir+' ; cp '+self._cmsswBasedir+'/src/'+self._haddnano+' . ; '+preBash+' python '+pyFile \
-                      +' ; ls -l ; '+stageOutCmd+' ; '+rmGarbageCmd
+                      +' ; '+stageOutCmd+' ; '+rmGarbageCmd
              if not self._pretend : os.system(command)
              else                 : print command
            # Batch
@@ -541,40 +548,37 @@ class PostProcMaker():
 
      # Download the file locally with size validation (make maximum 5 attempts)
      fPy.write('for source in sourceFiles:\n')
-     if self._LocalSite!='sdfarm' or self._iniStep == 'Prod':
-       fPy.write('    fname = os.path.basename(source).replace(".root", "_input.root")\n')
-       fPy.write('    for att in range(5):\n')
-       fPy.write('        if source.startswith("root://"):\n')
-       fPy.write('            proc = subprocess.Popen(["xrdcp", "-f", source, "./" + fname])\n')
-       fPy.write('            proc.communicate()\n')
-       fPy.write('            if proc.returncode == 0:\n')
-       fPy.write('                out, err = subprocess.Popen(["xrdfs", source[:source.find("/", 7)], "stat", source[source.find("/", 7) + 1:]], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()\n')
-       fPy.write('                try:\n')
-       fPy.write('                    size = int(out.split("\\n")[2].split()[1])\n')
-       fPy.write('                except:\n')
-       fPy.write('                    if hasattr(userConfig, "postProcSkipSizeValidation") and userConfig.postProcSkipSizeValidation:\n')
-       fPy.write('                        sys.stderr.write("Failed to obtain original file size but skipping validation as requested by user\\n")\n')
-       fPy.write('                        break\n')
-       fPy.write('                    raise\n')
-       fPy.write('            else:\n')
-       fPy.write('                continue\n')
-       fPy.write('        else:\n')
-       fPy.write('            shutil.copyfile(source, "./" + fname)\n')
-       fPy.write('            size = os.stat(source).st_size\n')
-       fPy.write('\n')
-       fPy.write('        try:\n')
-       fPy.write('            if os.stat(os.path.basename(fname)).st_size == size:\n')
-       fPy.write('                break\n')
-       fPy.write('        except:\n')
-       fPy.write('            try:\n')
-       fPy.write('                os.unlink(os.path.basename(fname))\n')
-       fPy.write('            except:\n')
-       fPy.write('                pass\n')
-       fPy.write('    else:\n')
-       fPy.write('        raise RuntimeError("Failed to download " + source)\n\n')
-       fPy.write('    files.append(fname)\n\n')
-     else:
-      fPy.write('    files.append(source)\n\n') ##direct
+#     fPy.write('    fname = os.path.basename(source).replace(".root", "_input.root")\n')
+#     fPy.write('    for att in range(5):\n')
+#     fPy.write('        if source.startswith("root://"):\n')
+#     fPy.write('            proc = subprocess.Popen(["xrdcp", "-f", source, "./" + fname])\n')
+#     fPy.write('            proc.communicate()\n')
+#     fPy.write('            if proc.returncode == 0:\n')
+#     fPy.write('                out, err = subprocess.Popen(["xrdfs", source[:source.find("/", 7)], "stat", source[source.find("/", 7) + 1:]], stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()\n')
+#     fPy.write('                try:\n')
+#     fPy.write('                    size = int(out.split("\\n")[2].split()[1])\n')
+#     fPy.write('                except:\n')
+#     fPy.write('                    if hasattr(userConfig, "postProcSkipSizeValidation") and userConfig.postProcSkipSizeValidation:\n')
+#     fPy.write('                        sys.stderr.write("Failed to obtain original file size but skipping validation as requested by user\\n")\n')
+#     fPy.write('                        break\n')
+#     fPy.write('                    raise\n')
+#     fPy.write('            else:\n')
+#     fPy.write('                continue\n')
+#     fPy.write('        else:\n')
+#     fPy.write('            shutil.copyfile(source, "./" + fname)\n')
+#     fPy.write('            size = os.stat(source).st_size\n')
+#     fPy.write('\n')
+#     fPy.write('        try:\n')
+#     fPy.write('            if os.stat(os.path.basename(fname)).st_size == size:\n')
+#     fPy.write('                break\n')
+#     fPy.write('        except:\n')
+#     fPy.write('            try:\n')
+#     fPy.write('                os.unlink(os.path.basename(fname))\n')
+#     fPy.write('            except:\n')
+#     fPy.write('                pass\n')
+#     fPy.write('    else:\n')
+#     fPy.write('        raise RuntimeError("Failed to download " + source)\n\n')
+     fPy.write('    files.append(source)\n\n')
 
      # Configure modules
 
@@ -865,7 +869,9 @@ class PostProcMaker():
      for iSample in self._HaddDic:
        for iFile in self._HaddDic[iSample] :
          iTarget = os.path.basename(iFile).replace(self._treeFilePrefix,'').replace('.root','')
-         pidFile=jDir+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
+         subDirExtra = '/' + "__".join([(iTarget+bpostFix).split('__')[0]]+(iTarget+bpostFix).split('__')[2:])
+         pidFile=jDir+'/'+subDirExtra+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
+         #pidFile=jDir+'/NanoGardening__'+iProd+'__'+iStep+'__'+iTarget+bpostFix+'.jid'
          if os.path.isfile(pidFile) :
            print "pidFile", pidFile
            print '--> Job Running already : '+iTarget
@@ -899,7 +905,7 @@ class PostProcMaker():
            if   self._jobMode == 'Interactive' : command  = 'cd '+wDir+' ; '+self._cmsswBasedir+'/src/'+self._haddnano+' '+outFile+' '
            else:                                 command  = '$CMSSW_BASE/src/'+self._haddnano+' '+outFile+' '
            for sFile in self._HaddDic[iSample][iFile] : command += self.getStageIn(sFile)+' '
-           command += ' ; ls -l ; '
+           command += ' ; '
            if not self._jobMode == 'Crab':  command += stageOutCmd+' ; '+rmGarbageCmd
            # Interactive
            if   self._jobMode == 'Interactive' :
