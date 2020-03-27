@@ -35,48 +35,49 @@ VAR_KIND_DICT={
 'up':'Up'
 }
 ##JES sources##
+#for yr in ['2016','2017','2018']:
 LIST_JES_SOURCE=['Total', 'Absolute',  'BBEC1', 'EC2',  'FlavorQCD', 'HF',  'RelativeBal']
-for yr in ['2016','2017','2018']:
-    LIST_JES_SOURCE+=['Absolute_'+yr, 'BBEC1_'+yr, 'EC2_'+yr, 'HF_'+yr, 'RelativeSample_'+yr ]
+LIST_JES_SOURCE+=['Absolute_RPLME_YEAR', 'BBEC1_RPLME_YEAR', 'EC2_RPLME_YEAR', 'HF_RPLME_YEAR', 'RelativeSample_RPLME_YEAR' ]#RPLME_YEAR
+#LIST_JES_SOURCE+=['Absolute_'+yr, 'BBEC1_'+yr, 'EC2_'+yr, 'HF_'+yr, 'RelativeSample_'+yr ]
 ##End of defining JES sources## 
 
 
 
 
-##--up/down steps--##
+    ##--up/down steps--##
 
 for var in ['up','do']:
-
-    Steps['JES'+var+'_suffix']={ ##Add branches for all JES sources
+    
+    Steps['HMlnjjVars_Dev_jhchoi7_JES'+var+'_suffix']={ ##Add branches for all JES sources
         'isChain'    : True ,
         'do4MC'      : True ,
         'do4Data'    : False  ,
-        'subTargets' : ['JESBase'] ##Variation from sources will be added @next loop
+        'subTargets' : ['JESBase'], ##Variation from sources will be added @next loop
         #'subTargets' : ['JESBase','do_JES'+var+'_'+jes_source+'_suffix','formulasMC_JES'+var+'_'+jes_source],
         'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/LatinoAnalysis/NanoGardener/python/data/keepsysts.txt'
-
+        
     }    
 
 
 
     for jes_source in LIST_JES_SOURCE:
 
-        Steps['JES'+var+'_suffix']['subTargets'].append('do_JES'+var+'_'+jes_source+'_suffix') ## This appended step will be defined at the next lines
-        Steps['JES'+var+'_suffix']['subTargets'].append('formulasMC_JES'+var+'_'+jes_source) ## This appended step will be defined at the next lines
-        Steps['JES'+var+'_suffix']['subTargets'].append('HMlnjjVars_Dev_jhchoi7'+'_JES'+var+'_'+jes_source) ## This analysis step must be defined at the next lines
-
+        Steps['HMlnjjVars_Dev_jhchoi7_JES'+var+'_suffix']['subTargets'].append('do_JES'+var+'_'+jes_source+'_suffix') ## This appended step will be defined at the next lines
+        Steps['HMlnjjVars_Dev_jhchoi7_JES'+var+'_suffix']['subTargets'].append('formulasMC_JES'+var+'_'+jes_source) ## This appended step will be defined at the next lines
+        Steps['HMlnjjVars_Dev_jhchoi7_JES'+var+'_suffix']['subTargets'].append('HMlnjjVars_Dev_jhchoi7'+'_JES'+var+'_'+jes_source) ## This analysis step must be defined at the next lines
+        
         Steps['do_JES'+var+'_'+jes_source+'_suffix'] = { ##do means execute
             'isChain'    : False ,
             'do4MC'      : True  ,
             'do4Data'    : False  ,
             'import'     : 'LatinoAnalysis.NanoGardener.modules.PtCorrApplier',
-            'declare'    : 'JES'+jes_source+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+jes_source+'", kind="'+VAR_KIND_DICT[var]+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"],suffix="_JES'+jes_source+var'"))',
+            'declare'    : 'JES'+jes_source+var+' = lambda : PtCorrApplier(Coll="CleanJet", CorrSrc="jecUncert'+jes_source+'", kind="'+VAR_KIND_DICT[var]+'", doMET=True, METobjects = ["MET","PuppiMET","RawMET"],suffix="_JES'+jes_source+var+'")',
             'module'     : 'JES'+jes_source+var+'()',
-
+            
         }
         
         Steps['formulasMC_JES'+var+'_'+jes_source]={
-            
+        
             'isChain'    : False ,
             'do4MC'      : True  ,
             'do4Data'    : False  ,
@@ -85,18 +86,18 @@ for var in ['up','do']:
             'module'     : 'GenericFormulaAdder(\'data/formulasToAdd_MC_RPLME_YEAR.py\', branch_map="JES'+jes_source+var+'")' ,
             
         }
-        Stpes['HMlnjjVars_Dev_jhchoi7'+'_JES'+var+'_'+jes_source] ={
+        Steps['HMlnjjVars_Dev_jhchoi7'+'_JES'+var+'_'+jes_source] ={
             'isChain'    : False ,
             'do4MC'      : True ,
-            'do4Data'    : True ,
+            'do4Data'    : False ,
             'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi7',
-            'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,bracn_map="JES'+jes_source+var+'")',
+            'declare'    : 'HMlnjjVars_Dev_jhchoi'+jes_source+var+' = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,branch_map="JES'+jes_source+var+'")',
             #    def __init__(self,year,doSkim=False,doHardSkim=False,branch_map=''):
-
-            'module' : 'HMlnjjVars_Dev_jhchoi()'
+            
+            'module' : 'HMlnjjVars_Dev_jhchoi'+jes_source+var+'()'
             ##    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):                                                                                              
-
-
+            
+            
         }
-
-    ##So, for JESup_suffix -> JESBase -> do_JESup_<SOURCE>_suffix -> formulasMC_JESup_<SOURCE>
+        
+        ##So, for JESup_suffix -> JESBase -> do_JESup_<SOURCE>_suffix -> formulasMC_JESup_<SOURCE>
