@@ -10,6 +10,8 @@ import sys
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection,Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
+from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection, matchObjectCollectionMultiple
+from LatinoAnalysis.NanoGardener.framework.BranchMapping import mappedOutputTree, mappedEvent
 
 
 ##--We can move this configurations to a cfg file after some tests--#
@@ -20,6 +22,8 @@ MYALGO={
 'dM':'',
 'dMchi2rawF':'',
 'dMchi2rawFqgl':'',
+'dMchi2Resolution':'',
+'dMchi2Resolutionqgl':'',
 
 }
 
@@ -87,11 +91,40 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             self.tau21WP=0.45  ##https://twiki.cern.ch/twiki/bin/viewauth/CMS/JetWtagging#tau21_0_45_HP_0_45_tau21_0_75_LP
             self.min_fatjetid = 4 
         # Tau21 cut (High purity)
+        
 
+        ##--Init JetResolution--##
+        self.init_JetResolution(year)
 
-
+    def init_JetResolution(self,Year):
+        print "--Initialize JetResolution reader---"
+        cmssw_base = os.getenv('CMSSW_BASE')
+        if int(Year) == 2016:
+          jerInputFileName = "Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
+          jetInputFileSource="https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Summer16_25nsV1b_DATA/Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
+        elif int(Year) == 2017:
+          jerInputFileName = "Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Fall17_V3b_DATA/Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
+        elif int(Year) == 2018:
+          jerInputFileName = "Autumn18_V7b_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Autumn18_V7b_DATA/Autumn18_V7b_DATA_PtResolution_AK4PFchs.txt"
+        self.jerInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
+        if not os.path.isfile(self.jerInputArchivePath+'/'+jerInputFileName):
+            print "Get JER source from ",jerInputFileSource
+            os.system('wget '+jerInputFileSource+" -O "+self.jerInputArchivePath+'/'+jerInputFileName)
+        self.jerInputFilePath = self.jerInputArchivePath
+        self.jerInputFileName = jerInputFileName
+        self.params_sf_and_uncertainty = ROOT.PyJetParametersWrapper()
+        self.params_resolution = ROOT.PyJetParametersWrapper()
+        for library in [ "libCondFormatsJetMETObjects", "libPhysicsToolsNanoAODTools" ]:
+            if library not in ROOT.gSystem.GetLibraries():
+                print("Load Library '%s'" % library.replace("lib", ""))
+                ROOT.gSystem.Load(library)
 
     def beginJob(self):
+        print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName))
+        self.jer = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath,self.jerInputFileName))
+
         pass
 
     def endJob(self):
@@ -137,9 +170,9 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         for algo in MYALGO:
             _algo='_'+algo
             self.out.branch('isResolved'+_algo,"O")
-            for var in ['pt','eta','phi','mass','Mt']:
+            for var in ['pt','eta','phi','mass','Mt','ScoreToLeast']:
                 self.out.branch('Whad_'+var+_algo,'F')
-        
+
             self.out.branch('Whad_cjidx1'+_algo,'I')
             self.out.branch('Whad_cjidx2'+_algo,'I')
             self.out.branch('BJetResolved_cjidx'+_algo,'I',lenVar='nBJetResolved'+_algo)
@@ -202,6 +235,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##--Resolved--##
         self._isResolved = {}
         self._Whad_4v = {}
+        self._Whad_ScoreToLeast = {}
         self._Whad_cjidx1={}
         self._Whad_cjidx2={}
         self._BJetResolved_cjidx={}
@@ -216,6 +250,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             self._isResolved[algo] = False
             self._Whad_4v[algo]=ROOT.TLorentzVector()
             self._Whad_4v[algo].SetPtEtaPhiM(0,0,0,0)
+            self._Whad_ScoreToLeast[algo] = sys.float_info.max 
+
             self._Whad_cjidx1[algo]=-1
             self._Whad_cjidx2[algo]=-1
             self._BJetResolved_cjidx[algo]=[]
@@ -236,7 +272,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         self.CleanJet_col = Collection(event, 'CleanJet')
         self.CleanJetNotFat_col = Collection(event, 'CleanJetNotFat')
         self.Jet_col = Collection(event,"Jet")
-
+        self.rho = event.fixedGridRhoFastjetAll##For deriving resulution 
         ##---MET
         self.MET = Object(event, self.METtype)
         self.MET_pt = self.MET.pt
@@ -416,6 +452,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             self.out.fillBranch('Whad_phi'+_algo, self._Whad_4v[algo].Phi())
             self.out.fillBranch('Whad_mass'+_algo, self._Whad_4v[algo].M())
             self.out.fillBranch('Whad_Mt'+_algo, self._Whad_4v[algo].Mt())
+            self.out.fillBranch('Whad_ScoreToLeast'+_algo, self._Whad_ScoreToLeast[algo])
 
             self.out.fillBranch('Whad_cjidx1'+_algo, self._Whad_cjidx1[algo])
             self.out.fillBranch('Whad_cjidx2'+_algo, self._Whad_cjidx2[algo])
@@ -747,8 +784,14 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
                 elif algo=="dMchi2rawF":
                     thisScore = self.CalcChi2rawFactor(pt1, eta1, phi1, mass1, rawFactor1,\
                                                   pt2, eta2, phi2, mass2, rawFactor2)
-                elif algo=="dMchi2rawF":
+                elif algo=="dMchi2rawFqgl":
                     thisScore = self.CalcInvLikelihood(i_cj, j_cj)
+                elif algo=="dMchi2Resolution":
+                    thisScore = self.CalcChi2DMReolsution(i_cj, j_cj,self.rho)
+
+                elif algo=="dMchi2Resolutionqgl":
+                    thisScore = self.CalcChi2DMReolsutionQgl(i_cj, j_cj,self.rho)
+                
                 ##Go to CalcAlgo
 
                 #v1=ROOT.TLorentzVector()
@@ -769,7 +812,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
                     self._Whad_cjidx2[algo] = j_cj
                     self._Whad_4v[algo] = v1+v2
         Whad_mass=self._Whad_4v[algo].M()
-
+        self._Whad_ScoreToLeast[algo] = ScoreToLeast
         if Whad_mass > 40 and Whad_mass < 250 : self._isResolved[algo] = True
         if ScoreToLeast==sys.float_info.max : self._isResolved[algo] = False ##for safety
         if self._Whad_cjidx1[algo] < 0 : self._isResolved[algo] = False #for safty
@@ -827,10 +870,98 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         this_Msigma=abs(this_Mbefore-this_M)
         this_chi2= this_dM**2 / this_Msigma**2
         ##Likelihood = 1/sqrt(sigma)*exp(-x**2/2)
-        this_likelihood = 1/math.sqrt(this_Msigma)*math.exp(-1*this_chi2/2)
-        this_likelihood *= qgl1*qgl2
+        #let it -log(likelihood) ->MLL
+        #print "this_Msigma=",this_Msigma
+        #print "this_chi2=",this_chi2
+        this_MLL = math.log(math.sqrt(this_Msigma))+this_chi2/2
+        #print 'before=',this_MLL
+        #if qgl1*qgl2<=0.:
         
-        return 1/this_likelihood
+        try:
+            this_MLL += -1*math.log(qgl1*qgl2)
+        except ValueError:
+            print "qgl1=",qgl1
+            print "qgl2=",qgl2
+            this_MLL = sys.float_info.max
+        #print 'after=',this_MLL
+        return this_MLL
+
+    def CalcChi2DMReolsution(self,i_cj, j_cj,rho):
+        pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
+        pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
+
+        v1=ROOT.TLorentzVector()
+        v2=ROOT.TLorentzVector()
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
+        #rho=event.fixedGridRhoFastjetAll
+        resol1= self.getJetPtResolution(v1,rho)
+        resol2= self.getJetPtResolution(v2,rho)
+        M=(v1+v2).M()
+        ##--j1 up--##
+        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1 )
+        M_j1up = (v1+v2).M()
+        ##--j1 do--##
+        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1 )
+        M_j1do = (v1+v2).M()
+        ##--j2 up--##
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
+        M_j2up = (v1+v2).M()
+        ##--j2 do--##
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
+        M_j2do = (v1+v2).M()
+        sigma2=(M-M_j1up)**2 + (M-M_j1do)**2 +(M-M_j2up)**2 +(M-M_j2do)**2
+        this_Chi2=(M-Wmass)**2/sigma2
+
+
+        return this_Chi2
+
+
+
+    def CalcChi2DMReolsutionQgl(self,i_cj, j_cj,rho):
+        pt1,eta1,phi1,mass1,rawFactor1,qgl1 = self.CleanJet_PtEtaPhiMrawFactorQgl(i_cj)
+        pt2,eta2,phi2,mass2,rawFactor2,qgl2 = self.CleanJet_PtEtaPhiMrawFactorQgl(j_cj)
+        if qgl1 < 0 : return sys.float_info.max
+        if qgl2 < 0 : return sys.float_info.max
+        v1=ROOT.TLorentzVector()
+        v2=ROOT.TLorentzVector()
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
+        #rho=event.fixedGridRhoFastjetAll
+        resol1= self.getJetPtResolution(v1,rho)
+        resol2= self.getJetPtResolution(v2,rho)
+        M=(v1+v2).M()
+        ##--j1 up--##
+        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1 )
+        M_j1up = (v1+v2).M()
+        ##--j1 do--##
+        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1 )
+        M_j1do = (v1+v2).M()
+        ##--j2 up--##
+        v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
+        M_j2up = (v1+v2).M()
+        ##--j2 do--##
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
+        M_j2do = (v1+v2).M()
+        sigma2=(M-M_j1up)**2 + (M-M_j1do)**2 +(M-M_j2up)**2 +(M-M_j2do)**2
+        this_Msigma=math.sqrt(sigma2)
+        this_chi2=(M-Wmass)**2/sigma2
+        this_MLL = math.log(math.sqrt(this_Msigma))+this_chi2/2
+
+        try:
+            this_MLL += -1*math.log(qgl1*qgl2)
+        except ValueError:
+            print "qgl1=",qgl1
+            print "qgl2=",qgl2
+            this_MLL = sys.float_info.max
+
+        #print 'before=',this_MLL
+        #this_MLL += -1*math.log(qgl1*qgl2)
+        #print 'after=',this_MLL
+        return this_MLL
+
 
     def WhadMakerdM(self):
         algo='dM'
@@ -937,6 +1068,23 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         mass=self.CleanFatJet_col[cfjidx].mass
         
         return pt,eta,phi,mass
+
+    def getJetPtResolution(self, jetIn, rho):
+        if hasattr( jetIn, "p4"):
+          jet = jetIn.p4()
+        else:
+          jet = jetIn
+        if not (jet.Perp() > 0.):
+            print("WARNING: jet pT = %1.1f !!" % jet.Perp())
+            return ( jet.Perp(), jet.Perp(), jet.Perp() )
+
+        self.params_resolution.setJetPt(jet.Perp())
+        self.params_resolution.setJetEta(jet.Eta())
+        self.params_resolution.setRho(rho)
+        jet_pt_resolution = self.jer.getResolution(self.params_resolution)
+        return jet_pt_resolution
+
+
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed                    
 HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi()

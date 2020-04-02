@@ -1658,7 +1658,7 @@ Steps = {
                 'do4MC': True,
                 'do4Data': False,
                 'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
-                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK8PFPuppi", jer_bin_list=[0,1])',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetColl="CleanFatJet", jer_bin_list=[0,1])',
                 'module':  'bin_by_bin_JER_maker()'
     },
     'BinByBinJetMCJER' :  {
@@ -1667,7 +1667,7 @@ Steps = {
                 'do4Data': False,
                 #'selection'  : '"Entry$<100"', #XXX 
                 'import': 'LatinoAnalysis.NanoGardener.modules.BinByBinJERMaker',
-                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetType="AK4PFchs", jer_bin_list=[0,1,2,3,4,5])',
+                'declare': 'bin_by_bin_JER_maker = lambda : BinByBinJERMaker(jetColl="CleanJet", jer_bin_list=[0,1,2,3,4,5])',
                 'module':  'bin_by_bin_JER_maker()'
     },
     'BinByBinJetMCJERChain' :  {

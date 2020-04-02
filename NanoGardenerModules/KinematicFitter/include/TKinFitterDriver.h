@@ -38,6 +38,11 @@ public:
   void SetLeptonicTopBJets(TLorentzVector jet_); // it doesn't check tagging status
   void SetWCHUpTypeJets(TLorentzVector jet_); // u/c jet from W(H+)
   void SetWCHDownTypeJets(TLorentzVector jet_); // d/s/b jet from W(H+)
+  void SetHadronicTopBJets(TLorentzVector jet_, double resolution_); // it doesn't check tagging status
+  void SetLeptonicTopBJets(TLorentzVector jet_, double resolution_); // it doesn't check tagging status
+  void SetWCHUpTypeJets(TLorentzVector jet_, double resolution_); // u/c jet from W(H+)
+  void SetWCHDownTypeJets(TLorentzVector jet_, double resolution_); // d/s/b jet from W(H+)
+  void SetJetPtResolution(std::vector<float> jetPtResolution_);
   void SetLepton(TLorentzVector lepton_);
   void SetMET(TLorentzVector met_);
   void SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down);
@@ -140,6 +145,7 @@ private:
   TSCorrection *ts_correction;
 
   std::vector<TLorentzVector> jet_vector;
+  std::vector<double> jet_pt_resolution_vector;
   std::vector<bool> btag_vector;
   TLorentzVector METv;
   double MET_pt_shift;
