@@ -1,8 +1,10 @@
 from os import *
 from os.path import *
-
+mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Run2017_102X_nAODv5_Full2017v6/DATAl1loose2017v6__HMSemilepSkimJHv6_7_data__HMlnjjVars_Dev'
+#mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7__HMlnjjVars_Dev'
+#mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5__HMlnjjLepVetoBWRew__HMlnjjVars_Dev'
 #mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev'
-mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev__HMlnjjVarsGen'
+#mcDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv4_Full2017v5/MCl1loose2017v5__MCCorr2017v5__Semilep2017__HMlnjjSelBWRew_Dev__HMlnjjVarsGen'
 #dataDir='/xrootd/store/user/jhchoi/Latino/HWWNano/Run2017_102X_nAODv4_Full2017v5/DATAl1loose2017v5__Semilep2017__HMlnjjSel2017'
 
 targetDir = mcDir
