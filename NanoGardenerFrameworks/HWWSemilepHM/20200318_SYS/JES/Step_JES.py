@@ -1,4 +1,5 @@
 import os
+import copy
 Steps={
   'formulasMC' : {
                   'isChain'    : False ,
@@ -42,6 +43,16 @@ Steps={
         
     },
 
+  'HMlnjjVars_Dev_jhchoi7' : {
+    'isChain'    : False ,
+    'do4MC'      : True ,
+    'do4Data'    : True ,
+    'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi7',
+    'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
+    'module' : 'HMlnjjVars_Dev_jhchoi()'
+  },
+
+
 }
 
 VAR_KIND_DICT={
@@ -75,3 +86,10 @@ for jes_source in LIST_JES_SOURCE:
 
         }
 
+for jes_source in LIST_JES_SOURCE:
+    for var in ['up','do']:
+        Steps['JES'+var+'_'+jes_source+'_'+'HMVAR7']=copy.deepcopy(Steps['JES'+var+'_'+jes_source])
+        Steps['JES'+var+'_'+jes_source+'_'+'HMVAR7']['subTargets'].append('HMlnjjVars_Dev_jhchoi7')
+
+
+#print Steps['JESup_Total_HMVAR7']

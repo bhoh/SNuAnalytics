@@ -1,4 +1,5 @@
 import os
+import copy
 
 Steps = {
   'ElepTup' :   {
@@ -126,4 +127,27 @@ Steps = {
                   'declare'    : 'METDo = lambda : MetUnclusteredTreeMaker(kind="Dn",metCollections=["MET", "PuppiMET", "RawMET"])',
                   'module'     : 'METDo()',
                 },
+
+    ##analysis code
+  'HMlnjjVars_Dev_jhchoi7' : {
+    'isChain'    : False ,
+    'do4MC'      : True ,
+    'do4Data'    : True ,
+    'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi7',
+    'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
+    'module' : 'HMlnjjVars_Dev_jhchoi()'
+
+  },
+
+
+
 }
+
+
+##Add HMSmemilep variables
+for SYS in ['ElepTup','ElepTdo','MupTup','MupTdo','METup','METdo']:
+    Steps[SYS+'_HMVAR7']=copy.deepcopy(Steps[SYS])
+    Steps[SYS+'_HMVAR7']['subTargets'].append('HMlnjjVars_Dev_jhchoi7')
+
+
+

@@ -115,6 +115,16 @@ Steps={
         'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
         'module' : 'HMlnjjVars_Dev_jhchoi()'
         ##    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
+    },
+
+    'HMlnjjVars_Dev_jhchoi7':  {
+        'isChain'    : False ,
+        'do4MC'      : True ,
+        'do4Data'    : True ,
+        'import'     : 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi7',
+        'declare'    : 'HMlnjjVars_Dev_jhchoi = lambda : HMlnjjVarsClass_Dev_jhchoi(RPLME_YEAR,METtype="PuppiMET")',
+        'module' : 'HMlnjjVars_Dev_jhchoi()'
+        ##    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
     }
 
 
@@ -129,6 +139,15 @@ for SOURCE in LIST_SOURCE:
             'do4MC' : True,
             'do4Data' : False,
             'subTargets' : ['CleanFatJet_'+SOURCE+VAR,'HMlnjjVars_Dev_jhchoi6'],
+            'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+
+        }
+
+        Steps['FAT'+SOURCE+VAR+'_HMVAR7']={
+            'isChain' : True,
+            'do4MC' : True,
+            'do4Data' : False,
+            'subTargets' : ['CleanFatJet_'+SOURCE+VAR,'HMlnjjVars_Dev_jhchoi7'],
             'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
 
         }
