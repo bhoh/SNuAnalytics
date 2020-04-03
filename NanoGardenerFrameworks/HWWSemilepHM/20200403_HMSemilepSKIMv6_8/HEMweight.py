@@ -21,9 +21,12 @@ class HEMweight(Module):
         self.isData = isData
         self.dataYear   = dataYear
         self.jetColl = jetColl
-
+        
         self.doHEMweight = int(self.dataYear) == 2018
         self.HEMPtScale = self.doHEMweight and not self.isData
+
+        if jetColl=="CleanJet":
+            self.IsCleanJetColl=True
 
     def beginJob(self): 
         pass
@@ -64,8 +67,12 @@ class HEMweight(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
 
+
         if not self.doHEMweight:
           return True
+          
+        if self.IsCleanJetColl:
+            self.orig_jet_coll = Collection(event, "Jet" )
         HEMweight_ = 1.
         HEMJetPtScale_ = [1. for _ in range(getattr(event,'n'+self.jetColl))]
         if self.isData:
@@ -102,8 +109,16 @@ class HEMweight(Module):
 
     def _hasHEMJet(self, jet_coll_):
         hasHEMJet = False
+
+        ##if cleanjet, get the corrected pt value
+        
         for jet in jet_coll_:
           pt  = jet["pt"]
+          #print "cleanejt_pt->",pt
+          if self.IsCleanJetColl: 
+              #print "[jhchoi] Get orig jet coll"
+              pt = self.orig_jet_coll[jet["jetIdx"]]["pt_nom"]
+              #print ">>pt=",pt
           eta = jet["eta"]
           phi = jet["phi"]
           if pt > 15. and -3.0 < eta < -1.3 and -1.57 < phi < -0.87:
@@ -113,7 +128,14 @@ class HEMweight(Module):
 
     def _scaleHEMJetPt(self, jet_coll_):
         HEMJetPtScale = []
+        
         for jet in jet_coll_:
+          #print"cleanejt_pt->",pt
+
+          if self.IsCleanJetColl:
+              #print "[jhchoi] Get orig jet coll"
+              pt = self.orig_jet_coll[jet["jetIdx"]]["pt_nom"]
+              #print ">>pt=",pt
           pt  = jet["pt"]
           eta = jet["eta"]
           phi = jet["phi"]

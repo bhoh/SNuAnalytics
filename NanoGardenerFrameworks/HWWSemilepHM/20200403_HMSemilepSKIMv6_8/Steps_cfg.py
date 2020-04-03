@@ -122,7 +122,7 @@ Steps['HMSemilepSKIMv6_8']= { ##To ReRun CleanFatJet
     'do4MC'      : True  ,
     'do4Data'    : False  ,
     'selection'  :'"( (Lepton_pt[0]>20) && ( Alt$( Lepton_pt[1],-1) < 20 ) &&  (PuppiMET_pt > 20) )"',
-    'subTargets' : ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK','CorrJetMC', 'CorrFatJetMC'],
+    'subTargets' : ['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK','CorrJetMC', 'CorrFatJetMC','HEMweightMC'],
 }##['wwNLOEWK','wzNLOEWK','zzNLOEWK','zNLOEWK','wNLOEWK',
 
 
@@ -131,7 +131,7 @@ Steps['HMSemilepSKIMv6_8_data']= { ##To ReRun CleanFatJet
     'do4MC'      : False  ,
     'do4Data'    : True  ,
     'selection'  :'"( (Lepton_pt[0]>20) && ( Alt$( Lepton_pt[1],-1) < 20 ) &&  (PuppiMET_pt > 20) )"',
-    'subTargets' : ['CorrJetDATA', 'CorrFatJetDATA'],
+    'subTargets' : ['CorrJetDATA', 'CorrFatJetDATA','HEMweightDATA'],
 }
 
 
