@@ -41,6 +41,8 @@ class WtaggerProducer(Module):
         self.sysvars=sysvars
         self.year=year
         self.isData=isData
+        if isData:
+            self.sysvars=['nom']
         globalTag=jecTagsMC[str(self.year)]
         jetType="AK8PFPuppi"
         jerTag = jerTagsMC[str(self.year)]
