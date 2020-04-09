@@ -103,3 +103,26 @@ WJID={
     
 
 
+FATJETCUTS={
+    '2018':{
+        'ptmin':200.,
+        'etamax':2.5,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+    '2017':{
+        'ptmin':200.,
+        'etamax':2.5,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+
+    '2016':{
+        'ptmin':200.,
+        'etamax':2.4,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+
+
+}

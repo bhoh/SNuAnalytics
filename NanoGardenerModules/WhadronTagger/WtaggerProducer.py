@@ -3,7 +3,7 @@ import math
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetSmearer import jetSmearer
 from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection, matchObjectCollectionMultiple
-from LatinoAnalysis.NanoGardener.data.Wtagger_cfg import WJID 
+from LatinoAnalysis.NanoGardener.data.Wtagger_cfg import WJID,FATJETCUTS
 ###configuration###
 ##https://twiki.cern.ch/twiki/bin/view/CMS/JetWtagging
 ##W taggers
@@ -84,6 +84,11 @@ class WtaggerProducer(Module):
         self.jets = Collection(event, self.jetBranchName )
         self.subJets = Collection(event, self.subJetBranchName )
 
+        ptmin=FATJETCUTS[str(self.year)]['ptmin']
+        etamax=FATJETCUTS[str(self.year)]['etamax']
+        msdmin=FATJETCUTS[str(self.year)]['msdmin']
+        msdmax=FATJETCUTS[str(self.year)]['msdmax']
+
         if not self.isData: ##for MC, use gen infos
             genJets = Collection(event, self.genJetBranchName )
             genSubJets = Collection(event, self.genSubJetBranchName )
@@ -131,10 +136,7 @@ class WtaggerProducer(Module):
 
 
             for jet in self.jets:##FatJet loop
-                genJet = pairs[jet]
-                genGroomedSubJets = genSubJetMatcher[genJet] if genJet != None else None
-                genGroomedJet = genGroomedSubJets[0].p4() + genGroomedSubJets[1].p4() if genGroomedSubJets != None and len(genGroomedSubJets) >= 2 else None
-
+                ##puppi sd correction##
                 if jet.subJetIdx1 >= 0 and jet.subJetIdx2 >= 0 :
                     groomedP4 = self.subJets[ jet.subJetIdx1 ].p4() + self.subJets[ jet.subJetIdx2].p4() #check subjet jecs
                 else :
@@ -147,6 +149,10 @@ class WtaggerProducer(Module):
                 if jet_msdcorr_raw < 0.0:
                     jet_msdcorr_raw *= -1.0
                 if not self.isData:
+                    ##jms/jmr smearing
+                    genJet = pairs[jet]
+                    genGroomedSubJets = genSubJetMatcher[genJet] if genJet != None else None
+                    genGroomedJet = genGroomedSubJets[0].p4() + genGroomedSubJets[1].p4() if genGroomedSubJets != None and len(genGroomedSubJets) >= 2 else None
                     ( jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4, genGroomedJet) if groomedP4 != None and genGroomedJet != None else (0.,0.,0.)
 
                 
@@ -181,10 +187,10 @@ class WtaggerProducer(Module):
                         tau21ddt=tau21+C_DDT*math.log(mass**2/pt)##use tau21ddt generally(if not ddt id, tau21ddt=tau21
                     if tau21ddt > tau21max: isWtagged=False
                     if tau21ddt < tau21min: isWtagged=False
-                    if pt < 200 : isWtagged=False
-                    if abs(eta) > 2.4 : isWtagged=False
-                    if mass < 40 : isWtagged=False
-                    if mass > 250 : isWtagged=False
+                    if pt < ptmin : isWtagged=False
+                    if abs(eta) > etamax : isWtagged=False
+                    if mass < msdmin : isWtagged=False
+                    if mass > msdmax : isWtagged=False
                     if isWtagged:
                         #for x in ['pt','eta','phi','mass','tau21ddt','effSF']:
                         WtaggerColl[tagname][var]['pt'].append(pt)
