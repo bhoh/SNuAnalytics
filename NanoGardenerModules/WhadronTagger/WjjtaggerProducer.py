@@ -10,7 +10,7 @@ Wmass=80.4
 
 
 class WjjtaggerProducer(Module):
-    def __init__(self, year,sysvars='all'):
+    def __init__(self, year,pairalgos=['dMchi2Resolution','dM'],sysvars='all'):
         self.sysvars=sysvars
         self.year=str(int(year))
         if sysvars=='all':
@@ -19,7 +19,7 @@ class WjjtaggerProducer(Module):
             for s in ['jesFlavorQCD','jesRelativeBal','jesHF','jesBBEC1','jesEC2','jesAbsolute','jesAbsolute_'+str(year),'jesHF_'+str(year),'jesEC2_'+str(year),'jesRelativeSample_'+str(year),'jesBBEC1_'+str(year),'jesTotal','jer']:
                 for d in ['Up','Down']:
                     self.sysvars.append(s+d)
-                    
+        self.pairalgos=pairalgos
         self.init_JetResolution(year)
                     
     def init_JetResolution(self,Year):##You don;t have to look into this :)
@@ -56,7 +56,7 @@ class WjjtaggerProducer(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         for var in self.sysvars:
-            for algo in MYALGO:
+            for algo in self.pairalgos:
                 self.out.branch('isResol_'+algo+"_"+var,"O")
                 objname='Whad_'+algo+"_"+var
                 for x in ['pt','eta','phi','mass','ScoreToLeast']:
@@ -78,7 +78,7 @@ class WjjtaggerProducer(Module):
             self._isResol[var]={}
             self._Whad[var]={}
             
-            for algo in MYALGO:
+            for algo in self.pairalgos:
                 self._isResol[var][algo]=False
                 self._Whad[var][algo]={
                     'cjidx1':-1,
@@ -99,7 +99,7 @@ class WjjtaggerProducer(Module):
 
         
         for var in self.sysvars:
-            for algo in MYALGO:
+            for algo in self.pairalgos:
                 
                 self._Whad[var][algo]['pt']=self._Whad[var][algo]['4v'].Perp()
                 self._Whad[var][algo]['eta']=self._Whad[var][algo]['4v'].Eta()

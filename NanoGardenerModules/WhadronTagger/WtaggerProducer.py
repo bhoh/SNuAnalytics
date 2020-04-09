@@ -67,6 +67,8 @@ class WtaggerProducer(Module):
         self.out = wrappedOutputTree
         for tagname in self.WtaggerConfig:
             for var in self.sysvars:
+                objname="isBoost_"+tagname+"_"+var
+                self.out.branch(objname,"O")
                 #for x in ['pt','eta','phi','mass','tau21ddt','effSF','effSFup','effSFdown']:
                 for x in ['pt','eta','phi','mass','tau21ddt']:
                     collname='WtaggerFatjet_'+tagname+'_'+var
@@ -204,6 +206,13 @@ class WtaggerProducer(Module):
 
         for tagname in self.WtaggerConfig:
             for var in self.sysvars:
+                ##Define flag##
+                isBoost=False
+                if len(WtaggerColl[tagname][var]['pt'])>0: ##if there's Wtagged fatjet->True 
+                    isBoost=True
+                #print isBoost
+                objname="isBoost_"+tagname+"_"+var
+                self.out.fillBranch(objname,isBoost)
                 collname='WtaggerFatjet_'+tagname+'_'+var
                 for x in WtaggerColl[tagname][var]:
                     self.out.fillBranch(collname+'_'+x,WtaggerColl[tagname][var][x])
