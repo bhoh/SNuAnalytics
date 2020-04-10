@@ -1808,6 +1808,14 @@ Steps = {
                  'module'     : 'trigMC()',
                },
 
+  'trigMC_lnjj'   : { 'isChain'    : False ,
+                 'do4MC'      : True  ,
+                 'do4Data'    : False ,
+                 'import'     : 'LatinoAnalysis.NanoGardener.modules.TrigMaker' ,
+                 'declare'    : 'trigMC_lnjj = lambda : TrigMaker_lnjj("RPLME_CMSSW",isData=False,keepRunP=False)',
+                 'module'     : 'trigMC_lnjj()',
+               },
+
   'trigMC_Cut'   : { 'isChain'    : False ,
                  'do4MC'      : True  ,
                  'do4Data'    : False ,
