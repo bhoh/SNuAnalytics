@@ -1,3 +1,5 @@
+# LatinoAnalysis/NanoGardener/python/modules 
+
 import ROOT
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 import math
@@ -13,18 +15,30 @@ Wmass=80.4
 MaxLimit =  99999.
 MinLimit = -1.
 
+Masses = [400, 1500]
+
 class HMlnjjVarsClass_Dev(Module):
-    def __init__(self,year,METtype='PuppiMET,',doSkim=False,doHardSkim=False):
+    def __init__(self, year, METtype='PuppiMET', doSkim=False, doHardSkim=False):
 
         self.cmssw_base = os.getenv('CMSSW_BASE')
         cmssw_arch = os.getenv('SCRAM_ARCH')
 
+        self._MET_4v        = ROOT.TLorentzVector()
+        self._MET_big4v     = ROOT.TLorentzVector()
         self._lepton_4v     = ROOT.TLorentzVector()
         self._Wlep_4v       = ROOT.TLorentzVector()
+        self._Wlep_big4v    = ROOT.TLorentzVector()
         self._FinalFatJet_4v= ROOT.TLorentzVector()
+        self._Whad_j1_4v    = ROOT.TLorentzVector()
+        self._Whad_j2_4v    = ROOT.TLorentzVector()
         self._Whad_4v       = ROOT.TLorentzVector()
 	self._lnJ_4v        = ROOT.TLorentzVector()
+	# TODO  let's think the usage of this MET_Z solution
+	self._lnJ_big4v     = ROOT.TLorentzVector()
 	self._lnjj_4v       = ROOT.TLorentzVector()
+	self._lnjj_big4v    = ROOT.TLorentzVector()
+	self._VBFBoost_jet1_4v       = ROOT.TLorentzVector()
+	self._VBFBoost_jet2_4v       = ROOT.TLorentzVector()
 
         self.doSkim = doSkim
         self.METtype = METtype
@@ -34,6 +48,8 @@ class HMlnjjVarsClass_Dev(Module):
         self._FatSel_cfjidx['mindM']=-1 ## FatJet_mass ~ mindM
         self._FatSel_cfjidx['mxPT']=-1 ## largest mxPT
        
+        self._subJet1_4v = ROOT.TLorentzVector()
+        self._subJet2_4v = ROOT.TLorentzVector()
         #####################################
 	# Cuts
         #####################################
@@ -44,6 +60,8 @@ class HMlnjjVarsClass_Dev(Module):
 
         self.METcut_Boost = 40.
         self.METcut_Resol = 30.
+	self.cut_lnjj_Mt  = 60
+	self.cut_Wlep_Mt  = 50 # resolve only
 
 	self.cut_fjet_eta = 2.4
 	self.cut_fjet_pt  = 200
@@ -89,10 +107,10 @@ class HMlnjjVarsClass_Dev(Module):
         ROOT.gSystem.Load("libZZMatrixElementMELA.so")
         ROOT.gSystem.Load("libMelaAnalyticsCandidateLOCaster.so")
         ROOT.gSystem.Load(self.cmssw_base+"/src/ZZMatrixElement/MELA/data/"+cmssw_arch+"/libmcfm_706.so")
-        #try:
-        #    ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C+g')
-        #except RuntimeError:
-        #    ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C++g')
+        try:
+            ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C+g')
+        except RuntimeError:
+            ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C++g')
 
         self.MakeMassVsGamma()
 
@@ -104,16 +122,54 @@ class HMlnjjVarsClass_Dev(Module):
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
+        self.debug = False
+	if self.debug:
+	  self.evtMyNum = 0
 
 	# ME
-	self.MEbranches = [
-	    'hm', 'me_vbf_hsm'
-	    ]
+	# Mass dependent later maybe, let's go with already observed processes
+	for mass in Masses:
+	 self.MEbranches = [
+	     'meP' + str(mass) + '_BstVBF_vbf_S',
+	     'meP' + str(mass) + '_BstVBF_vbf_B',
+	     'meP' + str(mass) + '_BstVBF_ggf_S',
+	     'meP' + str(mass) + '_BstVBF_ggf_B',
+	     'meP' + str(mass) + '_BstNoT_vbf_S',
+	     'meP' + str(mass) + '_BstNoT_vbf_B',
+	     'meP' + str(mass) + '_BstNoT_ggf_S',
+	     'meP' + str(mass) + '_BstNoT_ggf_B',
+	     'meP' + str(mass) + '_ResVBF_vbf_S',
+	     'meP' + str(mass) + '_ResVBF_vbf_B',
+	     'meP' + str(mass) + '_ResVBF_ggf_S',
+	     'meP' + str(mass) + '_ResVBF_ggf_B',
+	     'meP' + str(mass) + '_ResNoT_vbf_S',
+	     'meP' + str(mass) + '_ResNoT_vbf_B',
+	     'meP' + str(mass) + '_ResNoT_ggf_S',
+	     'meP' + str(mass) + '_ResNoT_ggf_B'
+	     ]
+	 for brName in self.MEbranches:
+	   self.out.branch(brName, "F")
+	#self.MEbranches = [
+	#    'meP_Boost_vbf_Sg',
+	#    'meP_Boost_ggf_Sg',
+	#    'meP_Resol_vbf_Sg',
+	#    'meP_Resol_ggf_Sg',
+	#    'meP_Boost_vbf_Bg',
+	#    'meP_Boost_ggf_Bg',
+	#    'meP_Resol_vbf_Bg',
+	#    'meP_Resol_ggf_Bg'
+	#    ]
 	for brName in self.MEbranches:
 	  self.out.branch(brName, "F")
 
+        # TODO high mass sample dependent mass and gamma
+	#massH = 400
+        #gsmH = self.g.GetBinContent(self.g.FindBin(massH))
+        #self.mela = ROOT.MelaHighMassKDwCalc(13, massH, gsmH )
+        self.mela = ROOT.MelaHighMassKDwCalc(13, 125, 0.00407 )
+
         # Wlep
-        for var in ['pt','eta','phi','mass']:
+        for var in ['pt','eta','phi','mass','Mt']:
             self.out.branch("Wlep_"+var  , "F")
         self.out.branch(self.METtype+'_pz1', "F")
         self.out.branch(self.METtype+'_pz2', "F")
@@ -155,6 +211,7 @@ class HMlnjjVarsClass_Dev(Module):
         self.out.branch('Whad_cjidx1','I')
         self.out.branch('Whad_cjidx2','I')
         self.out.branch('BJetResol_cjidx','I',lenVar='nBJetResol')
+        self.out.branch('BJetResolVBF_cjidx','I',lenVar='nBJetResolVBF')
         self.out.branch('isVBF_Resol','O')
         self.out.branch('VBFjjResol_dEta','F')
         self.out.branch('VBFjjResol_mjj','F')
@@ -180,11 +237,21 @@ class HMlnjjVarsClass_Dev(Module):
 
 
     def analyze(self, event):
+        if self.debug:
+          self.evtMyNum = self.evtMyNum +1
+	#if self.evtMyNum not in [945,947]: return True
         """process event, return True (go to next module) or False (fail, go to next event)"""
 	# Wlep ############################3
         self._lepton_4v.SetPtEtaPhiM(0,0,0,0)
+        self._MET_4v.SetPtEtaPhiM(0,0,0,0)
+        self._MET_big4v.SetPtEtaPhiM(0,0,0,0)
 	self._Wlep_4v.SetPtEtaPhiM(0,0,0,0)
+	self._Wlep_big4v.SetPtEtaPhiM(0,0,0,0)
+	self._Wlep_Mt = MinLimit
 
+
+	self._VBFBoost_jet1_4v.SetPtEtaPhiM(0,0,0,0)
+	self._VBFBoost_jet2_4v.SetPtEtaPhiM(0,0,0,0)
         # Boost ########################
         self._isBoost=False
         self._isBoostSB=False
@@ -192,6 +259,8 @@ class HMlnjjVarsClass_Dev(Module):
         self._Wfatjet_mindM_cfjidx=-1 ##select fatjet whose mass is closest to MW
         self._Wfatjet_mxPT_cfjidx=-1 ## select fatjet whose pt is largest one
         self._FinalFatJet_4v.SetPtEtaPhiM(0,0,0,0)
+        self._subJet1_4v.SetPtEtaPhiM(0,0,0,0)
+        self._subJet2_4v.SetPtEtaPhiM(0,0,0,0)
         self._Wfatjet_cfjidx_list=[]
         self._Wfatjet_pt_list=[]
         self._Wfatjet_eta_list=[]
@@ -209,15 +278,19 @@ class HMlnjjVarsClass_Dev(Module):
         self._FatSel_cfjidx['mindM']=-1 ## FatJet_mass ~ mindM
         self._FatSel_cfjidx['mxPT']=-1## largest mxPT
         self._lnJ_4v.SetPtEtaPhiM(0,0,0,0)
+        self._lnJ_big4v.SetPtEtaPhiM(0,0,0,0)
         
 	# Resol #########################3
         self._isResol = False
         self._isResolSR = False
         self._isResolSB = False
+        self._Whad_j1_4v.SetPtEtaPhiM(0,0,0,0)
+        self._Whad_j2_4v.SetPtEtaPhiM(0,0,0,0)
         self._Whad_4v.SetPtEtaPhiM(0,0,0,0)
         self._Whad_cjidx1=-1
         self._Whad_cjidx2=-1
         self._BJetResol_cjidx=[]
+        self._BJetResolVBF_cjidx=[]
         self._isVBF_Resol=False
         self._VBFjjResol_dEta= MinLimit
         self._VBFjjResol_mjj = MinLimit
@@ -227,6 +300,7 @@ class HMlnjjVarsClass_Dev(Module):
 	self._minPtWOverMlnjj = MinLimit
 	self._maxPtWOverMlnjj = MinLimit
         self._lnjj_4v.SetPtEtaPhiM(0,0,0,0)
+        self._lnjj_big4v.SetPtEtaPhiM(0,0,0,0)
 	self._lnjj_pt   = MinLimit
 	self._lnjj_mass = MinLimit
 	self._lnjj_Mt   = MinLimit
@@ -247,6 +321,7 @@ class HMlnjjVarsClass_Dev(Module):
         self._CleanJet_col = Collection(event, 'CleanJet')
         self._CleanJetNotFat_col = Collection(event, 'CleanJetNotFat')
         self._Jet_col = Collection(event,"Jet")
+        self._SubJet_col = Collection(event,"SubJet")
 
         ##---MET
         self._MET = Object(event, self.METtype)
@@ -254,9 +329,9 @@ class HMlnjjVarsClass_Dev(Module):
         self._MET_phi = self._MET.phi
 	self._MET_pz1 = -1
 	self._MET_pz2 = -1
-	self._MET_pz  = -1
-        #self._MET=ROOT.TLorentzVector()
-        #self._MET.SetPtEtaPhiM(self._MET_pt, 0., self._MET_phi, 0.)
+	self._MET_pz  = 0
+	self._MET_bigZ  = 0
+	#self._MET_4v.SetPtEtaPhiM(self._MET_pt, 0, self._MET_phi, 0.) at Wlep
         
         
 
@@ -325,7 +400,6 @@ class HMlnjjVarsClass_Dev(Module):
         # isResolSB, isResolSR
 
         ##Step.2 Get Btag
-        self.GetBJetsResol()
         ##set      self._BJetResol_cjidx
         
 
@@ -339,13 +413,32 @@ class HMlnjjVarsClass_Dev(Module):
         ##set      self._VBFjjResol_cjidx2
         ##set      self._VBFjjResol_mjj
 
+        ##--- should be after VBF_Boost for BJetResolVBF_cjidx
+        self.GetBJetsResol()
 
 	self.CookME()
-            
-        ##################
+   
         ##Fill branch ####
-        ##################
+	self.FillBranch()
 
+        #print "self._isBoost",self._isBoost
+        #print "self._isResol",self._isResol
+        
+        ##<<<<End of Resol
+
+
+	########################
+	# Event Save Decision
+	########################
+
+        if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
+
+        return True
+
+
+
+
+    def FillBranch(self):
 
         ##---Wlep
         #print "fillBranchBoost"
@@ -353,6 +446,7 @@ class HMlnjjVarsClass_Dev(Module):
         self.out.fillBranch('Wlep_eta',self._Wlep_4v.Eta())
         self.out.fillBranch('Wlep_phi',self._Wlep_4v.Phi())
         self.out.fillBranch('Wlep_mass',self._Wlep_4v.M())
+        self.out.fillBranch('Wlep_Mt'  ,self._Wlep_Mt)
         self.out.fillBranch(self.METtype+'_pz1',self._MET_pz1) ##MET_pz = pz1+-sqrt(pz2)
         self.out.fillBranch(self.METtype+'_pz2',self._MET_pz2)
         
@@ -366,15 +460,11 @@ class HMlnjjVarsClass_Dev(Module):
         self.out.fillBranch('WtagFatjet_mass',self._Wfatjet_mass_list)
         self.out.fillBranch('WtagFatjet_tau21',self._Wfatjet_tau21_list)
 
-
-
         ## choice for final fatjet
         self.out.fillBranch('FinalFatJet_mindM_cfjidx',self._Wfatjet_mindM_cfjidx)
         self.out.fillBranch('FinalFatJet_mxPT_cfjidx',self._Wfatjet_mxPT_cfjidx)
 
 
-        
-        
         ##---Btagged Jet
         self.out.fillBranch('BJetBoost_cjidx', self._BJetBoost_cjidx)
         self.out.fillBranch('BJetBoostVBF_cjidx', self._BJetBoostVBF_cjidx)
@@ -398,6 +488,7 @@ class HMlnjjVarsClass_Dev(Module):
         self.out.fillBranch('Whad_cjidx1', self._Whad_cjidx1)
         self.out.fillBranch('Whad_cjidx2', self._Whad_cjidx2)
         self.out.fillBranch('BJetResol_cjidx', self._BJetResol_cjidx)
+        self.out.fillBranch('BJetResolVBF_cjidx', self._BJetResolVBF_cjidx)
 
         ###VBF
         self.out.fillBranch('isVBF_Resol',     self._isVBF_Resol)
@@ -420,38 +511,324 @@ class HMlnjjVarsClass_Dev(Module):
 
 
 
+
+
+
+
+
         #print "End of fllbranch"
 
 
-        #print "self._isBoost",self._isBoost
-        #print "self._isResol",self._isResol
-        
-        ##<<<<End of Resol
-
-
-	########################
-	# Event Save Decision
-	########################
-
-        if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
-
-        return True
 
 
     def CookME(self):
-        boostMasses = [400, 1500]
-        resolMasses = [400, 1500]
-	for mH in boostMasses:
-	  gsm = self.g.GetBinContent(self.g.FindBin(mH))
-          self.melaBoost = ROOT.MelaHighMassKDwCalc(13, mH, gsm)
-	  allCut_VBFBoostSR = [
-	      self._isBoostSR and self._isVBF_Boost and len(self._BJetBoostVBF_cjidx) ==0
-	      ]
-	  if all(allCut_VBFBoostSR):
-	    daughter_coll = ROOT.SimpleParticleCollection_t()
-	    accociated_coll = ROOT.SimpleParticleCollection_t()
-	    daughter = ROOT.SimpleParticle_t(25, self._lnJ_4v)
-	    associated1 = ROOT.SimpleParticle_t(0,
+	# particle ids
+	lepId = self._Lepton.pdgId
+	if lepId > 0:
+	  neutId = -lepId -1
+	  WlepId   = 24
+	  WhadId = -24
+	else :
+	  neutId = -lepId + 1
+	  WlepId   = -24
+	  WhadId = 24
+	#print "lep, neut", lepId, neutId
+
+        #Boost_h_ids = ROOT.vector('int')()
+        #Boost_h_4Vs = ROOT.vector('TLorentzVector')()
+
+        #Boost_h_ids.push_back(int(25)) 
+	#Boost_h_4Vs.push_back(self._lnJ_4v)
+
+        Boost_hDa_ids = ROOT.vector('int')()
+        Boost_hDa_4Vs = ROOT.vector('TLorentzVector')()
+
+        Boost_hDa_ids.push_back(int(WlepId)) 
+	Boost_hDa_4Vs.push_back(self._Wlep_4v)
+        Boost_hDa_ids.push_back(int(WhadId)) 
+	Boost_hDa_4Vs.push_back(self._FinalFatJet_4v)
+
+	Boost_WWda_ids = ROOT.vector('int')()
+	Boost_WWda_4Vs = ROOT.vector('TLorentzVector')()
+
+	Boost_WWda_ids.push_back(int(lepId))
+	Boost_WWda_4Vs.push_back(self._lepton_4v)
+
+	Boost_WWda_ids.push_back(int(neutId))
+	Boost_WWda_4Vs.push_back(self._MET_4v)
+
+	Boost_WWda_ids.push_back(int(0))
+	Boost_WWda_4Vs.push_back(self._subJet1_4v)
+
+	Boost_WWda_ids.push_back(int(0))
+	Boost_WWda_4Vs.push_back(self._subJet2_4v)
+
+	Res_hDa_ids = ROOT.vector('int')()
+	Res_hDa_4Vs = ROOT.vector('TLorentzVector')()
+	Res_hDa_ids.push_back(int(WlepId))
+	Res_hDa_4Vs.push_back(self._Wlep_4v)
+	Res_hDa_ids.push_back(int(WhadId))
+	Res_hDa_4Vs.push_back(self._Whad_4v)
+
+	Res_WWda_ids = ROOT.vector('int')()
+	Res_WWda_4Vs = ROOT.vector('TLorentzVector')()
+
+	Res_WWda_ids.push_back(int(lepId))
+	Res_WWda_4Vs.push_back(self._lepton_4v)
+
+	Res_WWda_ids.push_back(int(neutId))
+	Res_WWda_4Vs.push_back(self._MET_4v)
+
+	Res_WWda_ids.push_back(int(0))
+	Res_WWda_4Vs.push_back(self._Whad_j1_4v)
+
+	Res_WWda_ids.push_back(int(0))
+	Res_WWda_4Vs.push_back(self._Whad_j2_4v)
+
+
+        for mH in Masses:
+          gsm = self.g.GetBinContent(self.g.FindBin(mH))
+	  self.mela.setMelaHiggsMassWidth(mH, gsm)
+	  # variable initialization
+          P_BstVBF_vbf_S = -1
+          P_BstVBF_vbf_B = -1
+          P_BstVBF_ggf_S = -1
+          P_BstVBF_ggf_B = -1
+
+          P_BstNoT_vbf_S = -1
+          P_BstNoT_vbf_B = -1
+          P_BstNoT_ggf_S = -1
+          P_BstNoT_ggf_B = -1
+
+          P_ResVBF_vbf_S = -1
+          P_ResVBF_vbf_B = -1
+          P_ResVBF_ggf_S = -1
+          P_ResVBF_ggf_B = -1
+
+          P_ResNoT_vbf_S = -1
+          P_ResNoT_vbf_B = -1
+          P_ResNoT_ggf_S = -1
+          P_ResNoT_ggf_B = -1
+
+	  if self.debug:
+	    print "Probability for mass",mH
+
+          allCut_BoostSR_VBF = [
+              self._isBoostSR and self._isVBF_Boost and len(self._BJetBoostVBF_cjidx) ==0
+              ]
+          allCut_BoostSR_NonVBF = [
+              self._isBoostSR and not self._isVBF_Boost and len(self._BJetBoost_cjidx) ==0
+              ]
+          allCut_ResolSR_VBF = [
+              self._isResolSR and  self._isVBF_Resol and len(self._BJetResolVBF_cjidx) ==0
+              ]
+          allCut_ResolSR_NonVBF = [
+              self._isResolSR and  not self._isVBF_Resol and len(self._BJetResol_cjidx) ==0
+              ]
+          if all( allCut_BoostSR_VBF ) :###### BstVBF #################
+	    pass
+	    #if self.debug:
+	    #  print "allCut_BoostSR_VBF begin"
+	    #  print self.evtMyNum
+
+	    #VBF_associate_ids = ROOT.vector('int')()
+	    #VBF_associate_4Vs = ROOT.vector('TLorentzVector')() 
+	    #
+	    #VBF_associate_ids.push_back(int(0))
+	    #VBF_associate_4Vs.push_back(self._VBFBoost_jet1_4v)
+	    #VBF_associate_ids.push_back(int(0))
+	    #VBF_associate_4Vs.push_back(self._VBFBoost_jet2_4v)
+	  
+	    #self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
+
+	    #if self.debug:
+	    #  print "BstVBF tag: VBF meP calculation" 
+	    #self.mela.setupDaughtersNoMom(
+	    #    True,
+	    #    Boost_WWda_ids, Boost_WWda_4Vs,
+	    #    VBF_associate_ids, VBF_associate_4Vs,
+	    #    False )
+	    #self.mela.setCurrentCandidateFromIndex(int(0))
+	    #P_BstVBF_vbf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    #P_BstVBF_vbf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+
+            #if self.debug:
+	    #  print "ggF prob. calculation"
+	    #self.mela.setupDaughtersNoMom(
+	    #    False,
+	    #    Boost_WWda_ids, Boost_WWda_4Vs,
+	    #    VBF_associate_ids, VBF_associate_4Vs,
+	    #    False )
+	    #self.mela.setCurrentCandidateFromIndex(int(0))
+	    ## TVar.CandidateDecay_Stable case: h->WW, ProdP : just 0 
+	    ## TVar.CandidateDecay_Stable case: h->WW, DecP :  not supported
+	    ## TVar.CandidateDecay_WW     case: h->WW, DecP :  not supported
+	    ## TVar.CandidateDecay_WW     case: h->WW, ProdP : not supported
+	    #P_BstVBF_ggf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    #P_BstVBF_ggf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+	    #if self.debug:
+	    #  print "allCut_BoostSR_VBF ------------------"
+	    #  print self.evtMyNum
+	    #  print 'P_BstVBF_vbf_S',P_BstVBF_vbf_S,'P_BstVBF_vbf_B',P_BstVBF_vbf_B,'P_BstVBF_ggf_S',P_BstVBF_ggf_S,'P_BstVBF_ggf_B',P_BstVBF_ggf_B
+	  elif all( allCut_BoostSR_NonVBF ): ############## BstNoT ############
+	    if self.debug:
+	      print "allCut_BoostSR_NoVBF begin"
+	    NoVBF_associate_ids = ROOT.vector('int')()
+	    NoVBF_associate_4Vs = ROOT.vector('TLorentzVector')()
+            tmp_4V = ROOT.TLorentzVector()
+	    for i_noFat in range(0, self._CleanJetNotFat_col._len):
+              cj_idx=self._CleanJetNotFat_col[i_noFat].jetIdx
+	      pt, eta, phi, mass = self.CleanJet_PtEtaPhiM(cj_idx)
+	      if pt < self.cut_jet_pt: continue
+              if abs(eta) > self.cut_jet_eta : continue
+	      tmp_4V.SetPtEtaPhiM(pt, eta, phi, mass)
+	      NoVBF_associate_ids.push_back( int(0) )
+	      NoVBF_associate_4Vs.push_back( tmp_4V )
+            if self.debug:
+	      print "check VBF prob."
+	    self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_Stable)
+	    self.mela.setupDaughtersNoMom(
+	        True,
+	        Boost_hDa_ids, Boost_hDa_4Vs,
+	        NoVBF_associate_ids, NoVBF_associate_4Vs,
+	        False )
+	    self.mela.setCurrentCandidateFromIndex(int(0))
+	    P_BstNoT_vbf_S = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, False)
+	    P_BstNoT_vbf_B = self.mela.computeProdP(ROOT.TVar.bkgWW,    ROOT.TVar.JHUGen, True)
+	    if self.debug:
+	      print "check ggf prob."
+	    self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
+	    self.mela.setupDaughtersNoMom(
+	        False,
+	        Boost_WWda_ids, Boost_WWda_4Vs,
+	        NoVBF_associate_ids, NoVBF_associate_4Vs,
+	        False )
+	    self.mela.setCurrentCandidateFromIndex(int(0))
+	    # TVar.CandidateDecay_Stable case: h->WW, ProdP : just 0 
+	    # TVar.CandidateDecay_Stable case: h->WW, DecP :  not supported
+	    # TVar.CandidateDecay_WW     case: h->WW, DecP :  not supported
+	    # TVar.CandidateDecay_WW     case: h->WW, ProdP : not supported
+	    #mePgg = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, True)
+	    P_BstNoT_ggf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    P_BstNoT_ggf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+	    if self.debug:
+	      print "NoVBF boost prob ==========================================="
+	      print self.evtMyNum
+	      print "P_BstNoT_vbf_S",P_BstNoT_vbf_S,"P_BstNoT_vbf_B",P_BstNoT_vbf_B,"P_BstNoT_ggf_S",P_BstNoT_ggf_S,"P_BstNoT_ggf_B",P_BstNoT_ggf_B
+
+	  elif all( allCut_ResolSR_VBF ): ############ Resol  VBF #############
+	    pass
+	    #if self.debug:
+	    #  print "allCut_ResolSR_VBF begin"
+	    #ResVbf_as_ids = ROOT.vector('int')()
+	    #ResVbf_as_4Vs = ROOT.vector('TLorentzVector')()
+
+	    #tmp_4V = self.CleanJet_4V(self._VBFjjResol_cjidx1)
+	    #ResVbf_as_ids.push_back(int(0))
+	    #ResVbf_as_4Vs.push_back(tmp_4V)
+	    #tmp_4V = self.CleanJet_4V(self._VBFjjResol_cjidx2)
+	    #ResVbf_as_ids.push_back(int(0))
+	    #ResVbf_as_4Vs.push_back(tmp_4V)
+
+	    #self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
+            #
+	    #if self.debug:
+	    #  print "Resol vbf meP"
+	    #self.mela.setupDaughtersNoMom(
+	    #    True,
+	    #    Res_WWda_ids, Res_WWda_4Vs,
+	    #    ResVbf_as_ids, ResVbf_as_4Vs,
+	    #    False )
+	    #self.mela.setCurrentCandidateFromIndex(int(0))
+	    #P_ResVBF_vbf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    #P_ResVBF_vbf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+	    #if self.debug:
+	    #  print "Resol ggf meP"
+	    #self.mela.setupDaughtersNoMom(
+	    #    False,
+	    #    Res_WWda_ids, Res_WWda_4Vs,
+	    #    ResVbf_as_ids, ResVbf_as_4Vs,
+	    #    False )
+	    #self.mela.setCurrentCandidateFromIndex(int(0))
+	    #P_ResVBF_ggf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    #P_ResVBF_ggf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+	    #if self.debug:
+	    #  print "ResolVBF  ==========================================="
+	    #  print self.evtMyNum
+	    #  print "P_ResVBF_vbf_S",P_ResVBF_vbf_S,"P_ResVBF_vbf_B",P_ResVBF_vbf_B,"P_ResVBF_ggf_S",P_ResVBF_ggf_S,"P_ResVBF_ggf_B",P_ResVBF_ggf_B
+
+	  elif all( allCut_ResolSR_NonVBF ): ############ Resol NonVBF ################
+	    if self.debug:
+	      print "allCut_ResolSR_NoT begin"
+	    ResNoVbf_as_ids = ROOT.vector('int')()
+	    ResNoVbf_as_4Vs = ROOT.vector('TLorentzVector')()
+            tmp_4V = ROOT.TLorentzVector()
+	    for i_cj in range(0, self._CleanJet_col._len):
+	      if i_cj in [self._Whad_cjidx1, self._Whad_cjidx2 ]: continue
+	      tmp_4V = self.CleanJet_4V(i_cj)
+	      if tmp_4V.Pt()  < self.cut_jet_pt: continue
+	      if abs(tmp_4V.Eta()) < self.cut_jet_pt: continue
+	      ResNoVbf_as_ids.push_back( int(0) )
+	      ResNoVbf_as_4Vs.push_back( tmp_4V )
+            if self.debug:
+	      print "meP vbf"
+	    self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_Stable)
+	    self.mela.setupDaughtersNoMom(
+	        True,
+	        Res_hDa_ids, Res_hDa_4Vs,
+	        ResNoVbf_as_ids, ResNoVbf_as_4Vs,
+	        False )
+	    self.mela.setCurrentCandidateFromIndex(int(0))
+	    # VBF can not use ProdDecP  with JHUGen, JHUGen possible for vbf prod, and ggHWW
+	    P_ResNoT_vbf_S = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, False)
+	    P_ResNoT_vbf_B = self.mela.computeProdP(ROOT.TVar.bkgWW,    ROOT.TVar.JHUGen, True)
+           
+	    if self.debug:
+	      print "meP ggf"
+	    self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
+	    self.mela.setupDaughtersNoMom(
+	        False,
+	        Res_WWda_ids, Res_WWda_4Vs,
+	        ResNoVbf_as_ids, ResNoVbf_as_4Vs,
+	        False )
+	    self.mela.setCurrentCandidateFromIndex(int(0))
+	    P_ResNoT_ggf_S = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+	    P_ResNoT_ggf_B = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+	    if self.debug:
+	      print "Resol NoVBF prob ==========================================="
+	      print self.evtMyNum
+	      print "P_ResNoT_vbf_S", P_ResNoT_vbf_S,"P_ResNoT_vbf_B",P_ResNoT_vbf_B,"P_ResNoT_ggf_S",P_ResNoT_ggf_S,"P_ResNoT_ggf_B",P_ResNoT_ggf_B
+
+	  else: pass
+
+          self.out.fillBranch('meP'+ str(mH) + '_BstVBF_vbf_S',   P_BstVBF_vbf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_BstVBF_vbf_B',   P_BstVBF_vbf_B)
+          self.out.fillBranch('meP'+ str(mH) + '_BstVBF_ggf_S',   P_BstVBF_ggf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_BstVBF_ggf_B',   P_BstVBF_ggf_B)
+
+          self.out.fillBranch('meP'+ str(mH) + '_BstNoT_vbf_S',   P_BstNoT_vbf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_BstNoT_vbf_B',   P_BstNoT_vbf_B)
+          self.out.fillBranch('meP'+ str(mH) + '_BstNoT_ggf_S',   P_BstNoT_ggf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_BstNoT_ggf_B',   P_BstNoT_ggf_B)
+
+          self.out.fillBranch('meP'+ str(mH) + '_ResVBF_vbf_S',   P_ResVBF_vbf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_ResVBF_vbf_B',   P_ResVBF_vbf_B)
+          self.out.fillBranch('meP'+ str(mH) + '_ResVBF_ggf_S',   P_ResVBF_ggf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_ResVBF_ggf_B',   P_ResVBF_ggf_B)
+
+          self.out.fillBranch('meP'+ str(mH) + '_ResNoT_vbf_S',   P_ResNoT_vbf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_ResNoT_vbf_B',   P_ResNoT_vbf_B)
+          self.out.fillBranch('meP'+ str(mH) + '_ResNoT_ggf_S',   P_ResNoT_ggf_S)
+          self.out.fillBranch('meP'+ str(mH) + '_ResNoT_ggf_B',   P_ResNoT_ggf_B)
+
+              #daughter_coll = ROOT.SimpleParticleCollection_t()
+            #accociated_coll = ROOT.SimpleParticleCollection_t()
+            #daughter = ROOT.SimpleParticle_t(25, self._lnJ_4v)
+            #associated1 = ROOT.SimpleParticle_t(0, self._VBFBoost_jet1_4v)
+            #associated2 = ROOT.SimpleParticle_t(0, self._VBFBoost_jet2_4v)
+            #daughter_coll.push_back(daughter)
+            #associated_coll.push_back(associated1)
+            #associated_coll.push_back(associated2)
 
 
 
@@ -498,6 +875,7 @@ class HMlnjjVarsClass_Dev(Module):
         lepton_pz  = lepton_pt*math.sinh(lepton_eta)
         lepton_E   = lepton_pt*math.cosh(lepton_eta)
         self._lepton_4v.SetPtEtaPhiM(lepton_pt,lepton_eta,lepton_phi,0)
+
         met_pt  = self._MET_pt
         met_phi = self._MET_phi
         #print 'Wmass=',type(Wmass)
@@ -519,14 +897,29 @@ class HMlnjjVarsClass_Dev(Module):
             sol2 = self._MET_pz1 - math.sqrt(self._MET_pz2)
             if abs(sol1) < abs(sol2):
                 self._MET_pz = sol1
+                self._MET_bigZ = sol2
             else:
                 self._MET_pz = sol2
+                self._MET_bigZ = sol1
 
-        wlep_px = lepton_pt*math.cos(lepton_phi) + met_pt*math.cos(met_phi)
-        wlep_py = lepton_pt*math.sin(lepton_phi) + met_pt*math.sin(met_phi)
-        wlep_pz = lepton_pz + self._MET_pz
-        wlep_E  = lepton_E  + math.sqrt(self._MET_pz**2 + met_pt**2)
-        self._Wlep_4v.SetPxPyPzE(wlep_px,wlep_py,wlep_pz,wlep_E)
+        met_px   =  met_pt*math.cos(met_phi)
+        met_py   =  met_pt*math.sin(met_phi)
+        met_E    =  math.sqrt(self._MET_pz**2 + met_pt**2)
+        met_bigE =  math.sqrt(self._MET_bigZ**2 + met_pt**2)
+        self._MET_4v.SetPxPyPzE(met_px, met_py, self._MET_pz ,met_E)
+        self._MET_big4v.SetPxPyPzE(met_px, met_py, self._MET_bigZ ,met_bigE)
+
+        wlep_px    = lepton_pt*math.cos(lepton_phi) + met_pt*math.cos(met_phi)
+        wlep_py    = lepton_pt*math.sin(lepton_phi) + met_pt*math.sin(met_phi)
+        wlep_pz    = lepton_pz + self._MET_pz
+        wlep_bigPz = lepton_pz + self._MET_bigZ
+        wlep_E     = lepton_E  + math.sqrt(self._MET_pz**2   + met_pt**2)
+        wlep_bigE  = lepton_E  + math.sqrt(self._MET_bigZ**2 + met_pt**2)
+        self._Wlep_4v.SetPxPyPzE(   wlep_px,wlep_py,wlep_pz,   wlep_E)
+	# TODO use this big4v for the event test, which could enhence the mH resolution
+        self._Wlep_big4v.SetPxPyPzE(wlep_px,wlep_py,wlep_bigPz,wlep_bigE)
+
+        self._Wlep_Mt = math.sqrt(2*lepton_pt*met_pt*(1-math.cos(lepton_phi - met_phi ) ) )
         
 
     def FindWtaggerFatJet(self):
@@ -607,6 +1000,9 @@ class HMlnjjVarsClass_Dev(Module):
             if pt < self.cut_bjet_pt  :continue
             if abs(eta) > self.cut_bjet_eta:continue
             self._BJetResol_cjidx.append(i_cj) ## fill index of CleanJet
+	    if self._isVBF_Resol:
+	      if i_cj not in [self._VBFjjResol_cjidx1, self._VBFjjResol_cjidx2]:
+		self._BJetResolVBF_cjidx.append(i_cj)
             
 
 
@@ -643,6 +1039,8 @@ class HMlnjjVarsClass_Dev(Module):
                     self._VBFjjBoost_mjj = this_mjj
                     self._VBFjjBoost_cjidx1 = cjidx1
                     self._VBFjjBoost_cjidx2 = cjidx2
+                    self._VBFBoost_jet1_4v.SetPtEtaPhiM(pt1, eta1, phi1, mass1)
+                    self._VBFBoost_jet2_4v.SetPtEtaPhiM(pt2, eta2, phi2, mass2)
 		# the biggest mjj for either VBF or non-VBF
                 if this_mjj > self._max_mjj_Boost:
                     self._max_mjj_Boost = this_mjj
@@ -718,6 +1116,8 @@ class HMlnjjVarsClass_Dev(Module):
                     self._Whad_cjidx1 = i_cj
                     self._Whad_cjidx2 = j_cj
                     self._Whad_4v = v1+v2
+		    self._Whad_j1_4v = v1
+		    self._Whad_j2_4v = v2
         if dM < MaxLimit:
 	  self._isResol = True
           ##DeltaR, DeltaPhi between l - Whad OR Wlep - Whad
@@ -733,8 +1133,8 @@ class HMlnjjVarsClass_Dev(Module):
  
     def CookLnJ(self):
         if not self._isBoost: return
-        self._FatSel_cfjidx['mindM']=self._Wfatjet_mindM_cfjidx
-        self._FatSel_cfjidx['mxPT']=self._Wfatjet_mxPT_cfjidx
+        self._FatSel_cfjidx['mindM'] = self._Wfatjet_mindM_cfjidx
+        self._FatSel_cfjidx['mxPT']  = self._Wfatjet_mxPT_cfjidx
 
         tmp_FatJet_4v= ROOT.TLorentzVector()
 
@@ -744,7 +1144,8 @@ class HMlnjjVarsClass_Dev(Module):
                 
                 WfatPt, WfatEta, WfatPhi, WfatMass = self.CleanFatJet_PtEtaPhiM(cfatjet_idx)
                 tmp_FatJet_4v.SetPtEtaPhiM(WfatPt,WfatEta,WfatPhi,WfatMass) ##FatJet vector
-                H_4v=self._Wlep_4v + tmp_FatJet_4v ## sum Wlep + Whad
+                H_4v    = self._Wlep_4v    + tmp_FatJet_4v ## sum Wlep + Whad
+                H_big4v = self._Wlep_big4v + tmp_FatJet_4v ## sum Wlep + Whad
                 lnJ_pt=H_4v.Pt()
                 lnJ_mass=H_4v.M()
                 ##--additional cut
@@ -762,7 +1163,20 @@ class HMlnjjVarsClass_Dev(Module):
 		########################
 		if sel == "mindM":
 		  #print "mindM case"
-                  self._lnJ_4v = H_4v
+                  fatjetIdx=self._CleanFatJet_col[cfatjet_idx].jetIdx
+                  subJetI1 = self._FatJet_col[fatjetIdx].subJetIdx1
+                  subJetI2 = self._FatJet_col[fatjetIdx].subJetIdx2
+		  self._subJet1_4v = self.SubJet_4V(subJetI1)
+		  self._subJet2_4v = self.SubJet_4V(subJetI2)
+		  fatjetAgain_4V = self._subJet1_4v + self._subJet2_4v
+		  #print "fatjetAgain"
+		  #print fatjetAgain_4V.Pt(), fatjetAgain_4V.Eta(), fatjetAgain_4V.Phi(), fatjetAgain_4V.M()
+		  #print WfatPt, WfatEta, WfatPhi, WfatMass
+		  #print self._FatJet_col[fatjetIdx].pt, self._FatJet_col[fatjetIdx].eta, self._FatJet_col[fatjetIdx].phi, self._FatJet_col[fatjetIdx].mass
+
+                  self._lnJ_4v    = H_4v
+		  # TODO
+                  self._lnJ_big4v = H_big4v
 		  self._FinalFatJet_4v = tmp_FatJet_4v
 	          cut_Boost_Base  = [ \
 		      self._MET_pt    > self.METcut_Boost and \
@@ -787,6 +1201,7 @@ class HMlnjjVarsClass_Dev(Module):
                 dR_l_F    = MinLimit
                 dR_Wlep_F = MinLimit
 
+            # All cases should be filled even with default values
             self.out.fillBranch('lnJ_pt_'+sel, lnJ_pt)
             self.out.fillBranch('lnJ_mass_'+sel, lnJ_mass)
             self.out.fillBranch('minPtWOverMlnJ_'+sel, minPtWOverMlnJ)##additional cut
@@ -799,18 +1214,28 @@ class HMlnjjVarsClass_Dev(Module):
 
     def CookLnjj(self):
         if not self._isResol : return
-        self._lnjj_4v = self._Wlep_4v + self._Whad_4v
+        self._lnjj_4v    = self._Wlep_4v    + self._Whad_4v
+	# TODO
+        self._lnjj_big4v = self._Wlep_big4v + self._Whad_4v
         self._lnjj_pt   = self._lnjj_4v.Pt()
         self._lnjj_mass = self._lnjj_4v.M()
-        self._lnjj_Mt   = self._lnjj_4v.Mt()
         self._minPtWOverMlnjj = min(self._Wlep_4v.Pt(), self._Whad_4v.Pt())/self._lnjj_mass
         self._maxPtWOverMlnjj = max(self._Wlep_4v.Pt(), self._Whad_4v.Pt())/self._lnjj_mass
 
-        Whad_mass=self._Whad_4v.M()
+        Ljj_4v = self._lepton_4v + self._Whad_4v
+	Ljj_pt = Ljj_4v.Pt()
+	self._lnjj_Mt = math.sqrt(2.* Ljj_pt*self._MET_pt * (1. - math.cos( Ljj_4v.DeltaPhi(self._MET_4v)) ))
 
-	cut_Resol_Base = [ \
-	    self._MET_pt           > self.METcut_Resol and  \
-	    self._minPtWOverMlnjj > self.cut_minPtWOverMlnjj ]
+        Whad_mass     = self._Whad_4v.M()
+
+	#print "Mts", self._lnjj_Mt, self._Wlep_Mt
+
+	cut_Resol_Base = [ 
+	    self._MET_pt          > self.METcut_Resol and  
+	    self._minPtWOverMlnjj > self.cut_minPtWOverMlnjj and
+	    self._lnjj_Mt         > self.cut_lnjj_Mt  and
+	    self._Wlep_Mt         > self.cut_Wlep_Mt
+	    ]
 	cut_Resol_SB = [ \
 	    Whad_mass > self.Wmass_CRlow and \
 	    Whad_mass < self.Wmass_CRhigh ]
@@ -832,6 +1257,16 @@ class HMlnjjVarsClass_Dev(Module):
         mass=self._Jet_col[jidx].mass
         return pt,eta,phi,mass
 
+    def CleanJet_4V(self,cjidx):
+        pt=self._CleanJet_col[cjidx].pt
+        eta=self._CleanJet_col[cjidx].eta
+        phi=self._CleanJet_col[cjidx].phi
+        jidx=self._CleanJet_col[cjidx].jetIdx
+        mass=self._Jet_col[jidx].mass
+        tmp_4V = ROOT.TLorentzVector()
+	tmp_4V.SetPtEtaPhiM(pt, eta, phi, mass)
+        return tmp_4V
+
     def CleanFatJet_PtEtaPhiM(self,cfjidx):
         pt=self._CleanFatJet_col[cfjidx].pt
         eta=self._CleanFatJet_col[cfjidx].eta
@@ -839,6 +1274,24 @@ class HMlnjjVarsClass_Dev(Module):
         mass=self._CleanFatJet_col[cfjidx].mass
         
         return pt,eta,phi,mass
+
+    def Jet_4V(self,jidx):
+        pt  = self._Jet_col[jidx].pt
+        eta = self._Jet_col[jidx].eta
+        phi = self._Jet_col[jidx].phi
+        mass= self._Jet_col[jidx].mass
+        tmp_4V = ROOT.TLorentzVector()
+	tmp_4V.SetPtEtaPhiM(pt, eta, phi, mass)
+        return tmp_4V
+
+    def SubJet_4V(self,jidx):
+        pt  = self._SubJet_col[jidx].pt
+        eta = self._SubJet_col[jidx].eta
+        phi = self._SubJet_col[jidx].phi
+        mass= self._SubJet_col[jidx].mass
+        tmp_4V = ROOT.TLorentzVector()
+	tmp_4V.SetPtEtaPhiM(pt, eta, phi, mass)
+        return tmp_4V
 
     def MakeMassVsGamma(self):
         # Non-CPS values from https://twiki.cern.ch/twiki/bin/view/LHCPhysics/CERNYellowReportPageBR2014 for up to 1000 GeV

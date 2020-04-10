@@ -12,7 +12,6 @@ beginFile
 endFile && endJob
          self.out._tree.AutoSave("FlushBaskets")
 
-endJob
 
 in analyze loop
         if event.event % 10000 ==1 :##To flush memory of ttree
