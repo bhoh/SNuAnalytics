@@ -1,3 +1,5 @@
+####----Add suffix based----###
+
 ##add Whad algorithm
 ####Jet rawfactor
 import ROOT
@@ -12,24 +14,15 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection, matchObjectCollectionMultiple
 from LatinoAnalysis.NanoGardener.framework.BranchMapping import mappedOutputTree, mappedEvent
-
+from LatinoAnalysis.NanoGardener.data.HMlnjjVars_Dev_jhchoi7_cfg import MYALGO,FatSel,HMSemilep_arr_br,HMSemilep_br,METtype,WtaggerFatjet_br
 
 ##--We can move this configurations to a cfg file after some tests--#
 Wmass=80.4
 
 
-MYALGO={
-'dM':'',
-'dMchi2rawF':'',
-'dMchi2rawFqgl':'',
-'dMchi2Resolution':'',
-'dMchi2Resolutionqgl':'',
-'HighPTjj':'', ##require jj pair making highest pt(jj)
-'LowPTjj':'', ##require jj pair making lowest pt(jj)
-}
-
 class HMlnjjVarsClass_Dev_jhchoi(Module):
-    def __init__(self,year,METtype='PuppiMET',doSkim=False,doHardSkim=False):
+    def __init__(self,year,doSkim=False,doHardSkim=False,branch_map=''):
+        self._branch_map = branch_map
 
         self._Wlep_4v=ROOT.TLorentzVector()
         self._lepton_4v=ROOT.TLorentzVector()
@@ -69,8 +62,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
         ##--How to select primary fatjet
         self.cfjidx_FatSel={}
-        self.cfjidx_FatSel['MW']=-1 ## FatJet_mass ~ MW
-        self.cfjidx_FatSel['PT']=-1 ## largest PT
+        for sel in FatSel:
+            self.cfjidx_FatSel[sel]=-1 ## FatJet_mass ~ MW
 
         ###---Year dependent cut----##
         print "@@Year->",year
@@ -102,7 +95,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         cmssw_base = os.getenv('CMSSW_BASE')
         if int(Year) == 2016:
           jerInputFileName = "Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
-          jerInputFileSource="https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Summer16_25nsV1b_DATA/Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
+          jetInputFileSource="https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Summer16_25nsV1b_DATA/Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
         elif int(Year) == 2017:
           jerInputFileName = "Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
           jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Fall17_V3b_DATA/Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
@@ -132,70 +125,18 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         pass
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
-        self.out = wrappedOutputTree
+        self.out = mappedOutputTree(wrappedOutputTree, mapname=self._branch_map)
+        #self.out = wrappedOutputTree
 
-        ##---Boosted Region kinematics
-        for var in ['pt','eta','phi','mass','Mt']:
-            self.out.branch("Wlep_"+var  , "F")
-        self.out.branch(self.METtype+'_pz1', "F")
-        self.out.branch(self.METtype+'_pz2', "F")
-        
-
-        self.out.branch("isBoosted","O")
-        self.out.branch("WtaggerFatjet_cfjidx","I",lenVar='nWtaggerFatjet')
-        for var in ['pt','eta','phi','mass','tau21']:
-            self.out.branch("WtaggerFatjet_"+var,"F",lenVar='nWtaggerFatjet')
-        self.out.branch("FinalFatJet_MW_cfjidx","I")
-        self.out.branch("FinalFatJet_PT_cfjidx","I")
-        
-
-        for sel in self.cfjidx_FatSel:
-            self.out.branch('lnJ_pt_'+sel,"F")
-            self.out.branch('lnJ_mass_'+sel,"F")
-            self.out.branch('minPtWOverMlnJ_'+sel,"F")
-            self.out.branch('maxPtWOverMlnJ_'+sel,"F")
-            self.out.branch('dR_l_F_'+sel,"F")
-            self.out.branch('dR_Wlep_F_'+sel,"F")
-            self.out.branch('dPhi_l_F_'+sel,"F")
-            self.out.branch('dPhi_Wlep_F'+sel,"F")
-        
-        self.out.branch('BJetBoosted_cjidx','I',lenVar='nBJetBoosted')
-        self.out.branch('AddJetBoosted_cjidx','I',lenVar='nAddJetBoosted')
-
-        self.out.branch('isVBF_Boosted','O')
-        self.out.branch('VBFjjBoosted_mjj','F')
-        self.out.branch('VBFjjBoosted_dEta','F')
-        self.out.branch('max_mjj_Boosted','F')
-
-        ##---Resolved Region kinemaics
-        for algo in MYALGO:
-            _algo='_'+algo
-            self.out.branch('isResolved'+_algo,"O")
-            for var in ['pt','eta','phi','mass','Mt','ScoreToLeast']:
-                self.out.branch('Whad_'+var+_algo,'F')
-
-            self.out.branch('Whad_cjidx1'+_algo,'I')
-            self.out.branch('Whad_cjidx2'+_algo,'I')
-            self.out.branch('BJetResolved_cjidx'+_algo,'I',lenVar='nBJetResolved'+_algo)
-            self.out.branch('AddJetResolved_cjidx'+_algo,'I',lenVar='nAddJetResolved'+_algo)
-            self.out.branch('isVBF_Resolved'+_algo,'O')
-            self.out.branch('VBFjjResolved_dEta'+_algo,'F')
-            self.out.branch('VBFjjResolved_mjj'+_algo,'F')
-            self.out.branch('VBFjjResolved_dEta'+_algo,'F')
-            self.out.branch('max_mjj_Resolved'+_algo,'F')
-
-            self.out.branch('lnjj_pt'+_algo, 'F')
-            self.out.branch('lnjj_mass'+_algo, 'F')
-            self.out.branch('lnjj_Mt'+_algo, 'F')
-            self.out.branch('minPtWOverMlnjj'+_algo,'F')
-            self.out.branch('maxPtWOverMlnjj'+_algo,'F')
-            self.out.branch('dR_l_Whad'+_algo,'F')
-            self.out.branch('dR_Wlep_Whad'+_algo,'F')
-            self.out.branch('dPhi_l_Whad'+_algo,'F')
-            self.out.branch('dPhi_Wlep_Whad'+_algo,'F')
-
-
-
+        for vartype in HMSemilep_arr_br:
+            for var in HMSemilep_arr_br[vartype]:
+                self.out.branch(var,vartype,lenVar='n'+var)
+        for vartype in HMSemilep_br:
+            for var in HMSemilep_br[vartype]:
+                self.out.branch(var,vartype)
+        for vartype in WtaggerFatjet_br:
+            for var in WtaggerFatjet_br[vartype]:
+                self.out.branch(var,vartype,lenVar='n'+'WtaggerFatjet')
         
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
@@ -206,6 +147,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
+
+        event = mappedEvent(event, mapname=self._branch_map) ##for suffix based
 	# initialize
         self._lepton_4v.SetPtEtaPhiM(0,0,0,0)
 	self._Wlep_4v.SetPtEtaPhiM(0,0,0,0)
@@ -299,8 +242,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##-> Fill        cleanfatjet index     to       self._cfatjet_idx_list=[]
         ##-> set         self._cfatjet_MW_idx -> select FatJet whose Msoftdrop is closest to MW
         ##-> set         self._cfatjet_PT_idx -> select FatJet whose PT is the largest one
-        if (len(self._cfatjet_idx_list) > 0) and ( self.MET_pt > self.METcut_Boosted): 
-            self._isBoosted=True
+        
         
         ##---Step.3 Btag in Boosted region
         self.GetBJetsBoosted()
@@ -317,7 +259,8 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##->self._VBFjjBoosted_cjidx2
         #print "End of Boosted"
         ##---Now Objects for Boosted Region are defined
-        
+        if (len(self._cfatjet_idx_list) > 0) and ( self.MET_pt > self.METcut_Boosted): 
+            self._isBoosted=True
 
 
         ##--Fill Branch for object ##
@@ -517,13 +460,10 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             
             ##<<<<End of Resolved
 
-
+        if (not self._isBoosted) and (not any( self._isResolved.values())) and self.doSkim: return False
         if event.event % 10000 ==1 :##To flush memory of ttree
             print >> sys.stderr, "[jhchoi]AutoSave, #event=",event.event
             self.out._tree.AutoSave("FlushBaskets")
-
-
-        if (not self._isBoosted) and (not any( self._isResolved.values())) and self.doSkim: return False
 
         
         
@@ -649,42 +589,22 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
             if abs(Wmass - mass) < min_dM : self._cfatjet_MW_idx = i_fj
         
     def GetBJetsBoosted(self):
-        if not self._isBoosted:
-            return
         ##->Set self._BJetBoosted_cjidx
         #self.CleanJetNotFat_col
         bWP=self.bWP
-        #N=len(self.CleanJetNotFat_col)
-        N=len(self.CleanJet_col)
-        ##jhchoi##
-        #idx_list=[]
-        #for i_cj in range(0,N): ##-- i_cj = idx of self.CleanJetNotFat_col
-        #    cj_idx=self.CleanJetNotFat_col[i_cj].jetIdx
-        #    idx_list.append(cj_idx)
+        N=self.CleanJetNotFat_col._len
         for i_cj in range(0,N): ##-- i_cj = idx of self.CleanJetNotFat_col
-            #if self.CleanJetNotFat_col[i_cj].deltaR < 0 : continue
-            #cj_idx=self.CleanJetNotFat_col[i_cj].jetIdx
-            cj_idx=i_cj
-            if self.IsAK4inAK8(cj_idx): continue
-            #try:
+            cj_idx=self.CleanJetNotFat_col[i_cj].jetIdx
             pt=self.CleanJet_col[cj_idx].pt
             eta=self.CleanJet_col[cj_idx].eta
             j_idx=self.CleanJet_col[cj_idx].jetIdx
             bAlgo=self.Jet_col[j_idx].btagDeepB
 
-            
             if pt < 20 :continue
             if abs(eta) > 2.5:continue
             self._AddJetBoosted_cjidx.append(cj_idx) ## fill index of CleanJet 
             if bAlgo < bWP:continue
-            self._BJetBoosted_cjidx.append(cj_idx) ## fill index of CleanJet
-            #except IndexError:
-            #    print "len(self.CleanFatJet_col)=",len(self.CleanFatJet_col)
-            #    print "cj_idx=",cj_idx
-            #    print "dR=",self.CleanJetNotFat_col[i_cj].deltaR
-            #    #print idx_list
-            #    print "N not fat=",N
-            #    print "N cleanjet=",len(self.CleanJet_col)
+            self._BJetBoosted_cjidx.append(cj_idx) ## fill index of CleanJet 
     def GetBJetsResolved(self,algo_):
         algo=algo_
         ##->Set self._BJetResolved_cjidx
@@ -710,11 +630,7 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
 
 
     def VBF_Boosted(self):
-        if not self._isBoosted:
-            self._isVBF_Boosted = False
-            return
-        #N=self.CleanJetNotFat_col._len
-        N=self.CleanJet_col._len
+        N=self.CleanJetNotFat_col._len
         if N < 2 :
             #print "NCleanJet < 2"
             self._isVBF_Boosted = False
@@ -722,19 +638,14 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         
         #max_mjj=-9999.
         for i_cj in range(0,N):
-            #if self.CleanJetNotFat_col[i_cj].deltaR < 0 : continue
-            #cjidx1 = self.CleanJetNotFat_col[i_cj].jetIdx ##index of CleanJet
-            cjidx1 = i_cj
+            cjidx1 = self.CleanJetNotFat_col[i_cj].jetIdx ##index of CleanJet
             pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(cjidx1)
             if pt1 < 30 : continue
             if abs(eta1) > 4.7 : continue
-            if self.IsAK4inAK8(cjidx1) : continue
+            
             for j_cj in range(0,N):
                 if j_cj <= i_cj : continue ##aviod doubly checked or the same one
-                #if self.CleanJetNotFat_col[j_cj].deltaR < 0 : continue
-                #cjidx2 = self.CleanJetNotFat_col[j_cj].jetIdx ##index of CleanJet
-                cjidx2=j_cj
-                if self.IsAK4inAK8(cjidx2) : continue
+                cjidx2 = self.CleanJetNotFat_col[j_cj].jetIdx ##index of CleanJet
                 pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(cjidx2)
                 if pt2 < 30: continue
                 if abs(eta2) > 4.7 : continue
@@ -801,22 +712,6 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         ##--End of jet pair loop
         if self._VBFjjResolved_mjj[algo] > 500. : self._isVBF_Resolved[algo] = True
         #print "_VBFjjResolved_mjj=",self._VBFjjResolved_mjj
-
-
-    ##Jet Cleaning
-    def IsAK4inAK8(self,cj_idx):
-        pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(cj_idx)
-        #_v1 = ROOT.TLorentzVector()
-        #_v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
-        for cfjidx in self._cfatjet_idx_list:
-            pt2,eta2,phi2,mass2 = self.CleanFatJet_PtEtaPhiM(cfjidx)
-            #_v2 = ROOT.TLorentzVector()
-            #_v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
-            #dR=_v2.DeltaR(_v1)
-            dR=self.getDeltaR(phi1,eta1,phi2,eta2)  ##    def getDeltaR(self, phi1, eta1, phi2, eta2):
-            if dR < 0.8 : return True
-        return False
-
 
     def WhadMaker(self,algo_):
         algo=algo_

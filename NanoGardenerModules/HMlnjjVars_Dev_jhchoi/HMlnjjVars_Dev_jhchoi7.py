@@ -101,14 +101,14 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         print "--Initialize JetResolution reader---"
         cmssw_base = os.getenv('CMSSW_BASE')
         if int(Year) == 2016:
-          jerInputFileName = "Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
-          jerInputFileSource="https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Summer16_25nsV1b_DATA/Summer16_25nsV1b_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileName = "Summer16_25nsV1_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileSource="https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Summer16_25nsV1_DATA/Summer16_25nsV1_DATA_PtResolution_AK4PFchs.txt"
         elif int(Year) == 2017:
-          jerInputFileName = "Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
-          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Fall17_V3b_DATA/Fall17_V3b_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileName = "Fall17_V3_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Fall17_V3_DATA/Fall17_V3_DATA_PtResolution_AK4PFchs.txt"
         elif int(Year) == 2018:
-          jerInputFileName = "Autumn18_V7b_DATA_PtResolution_AK4PFchs.txt"
-          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Autumn18_V7b_DATA/Autumn18_V7b_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileName = "Autumn18_V7_DATA_PtResolution_AK4PFchs.txt"
+          jerInputFileSource = "https://raw.githubusercontent.com/cms-jet/JRDatabase/master/textFiles/Autumn18_V7_DATA/Autumn18_V7_DATA_PtResolution_AK4PFchs.txt"
         self.jerInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
         if not os.path.isfile(self.jerInputArchivePath+'/'+jerInputFileName):
             print "Get JER source from ",jerInputFileSource
@@ -809,13 +809,13 @@ class HMlnjjVarsClass_Dev_jhchoi(Module):
         #_v1 = ROOT.TLorentzVector()
         #_v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
         for cfjidx in self._cfatjet_idx_list:
-            print "[cfjidx]=",cfjidx
+            #print "[cfjidx]=",cfjidx
             
             pt2,eta2,phi2,mass2 = self.CleanFatJet_PtEtaPhiM(cfjidx)
-            print "pt2=",pt2
-            print "eta2=",eta2
-            print "phi2=",phi2
-            print "mass2=",mass2
+            #print "pt2=",pt2
+            #print "eta2=",eta2
+            #print "phi2=",phi2
+            #print "mass2=",mass2
             #_v2 = ROOT.TLorentzVector()
             #_v2.SetPtEtaPhiM(pt2,eta2,phi2,mass2)
             #dR=_v2.DeltaR(_v1)
