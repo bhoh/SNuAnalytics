@@ -120,8 +120,10 @@ class HMlnjjVarsClass_Dev(Module):
             ROOT.gROOT.LoadMacro(self.cmssw_base+'/src/LatinoAnalysis/Gardener/python/variables/melaHighMassKDwCalc.C++g')
 
         self.MakeMassVsGamma()
+        
 
     def beginJob(self):
+        self.MyEventNumber=0
         pass
 
     def endJob(self):
@@ -133,6 +135,7 @@ class HMlnjjVarsClass_Dev(Module):
 	#massH = 400
         #gsmH = self.g.GetBinContent(self.g.FindBin(massH))
         #self.mela = ROOT.MelaHighMassKDwCalc(13, massH, gsmH )
+        
         self.mela = ROOT.MelaHighMassKDwCalc(13, 125, 0.00407 )##add 125GeV Higgs to mela model
         self.out = wrappedOutputTree
         self.debug = False
@@ -291,6 +294,11 @@ class HMlnjjVarsClass_Dev(Module):
 
 
     def analyze(self, event):
+        self.MyEventNumber += 1
+        if self.MyEventNumber < 9523:
+            
+            return False
+        print "[self.MyEventNumber]=",self.MyEventNumber
         if self.debug:
           self.evtMyNum = self.evtMyNum +1
 
@@ -637,40 +645,48 @@ class HMlnjjVarsClass_Dev(Module):
                 self._isVBF_ME = True
 
     def CookME(self):
+        print "[cookme]"
         self.initP() ##initialize all probabilities
         if self._doME: 
             # particle ids
             ##set daughters
             hDa_ids = ROOT.vector('int')()
             hDa_4Vs = ROOT.vector('TLorentzVector')()
-
             hDa_ids.push_back(int(self.WlepId)) 
             hDa_4Vs.push_back(self._Wlep_4v)
+            print "[self._Wlep_4v]pt,eta,phi,mass",self._Wlep_4v.Pt(),self._Wlep_4v.Eta(),self._Wlep_4v.Phi(),self._Wlep_4v.M()
             hDa_ids.push_back(int(self.WhadId)) 
             hDa_4Vs.push_back(self._Whad_4v)
+            print "[self._Whad_4v]pt,eta,phi,mass",self._Whad_4v.Pt(),self._Whad_4v.Eta(),self._Whad_4v.Phi(),self._Whad_4v.M()
             WWda_ids = ROOT.vector('int')()
             WWda_4Vs = ROOT.vector('TLorentzVector')()
 
             WWda_ids.push_back(int(self.lepId))
             WWda_4Vs.push_back(self._lepton_4v)
-            
+            print "[self._lepton_4v]",self._lepton_4v.Pt(),self._lepton_4v.Eta(),self._lepton_4v.Phi(),self._lepton_4v.M()
             WWda_ids.push_back(int(self.neutId))
             WWda_4Vs.push_back(self._MET_4v)
-
+            print "[self._MET_4v]",self._MET_4v.Pt(),self._MET_4v.Eta(),self._MET_4v.Phi(),self._MET_4v.M()
             WWda_ids.push_back(int(0))
             WWda_4Vs.push_back(self._Whad_j1_4v)
-
+            print "[self._Whad_j1_4v]",self._Whad_j1_4v.Pt(),self._Whad_j1_4v.Eta(),self._Whad_j1_4v.Phi(),self._Whad_j1_4v.M()
             WWda_ids.push_back(int(0))
             WWda_4Vs.push_back(self._Whad_j2_4v)
-
+            print "[self._Whad_j2_4v]",self._Whad_j2_4v.Pt(),self._Whad_j2_4v.Eta(),self._Whad_j2_4v.Phi(),self._Whad_j2_4v.M()
             NoVBF_associate_ids = ROOT.vector('int')()
             NoVBF_associate_4Vs = ROOT.vector('TLorentzVector')()
-            
+            print "[cookme] after set vector"
+            print "hDa_ids.size()=",hDa_ids.size()
+            print "hDa_4Vs.size()=",hDa_4Vs.size()
+            print "WWda_ids.size()=",WWda_ids.size()
+            print "WWda_4Vs.size()=",WWda_4Vs.size()
             for mH in self._MassME:
+                print "[cookme]lets set masswidth"
                 gsm = self.g.GetBinContent(self.g.FindBin(mH))
                 self.mela.setMelaHiggsMassWidth(mH, gsm)
                 # variable initialization
-
+                print "gms=",gsm
+                print "mH=",mH
                 if self.debug:
                     print "Probability for mass",mH
                 if self.debug:
@@ -692,22 +708,28 @@ class HMlnjjVarsClass_Dev(Module):
                     NoVBF_associate_ids.push_back( int(0) )
                     NoVBF_associate_4Vs.push_back( tmp_4V )
                 '''
-                
+                print "[cookme]self.mela.setCandidateDecayMode"
                 self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
+                print "[cookme]self.mela.setupDaughtersNoMom"
                 self.mela.setupDaughtersNoMom(
                     False,
                     WWda_ids, WWda_4Vs,
                     NoVBF_associate_ids, NoVBF_associate_4Vs,
                     False )
+                print "[cookme]self.mela.setCurrentCandidateFromIndex"
                 self.mela.setCurrentCandidateFromIndex(int(0))
+
                 # TVar.CandidateDecay_Stable case: h->WW, ProdP : just 0 
                 # TVar.CandidateDecay_Stable case: h->WW, DecP :  not supported
                 # TVar.CandidateDecay_WW     case: h->WW, DecP :  not supported
                 # TVar.CandidateDecay_WW     case: h->WW, ProdP : not supported -> same value for sig,bkg 
                 #mePgg = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, True)
+                print "[cookme]self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)"
                 self.P_ggf_S[mH] = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
-                self.P_ggf_B[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, False)
-                self.P_ggf_B2[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+                print "[cookme]self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, False)"
+                self.P_ggf_B[mH] = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+                #print "[cookme]self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)"
+                #self.P_ggf_B2[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
 
 
                 if self.debug:
@@ -715,7 +737,7 @@ class HMlnjjVarsClass_Dev(Module):
                     print self.evtMyNum
                     #print "P_vbf_S",self.P_vbf_S[mH],"P_vbf_B",self.P_vbf_B[mH],"P_ggf_S",self.P_ggf_S[mH],"P_ggf_B",self.P_ggf_B[mH]
                 
-                                    
+                '''                    
                 if self._isVBF_ME:
                     pass ##Do not run vbfcase
                     #print "[jhchoi]VBFME"
@@ -746,7 +768,7 @@ class HMlnjjVarsClass_Dev(Module):
 
                     #self._P_vbf_S[mH] = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
                     #self._P_vbf_B[mH] = self.mela.computeProdP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
-                
+                '''
             
     def FillBranchLnJ(self):
         #print "[FillBranchLnJ]self._WhadBoost_widx=",self._WhadBoost_widx

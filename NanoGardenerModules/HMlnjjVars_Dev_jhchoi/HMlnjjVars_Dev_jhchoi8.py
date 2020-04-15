@@ -703,11 +703,13 @@ class HMlnjjVarsClass_Dev(Module):
                 # TVar.CandidateDecay_WW     case: h->WW, DecP :  not supported
                 # TVar.CandidateDecay_WW     case: h->WW, ProdP : not supported -> same value for sig,bkg 
                 #mePgg = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, True)
-                self.P_ggf_S[mH] = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
-                self.P_ggf_B[mH] = self.mela.computeDecP(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
-                self.P_ggf_B2[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
-
-
+                try:
+                    self.P_ggf_S[mH] = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
+                    self.P_ggf_B[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, False)
+                    self.P_ggf_B2[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+                except:
+                    pass
+                    
                 if self.debug:
                     print "NoVBF prob ==========================================="
                     print self.evtMyNum
