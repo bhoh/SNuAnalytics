@@ -226,6 +226,18 @@ Steps['HMlnjjVars_Dev_jhchoi9_nom'] = {#    def __init__(self, year, METtype='Pu
     'module':  'hmlnjjvar()',
 
 }
+
+
+Steps['HMlnjjVars_Dev_jhchoi9_test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+    ##Use for data/nom
+    'isChain': False,
+    'do4MC': True,
+    'do4Data': True,
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9_test',
+    'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
+    'module':  'hmlnjjvar()',
+
+}
 Steps['HMlnjjVars_Dev_jhchoi9_sys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
@@ -431,6 +443,166 @@ Steps['HMFull_jhchoi9_data']={
 
 }
 
+Steps['HMFull_jhchoi9_data_test']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':True,
+    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_test'],
+
+}
+
+
+Steps['HMFull_jhchoi9_nom_test']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':True,
+    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_test'],
+
+}
+
+
+###--ElepT/MupT/MET
+SysSteps = {
+  'ElepTup' :   {
+    'isChain'    : True ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'subTargets' : ['do_ElepTup','trigMCKeepRun','LeptonSF','formulasMC'],
+    'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+               },
+
+  'ElepTdo' :   {
+      'isChain'    : True ,
+      'do4MC'      : True  ,
+      'do4Data'    : False  ,
+      'subTargets' : ['do_ElepTdo','trigMCKeepRun','LeptonSF','formulasMC'],
+      'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+  },
+  'MupTup' :   {
+    'isChain'    : True ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'subTargets' : ['do_MupTup','trigMCKeepRun','LeptonSF','formulasMC'],
+    'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+  },
+
+  'MupTdo' :   {
+    'isChain'    : True ,
+    'do4MC'      : True  ,
+    'do4Data'    : False  ,
+    'subTargets' : ['do_MupTdo','trigMCKeepRun','LeptonSF','formulasMC'],
+    'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+  },
+
+  'METup' :   {
+     'isChain'    : True ,
+     'do4MC'      : True  ,
+     'do4Data'    : False  ,
+     'subTargets' : ['do_METup','formulasMC'],
+     'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+   },
+   'METdo' :   {
+       'isChain'    : True ,
+       'do4MC'      : True  ,
+       'do4Data'    : False  ,
+       'subTargets' : ['do_METdo','formulasMC'],
+       'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200318_SYS/semilep_branch_jhchoi.txt',
+   },
+
+  'do_ElepTup' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LepPtScaleUncertainty',
+                  'declare'    : 'ElepTup = lambda : LeppTScalerTreeMaker(kind="Up", lepFlavor="ele", version="RPLME_CMSSW" , metCollections = ["MET", "PuppiMET", "RawMET", "TkMET"])',
+                  'module'     : 'ElepTup()',
+                },
+  'trigMCKeepRun' : { 'isChain'    : False ,
+                 'do4MC'      : True  ,
+                 'do4Data'    : False ,
+                 'import'     : 'LatinoAnalysis.NanoGardener.modules.TrigMaker' ,
+                 'declare'    : 'trigMCKR = lambda : TrigMaker("RPLME_CMSSW",isData=False,keepRunP=True)',
+                 'module'     : 'trigMCKR()',
+               },
+
+  'LeptonSF' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LeptonSFMaker' ,
+                  'declare'    : 'LeptonSF = lambda : LeptonSFMaker("RPLME_CMSSW")',
+                  'module'     : 'LeptonSF()',
+                },
+
+  'formulasMC' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.GenericFormulaAdder' ,
+                  'declare'    : '',
+                  'module'     : 'GenericFormulaAdder(\'data/formulasToAdd_MC_RPLME_YEAR.py\')' ,
+                 },
+
+  'do_ElepTdo' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LepPtScaleUncertainty',
+                  'declare'    : 'ElepTdo = lambda : LeppTScalerTreeMaker(kind="Dn", lepFlavor="ele", version="RPLME_CMSSW" , metCollections = ["MET", "PuppiMET", "RawMET", "TkMET"])',
+                  'module'     : 'ElepTdo()',
+                },
+
+  'do_MupTdo' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LepPtScaleUncertainty',
+                  'declare'    : 'MupTdo = lambda : LeppTScalerTreeMaker(kind="Dn", lepFlavor="mu", version="RPLME_CMSSW" , metCollections = ["MET", "PuppiMET", "RawMET", "TkMET\
+"])',
+                  'module'     : 'MupTdo()',
+                },
+
+  'do_MupTup' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LepPtScaleUncertainty',
+                  'declare'    : 'MupTup = lambda : LeppTScalerTreeMaker(kind="Up", lepFlavor="mu", version="RPLME_CMSSW" , metCollections = ["MET", "PuppiMET", "RawMET", "TkMET\
+"])',
+                  'module'     : 'MupTup()',
+                },
+  'do_METup' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.MetUnclustered',
+                  'declare'    : 'METup = lambda : MetUnclusteredTreeMaker(kind="Up",metCollections=["MET", "PuppiMET", "RawMET"])',
+                  'module'     : 'METup()',
+                },
+
+  'do_METdo' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.MetUnclustered',
+                  'declare'    : 'METDo = lambda : MetUnclusteredTreeMaker(kind="Dn",metCollections=["MET", "PuppiMET", "RawMET"])',
+                  'module'     : 'METDo()',
+                },
+
+
+}
+
+
+
+Steps.update(SysSteps)
+##--Define ElepT/MupT/MET
+AnaNom="HMFull_jhchoi9_nom"
+
+for SYS in ['ElepTup','ElepTdo','MupTup','MupTdo','METup','METdo']:
+    Steps[AnaNom+"_"+SYS]=copy.deepcopy(Steps[SYS])
+    Steps[AnaNom+"_"+SYS]['subTargets'].append(AnaNom)
+
+
 
 ##--Test
 
@@ -525,29 +697,6 @@ Steps['HMFull_jhchoi9_data_test']={
     'do4Data':True,
     'selection':'"Entry$ < 10000"',
     'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
-
-}
-
-
-
-##---Run--##
-Steps['HMlnjjVars_Dev_jhchoi9_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
-
-    'isChain': False,
-    'do4MC': True,
-    'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
-    'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
-    'module':  'hmlnjjvar()',
-
-}
-
-
-Steps['HMFull_jhchoi9_nom']={
-    'isChain':True,
-    'do4MC':True,
-    'do4Data':False,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
 
 }
 
