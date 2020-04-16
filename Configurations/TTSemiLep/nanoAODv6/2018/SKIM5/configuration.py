@@ -7,7 +7,7 @@ variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
 plotFile='plot.py' ##color code and some format-related things
 
-samplesFile = 'samples_2018.py'
+samplesFile = 'samples_2018_ttbarCat.py'
 
 lumi=58.826
 

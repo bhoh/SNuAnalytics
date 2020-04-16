@@ -18,6 +18,70 @@ variables['Event'] = {
     'xaxis':'1',
     'fold': 0
 }
+
+common_KF_cuts = 'fabs(hadronic_top_b_jet_pull)<2 &&\
+           fabs(w_ch_up_type_jet_pull)<2  &&\
+           fabs(w_ch_down_type_jet_pull)<2 &&\
+           fitter_status==0\
+'
+#( down_type_jet_b_tagged>2 && down_type_jet_b_tagged==1)
+
+for key in ["initial_dijet_M",'initial_dijet_M_high','fitted_dijet_M','fitted_dijet_M_high']:
+
+  variables[key] = {
+      'name' : key + "&&" + common_KF_cuts,
+      'range':(36,0,180),
+      'xaxis':'M_{jj}',
+      'fold':0
+  
+  }
+  variables[key+"_down_type_jet_b_tagged"] = {
+      'name' : key + "&&" + common_KF_cuts + "&&" + "(nBJets_WP_M >2 && down_type_jet_b_tagged==1)",
+      'range':(36,0,180),
+      'xaxis':'M_{jj}',
+      'fold':0
+  }
+#'best_chi2',
+
+variables['best_chi2'] = {
+    'name': 'best_chi2 && fitter_status>0',
+    'range':(30,0,30),
+    'xaxis': 'best_chi2',
+    'fold': 1
+}
+variables['fitter_status'] = {
+    'name': 'fitter_status',
+    'range':(10,-5,5),
+    'xaxis': 'fitter_status',
+    'fold': 1
+}
+
+for key in ['down_type_jet_b_tagged','hadronic_top_b_jet_idx','leptonic_top_b_jet_idx','w_ch_up_type_jet_idx','w_ch_down_type_jet_idx']:
+    variables[key] = {
+        'name': key +'&&'+common_KF_cuts,
+        'range':(20,0,20),
+        'xaxis': key,
+        'fold': 1
+    }
+
+
+for key in ['hadronic_top_b_jet_pull','w_ch_up_type_jet_pull','w_ch_down_type_jet_pull']:
+    variables[key] = {
+        'name': key +'&&'+common_KF_cuts,
+        'range':(80,-20,20),
+        'xaxis': key,
+        'fold': 0
+    }
+
+for key in ['hadronic_top_M','leptonic_top_M','leptonic_W_M']:
+    variables[key] = {
+        'name': key +'&&'+common_KF_cuts,
+        'range':(60,0,300),
+        'xaxis': key,
+        'fold': 0
+    }
+
+
 #variables['Whad_pt']={
 #    'name':'Whad_pt',
 #    'range':(100,0,1000),
@@ -102,6 +166,32 @@ variables ['nCleanJet30_2p5']={
     'xaxis' : 'jet multiplicity',
     'fold':0
 }
+
+variables ['nCleanJet30_2p5']={
+    'name' : 'nCleanJet30_2p5',
+    'range' : (6,2,8),
+    'xaxis' : 'b tagged jet multiplicity',
+    'fold':0
+}
+
+#variables ['nCleanJet30_2p5_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p5_lepveto0p4',
+#    'range' : (6,4,10),
+#    'xaxis' : 'jet multiplicity',
+#    'fold':0
+#}
+#variables ['nCleanJet30_2p5_tightlepvetoID']={
+#    'name' : 'nCleanJet30_2p5_tightlepvetoID',
+#    'range' : (6,4,10),
+#    'xaxis' : 'jet multiplicity',
+#    'fold':0
+#}
+#variables ['nCleanJet30_2p5_tightlepvetoID_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p5_tightlepvetoID_lepveto0p4',
+#    'range' : (6,4,10),
+#    'xaxis' : 'jet multiplicity',
+#    'fold':0
+#}
 
 #variables['lnjj_Mt_alt']={
 #    'name': 'lnjj_Mt_alt',

@@ -1,6 +1,7 @@
 ##---
 Year='2018'
 eleWP='mvaFall17V1Iso_WP90'
+#eleWP='cutFall17V1Iso_Tight'
 muWP='cut_Tight_HWWW'
 
 bAlgo='DeepB'
