@@ -19,13 +19,34 @@ dict_TColor={
 
 scriptname=opt.plotFile
 
-plot['DY']  = {
-                  'nameHR' : 'DY',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red'], 
-                  'isData'   : 0,
-                  'samples'  : ['DY']
-              }
+if not 'ele' in scriptname:
+    plot['QCD_MU']  = {
+        'nameHR' : 'QCD_MU',
+        'isSignal' : 0,
+        'color': dict_TColor['gray'],
+        'isData'   : 0,
+        
+        'samples'  : ['QCD_MU']
+    }
+
+if not 'mu' in scriptname:
+    plot['QCD_EM']  = {
+        'nameHR' : 'QCD_EM',
+        'isSignal' : 0,
+        'color': dict_TColor['gray'],
+        'isData'   : 0,
+        'samples'  : ['QCD_EM']
+    }
+
+    plot['QCD_bcToE']  = {
+        'nameHR' : 'QCD_bcToE',
+        'isSignal' : 0,
+        'color': dict_TColor['gray']+1,
+        'isData'   : 0,
+        'samples'  : ['QCD_bcToE']
+    }
+
+
 
 '''
 plot['WZZ']  = {
@@ -67,54 +88,13 @@ plot['WW']  = {
                   'samples'  : ['WW']
               }
 
-
-
-if not 'ele' in scriptname:
-    plot['QCD_MU']  = {
-        'nameHR' : 'QCD_MU',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        
-        'samples'  : ['QCD_MU']
-    }
-
-if not 'mu' in scriptname:
-    plot['QCD_EM']  = {
-        'nameHR' : 'QCD_EM',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        'samples'  : ['QCD_EM']
-    }
-
-    plot['QCD_bcToE']  = {
-        'nameHR' : 'QCD_bcToE',
-        'isSignal' : 0,
-        'color': dict_TColor['gray']+1,
-        'isData'   : 0,
-        'samples'  : ['QCD_bcToE']
-    }
-
-
-plot['TT']  = {
-                  'nameHR' : 'TT',
+plot['DY']  = {
+                  'nameHR' : 'DY',
                   'isSignal' : 0,
-                  'color': dict_TColor['orange'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TT']
+                  'color': dict_TColor['red'], 
+                  'isData'   : 0,
+                  'samples'  : ['DY']
               }
-
-
-plot['ST']  = {
-                  'nameHR' : 'ST',
-                  'isSignal' : 0,
-                  'color': dict_TColor['magenta'],
-                  'isData'   : 0,                 
-                  'samples'  : ['ST']
-              }
-
-
 plot['Wjets']  = {
                   'nameHR' : 'Wjets',
                   'isSignal' : 0,
@@ -125,6 +105,55 @@ plot['Wjets']  = {
               }
 
 
+
+
+plot['ST']  = {
+                  'nameHR' : 'ST',
+                  'isSignal' : 0,
+                  'color': dict_TColor['pink'],
+                  'isData'   : 0,                 
+                  'samples'  : ['ST']
+              }
+
+plot['TTLL']  = {
+                  'nameHR' : 'TTLL',
+                  'isSignal' : 0,
+                  'color': dict_TColor['magenta'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLL']
+              }
+
+plot['TTLJ+jj']  = {
+                  'nameHR' : 'TTLJ+jj',
+                  'isSignal' : 0,
+                  'color': dict_TColor['orange'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+jj']
+              }
+
+plot['TTLJ+cc']  = {
+                  'nameHR' : 'TTLJ+cc',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+4,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+cc']
+              }
+
+plot['TTLJ+bj']  = {
+                  'nameHR' : 'TTLJ+bj',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+1,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+bj']
+              }
+
+plot['TTLJ+bb']  = {
+                  'nameHR' : 'TTLJ+bb',
+                  'isSignal' : 0,
+                  'color': dict_TColor['blue'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+bb']
+              }
 
 plot['DATA']  = {
                   'nameHR' : 'DATA',
