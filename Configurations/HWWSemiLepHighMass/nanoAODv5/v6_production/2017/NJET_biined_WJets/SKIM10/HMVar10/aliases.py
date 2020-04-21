@@ -127,9 +127,9 @@ for M_MELA in MELA_MASS_BOOST:
     M=str(M_MELA)
     P_S='meP'+M+'_Bst_ggf_S_'+WTAG+'_nom'
     P_B='meP'+M+'_Bst_ggf_B_'+WTAG+'_nom'
-    P_S_B=P_B+'/'+P_S
+    P_B_S=P_B+'/'+P_S
     aliases['MEKD_'+str(M)]={
-        'expr':'1/(1+'+P_S_B+')'
+        'expr':'1/(1+'+P_B_S+')'
     }
 
 
@@ -137,9 +137,9 @@ for M_MELA in MELA_MASS_RESOL:
     M=str(M_MELA)
     P_S='meP'+M+'_Res_ggf_S_'+ALGO+'_nom'
     P_B='meP'+M+'_Res_ggf_B_'+ALGO+'_nom'
-    P_S_B=P_B+'/'+P_S
+    P_B_S=P_B+'/'+P_S
     aliases['MEKD_'+str(M)]={
-        'expr':'1/(1+'+P_S_B+')'
+        'expr':'1/(1+'+P_B_S+')'
     }
 
 
