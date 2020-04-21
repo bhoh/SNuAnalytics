@@ -26,14 +26,14 @@ aliases['nCleanJet30_2p5'] = {
 # B tagging
 
 aliases['nBJets_WP_M'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.4184)'
+            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.4941)'
             }
 
 
 ###---Btag SF---###
 
 btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_94XSF_V2_B_F.csv' % os.getenv('CMSSW_BASE')
-
+btagNormSource = '%s/src/SNuAnalytics/Configurations/TTSemiLep/patches/BTagReshapeNorm_2017.root' % os.getenv('CMSSW_BASE')
 aliases['Jet_btagSF_shapeFix'] = {
     'linesToAdd': [
         'gSystem->Load("libCondFormatsBTauObjects.so");',
@@ -46,17 +46,17 @@ aliases['Jet_btagSF_shapeFix'] = {
     'samples': mc
 }
 
-#aliases['Jet_btagSF_shapeFixNorm'] = {
-#    'linesToAdd': [
-#        #'gSystem->Load("libCondFormatsBTauObjects.so");',
-#        #'gSystem->Load("libCondToolsBTau.so");',
-#        #'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
-#        '.L %s/patches/btagnormpatch.cc+' % configurations
-#    ],
-#    'class': 'BtagReshapeNorm',
-#    'args': (btagNormSource,),
-#    'samples': mc
-#}
+aliases['Jet_btagSF_shapeFixNorm_top'] = {
+    'linesToAdd': [
+        #'gSystem->Load("libCondFormatsBTauObjects.so");',
+        #'gSystem->Load("libCondToolsBTau.so");',
+        #'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
+        '.L %s/patches/btagnormpatch.cc+' % configurations
+    ],
+    'class': 'BtagReshapeNorm',
+    'args': (btagNormSource,"top"),
+    'samples': mc
+}
 
 
 
@@ -64,11 +64,11 @@ aliases['btagSF'] = {
     'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
-#aliases['btagSFNorm'] = {
-#    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
-#    'samples': mc
-#}
-#
+aliases['btagSFNorm_top'] = {
+    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
+    'samples': mc
+}
+
 #for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
 #    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
 #    aliases['Jet_btagSF%sup_shapeFix' % shift] = {

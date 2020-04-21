@@ -16,10 +16,10 @@ scriptname=opt.cutsFile
 
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 LepCut="(  Lepton_pt[0]>30 \
-&& ( fabs(Lepton_eta[0])  < 2.1*(abs(Lepton_pdgId[0])==11) \
+&& ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
 ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
-&& ( ( Alt$( Lepton_pt[1],-1) < 15*( abs( Alt$(Lepton_pdgId[1], 11)) ==11) )\
-||   ( Alt$( Lepton_pt[1],-1) < 10*( abs( Alt$(Lepton_pdgId[1], 13)) ==13) )\
+&& ( ( ( Alt$( Lepton_pt[1],-1) <= 10 || Alt$(Lepton_isLoose[1], -1)<=0.5)*( abs( Alt$(Lepton_pdgId[1], 11)) ==11 )  )\
+||   ( ( Alt$( Lepton_pt[1],-1) <= 10 || Alt$(Lepton_isLoose[1], -1)<=0.5)*( abs( Alt$(Lepton_pdgId[1], 13)) ==13 ) )\
 )\
 )"
 LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'

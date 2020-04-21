@@ -22,10 +22,11 @@ muWP='cut_Tight_HWWW'
 
 mc = [skey for skey in samples if skey != 'DATA']
 
-
-
-
-
+nuisances['dumy'] = {
+    'name': 'dumy',
+    'type': 'lnN',
+    'samples': dict((skey, '1.00') for skey in mc )
+}
 
 #nuisances['lumi_Uncorrelated'] = {
 #    'name': 'lumi_13TeV_2018',
