@@ -159,8 +159,8 @@ from List_MX import *
 from List_MX_VBF import *
 
 
-#for MX in List_MX:
-for MX in [900]:
+for MX in List_MX:
+#for MX in [900]:
 
     plot['ggHWWlnuqq_M'+str(MX)]={
         'nameHR':'ggHWWlnuqq_M'+str(MX),
@@ -171,8 +171,8 @@ for MX in [900]:
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
 
-#for MX in List_MX_VBF:
-for MX in [900]:
+for MX in List_MX_VBF:
+#for MX in [900]:
     plot['vbfHWWlnuqq_M'+str(MX)]={
         'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,

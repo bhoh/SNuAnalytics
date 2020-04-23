@@ -155,14 +155,17 @@ variables['lnJ_'+WTAG+'_nom_mass']={
 }
 
 for M_MELA in MELA_MASS_BOOST:
-    #'MEKD_'+str(M)    
-    M=str(M_MELA)
-    variables['MEKD_'+str(M)]={
-        'name':'MEKD_'+str(M),
-        'range':(50,0,1),
-        'xaxis':'MEKD_'+str(M),
-        'fold':0
-    }
+    for C in MELA_C_BOOST:
+        
+        #'MEKD_'+str(M)    
+        M=str(M_MELA)
+        C=str(C)
+        variables['MEKD_Bst_C_'+C+'_M'+str(M)]={
+            'name':'MEKD_Bst_C_'+C+'_M'+str(M),
+            'range':(50,0,1),
+            'xaxis':'MEKD_Bst_C_'+C+'_M'+str(M),
+            'fold':0
+        }
 
 
 '''

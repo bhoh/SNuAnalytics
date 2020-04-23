@@ -29,7 +29,10 @@ jetptmin=str(JETCUTS['2017']['ptmin'])
 jetetamax=str(JETCUTS['2017']['etamax'])
 
 MELA_MASS_BOOST=[400,900,1500]
+MELA_C_BOOST=['1','0.1','0.01','0.001','0.0001','0.00001']
+
 MELA_MASS_RESOL=[200,400]
+MELA_C_RESOL=['1','0.1','0.01','0.001','0.0001','0.00001']
 
 
 METtype="PuppiMET"

@@ -124,23 +124,27 @@ aliases['JetMultplicity_eta4p7']={
 
 
 for M_MELA in MELA_MASS_BOOST:
-    M=str(M_MELA)
-    P_S='meP'+M+'_Bst_ggf_S_'+WTAG+'_nom'
-    P_B='meP'+M+'_Bst_ggf_B_'+WTAG+'_nom'
-    P_B_S=P_B+'/'+P_S
-    aliases['MEKD_'+str(M)]={
-        'expr':'1/(1+'+P_B_S+')'
-    }
+    for C in MELA_C_BOOST:
+        M=str(M_MELA)
+        C=str(C)
+        P_S='meP'+M+'_Bst_ggf_S_'+WTAG+'_nom'
+        P_B='meP'+M+'_Bst_ggf_B_'+WTAG+'_nom'
+        P_B_S=P_B+'/'+P_S
+        aliases['MEKD_Bst_C_'+C+'_M'+str(M)]={
+            'expr':P_S+'>0 ? '+'1/(1+'+C+'*'+P_B_S+')'+':-1'
+        }
 
 
 for M_MELA in MELA_MASS_RESOL:
-    M=str(M_MELA)
-    P_S='meP'+M+'_Res_ggf_S_'+ALGO+'_nom'
-    P_B='meP'+M+'_Res_ggf_B_'+ALGO+'_nom'
-    P_B_S=P_B+'/'+P_S
-    aliases['MEKD_'+str(M)]={
-        'expr':'1/(1+'+P_B_S+')'
-    }
+    for C in MELA_C_RESOL:
+        M=str(M_MELA)
+        C=str(C)
+        P_S='meP'+M+'_Res_ggf_S_'+ALGO+'_nom'
+        P_B='meP'+M+'_Res_ggf_B_'+ALGO+'_nom'
+        P_B_S=P_B+'/'+P_S
+        aliases['MEKD_Res_C_'+C+'_M'+str(M)]={
+            'expr':P_S+'>0 ? '+'1/(1+'+C+'*'+P_B_S+')'+':-1'
+        }
 
 
 
