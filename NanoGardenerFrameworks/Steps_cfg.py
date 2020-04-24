@@ -1548,16 +1548,63 @@ Steps = {
 
 ## ------- ChargedHiggsToCB
 
-    'kinFitTTSemiLep': {
+    'kinFitTTSemiLep_2018': {
                   'isChain'    : False ,
                   'do4MC'      : True ,
                   'do4Data'    : True ,
                   #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2018 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
+                                       )>=2))\
+                                  "',
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
                   'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
                   'module'     : 'kinFitting()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
                },
-
+    '4j2b_CHToCB_2018' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : True  ,
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.Dummy',
+                  'module'     : 'Dummy()',
+              },
+    'prune_CHToCB_2018' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : True  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.Dummy',
+                  'module'     : 'Dummy()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+              },
+    'genCHToCB' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4)\
+                                   )\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
+                  'module'     : 'genCHToCB()'
+              },
 ## ------- MODULES: Object Handling
 
   'Dummy' : {
@@ -1811,7 +1858,7 @@ Steps = {
   'trigMC_lnjj'   : { 'isChain'    : False ,
                  'do4MC'      : True  ,
                  'do4Data'    : False ,
-                 'import'     : 'LatinoAnalysis.NanoGardener.modules.TrigMaker' ,
+                 'import'     : 'LatinoAnalysis.NanoGardener.modules.TrigMaker_lnjj' ,
                  'declare'    : 'trigMC_lnjj = lambda : TrigMaker_lnjj("RPLME_CMSSW",isData=False,keepRunP=False)',
                  'module'     : 'trigMC_lnjj()',
                },

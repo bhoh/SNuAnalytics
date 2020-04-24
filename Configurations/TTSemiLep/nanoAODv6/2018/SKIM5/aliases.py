@@ -17,37 +17,31 @@ print configurations
 
 mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
-# Trig
-
-aliases['noSecondElTrigFire'] = {
-            'expr': 'Alt$(Sum$((((TrigObj_eta-Lepton_eta[1])*(TrigObj_eta-Lepton_eta[1])+(TrigObj_phi-Lepton_phi[1])*(TrigObj_phi-Lepton_phi[1]))<0.3*0.3)*(TrigObj_filterBits==2))==0,1)'
-            }
-
 # Jet cut
 
 aliases['nCleanJet20_2p5'] = {
-            'expr': 'Sum$(CleanJet_pt > 20. && abs(CleanJet_eta) < 2.5)'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && abs(CleanJet_eta) < 2.5)'
             }
 
 aliases['nCleanJet30_2p5'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5)'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5)'
             }
 
 aliases['nCleanJet30_2p5_lepveto0p4'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4) )'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4) )'
             }
 
 aliases['nCleanJet30_2p5_tightlepvetoID'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 )'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 )'
             }
 
 aliases['nCleanJet30_2p5_tightlepvetoID_lepveto0p4'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4))'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4))'
             }
 # B tagging
 
 aliases['nBJets_WP_M'] = {
-            'expr': 'Sum$(CleanJet_pt > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.4184)'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.4184)'
             }
 
 
@@ -83,12 +77,12 @@ aliases['Jet_btagSF_shapeFixNorm_top'] = {
 
 
 aliases['btagSF'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
+    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
 
 aliases['btagSFNorm_top'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((CleanJet_pt>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(CleanJet_pt<=30 || abs(CleanJet_eta)>=2.5))))',
+    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
     'samples': mc
 }
 
@@ -141,53 +135,53 @@ aliases['Jet_PUID_SF_L'] = {
 }
 
 #KF_path =   '%s/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src' % os.getenv('CMSSW_BASE')
-aliases['TTKinematicFitter'] = {
-    'linesToAdd': [
-        'gSystem->Load("libCondFormatsJetMETObjects.so");',
-        #'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
-        'gSystem->AddIncludePath("-I%s/patches/KinematicFitter/include");' % configurations,
-        '.L %s/patches/KinematicFitter/src/TAbsFitConstraint.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TAbsFitParticle.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TFitConstraintM.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TFitConstraintMGaus.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TFitParticlePt.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TFitParticlePxPy.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TFitParticlePz.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TKinFitter.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TSCorrection.cc+' % configurations,
-        '.L %s/patches/KinematicFitter/src/TKinFitterDriver.cc+' % configurations,
-        '.L %s/patches/kinematicfitter.cc+' % configurations,
-
-    ],
-    'class': 'KinematicFitter',
-    'args': ("2018"),
-    'samples': samples.keys()
-}
-
-TTKF_results = [
-'initial_dijet_M'        , 
-'initial_dijet_M_high'   ,
-'corrected_dijet_M'      ,
-'corrected_dijet_M_high' , 
-'fitted_dijet_M'         ,
-'fitted_dijet_M_high'    , 
-'best_chi2'              ,  
-'fitter_status'          ,  
-'down_type_jet_b_tagged' ,
-'hadronic_top_b_jet_idx' ,
-'leptonic_top_b_jet_idx' ,
-'w_ch_up_type_jet_idx'   , 
-'w_ch_down_type_jet_idx' , 
-'hadronic_top_b_jet_pull',   
-'w_ch_up_type_jet_pull'  , 
-'w_ch_down_type_jet_pull', 
-'hadronic_top_M'         ,  
-'leptonic_top_M'         ,   
-'leptonic_W_M'           , 
-]
-
-for iR, key in enumerate(TTKF_results):
-    aliases[key] = {
-        'expr' : 'TTKinematicFitter[%s]'%iR,
-        'samples': samples.keys()
-    }
+#aliases['TTKinematicFitter'] = {
+#    'linesToAdd': [
+#        'gSystem->Load("libCondFormatsJetMETObjects.so");',
+#        #'gSystem->AddIncludePath("-I%s/src");' % os.getenv('CMSSW_RELEASE_BASE'),
+#        'gSystem->AddIncludePath("-I%s/patches/KinematicFitter/include");' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TAbsFitConstraint.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TAbsFitParticle.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TFitConstraintM.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TFitConstraintMGaus.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TFitParticlePt.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TFitParticlePxPy.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TFitParticlePz.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TKinFitter_.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TSCorrection.cc+' % configurations,
+#        '.L %s/patches/KinematicFitter/src/TKinFitterDriver.cc+' % configurations,
+#        '.L %s/patches/kinematicfitter.cc+' % configurations,
+#
+#    ],
+#    'class': 'KinematicFitter',
+#    'args': ("2018"),
+#    'samples': samples.keys()
+#}
+#
+#TTKF_results = [
+#'initial_dijet_M'        , 
+#'initial_dijet_M_high'   ,
+#'corrected_dijet_M'      ,
+#'corrected_dijet_M_high' , 
+#'fitted_dijet_M'         ,
+#'fitted_dijet_M_high'    , 
+#'best_chi2'              ,  
+#'fitter_status'          ,  
+#'down_type_jet_b_tagged' ,
+#'hadronic_top_b_jet_idx' ,
+#'leptonic_top_b_jet_idx' ,
+#'w_ch_up_type_jet_idx'   , 
+#'w_ch_down_type_jet_idx' , 
+#'hadronic_top_b_jet_pull',   
+#'w_ch_up_type_jet_pull'  , 
+#'w_ch_down_type_jet_pull', 
+#'hadronic_top_M'         ,  
+#'leptonic_top_M'         ,   
+#'leptonic_W_M'           , 
+#]
+#
+#for iR, key in enumerate(TTKF_results):
+#    aliases[key] = {
+#        'expr' : 'TTKinematicFitter[%s]'%iR,
+#        'samples': samples.keys()
+#    }

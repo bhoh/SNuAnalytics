@@ -20,6 +20,7 @@ Sites = {
 
   'sdfarm' : {
               'lsCmd'       : 'ls' ,
+              'slc_ver'     :  7,
               'mkDir'       : False ,
 	      'xrootdPath'  : 'root://cms-xrdr.private.lo:2094/',
               'treeBaseDir' : '/xrootd/store/user/jhchoi/Latino/HWWNano/',
