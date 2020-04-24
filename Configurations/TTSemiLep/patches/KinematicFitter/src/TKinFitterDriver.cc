@@ -9,7 +9,7 @@ TKinFitterDriver::TKinFitterDriver(int DataYear_){
 
   DataYear = DataYear_;
 
-  fitter = new TKinFitter("fitter","fitter");
+  fitter = new TKinFitter_("fitter","fitter");
 
   error_hadronic_top_b_jet.ResizeTo(1,1); 
   error_leptonic_top_b_jet.ResizeTo(1,1);
@@ -25,12 +25,12 @@ TKinFitterDriver::TKinFitterDriver(int DataYear_){
   error_lepton.Zero();
   error_neutrino_pxpy.Zero();
 
-  ts_correction = new TSCorrection(DataYear);
-  ts_correction->ReadFittedError("fit_error_pythia.txt");
-  ts_correction->ReadFittedMean("fit_mean_pythia.txt");
+  //ts_correction = new TSCorrection(DataYear);
+  //ts_correction->ReadFittedError("fit_error_pythia.txt");
+  //ts_correction->ReadFittedMean("fit_mean_pythia.txt");
 
   fit_hadronic_top_b_jet = new TFitParticlePt();
-  //fit_leptonic_top_b_jet = new TFitParticlePt();
+  fit_leptonic_top_b_jet = new TFitParticlePt();
   fit_hadronic_w_ch_jet1 = new TFitParticlePt();
   fit_hadronic_w_ch_jet2 = new TFitParticlePt();
   //fit_lepton = new TFitParticlePt();
@@ -51,7 +51,7 @@ TKinFitterDriver::~TKinFitterDriver(){
   delete fitter;
 
   delete fit_hadronic_top_b_jet;
-  //delete fit_leptonic_top_b_jet;
+  delete fit_leptonic_top_b_jet;
   delete fit_hadronic_w_ch_jet1;
   delete fit_hadronic_w_ch_jet2;
   //delete fit_lepton;
@@ -64,7 +64,7 @@ TKinFitterDriver::~TKinFitterDriver(){
   //delete constrain_leptonic_top_MGaus;
   //delete constrain_leptonic_W_M;
   //delete constrain_leptonic_W_MGaus;
-  delete ts_correction;
+  //delete ts_correction;
 }
 
 
@@ -145,7 +145,7 @@ void TKinFitterDriver::SetHadronicTopBJets(TLorentzVector jet_){
   double Eta = hadronic_top_b_jet.Eta();
   double Phi = hadronic_top_b_jet.Phi();
   this->SetJetError(&error_hadronic_top_b_jet, Pt, Eta, Phi, "b");
-  corr_hadronic_top_b_jet = ts_correction->GetCorrectedJet("b",hadronic_top_b_jet);
+  //corr_hadronic_top_b_jet = ts_correction->GetCorrectedJet("b",hadronic_top_b_jet);
   fit_hadronic_top_b_jet->~TFitParticlePt();
   new(fit_hadronic_top_b_jet) TFitParticlePt("hadronic_top_b_jet",
                                                     "hadronic_top_b_jet",
@@ -163,7 +163,7 @@ void TKinFitterDriver::SetLeptonicTopBJets(TLorentzVector jet_){
   double Eta = leptonic_top_b_jet.Eta();
   double Phi = leptonic_top_b_jet.Phi();
   this->SetJetError(&error_leptonic_top_b_jet, Pt, Eta, Phi, "b");
-  corr_leptonic_top_b_jet = ts_correction->GetCorrectedJet("b",leptonic_top_b_jet) + lepton + neutrino_pxpy + neutrino_pz;
+  //corr_leptonic_top_b_jet = ts_correction->GetCorrectedJet("b",leptonic_top_b_jet) + lepton + neutrino_pxpy + neutrino_pz;
   fit_leptonic_top_b_jet->~TFitParticlePt();
   new(fit_leptonic_top_b_jet) TFitParticlePt("leptonic_top_b_jet",
                                                     "leptonic_top_b_jet",
@@ -180,7 +180,7 @@ void TKinFitterDriver::SetWCHUpTypeJets(TLorentzVector jet_){
   double Eta = hadronic_w_ch_jet1.Eta();
   double Phi = hadronic_w_ch_jet1.Phi();
   this->SetJetError(&error_hadronic_w_ch_jet1, Pt, Eta, Phi, "udsc");
-  corr_hadronic_w_ch_jet1 = ts_correction->GetCorrectedJet("udsc",hadronic_w_ch_jet1);
+  //corr_hadronic_w_ch_jet1 = ts_correction->GetCorrectedJet("udsc",hadronic_w_ch_jet1);
   fit_hadronic_w_ch_jet1->~TFitParticlePt();
   new(fit_hadronic_w_ch_jet1) TFitParticlePt("hadronic_w_ch_jet1",
                                                     "hadronic_w_ch_jet1",
@@ -198,7 +198,7 @@ void TKinFitterDriver::SetWCHDownTypeJets(TLorentzVector jet_){
   double Phi = hadronic_w_ch_jet2.Phi();
   TString flav =  nbtags>2 ? "b":"udsc";
   this->SetJetError(&error_hadronic_w_ch_jet2, Pt, Eta, Phi, flav);
-  corr_hadronic_w_ch_jet2 = ts_correction->GetCorrectedJet(flav, hadronic_w_ch_jet2);
+  //corr_hadronic_w_ch_jet2 = ts_correction->GetCorrectedJet(flav, hadronic_w_ch_jet2);
   fit_hadronic_w_ch_jet2->~TFitParticlePt();
   new(fit_hadronic_w_ch_jet2) TFitParticlePt("hadronic_w_ch_jet2",
                                                     "hadronic_w_ch_jet2",
@@ -780,7 +780,7 @@ void TKinFitterDriver::FindMaxPtHadTopFit(bool IsMaxLepTopPt, bool IsClosestHadT
           this->Fit();
           bool IsBTagged = btag_vector.at(maxHadTopPt_w_ch_down_type_jet_idx);
           fit_result.is_w_ch_down_type_jet_b_tagged = IsBTagged?1:0;
-  	      fit_result_vector.push_back(fit_result);
+  	      //fit_result_vector.push_back(fit_result);
          }
     }
     else{
@@ -1138,17 +1138,17 @@ void TKinFitterDriver::SetUnclError(TMatrixD *matrix, TLorentzVector &met){
 
 
 double TKinFitterDriver::JetErrorPt(double Pt, double Eta, TString flavour_key){
-  return ts_correction->GetFittedError("Pt", flavour_key, Pt, Eta);
+  return 1;//ts_correction->GetFittedError("Pt", flavour_key, Pt, Eta);
 }
 
 
 double TKinFitterDriver::JetErrorEta(double Pt, double Eta, TString flavour_key){
-  return ts_correction->GetFittedError("Eta", flavour_key, Pt, Eta);
+  return 1;//ts_correction->GetFittedError("Eta", flavour_key, Pt, Eta);
 }
 
 
 double TKinFitterDriver::JetErrorPhi(double Pt, double Eta, TString flavour_key){
-  return ts_correction->GetFittedError("Phi", flavour_key, Pt, Eta);
+  return 1;//ts_correction->GetFittedError("Phi", flavour_key, Pt, Eta);
 }
 
 

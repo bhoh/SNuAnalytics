@@ -33,6 +33,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&'+JetCut
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
 supercut += '&&(nCleanJet30_2p5 >=4)'
+supercut += '&&( nBJets_WP_M >= 2)'
 METtype="PuppiMET"
 supercut +='&&'+"( %s_pt > 20 )"%METtype
 
@@ -55,7 +56,7 @@ else:
 ##-----Basic categorization-----##
 
 TopRegionCats={}
-TopRegionCats['Top4j'] = '1'
+#TopRegionCats['Top4j'] = '1'
 TopRegionCats['Top4j2b'] = '( nBJets_WP_M == 2)'
 TopRegionCats['Top4j3b'] = '( nBJets_WP_M >= 3)'
 

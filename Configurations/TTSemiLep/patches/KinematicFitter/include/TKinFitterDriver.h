@@ -13,7 +13,7 @@
 #include "TFitParticlePz.h"
 #include "TFitParticlePxPy.h"
 #include "TFitParticleEtPhi.h"
-#include "TKinFitter.h"
+#include "TKinFitter_.h"
 #include "TSCorrection.h"
 
 
@@ -183,7 +183,7 @@ private:
   double neutrino_pz_sol[2];
   bool IsRealNeuPz;
 
-  TKinFitter *fitter;
+  TKinFitter_ *fitter;
   TSCorrection *ts_correction;
 
   std::vector<TLorentzVector> jet_vector;

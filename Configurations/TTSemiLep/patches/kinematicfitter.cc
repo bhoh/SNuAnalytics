@@ -62,6 +62,7 @@ protected:
 
   static JME::JetResolution jet_resolution;
   static JME::JetResolutionScaleFactor jet_resolution_sf;
+  static TKinFitterDriver fitter; // 2018 is dummy variable for now
 
   static std::vector<std::array<double, 1>> fitterResults; //std::vector<std::array<double, nShiftTypes>>
 
@@ -94,9 +95,10 @@ std::vector<unsigned> KinematicFitter::SelectedJet_jetIdx = std::vector<unsigned
 std::vector<TLorentzVector> KinematicFitter::SelectedJet_4vector = std::vector<TLorentzVector>();
 std::vector<double> KinematicFitter::SelectedJet_btagcsv = std::vector<double>();
 std::vector<float> KinematicFitter::SelectedJet_PtResolution = std::vector<float>();
-
 JME::JetResolution KinematicFitter::jet_resolution = JME::JetResolution();
 JME::JetResolutionScaleFactor KinematicFitter::jet_resolution_sf = JME::JetResolutionScaleFactor();
+
+TKinFitterDriver KinematicFitter::fitter = TKinFitterDriver(2018); // 2018 is dummy variable for now
 
 std::vector<std::array<double, 1>> KinematicFitter::fitterResults = std::vector<std::array<double, 1>>();
 
@@ -234,7 +236,7 @@ KinematicFitter::setValues(long long _iEntry)
   
   double DeepB_WP_M_2018 = 0.4184; //XXX let me hard code this time
 
-  TKinFitterDriver fitter = TKinFitterDriver(2018); //XXX just put 2018, this value is not used.
+  //TKinFitterDriver fitter = TKinFitterDriver(2018); // 2018 is dummy variable for now
   fitter.SetAllObjects(SelectedJet_4vector, SelectedJet_btagcsv, DeepB_WP_M_2018, lepton, MET);
   fitter.SetJetPtResolution(SelectedJet_PtResolution);
   fitter.FindMaxPtHadTopFit(false,true,true);

@@ -20,6 +20,14 @@ TSCorrection::~TSCorrection(){
     delete mapit.second;
   }
   */
+  for(auto& mapit : MapFittedErrorMyFormula){
+    mapit.second->ClearError();
+    delete mapit.second;
+  }
+  for(auto& mapit : MapFittedMeanMyFormula){
+    mapit.second->ClearMean();
+    delete mapit.second;
+  }
 }
 
 void TSCorrection::ReadFittedError(TString fileName){
