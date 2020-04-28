@@ -50,6 +50,7 @@ public :
   Double_t getS();
   Double_t getF();
   Double_t getDeltaS(){ return _deltaS; } //BHO
+  Double_t getLambda(){return _lambda(0,0); } //BHO
   void setVerbosity( Int_t verbosity = 1 );
   Int_t getVerbosity( ) { return _verbosity; }
 

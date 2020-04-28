@@ -53,8 +53,10 @@ public:
   void SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down);
   void SetMETShift(double met_shiftX, double met_shiftY);
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
+  void SetNeutrinoSmallerPz(TLorentzVector met_);
 
   void Fit();
+  void FitCurrentPermutation();
   void FindBestChi2Fit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
   void FindMaxPtHadTopFit(bool IsMaxLepTopPt, bool IsClosestHadTopM, bool IsClosestLepTopM);
 
@@ -67,6 +69,7 @@ public:
 
   int GetBestStatus();
   double GetBestChi2();
+  double GetBestLambda();
   double GetBestFittedDijetMass();
   double GetBestFittedDijetMass_high();
   double GetBestInitialDijetMass();
@@ -153,6 +156,7 @@ public:
     double currS;
     double deltaS;
     double chi2;
+    double lambda;
   };
 
 private:

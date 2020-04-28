@@ -95,11 +95,10 @@ class KinFitterProducer(Module):
           jerUncertaintyInputFileName = "Autumn18_V7_MC_SF_AK4PFchs.txt"
         #
         self.jerInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
-        #self.jerTag = jerInputFileName[:jerInputFileName.find('_DATA_')+len('_DATA')]
-        #self.jerArchive = tarfile.open(self.jerInputArchivePath+self.jerTag+".tgz", "r:gz")
-        #self.jerInputFilePath = tempfile.mkdtemp()
-        self.jerInputFilePath = self.jerInputArchivePath
-        #self.jerArchive.extractall(self.jerInputFilePath)
+        self.jerTag = jerInputFileName[:jerInputFileName.find('_MC_')+len('_MC')]
+        self.jerArchive = tarfile.open(self.jerInputArchivePath+self.jerTag+".tgz", "r:gz")
+        self.jerInputFilePath = tempfile.mkdtemp()
+        self.jerArchive.extractall(self.jerInputFilePath)
         self.jerInputFileName = jerInputFileName
         self.jerUncertaintyInputFileName = jerUncertaintyInputFileName
         
@@ -120,6 +119,7 @@ class KinFitterProducer(Module):
         # (cf. PhysicsTools/PatUtils/interface/SmearedJetProducerT.h )
         print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName))
         self.jer = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName))
+        print("Loading JER scale factors and uncertainties from file '%s'" % os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
         self.jerSF_and_Uncertainty = ROOT.PyJetResolutionScaleFactorWrapper(os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
 
 
@@ -277,8 +277,8 @@ class KinFitterProducer(Module):
         jet_pt_resolution_SF = self.jerSF_and_Uncertainty.getScaleFactor(self.params_sf_and_uncertainty, 0) # 0 for nominal
 
         # debug
-        print_msg = "MC jer : {0:.4f} \t\t   MC jer SF : {1:.4f}".format(jet_pt_resolution,jet_pt_resolution_SF)
-        print(print_msg)
+        #print_msg = "MC jer : {0:.4f} \t\t   MC jer SF : {1:.4f}".format(jet_pt_resolution,jet_pt_resolution_SF)
+        #print(print_msg)
         return jet_pt_resolution*jet_pt_resolution_SF
 
     def findOrigJetIdx(self,fitter_jet_idx, orig_jets_idx):
