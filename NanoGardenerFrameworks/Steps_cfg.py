@@ -1570,6 +1570,64 @@ Steps = {
                   'module'     : 'kinFitting()',
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
                },
+    'kinFitTTSemiLep_2017': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2017 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4941\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+               },
+    'kinFitTTSemiLep_2016': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2016 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.4\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.6321\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+               },
+
+    'GenKinFitTTSemiLep_2018': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : False,
+                  #'selection'  : '"Entry$<1000"',
+                  'selection'  : '""',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.GenKinFitterProducer' ,
+                  'declare'    : 'GenKinFitting = lambda : GenKinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'GenKinFitting()',
+               },
+
+
+
     '4j2b_CHToCB_2018' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
@@ -1593,17 +1651,21 @@ Steps = {
                   'module'     : 'Dummy()',
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
-    'genCHToCB' : {
+    'genCHToCB_2018' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
                                         abs(CleanJet_eta) < 2.5\
-                                       ) >= 4)\
-                                   )\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
+                                       )>=2))\
                                   "',
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
-                  'module'     : 'genCHToCB()'
+                  'module'     : 'genCHToCB()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
 ## ------- MODULES: Object Handling
 
