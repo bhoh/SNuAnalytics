@@ -74,10 +74,13 @@ class KinFitterProducer(Module):
         #
         if int(Year) == 2016:
           self._DeepB_WP_M = 0.6321
+          self._jet_abseta_cut = 2.4
         elif int(Year) == 2017:
           self._DeepB_WP_M = 0.4941
+          self._jet_abseta_cut = 2.5
         elif int(Year) == 2018:
           self._DeepB_WP_M = 0.4184
+          self._jet_abseta_cut = 2.5
 
         # read jet energy resolution (JER) and JER scale factors and uncertainties
         # (the txt files were downloaded from https://github.com/cms-jet/JRDatabase/tree/master/textFiles/ )
@@ -193,7 +196,7 @@ class KinFitterProducer(Module):
         njets  = 0
         #print("jets")
         for jet in Jet :
-          if OrigJet[jet.jetIdx].pt_nom <= 30 or abs(jet.eta)>=2.5:
+          if OrigJet[jet.jetIdx].pt_nom <= 30 or abs(jet.eta)>=self._jet_abseta_cut:
             continue
           njets += 1
           tmp_jet = ROOT.TLorentzVector()
