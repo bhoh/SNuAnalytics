@@ -19,6 +19,103 @@ dict_TColor={
 
 scriptname=opt.plotFile
 
+
+groupPlot['QCD'] = {
+        'nameHR' : 'QCD',
+        'isSignal' : 0,
+        'color' :  dict_TColor['gray'],
+        'isData'   : 0,
+        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
+    }
+groupPlot['TTV'] = {
+        'nameHR' : 'TTV',
+        'isSignal' : 0,
+        'color' : dict_TColor['green'],
+        'isData'   : 0,
+        'samples' : ['TTWjets','TTZjets'],
+    }
+groupPlot['VV'] = {
+        'nameHR' : 'VV',
+        'isSignal' : 0,
+        'color' : dict_TColor['cyan'],
+        'isData'   : 0,
+        'samples' : ['WW','WZ','ZZ'],
+    }
+
+
+
+groupPlot['V+jets'] = {
+        'nameHR' : 'V+jets',
+        'isSignal' : 0,
+        'color' : dict_TColor['red'],
+        'isData'   : 0,
+        'samples' : ['DY','Wjets'],
+    }
+
+groupPlot['ST'] = {
+        'nameHR' : 'ST',
+        'isSignal' : 0,
+        'color' : dict_TColor['pink'],
+        'isData'   : 0,
+        'samples' : ['ST'],
+    }
+groupPlot['TTLL'] = {
+        'nameHR' : 'TTLL',
+        'isSignal': 0,
+        'color'   :  dict_TColor['magenta'],
+        'isData'  : 0,
+        'samples' : ['TTLL'],
+    }
+
+groupPlot['TTLJ+jj']  = {
+                  'nameHR' : 'TTLJ+jj',
+                  'isSignal' : 0,
+                  'color': dict_TColor['orange'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+jj']
+              }
+
+groupPlot['TTLJ+cc']  = {
+                  'nameHR' : 'TTLJ+cc',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+4,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+cc']
+              }
+
+groupPlot['TTLJ+bj']  = {
+                  'nameHR' : 'TTLJ+bj',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+1,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+bj']
+              }
+
+groupPlot['TTLJ+bb']  = {
+                  'nameHR' : 'TTLJ+bb',
+                  'isSignal' : 0,
+                  'color': dict_TColor['blue'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+bb']
+              }
+#for mass in ['075','080','085','090','100','110','120','130','140','150']:
+for mass, color in [('090','green'),('120','red'),('150','blue')]:
+    sample_name = 'CHToCB_M{0}'.format(mass) 
+    groupPlot[sample_name]={
+        'nameHR':'M{0}(BR=0.01)'.format(mass),
+        'scale' : 2*(0.01)*(1-0.01),
+        'isData'   : 0,
+        'isSignal' : 2,
+        'color':dict_TColor[color],
+        'samples' : [sample_name]
+    }
+
+
+
+
+
+
+
 if not 'ele' in scriptname:
     plot['QCD_MU']  = {
         'nameHR' : 'QCD_MU',
@@ -45,47 +142,28 @@ if not 'mu' in scriptname:
         'isData'   : 0,
         'samples'  : ['QCD_bcToE']
     }
-
-
-
-'''
-plot['WZZ']  = {
-                  'nameHR' : 'WZZ',
-                  'isSignal' : 0,
-                  'color': dict_TColor['azure'], 
-                  'isData'   : 0,
-                  'samples'  : ['WZZ']
-              }
-
-plot['WWZ']  = {
-                  'nameHR' : 'WWZ',
-                  'isSignal' : 0,
-                  'color': dict_TColor['azure']+1, 
-                  'isData'   : 0,
-                  'samples'  : ['WWZ']
-              }
-plot['ZZ']  = {
-                  'nameHR' : 'ZZ',
-                  'isSignal' : 0,
-                  'color': dict_TColor['azure']+2,
-                  'isData'   : 0,
-                  'samples'  : ['ZZ']
-              }
-
-plot['WZ']  = {
-                  'nameHR' : 'WZ',
-                  'isSignal' : 0,
-                  'color': dict_TColor['azure']+3, 
-                  'isData'   : 0,
-                  'samples'  : ['WZ']
-              }
-'''
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,
                   'color': dict_TColor['cyan'], 
                   'isData'   : 0,
                   'samples'  : ['WW']
+              }
+
+plot['WZ']  = {
+                  'nameHR' : 'WZ',
+                  'isSignal' : 0,
+                  'color': dict_TColor['cyan'], 
+                  'isData'   : 0,
+                  'samples'  : ['WZ']
+              }
+
+plot['ZZ']  = {
+                  'nameHR' : 'ZZ',
+                  'isSignal' : 0,
+                  'color': dict_TColor['cyan'], 
+                  'isData'   : 0,
+                  'samples'  : ['ZZ']
               }
 
 plot['DY']  = {
@@ -98,14 +176,10 @@ plot['DY']  = {
 plot['Wjets']  = {
                   'nameHR' : 'Wjets',
                   'isSignal' : 0,
-                  'color': dict_TColor['green'],
+                  'color': dict_TColor['red'], 
                   'isData'   : 0,
-                  'samples'  : ['Wjets'],
-                  
+                  'samples'  : ['Wjets']
               }
-
-
-
 
 plot['ST']  = {
                   'nameHR' : 'ST',
@@ -155,6 +229,21 @@ plot['TTLJ+bb']  = {
                   'samples'  : ['TTLJ+bb']
               }
 
+plot['TTWjets']  = {
+                  'nameHR' : 'TTWjets',
+                  'isSignal' : 0,
+                  'color': dict_TColor['green'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTWjets']
+              }
+plot['TTZjets']  = {
+                  'nameHR' : 'TTZjets',
+                  'isSignal' : 0,
+                  'color': dict_TColor['green'],
+                  'isData'   : 0,                 
+                  'samples'  : ['TTZjets']
+              }
+
 plot['DATA']  = {
                   'nameHR' : 'DATA',
                   'isSignal' : 0,
@@ -163,6 +252,18 @@ plot['DATA']  = {
 		  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
+
+#for mass in ['075','080','085','090','100','110','120','130','140','150']:
+for mass, color in [('090','green'),('120','red'),('150','blue')]:
+    sample_name = 'CHToCB_M{0}'.format(mass) 
+    plot[sample_name]={
+        'nameHR':'M{0}(BR=0.01)'.format(mass),
+        'scale' : 2*(0.01)*(1-0.01),
+        'isData'   : 0,
+        'isSignal' : 2,
+        'color':dict_TColor[color],
+        'samples' : [sample_name]
+    }
 
 
 #import sys
@@ -197,3 +298,4 @@ plot['DATA']  = {
 legend['lumi'] = 'L = 58.8/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
+legend['extraText'] = 'work in progress'
