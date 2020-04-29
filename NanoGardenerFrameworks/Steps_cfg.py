@@ -198,6 +198,44 @@ def prepare_HMsemilep_syst(basename):
   return dictionary
 
 
+def prepare_CHToCB_syst(base_name):
+    dictionary = {}
+    syst_tot = ['jer','jesTotal','unclustEn']
+    syst_uncorr = ['jesAbsolute_RPLME_YEAR','jesBBEC1_RPLME_YEAR','jesEC2_RPLME_YEAR','jesHF_RPLME_YEAR','jesRelativeSample_RPLME_YEAR']
+    syst_corr = ['jesAbsolute','jesBBEC1','jesEC2','jesFlavorQCD','jesHF','jesRelativeBal']
+    syst_all = syst_tot + syst_uncorr + syst_corr
+    for syst in syst_all:
+      for j in ['Up','Down']:
+        dictionary[base_name+ "_" + syst + j] = {
+                  'isChain'    : False,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix={0}{1})'.format(syst,j),
+                  'module'     : 'kinFitting()',
+               }
+
+    #make chain
+    dictionary[base_name+"_"+"jetMETSyst_Total"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Up','Down']],
+               }
+    dictionary[base_name+"_"+"jetMETSyst_uncorr"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Up','Down']],
+               }
+    dictionary[base_name+"_"+"jetMETSyst_corr"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Up','Down']],
+               }
+
+    return dictionary
 
 
 Steps = {
@@ -4336,3 +4374,10 @@ Steps.update(addJESchainMembers())
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2016v6_fatjet"))
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2017v6_fatjet"))
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMsemilep2018v6_fatjet"))
+
+
+# Add syst steps for CHToCB
+# kinFitTTSemiLep_jetMETSyst_Total
+# kinFitTTSemiLep_jetMETSyst_uncorr
+# kinFitTTSemiLep_jetMETSyst_corr
+Steps.update(prepare_CHToCB_syst("kinFitTTSemiLep"))
