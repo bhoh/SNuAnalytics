@@ -26,11 +26,12 @@ import os.path
 
 
 class KinFitterProducer(Module):
-    def __init__(self, Year, branch_map=''):
+    def __init__(self, Year, syst_suffix='nom', branch_map=''):
 
         # change this part into correct path structure... 
 
         self._Year = Year
+        self._syst_suffix = syst_suffix
         cmssw_base = os.getenv('CMSSW_BASE')
         ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/include/')
         ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/')
@@ -132,30 +133,32 @@ class KinFitterProducer(Module):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = mappedOutputTree(wrappedOutputTree, mapname=self._branch_map)
         self.newbranches_F = [
-            'initial_dijet_M',
-            'initial_dijet_M_high',
-            'corrected_dijet_M',
-            'corrected_dijet_M_high',
-            'fitted_dijet_M',
-            'fitted_dijet_M_high',
-            'hadronic_top_M',
-            'hadronic_top_pt',
-            'leptonic_top_M',
-            'leptonic_W_M',
-            'best_chi2',
-            'lambda',
-            'fitter_status',
-            'hadronic_top_b_jet_pull',
-            'w_ch_up_type_jet_pull',
-            'w_ch_down_type_jet_pull',
+            'initial_dijet_M_{}'.format(self._syst_suffix),
+            'initial_dijet_M_high_{}'.format(self._syst_suffix),
+            'corrected_dijet_M_{}'.format(self._syst_suffix),
+            'corrected_dijet_M_high_{}'.format(self._syst_suffix),
+            'fitted_dijet_M_{}'.format(self._syst_suffix),
+            'fitted_dijet_M_high_{}'.format(self._syst_suffix),
+            'hadronic_top_M_{}'.format(self._syst_suffix),
+            'hadronic_top_pt_{}'.format(self._syst_suffix),
+            'leptonic_top_M_{}'.format(self._syst_suffix),
+            'leptonic_W_M_{}'.format(self._syst_suffix),
+            'best_chi2_{}'.format(self._syst_suffix),
+            'lambda_{}'.format(self._syst_suffix),
+            'fitter_status_{}'.format(self._syst_suffix),
+            'hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
+            'w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
+            'w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
+            'MET_CHToCB_pt_{}'.format(self._syst_suffix),
+            'MET_CHToCB_phi_{}'.format(self._syst_suffix),
           ]
         self.newbranches_I = [
-            'nbtagsCleanJet',
-            'down_type_jet_b_tagged',
-            'hadronic_top_b_jet_idx',
-            'leptonic_top_b_jet_idx',
-            'w_ch_up_type_jet_idx',
-            'w_ch_down_type_jet_idx'
+            'nbtagsCleanJet_{}'.format(self._syst_suffix),
+            'down_type_jet_b_tagged_{}'.format(self._syst_suffix),
+            'hadronic_top_b_jet_idx_{}'.format(self._syst_suffix),
+            'leptonic_top_b_jet_idx_{}'.format(self._syst_suffix),
+            'w_ch_up_type_jet_idx_{}'.format(self._syst_suffix),
+            'w_ch_down_type_jet_idx_{}'.format(self._syst_suffix)
           ]
         for nameBranches in self.newbranches_F :
           self.out.branch(nameBranches  ,  "F");
@@ -194,64 +197,80 @@ class KinFitterProducer(Module):
 
         nbtags = 0
         njets  = 0
+
         #print("jets")
         for jet in Jet :
-          if OrigJet[jet.jetIdx].pt_nom <= 30 or abs(jet.eta)>=self._jet_abseta_cut:
+          # jet_pt syst branch should exist in skim
+          jet_pt = self.findJetPtSystAttr(OrigJet[jet.jetIdx])
+          if jet_pt <= 30 or abs(jet.eta)>=self._jet_abseta_cut:
             continue
           njets += 1
           tmp_jet = ROOT.TLorentzVector()
-          tmp_jet.SetPtEtaPhiM(OrigJet[jet.jetIdx].pt_nom, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
+          tmp_jet.SetPtEtaPhiM(jet_pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
           jets.push_back(tmp_jet)
           orig_jets_idx.push_back(jet.jetIdx)
           tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
+          # set jet resolution
           jetPtResolution_ = self.getJetPtResolution(tmp_jet, event.fixedGridRhoFastjetAll)
           jetPtResolution.push_back(jetPtResolution_)
           btag_csv_vector.push_back(OrigJet[jet.jetIdx].btagDeepB)
+          # b taggging
           if OrigJet[jet.jetIdx].btagDeepB > self._DeepB_WP_M:
             nbtags += 1
         
-        MET = ROOT.TLorentzVector()
-        MET.SetPtEtaPhiM(event.PuppiMET_pt, 0., event.PuppiMET_phi, 0.)
-        #print("MET")
+
+
+        # propagate MET by syst suffix
+        # jet_pt syst branch should exist in skim
+        MET_CHToCB = ROOT.TLorentzVector()
+        origMET = Object(event, "PuppiMET")
+
+        MET_CHToCB_pt, MET_CHToCB_phi = self.propagateToMET(OrigJet,Jet,origMET)
+        MET_CHToCB_pt, MET_CHToCB_phi = self.UnclShift(MET_CHToCB_pt,MET_CHToCB_phi,event)
+        MET_CHToCB.SetPtEtaPhiM(MET_CHToCB_pt, 0., MET_CHToCB_phi, 0.)
+        #print("MET_CHToCB")
         #print(event.PuppiMET_pt,"   ",event.PuppiMET_phi)
 
         METShiftX =event.MET_MetUnclustEnUpDeltaX
         METShiftY =event.MET_MetUnclustEnUpDeltaY
         
         fitter = ROOT.TKinFitterDriver(int(self._Year))
-        fitter.SetAllObjects(jets, btag_csv_vector, self._DeepB_WP_M, lepton, MET)
+        fitter.SetAllObjects(jets, btag_csv_vector, self._DeepB_WP_M, lepton, MET_CHToCB)
         fitter.SetJetPtResolution(jetPtResolution)
         fitter.SetMETShift(METShiftX, METShiftY)
         #fitter.FindBestChi2Fit()
         fitter.FindMaxPtHadTopFit(False,True,True)
 
         variables = {}
-        variables['initial_dijet_M']         = fitter.GetBestInitialDijetMass()
-        variables['initial_dijet_M_high']    = fitter.GetBestInitialDijetMass_high()
-        variables['corrected_dijet_M']       = fitter.GetBestCorrectedDijetMass()
-        variables['corrected_dijet_M_high']  = fitter.GetBestCorrectedDijetMass_high()
-        variables['fitted_dijet_M']          = fitter.GetBestFittedDijetMass()
-        variables['fitted_dijet_M_high']     = fitter.GetBestFittedDijetMass_high()
-        variables['best_chi2']               = fitter.GetBestChi2()
-        variables['lambda']                  = fitter.GetBestLambda()
-        variables['fitter_status']           = fitter.GetBestStatus()
-        variables['down_type_jet_b_tagged']  = fitter.GetBestDownTypeJetBTagged()
+        variables['initial_dijet_M_{}'.format(self._syst_suffix)]         = fitter.GetBestInitialDijetMass()
+        variables['initial_dijet_M_high_{}'.format(self._syst_suffix)]    = fitter.GetBestInitialDijetMass_high()
+        variables['corrected_dijet_M_{}'.format(self._syst_suffix)]       = fitter.GetBestCorrectedDijetMass()
+        variables['corrected_dijet_M_high_{}'.format(self._syst_suffix)]  = fitter.GetBestCorrectedDijetMass_high()
+        variables['fitted_dijet_M_{}'.format(self._syst_suffix)]          = fitter.GetBestFittedDijetMass()
+        variables['fitted_dijet_M_high_{}'.format(self._syst_suffix)]     = fitter.GetBestFittedDijetMass_high()
+        variables['best_chi2_{}'.format(self._syst_suffix)]               = fitter.GetBestChi2()
+        variables['lambda_{}'.format(self._syst_suffix)]                  = fitter.GetBestLambda()
+        variables['fitter_status_{}'.format(self._syst_suffix)]           = fitter.GetBestStatus()
+        variables['down_type_jet_b_tagged_{}'.format(self._syst_suffix)]  = fitter.GetBestDownTypeJetBTagged()
         # these idx variables should be calculated again and this will become a OrigJet idx
-        variables['hadronic_top_b_jet_idx']  = self.findOrigJetIdx(fitter.GetBestHadronicTopBJetIdx(), orig_jets_idx)
-        variables['leptonic_top_b_jet_idx']  = self.findOrigJetIdx(fitter.GetBestLeptonicTopBJetIdx(), orig_jets_idx)
-        variables['w_ch_up_type_jet_idx']    = self.findOrigJetIdx(fitter.GetBestHadronicWCHUpTypeJetIdx(), orig_jets_idx)
-        variables['w_ch_down_type_jet_idx']  = self.findOrigJetIdx(fitter.GetBestHadronicWCHDownTypeJetIdx(), orig_jets_idx)
+        variables['hadronic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicTopBJetIdx(), orig_jets_idx)
+        variables['leptonic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestLeptonicTopBJetIdx(), orig_jets_idx)
+        variables['w_ch_up_type_jet_idx_{}'.format(self._syst_suffix)]    = self.findOrigJetIdx(fitter.GetBestHadronicWCHUpTypeJetIdx(), orig_jets_idx)
+        variables['w_ch_down_type_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicWCHDownTypeJetIdx(), orig_jets_idx)
          
-        variables['hadronic_top_b_jet_pull'] = fitter.GetBestHadronicTopBJetPull()
-        variables['w_ch_up_type_jet_pull']   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
-        variables['w_ch_down_type_jet_pull'] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
+        variables['hadronic_top_b_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicTopBJetPull()
+        variables['w_ch_up_type_jet_pull_{}'.format(self._syst_suffix)]   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
+        variables['w_ch_down_type_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
 
-        variables['hadronic_top_M']          = fitter.GetBestHadronicTopMass()
-        variables['hadronic_top_pt']          = fitter.GetBestHadronicTopPt()
-        variables['leptonic_top_M']          = fitter.GetBestLeptonicTopMass()
-        variables['leptonic_W_M']            = fitter.GetBestLeptonicWMass()
+        variables['hadronic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestHadronicTopMass()
+        variables['hadronic_top_pt_{}'.format(self._syst_suffix)]          = fitter.GetBestHadronicTopPt()
+        variables['leptonic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestLeptonicTopMass()
+        variables['leptonic_W_M_{}'.format(self._syst_suffix)]            = fitter.GetBestLeptonicWMass()
 
-        variables["nbtagsCleanJet"] = nbtags
+        variables['nbtagsCleanJet_{}'.format(self._syst_suffix)] = nbtags
+
+        variables['MET_CHToCB_pt_{}'.format(self._syst_suffix)]  = MET_CHToCB_pt
+        variables['MET_CHToCB_phi_{}'.format(self._syst_suffix)] = MET_CHToCB_phi
 
         for nameBranches in self.newbranches_F:
           self.out.fillBranch(nameBranches  ,  variables[nameBranches]);
@@ -290,3 +309,70 @@ class KinFitterProducer(Module):
           return fitter_jet_idx
         else:
           return orig_jets_idx[fitter_jet_idx]
+
+
+    def findJetPtSystAttr(self,object_):
+        if "unclustEn" in self._syst_suffix:
+          syst_suffix = "pt_nom"
+        else:
+          syst_suffix = "pt_{}".format(self._syst_suffix)
+        return getattr(object_,syst_suffix)
+
+
+    def propagateToMET(self,Jet,CleanJet,origMET):
+        #### MET_px = -sum( particle_px ) 
+        ######MET_px_new = -sum(particle_px_new) = -sum( particle_px - particle_px + particle_px_new  )
+        ######## = MET_px -sum(particle_px_new - particle_px)
+        ###     => MET_px_new = MET_px - sum( dpx )
+        JetPxSum_old, JetPySum_old = self.GetJetPxPySum(Jet,CleanJet,False)
+        JetPxSum_new, JetPySum_new = self.GetJetPxPySum(Jet,CleanJet,True)
+        
+        dpx = JetPxSum_new - JetPxSum_old
+        dpy = JetPySum_new - JetPySum_old
+
+        origMET_pt = origMET.pt
+        origMET_phi = origMET.phi
+        origMET_px = origMET_pt*math.cos(origMET_phi)
+        origMET_py = origMET_pt*math.sin(origMET_phi)
+
+        newMET_px = origMET_px - dpx
+        newMET_py = origMET_py - dpy
+        newMET_pt = math.sqrt(newMET_px**2 + newMET_py**2)
+        newMET_phi = math.atan2(newMET_py,newMET_px)
+
+        return newMET_pt, newMET_phi
+
+
+    def GetJetPxPySum(self,Jet,CleanJet,syst):
+        JetPxSum = 0.
+        JetPySum = 0.
+        for jet in CleanJet: #propagate CleanJet to MET
+          if syst==False:
+            pt = jet.pt #jet pt no JER smearing
+          else:
+            pt = self.findJetPtSystAttr(Jet[jet.jetIdx]) # for nominal syst, propagate Jet_pt_nom
+          phi=jet.phi
+          JetPxSum+=pt*math.cos(phi)
+          JetPySum+=pt*math.sin(phi)
+
+        return JetPxSum, JetPySum
+
+    def UnclShift(self,met_pt,met_phi,event_):
+        if "unclustEn" not in self._syst_suffix:
+          return met_pt, met_phi
+        elif "unclustEnUp" in self._syst_suffix:
+          METShiftX =event_.MET_MetUnclustEnUpDeltaX
+          METShiftY =event_.MET_MetUnclustEnUpDeltaY
+        elif "unclustEnDown" in self._syst_suffix:
+          METShiftX =-(event_.MET_MetUnclustEnDeltaX)
+          METShiftY =-(event_.MET_MetUnclustEnDeltaY)
+        met_px = met_pt*math.cos(met_phi) + METShiftX
+        met_py = met_pt*math.sin(met_phi) + METShiftY
+
+        new_met_pt = math.sqrt(met_px**2 + met_py**2)
+        new_met_phi = math.atan2(met_py,met_px)
+
+        return new_met_pt, new_met_phi
+        
+        
+
