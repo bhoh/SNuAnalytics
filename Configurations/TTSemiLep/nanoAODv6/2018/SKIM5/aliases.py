@@ -38,6 +38,13 @@ aliases['nCleanJet30_2p5_tightlepvetoID'] = {
 aliases['nCleanJet30_2p5_tightlepvetoID_lepveto0p4'] = {
             'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4))'
             }
+# MET
+
+aliases['METAlias'] = {
+            #'expr': 'PuppiMET_pt',
+            'expr': 'MET_CHToCB_pt_nom'
+            }
+
 # B tagging
 
 aliases['nBJets_WP_M'] = {
@@ -86,29 +93,29 @@ aliases['btagSFNorm_top'] = {
     'samples': mc
 }
 
-#for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
-#    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
-#    aliases['Jet_btagSF%sup_shapeFix' % shift] = {
-#        'class': 'BtagSF',
-#        'args': (btagSFSource, 'up_' + shift),
-#        'samples': mc
-#    }
-#    aliases['Jet_btagSF%sdown_shapeFix' % shift] = {
-#        'class': 'BtagSF',
-#        'args': (btagSFSource, 'down_' + shift),
-#        'samples': mc
-#    }
-# 
-#    aliases['btagSF%sup' % shift] = {
-#        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'up'),
-#        'samples': mc
-#    }
-#
-#    aliases['btagSF%sdown' % shift] = {
-#        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'down'),
-#        'samples': mc
-#    }
-#
+for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+    #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
+    aliases['Jet_btagSF%sup_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'up_' + shift),
+        'samples': mc
+    }
+    aliases['Jet_btagSF%sdown_shapeFix' % shift] = {
+        'class': 'BtagSF',
+        'args': (btagSFSource, 'down_' + shift),
+        'samples': mc
+    }
+ 
+    aliases['btagSF%sup' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'up'),
+        'samples': mc
+    }
+
+    aliases['btagSF%sdown' % shift] = {
+        'expr': aliases['btagSF']['expr'].replace('SF', 'SF' + shift + 'down'),
+        'samples': mc
+    }
+
 
 
 #aliases['Wlep_Mt']={

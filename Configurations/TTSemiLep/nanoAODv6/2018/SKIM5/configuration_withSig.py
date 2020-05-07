@@ -5,7 +5,7 @@ tag='2018_SKIM5'
 
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
-plotFile='plot_noSig.py' ##color code and some format-related things
+plotFile='plot.py' ##color code and some format-related things
 
 samplesFile = 'samples_2018_ttbarCat.py'
 
