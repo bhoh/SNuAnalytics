@@ -1,15 +1,15 @@
 ##Just set below things##
 
 
-tag='2018_SKIM5'
+tag='2016_SKIM7'
 
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
 plotFile='plot_noSig.py' ##color code and some format-related things
 
-samplesFile = 'samples_2018_ttbarCat.py'
+samplesFile = 'samples_2016_ttbarCat.py'
 
-lumi=58.826
+lumi=35.9
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

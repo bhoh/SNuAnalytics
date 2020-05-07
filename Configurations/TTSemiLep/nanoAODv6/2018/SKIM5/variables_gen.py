@@ -19,78 +19,65 @@ variables['Event'] = {
     'fold': 0
 }
 
-common_KF_cuts = '(fabs(hadronic_top_b_jet_pull_nom)<2 &&\
-           fabs(w_ch_up_type_jet_pull_nom)<2  &&\
-           fabs(w_ch_down_type_jet_pull_nom)<2 &&\
-           fitter_status_nom==0)\
+common_KF_cuts = '(fabs(hadronic_top_b_jet_pull)<2 &&\
+           fabs(w_ch_up_type_jet_pull)<2  &&\
+           fabs(w_ch_down_type_jet_pull)<2 &&\
+           fitter_status==0)\
 '
 name_template = "{0}*({1}==1) + (-9999)*({1}==0)"
-#( down_type_jet_b_tagged_nom>2 && down_type_jet_b_tagged_nom==1)
+#( down_type_jet_b_tagged>2 && down_type_jet_b_tagged==1)
 
-for key in ["initial_dijet_M_nom",'initial_dijet_M_high_nom','fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
+for key in ["initial_dijet_M",'initial_dijet_M_high','fitted_dijet_M','fitted_dijet_M_high']:
 
-  variables[key.replace("_nom","")] = {
+  variables[key] = {
       'name' : name_template.format(key,common_KF_cuts),
       'range':(36,0,180),
       'xaxis':'#it{M_{jj}} [GeV]',
       'fold':0
   
   }
-  variables[key.replace("_nom","")+"_down_type_jet_b_tagged"] = {
-      'name' : name_template.format(key,common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
-      'range':(36,0,180),
-      'xaxis':'#it{M_{jj}} [GeV]',
-      'fold':0
-  }
+
 #'best_chi2',
 
 variables['best_chi2'] = {
-    'name': name_template.format('best_chi2_nom','(fitter_status_nom>0)'),
+    'name': name_template.format('best_chi2','(fitter_status>0)'),
     'range':(150,0,30),
     'xaxis': 'best #chi^{2}',
     'fold': 1
 }
 variables['fitter_status'] = {
-    'name': 'fitter_status_nom',
+    'name': 'fitter_status',
     'range':(10,-5,5),
     'xaxis': 'fitter_status',
     'fold': 1
 }
 
-for key in ['down_type_jet_b_tagged_nom','hadronic_top_b_jet_idx_nom','leptonic_top_b_jet_idx_nom','w_ch_up_type_jet_idx_nom','w_ch_down_type_jet_idx_nom']:
-    variables[key.replace("_nom","")] = {
-        'name': name_template.format(key,common_KF_cuts),
-        'range':(20,0,20),
-        'xaxis': 'index',
-        'fold': 1
-    }
 
-
-for key in ['hadronic_top_b_jet_pull_nom','w_ch_up_type_jet_pull_nom','w_ch_down_type_jet_pull_nom']: 
-    variables[key.replace("_nom","")+'_noCut'] = {
-        'name': name_template.format(key,'(fitter_status_nom==0)'),
+for key in ['hadronic_top_b_jet_pull','w_ch_up_type_jet_pull','w_ch_down_type_jet_pull']: 
+    variables[key+'_noCut'] = {
+        'name': name_template.format(key,'(fitter_status==0)'),
         'range':(100,-10,10),
         'xaxis': 'pull',
         'fold': 0
     }
 
-    variables[key.replace("_nom","")] = {
+    variables[key] = {
         'name': name_template.format(key,common_KF_cuts),
         'range':(100,-10,10),
         'xaxis': 'pull',
         'fold': 0
     }
 
-for key in ['hadronic_top_M_nom','leptonic_top_M_nom','leptonic_W_M_nom']:
-    variables[key.replace("_nom","")] = {
+for key in ['hadronic_top_M','leptonic_top_M','leptonic_W_M']:
+    variables[key] = {
         'name': name_template.format(key,common_KF_cuts),
         'range':(60,0,300),
         'xaxis': '#it{M} [GeV]',
         'fold': 0
     }
 
-for key in ['hadronic_top_pt_nom']:
-    variables[key.replace("_nom","")] = {
+for key in ['hadronic_top_pt']:
+    variables[key] = {
         'name': name_template.format(key,common_KF_cuts),
         'range':(60,0,600),
         'xaxis': key,
@@ -143,7 +130,7 @@ variables['Lepton_eta[0]']={
 #}
 
 variables['PuppiMet']={
-    'name' : 'METAlias',
+    'name' : 'PuppiMET_pt',
     'range':(50,0,600),
     'xaxis':'MET [GeV]',
     'fold':0
@@ -182,8 +169,8 @@ variables ['nCleanJet30_2p5']={
     'fold':0
 }
 
-variables ['nBJets_WP_M']={
-    'name' : 'nBJets_WP_M',
+variables ['nCleanJet30_2p5']={
+    'name' : 'nCleanJet30_2p5',
     'range' : (6,2,8),
     'xaxis' : 'b tagged jet multiplicity',
     'fold':0

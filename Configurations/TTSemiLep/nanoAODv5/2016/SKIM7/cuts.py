@@ -1,20 +1,20 @@
 #-----Variable Deinition-----#
 import sys
 try:
-  from WPandCut2018 import *
+  from WPandCut2016 import *
 except ImportError:
   import os
   CMSSW     = os.environ["CMSSW_BASE"]
-  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/SKIM7"
   sys.path.append(BASE_PATH)
-  from WPandCut2018 import *
+  from WPandCut2016 import *
 
 #cuts={}
 
 scriptname=opt.cutsFile
 
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
-LepCut="(  Lepton_pt[0]>30 \
+LepCut="(  Lepton_pt[0]>27 \
 && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
 ||   fabs(Lepton_eta[0])  < 2.4*(abs(Lepton_pdgId[0])==13))\
 && ( ( ( Alt$( Lepton_pt[1],-1) <= 10 || Alt$(Lepton_isLoose[1], -1)<=0.5)*( abs( Alt$(Lepton_pdgId[1], 11)) ==11 )  )\
@@ -25,7 +25,7 @@ LepCut="(  Lepton_pt[0]>30 \
 LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'
 
 
-#JetCut='nCleanJet30_2p5 >=4'
+#JetCut='nCleanJet30_2p4 >=4'
 
 #------End of Variable Definition-----#
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
@@ -63,7 +63,7 @@ signCats['_'] = '1'
 #signCats['OS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]<0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 #signCats['SS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]>0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 
-common_cut = '(nCleanJet30_2p5 >=4) &&( nBJets_WP_M >= 2) && (METAlias > 20.)'
+common_cut = '(nCleanJet30_2p4 >=4) &&( nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 20.)'
 for LepCut in LepCats:
     for TopCut in TopRegionCats:
         for HEMcut in HEMCats:

@@ -211,8 +211,8 @@ def prepare_CHToCB_syst(base_name):
                   'do4MC'      : True ,
                   'do4Data'    : False ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
-                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix={0}{1})'.format(syst,j),
-                  'module'     : 'kinFitting()',
+                  'declare'    : 'kinFitting_{0}{1} = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix="{0}{1}")'.format(syst,j),
+                  'module'     : 'kinFitting_{0}{1}()'.format(syst,j),
                }
 
     #make chain
@@ -1595,10 +1595,10 @@ Steps = {
                   #2018 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5\
                                        ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5 &&\
                                         Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
                                        )>=2))\
@@ -1617,10 +1617,10 @@ Steps = {
                   #2017 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5\
                                        ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5 &&\
                                         Jet_btagDeepB[CleanJet_jetIdx] > 0.4941\
                                        )>=2))\
@@ -1639,10 +1639,10 @@ Steps = {
                   #2016 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.4\
                                        ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.4 &&\
                                         Jet_btagDeepB[CleanJet_jetIdx] > 0.6321\
                                        )>=2))\

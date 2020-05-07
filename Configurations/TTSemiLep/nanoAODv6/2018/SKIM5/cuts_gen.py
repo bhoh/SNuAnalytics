@@ -11,6 +11,7 @@ except ImportError:
 
 #cuts={}
 
+
 scriptname=opt.cutsFile
 
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
@@ -31,6 +32,11 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&'+JetCut
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
+supercut += '&&(nCleanJet30_2p5 >=4)'
+supercut += '&&( nBJets_WP_M >= 2)'
+METtype="PuppiMET"
+supercut +='&&'+"( %s_pt > 20 )"%METtype
+
 ##---Lepton Categorization---##
 
 
@@ -63,19 +69,17 @@ signCats['_'] = '1'
 #signCats['OS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]<0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 #signCats['SS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]>0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 
-common_cut = '(nCleanJet30_2p5 >=4) &&( nBJets_WP_M >= 2) && (METAlias > 20.)'
 for LepCut in LepCats:
     for TopCut in TopRegionCats:
         for HEMcut in HEMCats:
             for signcut in signCats:
-                cut = "(%s && %s && %s && %s && %s)"%(
-                                                          common_cut,
+                cuts[LepCut+'__'+TopCut+'__'+HEMcut+'__'+signcut] = "(%s && %s && %s && %s)"%(
                                                           LepCats[LepCut],
                                                           TopRegionCats[TopCut],
                                                           HEMCats[HEMcut],
                                                           signCats[signcut]
                                                         )
-                cuts[LepCut+'__'+TopCut+'__'+HEMcut+'__'+signcut] = cut
+
 #cuts['isVBF']='isVBF'
 print "Ncuts=",len(cuts)
 

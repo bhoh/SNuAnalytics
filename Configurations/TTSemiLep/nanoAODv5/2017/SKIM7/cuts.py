@@ -1,13 +1,13 @@
 #-----Variable Deinition-----#
 import sys
 try:
-  from WPandCut2018 import *
+  from WPandCut2017 import *
 except ImportError:
   import os
   CMSSW     = os.environ["CMSSW_BASE"]
-  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2017/SKIM7"
   sys.path.append(BASE_PATH)
-  from WPandCut2018 import *
+  from WPandCut2017 import *
 
 #cuts={}
 
@@ -63,7 +63,7 @@ signCats['_'] = '1'
 #signCats['OS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]<0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 #signCats['SS'] = 'Alt$(Lepton_pdgId[0]*Lepton_pdgId[1]>0 && abs(Lepton_pdgId[0])==abs(Lepton_pdgId[1]),1)'
 
-common_cut = '(nCleanJet30_2p5 >=4) &&( nBJets_WP_M >= 2) && (METAlias > 20.)'
+common_cut = '(nCleanJet30_2p5 >=4) &&( nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 20.)'
 for LepCut in LepCats:
     for TopCut in TopRegionCats:
         for HEMcut in HEMCats:
