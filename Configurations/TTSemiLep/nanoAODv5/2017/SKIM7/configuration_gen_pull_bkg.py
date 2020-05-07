@@ -1,24 +1,22 @@
 ##Just set below things##
 
 
-tag='2018_SKIM5'
+tag='2017_SKIM7_gen_pull_bkg'
 
-variablesFile='variables.py' ##what variables to draw
+variablesFile='variables_pull.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
-plotFile='plot_noSig.py' ##color code and some format-related things
+plotFile='plot_gen_pull_bkg.py' ##color code and some format-related things
 
-samplesFile = 'samples_2018_ttbarCat.py'
+samplesFile = 'samples_2017_GenKinFitter.py'
 
-lumi=58.826
+lumi=41.5
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
 aliasesFile='aliases.py'
-#nuisancesFile = 'nuisances_stat_only.py'
-#nuisancesFile = 'nuisances_weight_based.py'
-nuisancesFile = 'nuisances_all.py'
+nuisancesFile = 'nuisances_NULL.py'
 
 #structureFile = 'structure.py'
 

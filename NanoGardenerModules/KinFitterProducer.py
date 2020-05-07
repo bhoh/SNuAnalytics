@@ -330,6 +330,7 @@ class KinFitterProducer(Module):
         dpx = JetPxSum_new - JetPxSum_old
         dpy = JetPySum_new - JetPySum_old
 
+
         origMET_pt = origMET.pt
         origMET_phi = origMET.phi
         origMET_px = origMET_pt*math.cos(origMET_phi)
@@ -348,7 +349,7 @@ class KinFitterProducer(Module):
         JetPySum = 0.
         for jet in CleanJet: #propagate CleanJet to MET
           if syst==False:
-            pt = jet.pt #jet pt no JER smearing
+            pt = Jet[jet.jetIdx].pt #jet pt no JER smearing
           else:
             pt = self.findJetPtSystAttr(Jet[jet.jetIdx]) # for nominal syst, propagate Jet_pt_nom
           phi=jet.phi
@@ -364,8 +365,8 @@ class KinFitterProducer(Module):
           METShiftX =event_.MET_MetUnclustEnUpDeltaX
           METShiftY =event_.MET_MetUnclustEnUpDeltaY
         elif "unclustEnDown" in self._syst_suffix:
-          METShiftX =-(event_.MET_MetUnclustEnDeltaX)
-          METShiftY =-(event_.MET_MetUnclustEnDeltaY)
+          METShiftX =-(event_.MET_MetUnclustEnUpDeltaX)
+          METShiftY =-(event_.MET_MetUnclustEnUpDeltaY)
         met_px = met_pt*math.cos(met_phi) + METShiftX
         met_py = met_pt*math.sin(met_phi) + METShiftY
 

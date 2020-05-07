@@ -2,8 +2,8 @@ import os
 import copy
 import inspect
 
-##---WP2017---##
-from WPandCut2018 import *
+##---WP2016---##
+from WPandCut2016 import *
 
 
 ##-End WP--##
@@ -19,43 +19,39 @@ mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
 # Jet cut
 
-aliases['nCleanJet20_2p5'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && abs(CleanJet_eta) < 2.5)'
+aliases['nCleanJet20_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && abs(CleanJet_eta) < 2.4)'
             }
 
-aliases['nCleanJet30_2p5'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5)'
+aliases['nCleanJet30_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4)'
             }
 
-aliases['nCleanJet30_2p5_lepveto0p4'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4) )'
+aliases['nCleanJet30_2p4_lepveto0p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4) )'
             }
 
-aliases['nCleanJet30_2p5_tightlepvetoID'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 )'
+aliases['nCleanJet30_2p4_tightlepvetoID'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4 && Jet_jetId[CleanJet_jetIdx]>=4 )'
             }
 
-aliases['nCleanJet30_2p5_tightlepvetoID_lepveto0p4'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_jetId[CleanJet_jetIdx]>=4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4))'
+aliases['nCleanJet30_2p4_tightlepvetoID_lepveto0p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4 && Jet_jetId[CleanJet_jetIdx]>=4 && ((Lepton_eta[0]-CleanJet_eta)*(Lepton_eta[0]-CleanJet_eta)+(Lepton_phi[0]-CleanJet_phi)*(Lepton_phi[0]-CleanJet_phi)) >= (0.4*0.4))'
             }
-# MET
 
-aliases['METAlias'] = {
-            #'expr': 'PuppiMET_pt',
-            'expr': 'MET_CHToCB_pt_nom'
-            }
 
 # B tagging
 
 aliases['nBJets_WP_M'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepB[CleanJet_jetIdx] > 0.4184)'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4 && Jet_btagDeepB[CleanJet_jetIdx] > 0.6321 )'
             }
 
 
 ###---Btag SF---###
 
-btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_102XSF_V1.csv' % os.getenv('CMSSW_BASE')
-btagNormSource = '%s/src/SNuAnalytics/Configurations/TTSemiLep/patches/BTagReshapeNorm.root' % os.getenv('CMSSW_BASE')
+btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_2016LegacySF_V1.csv' % os.getenv('CMSSW_BASE')
+#TODO will derive 2016
+btagNormSource = '%s/src/SNuAnalytics/Configurations/TTSemiLep/patches/BTagReshapeNorm_2017.root' % os.getenv('CMSSW_BASE')
 
 aliases['Jet_btagSF_shapeFix'] = {
     'linesToAdd': [
@@ -84,12 +80,12 @@ aliases['Jet_btagSF_shapeFixNorm_top'] = {
 
 
 aliases['btagSF'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
+    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.4)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.4))))',
     'samples': mc
 }
 
 aliases['btagSFNorm_top'] = {
-    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
+    'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.4)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.4))))',
     'samples': mc
 }
 
@@ -137,7 +133,7 @@ aliases['Jet_PUID_SF_L'] = {
         '.L %s/patches/pujetidsf_event.cc+' % configurations
     ],
     'class': 'PUJetIdEventSF',
-    'args': (PUIDSFSource,"2018","loose"),
+    'args': (PUIDSFSource,"2016","loose"),
     'samples': mc
 }
 
@@ -161,7 +157,7 @@ aliases['Jet_PUID_SF_L'] = {
 #
 #    ],
 #    'class': 'KinematicFitter',
-#    'args': ("2018"),
+#    'args': ("2017"),
 #    'samples': samples.keys()
 #}
 #

@@ -1,12 +1,12 @@
 #-----Variable Deinition-----#
 try:
-  from WPandCut2018 import *
+  from WPandCut2017 import *
 except ImportError:
   import os, sys
   CMSSW     = os.environ["CMSSW_BASE"]
-  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2017/SKIM7"
   sys.path.append(BASE_PATH)
-  from WPandCut2018 import *
+  from WPandCut2017 import *
 
 
 #------End of Variable Definition-----#
@@ -143,7 +143,7 @@ variables['Lepton_eta[0]']={
 #}
 
 variables['PuppiMet']={
-    'name' : 'METAlias',
+    'name' : 'MET_CHToCB_pt_nom',
     'range':(50,0,600),
     'xaxis':'MET [GeV]',
     'fold':0

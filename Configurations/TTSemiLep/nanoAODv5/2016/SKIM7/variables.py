@@ -1,12 +1,12 @@
 #-----Variable Deinition-----#
 try:
-  from WPandCut2018 import *
+  from WPandCut2016 import *
 except ImportError:
   import os, sys
   CMSSW     = os.environ["CMSSW_BASE"]
-  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/SKIM5"
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/SKIM7"
   sys.path.append(BASE_PATH)
-  from WPandCut2018 import *
+  from WPandCut2016 import *
 
 
 #------End of Variable Definition-----#
@@ -143,7 +143,7 @@ variables['Lepton_eta[0]']={
 #}
 
 variables['PuppiMet']={
-    'name' : 'METAlias',
+    'name' : 'MET_CHToCB_pt_nom',
     'range':(50,0,600),
     'xaxis':'MET [GeV]',
     'fold':0
@@ -175,8 +175,8 @@ variables ['PV_npvs']={
     'fold':0
 }
 
-variables ['nCleanJet30_2p5']={
-    'name' : 'nCleanJet30_2p5',
+variables ['nCleanJet30_2p4']={
+    'name' : 'nCleanJet30_2p4',
     'range' : (6,4,10),
     'xaxis' : 'jet multiplicity',
     'fold':0
@@ -189,20 +189,20 @@ variables ['nBJets_WP_M']={
     'fold':0
 }
 
-#variables ['nCleanJet30_2p5_lepveto0p4']={
-#    'name' : 'nCleanJet30_2p5_lepveto0p4',
+#variables ['nCleanJet30_2p4_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p4_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet30_2p5_tightlepvetoID']={
-#    'name' : 'nCleanJet30_2p5_tightlepvetoID',
+#variables ['nCleanJet30_2p4_tightlepvetoID']={
+#    'name' : 'nCleanJet30_2p4_tightlepvetoID',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet30_2p5_tightlepvetoID_lepveto0p4']={
-#    'name' : 'nCleanJet30_2p5_tightlepvetoID_lepveto0p4',
+#variables ['nCleanJet30_2p4_tightlepvetoID_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p4_tightlepvetoID_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
