@@ -9,8 +9,6 @@ from ROOT import TFile, TTree, TCut, TMVA, gROOT
 
 class TMVATools():
 
-
-
   def __init__(self):
     gROOT.SetBatch()
     TMVA.Tools.Instance()
@@ -18,8 +16,10 @@ class TMVATools():
     self._trees = {}
     self._fout = None
     self._variables = {}
+    self._spectators = {}
     self._cuts = {}
     self._options = {}
+    self._debug = True
 
 
   def SetTrees(self,treeName,trees):
@@ -28,6 +28,9 @@ class TMVATools():
 
   def SetVariables(self,variables):
     self._variables = variables
+
+  def SetSpectators(self,spectors):
+    self._spectators = spectors
 
 
   def SetCuts(self,cuts):
@@ -39,6 +42,7 @@ class TMVATools():
 
 
   def _setFactory(self,outFileName):
+    print 'OutFileName', outFileName
     self._fout = TFile(outFileName,"RECREATE")
     self._factory = TMVA.Factory(self._options['factory']['name'],
 		                 self._fout,
@@ -49,7 +53,10 @@ class TMVATools():
   def _dataLoader(self,sigTreeNames,bkgTreeNames):
     self._data_loader = TMVA.DataLoader(self._options['factory']['name'])
     for value in self._variables.values():
-      self._data_loader.AddVariable(value['name'],value['type'])
+      self._data_loader.AddVariable(value['definition'],value['type'])
+    for value in self._spectators.values():
+      print 'spectator added:', value['definition']
+      self._data_loader.AddSpectator(value['definition'])
     #----
     for sigTreeName in sigTreeNames:
       if "_Train" in sigTreeName:
@@ -57,14 +64,16 @@ class TMVATools():
       elif "_Test" in sigTreeName:
         self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"test")
       else:
-        raise Exception("[TMVATools.py] raise exception at _dataLoase")
+        self._data_loader.AddSignalTree(self._trees[sigTreeName])
+        #raise Exception("[TMVATools.py] raise exception at _dataLoase")
     for bkgTreeName in bkgTreeNames:
       if "_Train" in bkgTreeName:
         self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"train")
       elif "_Test" in bkgTreeName:
         self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"test")
       else:
-        raise Exception("[TMVATools.py] raise exception at _dataLoase")
+        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName])
+        #raise Exception("[TMVATools.py] raise exception at _dataLoase")
     self._data_loader.SetSignalWeightExpression(self._options['factory']['weight'])
     self._data_loader.SetBackgroundWeightExpression(self._options['factory']['weight'])
     #----
@@ -83,23 +92,26 @@ class TMVATools():
 			       )
 
 
-  def doTrain(self,sigTreeNameList,bkgTreeNameList,outWeightsSuffix,outFileName,epoch=1):
+  def doTrain(self, sigTreeNameList, bkgTreeNameList, outWeightsSuffix, outFileName, epoch=1):
+    if self._debug:
+      print sigTreeNameList, bkgTreeNameList
     self._setFactory(outFileName)
-    self._dataLoader(sigTreeNameList,bkgTreeNameList)
+    self._dataLoader(sigTreeNameList, bkgTreeNameList)
     self._bookMethod()
     self._factory.TrainAllMethods()
     self._factory.TestAllMethods()
     self._factory.EvaluateAllMethods()
     self._getSignalReferenceCut(outWeightsSuffix)
+    self._fout.Close()
 
 
   def doTest(self):
     pass
 
   def _getSignalReferenceCut(self,outWeightsSuffix):
-    fOut = open('signal_reference_cut.txt','a')
+    fOut = open('signal_reference_cut.txt','w')
     for method in self._options['bookMethod']:
-      cut = self._factory.GetMethod(self._options['factory']['name'], method['name']).GetSignalReferenceCut()
+      cut = self._factory.GetMethod(self._options['factory']['name'], method['name']).GetSignalReferenceCut() # minimum requirement on the MVA output to declare an event signal-like
       out = "%s_%s		%s\n"%(method['name'],outWeightsSuffix,cut)
       fOut.write(out)
 

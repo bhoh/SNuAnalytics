@@ -137,7 +137,8 @@ float MelaHighMassKDwCalc::computeDecP(TVar::Process process, TVar::MatrixElemen
   float me;
   if(process == TVar::bkgWW){
     //cout<<"bkgWW case"<<endl;
-    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
+    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);
+    //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
   }else{
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZGG);
   }
@@ -163,7 +164,8 @@ float MelaHighMassKDwCalc::computeProdP(TVar::Process process, TVar::MatrixEleme
 
   float me;
   if(process == TVar::bkgWW){
-    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
+    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);
+    //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
   }else{
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZGG);
   }
