@@ -198,6 +198,44 @@ def prepare_HMsemilep_syst(basename):
   return dictionary
 
 
+def prepare_CHToCB_syst(base_name):
+    dictionary = {}
+    syst_tot = ['jer','jesTotal','unclustEn']
+    syst_uncorr = ['jesAbsolute_RPLME_YEAR','jesBBEC1_RPLME_YEAR','jesEC2_RPLME_YEAR','jesHF_RPLME_YEAR','jesRelativeSample_RPLME_YEAR']
+    syst_corr = ['jesAbsolute','jesBBEC1','jesEC2','jesFlavorQCD','jesHF','jesRelativeBal']
+    syst_all = syst_tot + syst_uncorr + syst_corr
+    for syst in syst_all:
+      for j in ['Up','Down']:
+        dictionary[base_name+ "_" + syst + j] = {
+                  'isChain'    : False,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting_{0}{1} = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix="{0}{1}")'.format(syst,j),
+                  'module'     : 'kinFitting_{0}{1}()'.format(syst,j),
+               }
+
+    #make chain
+    dictionary[base_name+"_"+"jetMETSyst_Total"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Up','Down']],
+               }
+    dictionary[base_name+"_"+"jetMETSyst_uncorr"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Up','Down']],
+               }
+    dictionary[base_name+"_"+"jetMETSyst_corr"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Up','Down']],
+               }
+
+    return dictionary
 
 
 Steps = {
@@ -1557,10 +1595,10 @@ Steps = {
                   #2018 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5\
                                        ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5 &&\
                                         Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
                                        )>=2))\
@@ -1570,6 +1608,64 @@ Steps = {
                   'module'     : 'kinFitting()',
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
                },
+    'kinFitTTSemiLep_2017': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2017 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4941\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+               },
+    'kinFitTTSemiLep_2016': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2016 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.4\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.6321\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+               },
+
+    'GenKinFitTTSemiLep_2018': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : False,
+                  #'selection'  : '"Entry$<1000"',
+                  'selection'  : '""',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.GenKinFitterProducer' ,
+                  'declare'    : 'GenKinFitting = lambda : GenKinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'GenKinFitting()',
+               },
+
+
+
     '4j2b_CHToCB_2018' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
@@ -1593,17 +1689,21 @@ Steps = {
                   'module'     : 'Dummy()',
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
-    'genCHToCB' : {
+    'genCHToCB_2018' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
                                         abs(CleanJet_eta) < 2.5\
-                                       ) >= 4)\
-                                   )\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
+                                       )>=2))\
                                   "',
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
-                  'module'     : 'genCHToCB()'
+                  'module'     : 'genCHToCB()',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
 ## ------- MODULES: Object Handling
 
@@ -4274,3 +4374,10 @@ Steps.update(addJESchainMembers())
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2016v6_fatjet"))
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMSemilep2017v6_fatjet"))
 Steps.update(prepare_HMsemilep_Fatjet_syst("HMsemilep2018v6_fatjet"))
+
+
+# Add syst steps for CHToCB
+# kinFitTTSemiLep_jetMETSyst_Total
+# kinFitTTSemiLep_jetMETSyst_uncorr
+# kinFitTTSemiLep_jetMETSyst_corr
+Steps.update(prepare_CHToCB_syst("kinFitTTSemiLep"))

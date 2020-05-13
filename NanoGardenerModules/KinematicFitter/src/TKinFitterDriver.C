@@ -355,6 +355,19 @@ void TKinFitterDriver::SetNeutrino(TLorentzVector met_, int i){
 }
 
 
+void TKinFitterDriver::SetNeutrinoSmallerPz(TLorentzVector met_){
+  this->SetMET(met_);
+  this->Sol_Neutrino_Pz();
+  if(IsRealNeuPz){
+    if(fabs(neutrino_pz_sol[0]) < fabs(neutrino_pz_sol[1])){
+      this->SetNeutrino(METv, 0);
+    }
+    else{
+      this->SetNeutrino(METv, 1);
+    }
+  }
+}
+
 void TKinFitterDriver::SetCurrentPermutationJets(){
 
   hadronic_top_b_jet_idx=-1;
@@ -547,6 +560,7 @@ void TKinFitterDriver::SaveResults(){
     // re-calculate chi2,
     //chi2 term comes from constraint is not accurate
     fit_result.chi2 = this->CalcChi2();
+    fit_result.lambda = fitter->getLambda();
 
     // calc. dijet mass
     const TLorentzVector *fitted_jet1 = fit_hadronic_w_ch_jet1->getCurr4Vec(); // get address of fitted object
@@ -617,6 +631,12 @@ double TKinFitterDriver::CalcEachChi2(TFitConstraintM* ptr, double width){
 
 double TKinFitterDriver::CalcEachChi2(TFitConstraintMGaus* ptr){
   return ptr->getChi2();
+}
+
+void TKinFitterDriver::FitCurrentPermutation(){
+  fit_result_vector.clear();
+  this->Fit();
+  fit_result_vector.push_back(fit_result);
 }
 
 
@@ -827,6 +847,14 @@ double TKinFitterDriver::GetBestChi2(){
   double out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).chi2;
+  }
+  return out==9999 ? -1. : out;
+}
+
+double TKinFitterDriver::GetBestLambda(){
+  double out=-1;
+  if(fit_result_vector.size()>0){
+    out =fit_result_vector.at(0).lambda;
   }
   return out==9999 ? -1. : out;
 }
