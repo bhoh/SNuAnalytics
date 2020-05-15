@@ -209,7 +209,8 @@ modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
 #mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_5 -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s HMlnjjLepVetoBWRew -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5__HMlnjjLepVetoBWRew -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST} 
-mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7 -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST} 
+#mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7 -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST} 
+mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST}
 
 
 #mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6 -s ElepTup_suffix -b -T ${SAMPLE_LIST} 

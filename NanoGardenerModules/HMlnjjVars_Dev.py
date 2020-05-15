@@ -433,6 +433,10 @@ class HMlnjjVarsClass_Dev(Module):
 
         if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
 
+        #if event.event % 10000 ==1 :##To flush memory of ttree
+	#  self.out._tree.AutoSave()
+	#self.out._tree.AutoSave("FlushBaskets")
+
         return True
 
 

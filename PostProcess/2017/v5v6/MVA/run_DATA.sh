@@ -25,7 +25,8 @@ modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
 
 #mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i Prod -s DATAl1loose2017v6 -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i DATAl1loose2017v6 -s HMSemilepSkimJH2017v6_7_data -b -T ${SAMPLE_LIST}
-mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i DATAl1loose2017v6__HMSemilepSkimJHv6_7_data -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i DATAl1loose2017v6__HMSemilepSkimJHv6_7_data -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i DATAl1loose2017v6__HMSemilepSKIMv6_10_data -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST}
 
 
 

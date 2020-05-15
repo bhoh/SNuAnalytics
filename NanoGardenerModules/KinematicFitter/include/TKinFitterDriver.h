@@ -34,6 +34,11 @@ public:
                      std::vector<bool> btag_vector_,
                      TLorentzVector lepton_,
                      TLorentzVector met_);
+  void SetAllObjects(std::vector<TLorentzVector> jet_vector_,
+                     std::vector<double> btag_csv_vector_,
+                     double btag_cut_,
+                     TLorentzVector lepton_,
+                     TLorentzVector met_);
   void SetHadronicTopBJets(TLorentzVector jet_); // it doesn't check tagging status
   void SetLeptonicTopBJets(TLorentzVector jet_); // it doesn't check tagging status
   void SetWCHUpTypeJets(TLorentzVector jet_); // u/c jet from W(H+)
@@ -48,26 +53,44 @@ public:
   void SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down);
   void SetMETShift(double met_shiftX, double met_shiftY);
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
+  void SetNeutrinoSmallerPz(TLorentzVector met_);
 
   void Fit();
+  void FitCurrentPermutation();
   void FindBestChi2Fit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
+  void FindMaxPtHadTopFit(bool IsMaxLepTopPt, bool IsClosestHadTopM, bool IsClosestLepTopM);
 
   int GetStatus();
   double GetChi2();
+  int GetBestDownTypeJetBTagged();
   double GetFittedDijetMass();
   double GetInitialDijetMass();
   double GetCorrectedDijetMass();
 
   int GetBestStatus();
   double GetBestChi2();
+  double GetBestLambda();
   double GetBestFittedDijetMass();
+  double GetBestFittedDijetMass_high();
   double GetBestInitialDijetMass();
+  double GetBestInitialDijetMass_high();
   double GetBestCorrectedDijetMass();
+  double GetBestCorrectedDijetMass_high();
 
   double GetBestHadronicTopMass();
+  double GetBestHadronicTopPt();
   double GetBestLeptonicTopMass();
   double GetBestLeptonicWMass();
   bool GetBestIsRealNeuPz();
+
+  int GetBestHadronicTopBJetIdx();
+  int GetBestLeptonicTopBJetIdx();
+  int GetBestHadronicWCHUpTypeJetIdx();
+  int GetBestHadronicWCHDownTypeJetIdx();
+
+  double GetBestHadronicTopBJetPull();
+  double GetBestHadronicWCHUptypeJetIdxPull();
+  double GetBestHadronicWCHDowntypeJetIdxPull();
 
   double GetBestHadronicTopMassF();
   double GetBestLeptonicTopMassF();
@@ -88,15 +111,22 @@ public:
     NONE
   };
 
-  struct ResultContatiner{
-    ResultContatiner(){}
-    ~ResultContatiner(){}
+  struct ResultContainer{
+    ResultContainer(){}
+    ~ResultContainer(){}
     int status; //fitter status
     double fitted_dijet_M;
     double initial_dijet_M;
     double corrected_dijet_M;
+
+    double fitted_dijet_M_high;
+    double initial_dijet_M_high;
+    double corrected_dijet_M_high;
+
     double hadronic_top_M;
+    double hadronic_top_pt;
     double leptonic_top_M;
+    double leptonic_top_pt;
     double leptonic_W_M;
     bool IsRealNeuPz;
 
@@ -105,6 +135,20 @@ public:
     double w_ch_up_type_pt;
     double w_ch_down_type_pt;
 
+    //idx
+    int hadronic_top_b_jet_idx;
+    int leptonic_top_b_jet_idx;
+    int hadronic_w_ch_jet1_idx;
+    int hadronic_w_ch_jet2_idx;
+
+    //pull
+    double hadronic_top_b_jet_pull;
+    double hadronic_w_ch_jet1_pull;
+    double hadronic_w_ch_jet2_pull;
+
+    //tagging
+    int is_w_ch_down_type_jet_b_tagged;
+
     // F from constraints
     double hadronic_top_mass_F;
     double leptonic_top_mass_F;
@@ -112,6 +156,7 @@ public:
     double currS;
     double deltaS;
     double chi2;
+    double lambda;
   };
 
 private:
@@ -147,6 +192,7 @@ private:
   std::vector<TLorentzVector> jet_vector;
   std::vector<double> jet_pt_resolution_vector;
   std::vector<bool> btag_vector;
+  std::vector<double> btag_csv_vector;
   TLorentzVector METv;
   double MET_pt_shift;
   double MET_phi_shift;
@@ -180,6 +226,11 @@ private:
   TFitParticlePxPy *fit_neutrino_pxpy;
   TFitParticlePz *fit_neutrino_pz;
 
+  int hadronic_top_b_jet_idx;
+  int leptonic_top_b_jet_idx;
+  int hadronic_w_ch_jet1_idx;
+  int hadronic_w_ch_jet2_idx;
+
   TMatrixD error_hadronic_top_b_jet; 
   TMatrixD error_leptonic_top_b_jet;
   TMatrixD error_hadronic_w_ch_jet1;
@@ -194,12 +245,16 @@ private:
   TFitConstraintM *constrain_leptonic_W_M;
   //TFitConstraintMGaus *constrain_leptonic_W_MGaus;
 
-  TKinFitterDriver::ResultContatiner fit_result;
+  TKinFitterDriver::ResultContainer fit_result;
 
-  std::vector<TKinFitterDriver::ResultContatiner> fit_result_vector;
-  std::vector<TKinFitterDriver::ResultContatiner> GetResults();
-  static bool Chi2Comparing(const TKinFitterDriver::ResultContatiner& rc1, const TKinFitterDriver::ResultContatiner& rc2);
-  static bool HighMassFitter(const TKinFitterDriver::ResultContatiner& rc1, const TKinFitterDriver::ResultContatiner& rc2);
+  std::vector<TKinFitterDriver::ResultContainer> fit_result_vector;
+  std::vector<TKinFitterDriver::ResultContainer> GetResults();
+  static bool Chi2Comparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+  static bool HighMassFitter(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+  static bool HadTopPtComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+  static bool LepTopPtComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+  static bool TopPtComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+
 };
 
 #endif

@@ -37,38 +37,38 @@ from List_melaKDmass import *
 
 for MX in List_melaKDmass:
   variables['P_BstGF'+str(MX)]={
-      'name' : 'PrbBstGF' + str(MX),
+      'name' : 'P_BstGF' + str(MX),
       'range':(50,0,1),
       'xaxis':'Prob. GF_{Boost}',
       'fold':3
   }
   variables['P_RsvGF'+str(MX)]={
-      'name' : 'PrbRsvGF' + str(MX),
+      'name' : 'P_RsvGF' + str(MX),
       'range':(50,0,1),
       'xaxis':'Prob. GF_{Resol}',
       'fold':3
   }
   variables['meP'+str(MX) +'_BstNoT_ggf_S']={
-      'name' : 'meP' + str(MX) + '_BstNoT_ggf_S*1e9',
-      'range':(50,0,1e-3),
+      'name' : 'meP' + str(MX) + '_BstNoT_ggf_S',
+      'range':(50,0,1e-7),
       'xaxis':'Prob. GF_{Boost}',
       'fold':3
   }
   variables['meP'+str(MX) +'_BstNoT_ggf_B']={
-      'name' : 'meP' + str(MX) + '_BstNoT_ggf_B*1e9',
-      'range':(50,0,1e-3),
+      'name' : 'meP' + str(MX) + '_BstNoT_ggf_B',
+      'range':(50,0,1e-7),
       'xaxis':'Prob. GF_{Boost}',
       'fold':3
   }
   variables['meP'+str(MX)+'_ResNoT_ggf_S']={
-      'name' : 'meP'+str(MX)+'_ResNoT_ggf_S*1e9',
-      'range':(50,0,1e-3),
+      'name' : 'meP'+str(MX)+'_ResNoT_ggf_S',
+      'range':(50,0,1e-7),
       'xaxis':'Prob. GF_{Resol}',
       'fold':3
   }
   variables['meP'+str(MX)+'_ResNoT_ggf_B']={
-      'name' : 'meP'+str(MX)+'_ResNoT_ggf_B*1e9',
-      'range':(50,0,1e-3),
+      'name' : 'meP'+str(MX)+'_ResNoT_ggf_B',
+      'range':(50,0,1e-7),
       'xaxis':'Prob. GF_{Resol}',
       'fold':3
   }
