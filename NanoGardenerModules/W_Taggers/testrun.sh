@@ -1,7 +1,7 @@
 #HMSemilepSKIMv6_8
 ##DATARUN
 #SNuAnalytics/NanoGardenerModules/WhadronTagger
-modcfg="--modcfg SNuAnalytics/NanoGardenerModules/WhadronTagger/Steps_cfg.py"
+modcfg="--modcfg SNuAnalytics/NanoGardenerModules/W_Taggers/Steps_cfg.py"
 #dobatch='-b'
 dobatch=''
 
@@ -32,4 +32,10 @@ dobatch=''
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WtaggerProducer -T GluGluHToWWToLNuQQ_M1000
 
 ##wlepmaker
-mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WlepMaker_test -T GluGluHToWWToLNuQQ_M1000
+#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WlepMaker_test -T GluGluHToWWToLNuQQ_M1000
+
+#WmakerChain test
+mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WtaggerProducer -T GluGluHToWWToLNuQQ_M1000
+#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WmakerChain_nom_test -T GluGluHToWWToLNuQQ_M1000 -b
+#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s WmakerChain_sys_test -T GluGluHToWWToLNuQQ_M1000 -b
+#mkPostProc.py ${modcfg} -p Run2018_102X_nAODv6_Full2018v6 -i DATAl1loose2018v6__HMSemilepSKIMv6_10_data -s WmakerChain_data_test -T SingleMuon_Run2018D-Nano25Oct2019_ver2-v1 -b

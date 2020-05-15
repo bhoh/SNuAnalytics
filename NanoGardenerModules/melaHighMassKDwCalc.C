@@ -36,6 +36,7 @@ class MelaHighMassKDwCalc{
 
   void setIsVbfProd(bool IsVbf){_isVBF = IsVbf; return;};
   float computeDecP( TVar::Process, TVar::MatrixElement, bool resetInputEvent );
+  float computeDecP2( TVar::Process, TVar::MatrixElement, bool resetInputEvent );
   float computeProdP(TVar::Process, TVar::MatrixElement, bool resetInputEvent );
   
 
@@ -137,8 +138,36 @@ float MelaHighMassKDwCalc::computeDecP(TVar::Process process, TVar::MatrixElemen
   float me;
   if(process == TVar::bkgWW){
     //cout<<"bkgWW case"<<endl;
-    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);
+<<<<<<< HEAD
+    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
+    //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);//jhchoi change to qq->WW more dominant in SM->same value
+  }else{
+    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZGG);
+  }
+  //_mela->setProcess(TVar::HSMHiggs, TVar::MCFM, _isVBF ? TVar::JJVBF : TVar::ZZGG);
+  // Added here -- U. Sarica
+  //cout<<"setting mass and width "<<_mpole<<" "<<_width<<endl;
+  _mela->setMelaHiggsMassWidth(_mpole, _width, 0);
+  //_mela->setMelaHiggsMassWidth(125., 4.07e-3, 1);
+  //
+  if (!_isVBF)
+    _mela->computeP(me, !_isGenLevel);//useConstant: if isGen=true when calling setInputEvent, this argument will be disregarded. recon useConstant = true
+  else
+    _mela->computeProdDecP(me, !_isGenLevel); // only with MCFM
+
+  if(resetEvt)
+    _mela->resetInputEvent(); // clean up 
+
+  return me;
+}
+
+float MelaHighMassKDwCalc::computeDecP2(TVar::Process process, TVar::MatrixElement MEgen, bool resetEvt){    
+
+  float me;
+  if(process == TVar::bkgWW){
+    //cout<<"bkgWW case"<<endl;
     //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
+    _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);//jhchoi change to qq->WW more dominant in SM
   }else{
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZGG);
   }
@@ -164,10 +193,12 @@ float MelaHighMassKDwCalc::computeProdP(TVar::Process process, TVar::MatrixEleme
 
   float me;
   if(process == TVar::bkgWW){
+
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);
     //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
   }else{
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZGG);
+    //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJVBF : TVar::ZZQQB);
   }
   //_mela->setProcess(TVar::HSMHiggs, TVar::MCFM, _isVBF ? TVar::JJVBF : TVar::ZZGG);
   // Added here -- U. Sarica
