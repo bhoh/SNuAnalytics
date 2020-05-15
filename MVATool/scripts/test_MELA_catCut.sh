@@ -1,6 +1,6 @@
 
 # To make the tree for MELA cut study
-#python test_MELA_catCut.py
+python test_MELA_catCut.py
 #python test_MELA_catCut.py | tee log.txt
 
 # Copy MELA cut tree which is the output of TMVA cuts
@@ -12,4 +12,4 @@
 #mv TMVAClassification TMVAClassification_$datevalue
 #mkdir -p TMVAClassification/plots
 
-root -l 'mvaeffscxxMod.C("","Out_Roots/out_train_2017_Bst_Pggfh1500_GgfM1000vsEW0p1.root",50,0.01)'
+#root -l 'mvaeffscxxMod.C("","Out_Roots/out_train_2017_Bst_Pggfh1500_GgfM1000vsEW0p1.root",50,0.01)'

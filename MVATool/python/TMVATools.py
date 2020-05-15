@@ -94,7 +94,7 @@ class TMVATools():
 
   def doTrain(self, sigTreeNameList, bkgTreeNameList, outWeightsSuffix, outFileName, epoch=1):
     if self._debug:
-      print sigTreeNameList, bkgTreeNameList
+      print "doTrain: sigSampleList, bkgSampleList",sigTreeNameList, bkgTreeNameList
     self._setFactory(outFileName)
     self._dataLoader(sigTreeNameList, bkgTreeNameList)
     self._bookMethod()
