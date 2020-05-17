@@ -1,3 +1,5 @@
+import os
+import copy
 Steps={}##initializWe steps dictionary
 
 
@@ -216,46 +218,57 @@ Steps['WlepMaker_data'] = {
 }
 
 ###--Analyzer
-Steps['HMlnjjVars_Dev_jhchoi9_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
     ##Use for data/nom
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
+    'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
+    'module':  'hmlnjjvar()',
+
+}
+
+Steps['HMlnjjVars_Dev_jhchoi11_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+    ##Use for data/nom
+    'isChain': False,
+    'do4MC': True,
+    'do4Data': True,
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
     ##Use for data/nom
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9_test',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10_test',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
-Steps['HMlnjjVars_Dev_jhchoi9_sys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_sys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
@@ -263,83 +276,83 @@ Steps['HMlnjjVars_Dev_jhchoi9_jetsys'] = {#    def __init__(self, year, METtype=
 
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysup'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysup'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="up",pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysdown'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysdown'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="down",pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysup_correlate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysup_correlate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="up",pairalgos=["dMchi2Resolution","dM"],jsyssources="correlate")',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysdown_correlate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysdown_correlate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="down",pairalgos=["dMchi2Resolution","dM"],jsyssources="correlate")',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysup_uncorrelate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysup_uncorrelate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="up",pairalgos=["dMchi2Resolution","dM"],jsyssources="uncorrelate")',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_jetsysdown_uncorrelate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_jetsysdown_uncorrelate'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars="down",pairalgos=["dMchi2Resolution","dM"],jsyssources="uncorrelate")',
     'module':  'hmlnjjvar()',
 
 }
 
 
-Steps['HMlnjjVars_Dev_jhchoi9_fatjetsys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_fatjetsys'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
@@ -348,115 +361,123 @@ Steps['HMlnjjVars_Dev_jhchoi9_fatjetsys'] = {#    def __init__(self, year, METty
 
 
 ##--Chain
-Steps['HMFull_jhchoi9_nom']={
+Steps['HMFull_jhchoi10_nom']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi10_nom'],
 
 }
 
-Steps['HMFull_jhchoi9_sys']={
+Steps['HMFull_jhchoi11_nom']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsys','WtaggerProducer_fatjetsys','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_sys'],
+    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi11_nom'],
 
 }
 
-
-
-Steps['HMFull_jhchoi9_jetsys']={
+Steps['HMFull_jhchoi10_sys']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsys','WtaggerProducer_nom','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_jetsys'],
-
-}
-
-Steps['HMFull_jhchoi9_jetsysup']={
-    'isChain':True,
-    'do4MC':True,
-    'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup','WtaggerProducer_nom','WjjtaggerProducer_jetsysup','HMlnjjVars_Dev_jhchoi9_jetsysup'],
+    'subTargets':['WlepMaker_jetsys','WtaggerProducer_fatjetsys','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi10_sys'],
 
 }
 
 
-Steps['HMFull_jhchoi9_jetsysdown']={
+
+Steps['HMFull_jhchoi10_jetsys']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown','HMlnjjVars_Dev_jhchoi9_jetsysdown'],
+    'subTargets':['WlepMaker_jetsys','WtaggerProducer_nom','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi10_jetsys'],
+
+}
+
+Steps['HMFull_jhchoi10_jetsysup']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':False,
+    'subTargets':['WlepMaker_jetsysup','WtaggerProducer_nom','WjjtaggerProducer_jetsysup','HMlnjjVars_Dev_jhchoi10_jetsysup'],
 
 }
 
 
-Steps['HMFull_jhchoi9_jetsysup_correlate']={
+Steps['HMFull_jhchoi10_jetsysdown']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_correlate','HMlnjjVars_Dev_jhchoi9_jetsysup_correlate'],
+    'subTargets':['WlepMaker_jetsysdown','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown','HMlnjjVars_Dev_jhchoi10_jetsysdown'],
 
 }
 
 
-Steps['HMFull_jhchoi9_jetsysdown_correlate']={
+Steps['HMFull_jhchoi10_jetsysup_correlate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_correlate','HMlnjjVars_Dev_jhchoi9_jetsysdown_correlate'],
-
-}
-
-Steps['HMFull_jhchoi9_jetsysup_uncorrelate']={
-    'isChain':True,
-    'do4MC':True,
-    'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysup_uncorrelate'],
+    'subTargets':['WlepMaker_jetsysup_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_correlate','HMlnjjVars_Dev_jhchoi10_jetsysup_correlate'],
 
 }
 
 
-Steps['HMFull_jhchoi9_jetsysdown_uncorrelate']={
+Steps['HMFull_jhchoi10_jetsysdown_correlate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysdown_uncorrelate'],
+    'subTargets':['WlepMaker_jetsysdown_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_correlate','HMlnjjVars_Dev_jhchoi10_jetsysdown_correlate'],
 
 }
 
-Steps['HMFull_jhchoi9_fatjetsys']={
+Steps['HMFull_jhchoi10_jetsysup_uncorrelate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_fatjetsys','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_fatjetsys'],
+    'subTargets':['WlepMaker_jetsysup_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_uncorrelate','HMlnjjVars_Dev_jhchoi10_jetsysup_uncorrelate'],
 
 }
 
 
-Steps['HMFull_jhchoi9_data']={
+Steps['HMFull_jhchoi10_jetsysdown_uncorrelate']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':False,
+    'subTargets':['WlepMaker_jetsysdown_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_uncorrelate','HMlnjjVars_Dev_jhchoi10_jetsysdown_uncorrelate'],
+
+}
+
+Steps['HMFull_jhchoi10_fatjetsys']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':False,
+    'subTargets':['WlepMaker_nom','WtaggerProducer_fatjetsys','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi10_fatjetsys'],
+
+}
+
+
+Steps['HMFull_jhchoi10_data']={
     'isChain':True,
     'do4MC':False,
     'do4Data':True,
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi10_nom'],
 
 }
 
-Steps['HMFull_jhchoi9_data_test']={
+Steps['HMFull_jhchoi10_data_test']={
     'isChain':True,
     'do4MC':True,
     'do4Data':True,
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_test'],
+    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi10_test'],
 
 }
 
 
-Steps['HMFull_jhchoi9_nom_test']={
+Steps['HMFull_jhchoi10_nom_test']={
     'isChain':True,
     'do4MC':True,
     'do4Data':True,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_test'],
+    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi10_test'],
 
 }
 
@@ -596,7 +617,7 @@ SysSteps = {
 
 Steps.update(SysSteps)
 ##--Define ElepT/MupT/MET
-AnaNom="HMFull_jhchoi9_nom"
+AnaNom="HMFull_jhchoi10_nom"
 
 for SYS in ['ElepTup','ElepTdo','MupTup','MupTdo','METup','METdo']:
     Steps[AnaNom+"_"+SYS]=copy.deepcopy(Steps[SYS])
@@ -618,25 +639,25 @@ Steps['WlepMaker_test'] = {
 
 }
 
-Steps['HMlnjjVars_Dev_jhchoi9test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
     'selection':'"Entry$ < 1000"',
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
 }
 
-Steps['HMlnjjVars_Dev_jhchoi9_sys_test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+Steps['HMlnjjVars_Dev_jhchoi10_sys_test'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
 
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
     'selection':'"Entry$ < 1000"',
-    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi9',
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_Dev_jhchoi10',
     'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",pairalgos=["dMchi2Resolution","dM"])',
     'module':  'hmlnjjvar()',
 
@@ -647,7 +668,7 @@ Steps['HMFull_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi10_nom'],
 
 }
 
@@ -657,7 +678,7 @@ Steps['HMFull_sys_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 1000"',
-    'subTargets':['WlepMaker','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys','HMlnjjVars_Dev_jhchoi9_sys_test'],
+    'subTargets':['WlepMaker','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys','HMlnjjVars_Dev_jhchoi10_sys_test'],
 
 }
 
@@ -691,12 +712,107 @@ Steps['WmakerChain_sys_test']={
 
 
 
-Steps['HMFull_jhchoi9_data_test']={
+Steps['HMFull_jhchoi10_data_test']={
     'isChain':True,
     'do4MC':False,
     'do4Data':True,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi10_nom'],
 
 }
 
+###--BWreweighter
+signals=[
+"GluGluHToWWToLNuQQ_M1000",
+"GluGluHToWWToLNuQQ_M115",
+"GluGluHToWWToLNuQQ_M120",
+"GluGluHToWWToLNuQQ_M124",
+"GluGluHToWWToLNuQQ_M125",
+"GluGluHToWWToLNuQQ_M126",
+"GluGluHToWWToLNuQQ_M130",
+"GluGluHToWWToLNuQQ_M135",
+"GluGluHToWWToLNuQQ_M140",
+"GluGluHToWWToLNuQQ_M145",
+"GluGluHToWWToLNuQQ_M150",
+"GluGluHToWWToLNuQQ_M1500",
+"GluGluHToWWToLNuQQ_M155",
+"GluGluHToWWToLNuQQ_M160",
+"GluGluHToWWToLNuQQ_M165",
+"GluGluHToWWToLNuQQ_M170",
+"GluGluHToWWToLNuQQ_M175",
+"GluGluHToWWToLNuQQ_M180",
+"GluGluHToWWToLNuQQ_M190",
+"GluGluHToWWToLNuQQ_M200",
+"GluGluHToWWToLNuQQ_M2000",
+"GluGluHToWWToLNuQQ_M210",
+"GluGluHToWWToLNuQQ_M230",
+"GluGluHToWWToLNuQQ_M250",
+"GluGluHToWWToLNuQQ_M2500",
+"GluGluHToWWToLNuQQ_M270",
+"GluGluHToWWToLNuQQ_M300",
+"GluGluHToWWToLNuQQ_M3000",
+"GluGluHToWWToLNuQQ_M350",
+"GluGluHToWWToLNuQQ_M400",
+"GluGluHToWWToLNuQQ_M4000",
+"GluGluHToWWToLNuQQ_M450",
+"GluGluHToWWToLNuQQ_M500",
+"GluGluHToWWToLNuQQ_M5000",
+"GluGluHToWWToLNuQQ_M550",
+"GluGluHToWWToLNuQQ_M600",
+"GluGluHToWWToLNuQQ_M650",
+"GluGluHToWWToLNuQQ_M700",
+"GluGluHToWWToLNuQQ_M750",
+"GluGluHToWWToLNuQQ_M800",
+"GluGluHToWWToLNuQQ_M900",
+"VBFHToWWToLNuQQ_M1000",
+"VBFHToWWToLNuQQ_M115",
+"VBFHToWWToLNuQQ_M120",
+"VBFHToWWToLNuQQ_M124",
+"VBFHToWWToLNuQQ_M125",
+"VBFHToWWToLNuQQ_M126",
+"VBFHToWWToLNuQQ_M130",
+"VBFHToWWToLNuQQ_M135",
+"VBFHToWWToLNuQQ_M140",
+"VBFHToWWToLNuQQ_M145",
+"VBFHToWWToLNuQQ_M150",
+"VBFHToWWToLNuQQ_M1500",
+"VBFHToWWToLNuQQ_M155",
+"VBFHToWWToLNuQQ_M160",
+"VBFHToWWToLNuQQ_M165",
+"VBFHToWWToLNuQQ_M170",
+"VBFHToWWToLNuQQ_M175",
+"VBFHToWWToLNuQQ_M180",
+"VBFHToWWToLNuQQ_M190",
+"VBFHToWWToLNuQQ_M200",
+"VBFHToWWToLNuQQ_M2000",
+"VBFHToWWToLNuQQ_M210",
+"VBFHToWWToLNuQQ_M230",
+"VBFHToWWToLNuQQ_M250",
+"VBFHToWWToLNuQQ_M2500",
+"VBFHToWWToLNuQQ_M270",
+"VBFHToWWToLNuQQ_M300",
+"VBFHToWWToLNuQQ_M3000",
+"VBFHToWWToLNuQQ_M350",
+"VBFHToWWToLNuQQ_M400",
+"VBFHToWWToLNuQQ_M4000",
+"VBFHToWWToLNuQQ_M450",
+"VBFHToWWToLNuQQ_M500",
+"VBFHToWWToLNuQQ_M5000",
+"VBFHToWWToLNuQQ_M550",
+"VBFHToWWToLNuQQ_M600",
+"VBFHToWWToLNuQQ_M650",
+"VBFHToWWToLNuQQ_M700",
+"VBFHToWWToLNuQQ_M750",
+"VBFHToWWToLNuQQ_M800",
+"VBFHToWWToLNuQQ_M900",
+]
+
+Steps['BWReweight'] ={
+                 'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.BWEwkSingletReweighter' ,
+                  'declare'    : 'BWEwkSingRew = lambda : BWEwkSingletReweighter(year=RPLME_YEAR)',
+                  'module'     : 'BWEwkSingRew()',
+    'onlySample':signals,
+}
