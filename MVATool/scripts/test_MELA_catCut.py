@@ -175,6 +175,7 @@ ResolNoVbfSR = '(isResolSR && !isVBF_Resol && nBJetResol==0 && meP400_ResNoT_ggf
 
 # settings for isHighMassGGFClass --------------
 isHighMassGGFClass = True
+#W_recoCats = ["Boost"]
 W_recoCats = ["Boost", "Resol"]
 #VarWorkPtsCat = ["1500"]
 VarWorkPtsCat = ["400","1500"]
@@ -456,7 +457,7 @@ for train_year in train_years:
 
               ml_tools.doTrain(
                   ['%s_Events'% hGF ],
-                  ['%s_Events'% bkg ],
+                  ['%s_Events'% bg for bg in bkg_GGFClass[bkgKey]],
                   '%s'%train_year,'out_train_%s.root'% label)
 	      del ml_tools
 
