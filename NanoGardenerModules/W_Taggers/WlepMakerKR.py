@@ -4,9 +4,9 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 Wmass=80.4
-class WlepMaker(Module):
+class WlepMakerKR(Module):
     def __init__(self,METtype='PuppiMET',jsysvars='all',year=2017,jsyssources="all"):
-        print "==init WlepMaker=="
+        print "==init WlepMakerKR=="
         self.METtype = METtype
 
         ##declare
@@ -33,7 +33,7 @@ class WlepMaker(Module):
             if jsysvars=='all':directions=['Up','Down']
             if jsysvars=="up":directions=["Up"]
             if jsysvars=="down":directions=["Down"]
-            print "[WlepMaker]Run all regrouped set of sys"
+            print "[WlepMakerKR]Run all regrouped set of sys"
             self.jsysvars=['nom']
             for s in jsources:
                 for d in directions:

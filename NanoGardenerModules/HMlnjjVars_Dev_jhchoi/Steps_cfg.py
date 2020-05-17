@@ -124,93 +124,93 @@ Steps['WjjtaggerProducer_jetsysdown_uncorrelate'] =  {##    def __init__(self,ye
 
 ##---Wlep tagger--##
 
-Steps['WlepMaker'] = {
+Steps['WlepMakerKR'] = {
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR)',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR)',
     'module':  'wlepmaker()',
 
 }
 
 
 
-Steps['WlepMaker_jetsys'] = {##ak4 jet sys
+Steps['WlepMakerKR_jetsys'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR)',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR)',
     'module':  'wlepmaker()',
 }
-Steps['WlepMaker_jetsysup'] = {##ak4 jet sys
+Steps['WlepMakerKR_jetsysup'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up")',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up")',
     'module':  'wlepmaker()',
 }
-Steps['WlepMaker_jetsysdown'] = {##ak4 jet sys
+Steps['WlepMakerKR_jetsysdown'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down")',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down")',
     'module':  'wlepmaker()',
 }
-Steps['WlepMaker_jetsysup_correlate'] = {##ak4 jet sys
+Steps['WlepMakerKR_jetsysup_correlate'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up",jsyssources="correlate")',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up",jsyssources="correlate")',
     'module':  'wlepmaker()',
 }
-Steps['WlepMaker_jetsysdown_correlate'] = {##ak4 jet sys
+Steps['WlepMakerKR_jetsysdown_correlate'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down",jsyssources="correlate")',
-    'module':  'wlepmaker()',
-}
-
-Steps['WlepMaker_jetsysup_uncorrelate'] = {##ak4 jet sys
-    'isChain': False,
-    'do4MC': True,
-    'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up",jsyssources="uncorrelate")',
-    'module':  'wlepmaker()',
-}
-Steps['WlepMaker_jetsysdown_uncorrelate'] = {##ak4 jet sys
-    'isChain': False,
-    'do4MC': True,
-    'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down",jsyssources="uncorrelate")',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down",jsyssources="correlate")',
     'module':  'wlepmaker()',
 }
 
-
-Steps['WlepMaker_nom'] = {
+Steps['WlepMakerKR_jetsysup_uncorrelate'] = {##ak4 jet sys
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",jsysvars=["nom"],year=RPLME_YEAR)',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="up",jsyssources="uncorrelate")',
+    'module':  'wlepmaker()',
+}
+Steps['WlepMakerKR_jetsysdown_uncorrelate'] = {##ak4 jet sys
+    'isChain': False,
+    'do4MC': True,
+    'do4Data': True,
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",year=RPLME_YEAR,jsysvars="down",jsyssources="uncorrelate")',
+    'module':  'wlepmaker()',
+}
+
+
+Steps['WlepMakerKR_nom'] = {
+    'isChain': False,
+    'do4MC': True,
+    'do4Data': True,
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",jsysvars=["nom"],year=RPLME_YEAR)',
     'module':  'wlepmaker()',
 
 }
 
-Steps['WlepMaker_data'] = {
+Steps['WlepMakerKR_data'] = {
     'isChain': False,
     'do4MC': False,
     'do4Data': True,
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET",jsysvars=["nom"],year=RPLME_YEAR)',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET",jsysvars=["nom"],year=RPLME_YEAR)',
     'module':  'wlepmaker()',
 
 }
@@ -352,7 +352,7 @@ Steps['HMFull_jhchoi9_nom']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
 
 }
 
@@ -360,7 +360,7 @@ Steps['HMFull_jhchoi9_sys']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsys','WtaggerProducer_fatjetsys','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_sys'],
+    'subTargets':['WlepMakerKR_jetsys','WtaggerProducer_fatjetsys','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_sys'],
 
 }
 
@@ -370,7 +370,7 @@ Steps['HMFull_jhchoi9_jetsys']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsys','WtaggerProducer_nom','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_jetsys'],
+    'subTargets':['WlepMakerKR_jetsys','WtaggerProducer_nom','WjjtaggerProducer_jetsys','HMlnjjVars_Dev_jhchoi9_jetsys'],
 
 }
 
@@ -378,7 +378,7 @@ Steps['HMFull_jhchoi9_jetsysup']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup','WtaggerProducer_nom','WjjtaggerProducer_jetsysup','HMlnjjVars_Dev_jhchoi9_jetsysup'],
+    'subTargets':['WlepMakerKR_jetsysup','WtaggerProducer_nom','WjjtaggerProducer_jetsysup','HMlnjjVars_Dev_jhchoi9_jetsysup'],
 
 }
 
@@ -387,7 +387,7 @@ Steps['HMFull_jhchoi9_jetsysdown']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown','HMlnjjVars_Dev_jhchoi9_jetsysdown'],
+    'subTargets':['WlepMakerKR_jetsysdown','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown','HMlnjjVars_Dev_jhchoi9_jetsysdown'],
 
 }
 
@@ -396,7 +396,7 @@ Steps['HMFull_jhchoi9_jetsysup_correlate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_correlate','HMlnjjVars_Dev_jhchoi9_jetsysup_correlate'],
+    'subTargets':['WlepMakerKR_jetsysup_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_correlate','HMlnjjVars_Dev_jhchoi9_jetsysup_correlate'],
 
 }
 
@@ -405,7 +405,7 @@ Steps['HMFull_jhchoi9_jetsysdown_correlate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_correlate','HMlnjjVars_Dev_jhchoi9_jetsysdown_correlate'],
+    'subTargets':['WlepMakerKR_jetsysdown_correlate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_correlate','HMlnjjVars_Dev_jhchoi9_jetsysdown_correlate'],
 
 }
 
@@ -413,7 +413,7 @@ Steps['HMFull_jhchoi9_jetsysup_uncorrelate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysup_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysup_uncorrelate'],
+    'subTargets':['WlepMakerKR_jetsysup_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysup_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysup_uncorrelate'],
 
 }
 
@@ -422,7 +422,7 @@ Steps['HMFull_jhchoi9_jetsysdown_uncorrelate']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_jetsysdown_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysdown_uncorrelate'],
+    'subTargets':['WlepMakerKR_jetsysdown_uncorrelate','WtaggerProducer_nom','WjjtaggerProducer_jetsysdown_uncorrelate','HMlnjjVars_Dev_jhchoi9_jetsysdown_uncorrelate'],
 
 }
 
@@ -430,7 +430,7 @@ Steps['HMFull_jhchoi9_fatjetsys']={
     'isChain':True,
     'do4MC':True,
     'do4Data':False,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_fatjetsys','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_fatjetsys'],
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_fatjetsys','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_fatjetsys'],
 
 }
 
@@ -439,7 +439,7 @@ Steps['HMFull_jhchoi9_data']={
     'isChain':True,
     'do4MC':False,
     'do4Data':True,
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMakerKR_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
 
 }
 
@@ -447,7 +447,7 @@ Steps['HMFull_jhchoi9_data_test']={
     'isChain':True,
     'do4MC':True,
     'do4Data':True,
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_test'],
+    'subTargets':['WlepMakerKR_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_test'],
 
 }
 
@@ -456,7 +456,7 @@ Steps['HMFull_jhchoi9_nom_test']={
     'isChain':True,
     'do4MC':True,
     'do4Data':True,
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_test'],
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_test'],
 
 }
 
@@ -607,13 +607,13 @@ for SYS in ['ElepTup','ElepTdo','MupTup','MupTdo','METup','METdo']:
 ##--Test
 
 
-Steps['WlepMaker_test'] = {
+Steps['WlepMakerKR_test'] = {
     'isChain': False,
     'do4MC': True,
     'do4Data': True,
     'selection':'"Entry$ < 1000"',
-    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMaker',
-    'declare': 'wlepmaker = lambda:WlepMaker(METtype="PuppiMET")',
+    'import': 'LatinoAnalysis.NanoGardener.modules.WlepMakerKR',
+    'declare': 'wlepmaker = lambda:WlepMakerKR(METtype="PuppiMET")',
     'module':  'wlepmaker()',
 
 }
@@ -647,7 +647,7 @@ Steps['HMFull_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_Dev_jhchoi9_nom'],
 
 }
 
@@ -657,7 +657,7 @@ Steps['HMFull_sys_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 1000"',
-    'subTargets':['WlepMaker','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys','HMlnjjVars_Dev_jhchoi9_sys_test'],
+    'subTargets':['WlepMakerKR','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys','HMlnjjVars_Dev_jhchoi9_sys_test'],
 
 }
 
@@ -667,7 +667,7 @@ Steps['WmakerChain_data_test']={
     'do4MC':False,
     'do4Data':True,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_nom'],
+    'subTargets':['WlepMakerKR_data','WtaggerProducer_data','WjjtaggerProducer_nom'],
 }
 
 
@@ -676,7 +676,7 @@ Steps['WmakerChain_nom_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_nom','WtaggerProducer_nom','WjjtaggerProducer_nom'],
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_nom','WjjtaggerProducer_nom'],
 }
 
 
@@ -685,7 +685,7 @@ Steps['WmakerChain_sys_test']={
     'do4MC':True,
     'do4Data':False,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys'],
+    'subTargets':['WlepMakerKR','WtaggerProducer_fatjetsys','WjjtaggerProducer_sys'],
 }
 
 
@@ -696,7 +696,7 @@ Steps['HMFull_jhchoi9_data_test']={
     'do4MC':False,
     'do4Data':True,
     'selection':'"Entry$ < 10000"',
-    'subTargets':['WlepMaker_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
+    'subTargets':['WlepMakerKR_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
 
 }
 
