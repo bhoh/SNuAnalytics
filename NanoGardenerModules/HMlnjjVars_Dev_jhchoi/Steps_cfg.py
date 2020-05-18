@@ -817,8 +817,4 @@ Steps['BWReweight'] ={
                   'declare'    : 'BWEwkSingRew = lambda : BWEwkSingletReweighter(year=RPLME_YEAR)',
                   'module'     : 'BWEwkSingRew()',
     'onlySample':signals,
-=======
-    'subTargets':['WlepMakerKR_data','WtaggerProducer_data','WjjtaggerProducer_data','HMlnjjVars_Dev_jhchoi9_nom'],
-
->>>>>>> 40f13b26c034f250a8675a390fbccde0b50265b4
 }
