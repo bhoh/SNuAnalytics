@@ -138,7 +138,6 @@ float MelaHighMassKDwCalc::computeDecP(TVar::Process process, TVar::MatrixElemen
   float me;
   if(process == TVar::bkgWW){
     //cout<<"bkgWW case"<<endl;
-<<<<<<< HEAD
     _mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZGG);
     //_mela->setProcess(process, MEgen, _isVBF ? TVar::JJEW : TVar::ZZQQB);//jhchoi change to qq->WW more dominant in SM->same value
   }else{
