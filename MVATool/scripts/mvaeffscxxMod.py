@@ -28,7 +28,8 @@ for P_point in P_ggfh_points:
       #os.system(rmCmd)
       #mkdirCmd = 'mkdir -p TMVAClassification/plots'
       #os.system(mkdirCmd)
-      #cmd_EW  = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_Allp400p1500/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsEW0p1.root",50,0.001)'+"'"
+      #cmd_EW  = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_kd/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsEW0p1.root",50,1)'+"'"
+      ##cmd_EW  = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_Allp400p1500/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsEW0p1.root",50,0.001)'+"'"
       #os.system(cmd_EW)
       #mvCmd = 'mv TMVAClassification '+EWDirName
       #os.system(mvCmd)
@@ -38,7 +39,8 @@ for P_point in P_ggfh_points:
       os.system(rmCmd)
       mkdirCmd = 'mkdir -p TMVAClassification/plots'
       os.system(mkdirCmd)
-      cmd_Vbf = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_Allp400p1500/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsVbfM'+mass+'.root",50,0.001)'+"'"
+      cmd_Vbf = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_kd/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsVbfM'+mass+'.root",50,1)'+"'"
+      #cmd_Vbf = "root -l -q 'mvaeffscxxMod.C("+'"",'+'"Out_Roots_Allp400p1500/out_train_2017_'+Wreco+"_Pggfh"+P_point+'_GgfM'+mass+'vsVbfM'+mass+'.root",50,0.001)'+"'"
       os.system(cmd_Vbf)
       mvCmd = 'mv TMVAClassification '+VbfDirName
       os.system(mvCmd)
