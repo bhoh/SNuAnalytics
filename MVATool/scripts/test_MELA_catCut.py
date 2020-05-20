@@ -414,14 +414,16 @@ for train_year in train_years:
 	    cuts['sig'] = BoostNoVbfSR
 	    cuts['bkg'] = BoostNoVbfSR
 	    varKey = "Bst_Pggfh"+workpt # we don't use this key name later
-            definition = 'P_SovB:= meP'+workpt+'_BstNoT_ggf_S/meP'+workpt+'_BstNoT_ggf_B'
+            definition = 'kd:= meP'+workpt+'_BstNoT_ggf_S/(meP'+workpt+'_BstNoT_ggf_S + 0.002*meP'+workpt+'_BstNoT_ggf_B)'
+            #definition = 'P_SovB:= meP'+workpt+'_BstNoT_ggf_S/meP'+workpt+'_BstNoT_ggf_B'
           elif idxW is "Resol":
             if Debug:
               print "i'm Resolved"
             cuts['sig'] = ResolNoVbfSR
             cuts['bkg'] = ResolNoVbfSR
             varKey = "Res_Pggfh"+workpt
-            definition = 'P_SovB:= meP'+workpt+'_ResNoT_ggf_S/meP'+workpt+'_ResNoT_ggf_B'
+            definition = 'kd:= meP'+workpt+'_ResNoT_ggf_S/(meP'+workpt+'_ResNoT_ggf_S + 0.002*meP'+workpt+'_ResNoT_ggf_B)'
+            #definition = 'P_SovB:= meP'+workpt+'_ResNoT_ggf_S/meP'+workpt+'_ResNoT_ggf_B'
           else:
 	    pass
 
