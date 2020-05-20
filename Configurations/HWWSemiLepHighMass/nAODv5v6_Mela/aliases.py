@@ -19,22 +19,22 @@ configurations = os.path.dirname(configurations)
 aliases['BoostVbfSR']    = {
                            'expr' : '(isBoostSR && isVBF_Boost  && nBJetBoostVBF==0)'
 			   }
-aliases['BoostNonVbfSR'] = {
+aliases['BoostNoVbfSR'] = {
                            'expr' : '(isBoostSR && !isVBF_Boost && nBJetBoost==0)' 
 			   }
 aliases['ResolVbfSR']    = {
                            'expr' : '(isResolSR && isVBF_Resol  && nBJetResolVBF==0)' 
 			   }
-aliases['ResolNonVbfSR'] = {
+aliases['ResolNoVbfSR'] = {
                            'expr' : '(isResolSR && !isVBF_Resol && nBJetResol==0)'
 			   }
 
 for mass in List_melaKDmass:
-  aliases['PrbBstGF'+str(mass)] = {
+  aliases['P_BstGF'+str(mass)] = {
       'expr' : 'meP'+str(mass)+'_BstNoT_ggf_S > 0 ? (meP'+str(mass) + '_BstNoT_ggf_S)/(meP'+str(mass) + '_BstNoT_ggf_S + meP' + str(mass) + '_BstNoT_ggf_B ) : -1'
       }
 
-  aliases['PrbRsvGF'+str(mass)] = {
+  aliases['P_RsvGF'+str(mass)] = {
       'expr' : 'meP'+str(mass)+'_ResNoT_ggf_S > 0 ? meP'+str(mass) + '_ResNoT_ggf_S/(meP'+str(mass) + '_ResNoT_ggf_S + meP' + str(mass) + '_ResNoT_ggf_B ) : -1'
       }
 

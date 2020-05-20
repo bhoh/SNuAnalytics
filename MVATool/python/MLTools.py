@@ -25,6 +25,8 @@ class MLTools():
 
   def SetVariables(self, variables):
     self._tools.SetVariables(variables)
+  def SetSpectators(self, spector):
+    self._tools.SetSpectators(spector)
 
   def SetCuts(self,cuts):
     self._tools.SetCuts(cuts)
@@ -32,9 +34,9 @@ class MLTools():
   def SetOptions(self,options):
     self._tools.SetOptions(options)
     
-  def doTrain(self,sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch=1):
-    self._tools.doTrain(sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch)
-    os.system('mv TMVAClassification/weights TMVAClassification/weights_%s'%(outWeightsSuffix))
+  def doTrain(self, sigTreeName, bkgTreeName, outWeightsSuffix, outFileName, epoch=1):
+    self._tools.doTrain( sigTreeName, bkgTreeName, outWeightsSuffix, outFileName, epoch)
+    #os.system('mv TMVAClassification/weights TMVAClassification/weights_%s'%(outWeightsSuffix))
 
   def doTest(self):
     self._tools.doTest()

@@ -3,7 +3,7 @@
 # changed to /xrd/store/user/jhchoi/Latino/HWWNano/
 # L1Loose
 
-#source TurnOnDryRun.sh
+source TurnOnDryRun.sh
 
 
 
@@ -160,28 +160,6 @@ WZZ
 WWZ
 WpWmJJ_EWK_QCD_noHiggs
 )
-#SAMPLES=(
-#GluGluHToWWToLNuQQ_M450
-#TTToSemiLeptonic
-#TTTo2L2Nu_PSWeights
-#ST_t-channel_top
-#ST_t-channel_antitop
-#ST_tW_antitop
-#ST_tW_top
-#ST_s-channel
-#TTWjets
-#TTWjets_ext1
-#TTZjets
-#TTZjets_ext1
-#VBFHToWWToLNuQQ_M450
-#WJetsToLNu-0J
-#WJetsToLNu-1J
-#WJetsToLNu-2J
-#WW-LO
-#WWToLNuQQ
-#WZ
-#ZZ
-#)
 
 EXCLUDE=()
 
@@ -197,47 +175,46 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 # Option: -R(redo)
 ######################
 
-#modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200305_SemilepSkim5/Steps_cfg.py'
-modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
+#modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
 
 #--l1Prod--#
-
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i Prod -s MCl1loose2017v6 -b -T ${SAMPLE_LIST}
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6 -s MCCorr2017v6 -b -T ${SAMPLE_LIST}
-#
-
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJH2017v6_5 -b -T ${SAMPLE_LIST}
-#mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5 -s HMlnjjLepVetoBWRew -b -T ${SAMPLE_LIST}
-#mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_5__HMlnjjLepVetoBWRew -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST} 
-#mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJHv6_7 -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST} 
-mkPostProc.py ${modcfg}  -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMlnjjVars_Dev -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i Prod -s MCl1loose2017v6 -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6 -s MCCorr2017v6 -b -T ${SAMPLE_LIST}
 
 
-#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6 -s ElepTup_suffix -b -T ${SAMPLE_LIST} 
+##SKIM10
+modcfg="--modcfg SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200406_HMSemilepSKIMv6_10/Steps_cfg.py"
+#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSKIMv6_10 -b -T ${SAMPLE_LIST}
+
+
+##Analyzer
+modcfg="--modcfg SNuAnalytics/NanoGardenerModules/HMlnjjVars_Dev_jhchoi/Steps_cfg.py"
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_nom -T ${SAMPLE_LIST} -b
+##JetSys -> HMFull_jhchoi10_jetsysdown_uncorrelate
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_jetsysdown_uncorrelate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_jetsysup_uncorrelate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_jetsysdown_correlate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_jetsysup_correlate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi10_fatjetsys -T ${SAMPLE_LIST} -b
+
+#mkPostProc.py -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6 -s HMSemilepSkimJHv6_7 -T ZZZ
 
 
 ##--Systematics
 SYSLIST=()
 ##--Lepton momentum Scale--##
-
-SYSLIST+=(ElepTup_suffix ElepTdo_suffix)
-SYSLIST+=(MupTup_suffix MupTdo_suffix)
-
-##--ak4 Jet Energy Scale--##
-SYSLIST+=(JESup_suffix_total JESdo_suffix_total)
-##--ak8 Jet Energy Scale--##
-SYSLIST+=(FATJESup_suffix_total FATJESdo_suffix_total)
-##--MET--##
-SYSLIST+=(METup_suffix METdo_suffix)
-
-
-
-
+ANA=HMFull_jhchoi10_nom
+SYSLIST+=(${ANA}_ElepTup)
+SYSLIST+=(${ANA}_ElepTdo)
+SYSLIST+=(${ANA}_MupTup)
+SYSLIST+=(${ANA}_MupTdo)
+SYSLIST+=(${ANA}_METup)
+SYSLIST+=(${ANA}_METdo)
 
 for sys in ${SYSLIST[@]};do
-    continue ##skip
     echo "---$sys---"
-    mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSkimJH2017v6_2 -s ${sys} -b -T ${SAMPLE_LIST}
+    mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s ${sys} -b -T ${SAMPLE_LIST}
+    #mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i  MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10 -s ${sys} -b -T ZZZ ##To Test
 done
 
 
