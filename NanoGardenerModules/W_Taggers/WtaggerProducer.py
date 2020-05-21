@@ -158,7 +158,6 @@ class WtaggerProducer(Module):
                     groomedP4 = self.subJets[ jet.subJetIdx1 ].p4() + self.subJets[ jet.subJetIdx2].p4() #check subjet jecs
                 else :
                     groomedP4 = None ## [jhchoi]non 2 subjets cases
-                jet_msdcorr_raw = groomedP4.M() if groomedP4 != None else 0.0
                 puppisd_total=jet.msoftdrop_corr_PUPPI
                 if groomedP4 != None:
                     groomedP4.SetPtEtaPhiM(groomedP4.Perp(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
