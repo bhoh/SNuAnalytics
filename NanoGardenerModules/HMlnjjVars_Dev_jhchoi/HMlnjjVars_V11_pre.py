@@ -276,7 +276,6 @@ class HMlnjjVarsClass_Dev(Module):
         ##--VBF vars
         self.out.branch('VBFjjResol_dEta'+_suffix,'F')
         self.out.branch('VBFjjResol_mjj'+_suffix,'F')
-        self.out.branch('VBFjjResol_dEta'+_suffix,'F')
         self.out.branch('max_mjj_Resol'+_suffix,'F')
         self.out.branch('dEta_of_max_mjj_Resol'+_suffix,'F')
         ##--VBF jets
@@ -613,7 +612,8 @@ class HMlnjjVarsClass_Dev(Module):
             pt,eta,phi,mass=self.SubJet_PtEtaPhiM(subJetI2)
             self._Whad_j2_4v.SetPtEtaPhiM(pt,eta,phi,mass)##whad daughter 1 in ME
             self._Whad_4v = self._WhadBoost_4v ##Whad momentum
-            if self._VBFjjBoost_cjidx1> 0 and self._VBFjjBoost_cjidx2: ##To set up associated jets
+            if self._VBFjjBoost_cjidx1> 0 and self._VBFjjBoost_cjidx2 > 0: ##To set up associated jets
+            #if self._VBFjjBoost_cjidx1> 0 and self._VBFjjBoost_cjidx2: ##To set up associated jets
                 pt,eta,phi,mass=self.CleanJet_PtEtaPhiM(self._max_mjjBoost_cjidx1)
                 self._vbfj1_4v.SetPtEtaPhiM(pt,eta,phi,mass)
                 pt,eta,phi,mass=self.CleanJet_PtEtaPhiM(self._max_mjjBoost_cjidx2)
@@ -638,6 +638,12 @@ class HMlnjjVarsClass_Dev(Module):
 
     def CookME(self):
         self.initP() ##initialize all probabilities
+	# From Manual for the JHU generator and MELA pakage version v7.3.0, release date April 28, 2019
+	# daughters: Higgs decay products
+	# associated: ptcl produced in association with the Higgs, such as VBF jets, ptcls from V decay in VH
+	# mother incoming partons: in reconstructed evts, an empty vector or a null pointer
+	# setupDaughtersNoMom( isVBF, daughter_ids, daughter_4Vs, associate_ids, associate_4Vs, isGenLevel)
+		    
         if self._doME: 
             # particle ids
             ##set daughters
@@ -952,10 +958,13 @@ class HMlnjjVarsClass_Dev(Module):
             if bAlgo < bWP:continue
             self._BJetBoost['cjidx'].append(i_cj) ## fill index of CleanJet 
 	    if self._isVBF_Boost:
-	      if i_cj != self._VBFjjBoost_cjidx1:
-                  self._BJetBstNotVBF['cjidx'].append(i_cj)
-              elif i_cj != self._VBFjjBoost_cjidx2:
-                  self._BJetBstNotVBF['cjidx'].append(i_cj)
+	      if i_cj not in [ self._VBFjjBoost_cjidx1, self._VBFjjBoost_cjidx2]:
+		self._BJetBstNotVBF['cjidx'].append(i_cj)
+
+	      #if i_cj != self._VBFjjBoost_cjidx1:
+              #    self._BJetBstNotVBF['cjidx'].append(i_cj)
+              #elif i_cj != self._VBFjjBoost_cjidx2:
+              #    self._BJetBstNotVBF['cjidx'].append(i_cj)
 
     def GetBJetsResol(self):
         ##->Set self._BJetResol_cjidx
