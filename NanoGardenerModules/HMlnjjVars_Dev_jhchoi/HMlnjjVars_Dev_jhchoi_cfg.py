@@ -1,3 +1,5 @@
+# location to put: LatinoAnalysis/NanoGardener/python/data
+
 HMlnjjVarsCuts={
     '2018':{
         #'Wmass_CRlow':40.,

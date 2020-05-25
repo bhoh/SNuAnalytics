@@ -762,7 +762,7 @@ class HMlnjjVarsClass_Dev(Module):
 
 	  elif all( allCut_ResolSR_NonVBF ): ############ Resol NonVBF ################
 	    if self.debug:
-	      print "allCut_ResolSR_NoT begin"
+	      print "allCut_ResolSR_NoTag begin"
 	    ResNoVbf_as_ids = ROOT.vector('int')()
 	    ResNoVbf_as_4Vs = ROOT.vector('TLorentzVector')()
             tmp_4V = ROOT.TLorentzVector()
