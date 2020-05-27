@@ -5,7 +5,10 @@ from List_MX_VBF import *
 
 List_MX_common=list(set(List_MX).intersection(List_MX_VBF))
 
+import os
 
+os.system('cp plot_MassTemplate_SR.py plot_MassTemplate_SR_ele.py')
+os.system('cp plot_MassTemplate_SR.py plot_MassTemplate_SR_mu.py')
 ListPlotTemplate=['plot_MassTemplate_SR_ele.py','plot_MassTemplate_SR_mu.py']
 
 

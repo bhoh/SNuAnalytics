@@ -1,4 +1,5 @@
 UsePseudoData=False
+doScale=False
 print "UsePseudoData=",UsePseudoData
 import sys
 from collections import OrderedDict
@@ -227,24 +228,38 @@ else:
 
 import sys
 for MX in [800]:
-
-    plot['ggHWWlnuqq_M'+str(MX)]={
+    #groupPlot
+    groupPlot['ggHWWlnuqq_M'+str(MX)]={
         'nameHR':'ggHWWlnuqq_M'+str(MX),
-        'scale' : 100,
         'isData'   : 0,
-        'isSignal' : 1,
+        'isSignal' : 3,
         'color':dict_TColor['red'],
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
-
+    plot['ggHWWlnuqq_M'+str(MX)]={
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
+        'isData'   : 0,
+        'isSignal' : 3,
+        'color':dict_TColor['red'],
+        'samples' : ['ggHWWlnuqq_M'+str(MX)]
+    }    
     #for MX in List_MX_VBF:
+
 for MX in [800]:
     #continue
+    groupPlot['vbfHWWlnuqq_M'+str(MX)]={
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
+        'isData'   : 0,
+        'isSignal' : 3,
+        'color':dict_TColor['blue'],
+        'samples' : ['ggHWWlnuqq_M'+str(MX)]
+    }
+
+
     plot['vbfHWWlnuqq_M'+str(MX)]={
         'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
-        'isSignal' : 1,
-        'scale' : 100,
+        'isSignal' : 3,
         'color':dict_TColor['blue'],
         'samples' : ['ggHWWlnuqq_M'+str(MX)]
     }
