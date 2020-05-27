@@ -1,3 +1,4 @@
+doSclae=False
 from List_MX import *
 from List_MX_VBF import *
 
@@ -5,7 +6,7 @@ from List_MX_VBF import *
 List_MX_common=list(set(List_MX).intersection(List_MX_VBF))
 
 
-ListPlotTemplate=['plot_MassTemplate_SR.py']
+ListPlotTemplate=['plot_MassTemplate_SR_ele.py','plot_MassTemplate_SR_mu.py']
 
 
 
@@ -49,7 +50,8 @@ for PlotTemplate in ListPlotTemplate:
             if '__THIS_MASS__' in line:
                 line=line.replace('__THIS_MASS__',str(MX))
             if '__THIS_SCALE__' in line:
-                line=line.replace('__THIS_SCALE__',str(dic_scale[MX]))
+
+                if doSclae:line=line.replace('__THIS_SCALE__',str(dic_scale[MX]))
             f_plot.write(line)
                     
         f_plot_template.close()

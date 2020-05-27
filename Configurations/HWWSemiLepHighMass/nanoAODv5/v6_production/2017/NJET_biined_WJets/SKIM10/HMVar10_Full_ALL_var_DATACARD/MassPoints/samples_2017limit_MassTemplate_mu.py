@@ -59,14 +59,14 @@ DataTrig = {
 
 import sys
 
-  samples['ggHWWlnuqq_M__THIS_MASS__'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M__THIS_MASS__',False,'nanoLatino_'),
-                                                 'weight' : 'XSWeight*SFweight*METFilter_MC',
-  }
-  
-  samples['vbfHWWlnuqq_M__THIS_MASS__'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M__THIS_MASS__',False,'nanoLatino_'),
-                                                 'weight' : 'XSWeight*SFweight*METFilter_MC',
-                                                 'FilesPerJob' : 10,
-  }
+samples['ggHWWlnuqq_M__THIS_MASS__'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M__THIS_MASS__',False,'nanoLatino_'),
+                                         'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                       }
+
+samples['vbfHWWlnuqq_M__THIS_MASS__'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M__THIS_MASS__',False,'nanoLatino_'),
+                                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                          'FilesPerJob' : 10,
+                                        }
 
 
 
