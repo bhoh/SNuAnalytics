@@ -596,8 +596,8 @@ void MineTMVA::StatDialogMVAEffs::ReadVariableToHisto(TFile* file, Int_t Nbins, 
       TH1F* testBkg = new TH1F("testBkg","testBkg",Nbins, 0, maxX);
       //info->testSig = new TH1F("testSig","testSig",40, 0, 1.5);
       //info->testBkg = new TH1F("testBkg","testBkg",40, 0, 1.5);
-      myTree->Draw("P_SovB>>testSig", "(classID==0)*weight","goff");
-      myTree->Draw("P_SovB>>testBkg", "(classID==1)*weight","goff");
+      myTree->Draw("kd>>testSig", "(classID==0)*weight","goff");
+      myTree->Draw("kd>>testBkg", "(classID==1)*weight","goff");
       info->sig = (TH1*)testSig->Clone();
       info->bgd = (TH1*)testBkg->Clone();
       info->origSigE = (TH1*)info->sig->Clone("origSigEffi");
@@ -627,7 +627,7 @@ void MineTMVA::StatDialogMVAEffs::ReadVariableToHisto(TFile* file, Int_t Nbins, 
       //info->origSigE->Draw();
       //info->origBgdE->Draw("same");
 
-      //myTree->Draw("P_SovB>>testSig", "classID==0 && P_SovB < 1.5");
+      //myTree->Draw("kd>>testSig", "classID==0 && kd < 1.5");
       //  
       //   info->sig = dynamic_cast<TH1*>(titDir->Get( hname + "_S" ));
       //   info->bgd = dynamic_cast<TH1*>(titDir->Get( hname + "_B" ));
