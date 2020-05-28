@@ -105,16 +105,14 @@ spectators = OrderedDict()
 
 cuts = {}
 
-BoostNoVbfSR = '(isBoostSR && !isVBF_Boost && nBJetBoost==0 && meP400_BstNoT_ggf_B>0)'
-ResolNoVbfSR = '(isResolSR && !isVBF_Resol && nBJetResol==0 && meP400_ResNoT_ggf_B>0)'
 
 
 # settings for isHighMassGGFClass --------------
 isHighMassGGFClass = True
 #W_recoCats = ["Boost"]
 W_recoCats = ["Boost", "Resol"]
-#VarWorkPtsCat = ["1500"]
-VarWorkPtsCat = ["400","1500"]
+#meWorkPTs = ["1500"]
+meWorkPTs = ["400","1500"]
 GGFClass_bkg = {'EW': EW_samples}
 #GGFClass_bkg = {'EW': EW_samples, 'VBF': VBF_samples}
 ##----------------------------------------
@@ -307,153 +305,150 @@ if IsKeras:
 
 
 for train_year in train_years:
-  if not isHighMassGGFClass:
-    ml_tools =MLTools()
-    ml_tools.SetMLTools(TMVATools)
-    for bkg in bkg_samples:
-      ml_tools.SetTrees(bkg,'Events',file_names[train_year, bkg])
-      for sig in sig_samples:
-        ml_tools.SetTrees(sig,'Events',file_names[train_year, sig])
+  if train_year == '2016':
+    fatWP = 'HP40'
+  elif train_year == '2017':
+    fatWP = 'HP45'
+  elif train_year == '2018':
+    fatWP = 'HP45'
+  else:
+    print 'the year of', train_year,'is not ready for fatWP'
+    exit()
 
-      ml_tools.SetVariables(variables)
-      ml_tools.SetSpectators(spectators)
-      ml_tools.SetCuts(cuts)
-      ml_tools.SetOptions(options)
+  print 'For fatWP', fatWP
+  BoostSuffix = fatWP+'_nom'
+  ResolSuffix = 'dMchi2Resolution'+'_nom'
 
-      ml_tools.doTrain(
-          ['%s_Events'%sig for sig in sig_samples],
-          ['%s_Events'%bkg for bkg in bkg_samples],
-          '%s'%train_year,'out_train_%s.root'%train_year)
-      #
-      #---------------------------------------------------
-      #
-      os.system('rm -rf TMVAClassification_%s'%(train_year))
-      os.system('mv TMVAClassification TMVAClassification_%s'%(train_year))
+  name_nBJetBoost = 'nBJetBoost_'+BoostSuffix
+  name_nBJetResol = 'nBJetResol_'+ResolSuffix
 
-      
-      os.system('rm -rf out_root_%s_old'%(train_year))
-      os.system('mv out_root_%s out_root_%s_old'%(train_year, train_year))
-      os.system('mkdir out_root_%s'%(train_year))
-      os.system('mv out_*.root out_root_%s'%(train_year))
-  else: # HighMass Study
-    for hGF in HWWggf_samples:
-      if Debug:
-	print 'For signal:', hGF, '=========================================='
-      ggfmass = hGF.split('GgfM')[1]
-      for workpt in VarWorkPtsCat: # s/b variable working points
-        for idxW in W_recoCats:
+
+  for hGF in HWWggf_samples:
+    if Debug:
+      print 'For signal:', hGF, '=========================================='
+    ggfmass = hGF.split('GgfM')[1]
+    for meWP in meWorkPTs: # s/b variable working points
+
+      mePggf_Bst_S = 'meP'+meWP+'_Bst_ggf_S_'+BoostSuffix
+      mePggf_Bst_B = 'meP'+meWP+'_Bst_ggf_B_'+BoostSuffix
+      mePggf_Res_S = 'meP'+meWP+'_Res_ggf_S_'+ResolSuffix
+      mePggf_Res_B = 'meP'+meWP+'_Res_ggf_B_'+ResolSuffix
+
+      isBoostSR    = 'isBoostSR_'  +BoostSuffix
+      isVBF_Boost  = 'isVBF_Boost_'+BoostSuffix
+      isResolSR    = 'isResolSR_'  +ResolSuffix
+      isVBF_Resol  = 'isVBF_Resol_'+ResolSuffix
+
+      BoostNoVbfSR = '(' + isBoostSR + ' && !'+ isVBF_Boost + ' && '+name_nBJetBoost + '==0 && ' + mePggf_Bst_B+ '>0)'
+      ResolNoVbfSR = '(' + isResolSR + ' && !'+ isVBF_Resol + ' && '+name_nBJetResol + '==0 && ' + mePggf_Res_B+ '>0)'
+
+      for idxW in W_recoCats:
+        if Debug:
+          print idxW
+        variables = OrderedDict()
+        if idxW is "Boost":
           if Debug:
-            print idxW
-          variables = OrderedDict()
-          if idxW is "Boost":
-	    if Debug:
-	      print  "i'm Boosted"
-	    cuts['sig'] = BoostNoVbfSR
-	    cuts['bkg'] = BoostNoVbfSR
-	    varKey = "Bst_Pggfh"+workpt # we don't use this key name later
-            definition = 'KD:= meP'+workpt+'_BstNoT_ggf_S/(meP'+workpt+'_BstNoT_ggf_S + 0.002*meP'+workpt+'_BstNoT_ggf_B)'
-            #definition = 'P_SovB:= meP'+workpt+'_BstNoT_ggf_S/meP'+workpt+'_BstNoT_ggf_B'
-          elif idxW is "Resol":
+            print  "i'm Boosted"
+          cuts['sig'] = BoostNoVbfSR
+          cuts['bkg'] = BoostNoVbfSR
+          varKey = "Bst_Pggfh"+meWP # we don't use this key name later
+          definition = 'KD:= '+ mePggf_Bst_S+'/(' + mePggf_Bst_S + ' + 0.002*'+mePggf_Bst_B+ ')'
+          #definition = 'P_SovB:= meP'+meWP+'_BstNoT_ggf_S/meP'+meWP+'_BstNoT_ggf_B'
+        elif idxW is "Resol":
+	  if meWP == "1500":
+	    continue
+          if Debug:
+            print "i'm Resolved"
+          cuts['sig'] = ResolNoVbfSR
+          cuts['bkg'] = ResolNoVbfSR
+          varKey = "Res_Pggfh"+meWP
+          definition = 'KD:= '+ mePggf_Res_S+'/(' + mePggf_Res_S + ' + 0.002*'+mePggf_Res_B+ ')'
+          #definition = 'P_SovB:= meP'+meWP+'_ResNoT_ggf_S/meP'+meWP+'_ResNoT_ggf_B'
+        else:
+          pass
+
+        if Debug:
+          print varKey, definition
+        variables[varKey] = {
+            'definition' : definition,
+            'type' : 'F'
+            }
+
+        for bkgKey in GGFClass_bkg:
+          print 'for bkg:',bkgKey
+          if bkgKey is "EW":
+            sgName = hGF.replace("HWW_", "")
+            bgName = 'EW0p1'
+            label = train_year+'_'+varKey+'_'+sgName+'vs'+bgName
+            sys.stdout = open('%s/log_%s.txt'% (LogDir,label),'w')
+            ml_tools =MLTools()
+            ml_tools.SetMLTools(TMVATools)
             if Debug:
-              print "i'm Resolved"
-            cuts['sig'] = ResolNoVbfSR
-            cuts['bkg'] = ResolNoVbfSR
-            varKey = "Res_Pggfh"+workpt
-            definition = 'KD:= meP'+workpt+'_ResNoT_ggf_S/(meP'+workpt+'_ResNoT_ggf_S + 0.002*meP'+workpt+'_ResNoT_ggf_B)'
-            #definition = 'P_SovB:= meP'+workpt+'_ResNoT_ggf_S/meP'+workpt+'_ResNoT_ggf_B'
-          else:
-	    pass
+              print "add signal:",hGF
+            ml_tools.SetTrees(hGF, 'Events', file_names[train_year, hGF])
+            for bkg in GGFClass_bkg[bkgKey]:
+      	      print 'adding bkg:',bkg
+              ml_tools.SetTrees(bkg, 'Events', file_names[train_year, bkg])
 
-          if Debug:
-            print varKey, definition
-          variables[varKey] = {
-              'definition' : definition,
-              'type' : 'F'
-              }
+            print 'For variables:', variables
+            ml_tools.SetVariables(variables)
+            ml_tools.SetSpectators(spectators)
+            print 'For cuts:',cuts
+            ml_tools.SetCuts(cuts)
+            ml_tools.SetOptions(options)
 
-	  for bkgKey in GGFClass_bkg:
-	    print 'for bkg:',bkgKey
-	    if bkgKey is "EW":
-              sgName = hGF.replace("HWW_", "")
-              bgName = 'EW0p1'
-	      label = train_year+'_'+varKey+'_'+sgName+'vs'+bgName
-	      sys.stdout = open('%s/log_%s.txt'% (LogDir,label),'w')
-              ml_tools =MLTools()
-              ml_tools.SetMLTools(TMVATools)
-	      if Debug:
-	        print "add signal:",hGF
-	      ml_tools.SetTrees(hGF, 'Events', file_names[train_year, hGF])
-	      for bkg in GGFClass_bkg[bkgKey]:
-		print 'adding bkg:',bkg
-	        ml_tools.SetTrees(bkg, 'Events', file_names[train_year, bkg])
+            ml_tools.doTrain(
+                ['%s_Events'% hGF ],
+                ['%s_Events'% bg for bg in GGFClass_bkg[bkgKey]],
+                '%s'%train_year,'out_train_%s.root'% label)
+            del ml_tools
 
-	      print 'For variables:', variables
-              ml_tools.SetVariables(variables)
-              ml_tools.SetSpectators(spectators)
-	      print 'For cuts:',cuts
-              ml_tools.SetCuts(cuts)
-              ml_tools.SetOptions(options)
+            os.system('rm -rf %s/TClass_%s'% (TMVAClassDir, label))
+            os.system('mv TMVAClassification %s/TClass_%s'% (TMVAClassDir, label) )
+            os.system('rm -rf %s/out_train_%s_old.root'% (RootDir,label) )
+            os.system('mv %s/out_train_%s.root %s/out_train_%s_old.root' %(RootDir, label, RootDir, label ))
+            os.system('mv out_train_%s.root %s/'%(label, RootDir))
+            os.system('mv signal_reference_cut.txt %s/sig_refCut_%s.txt'%(LogDir, label))
+            print 'Trainning End ================'
 
-              ml_tools.doTrain(
-                  ['%s_Events'% hGF ],
-                  ['%s_Events'% bg for bg in GGFClass_bkg[bkgKey]],
-                  '%s'%train_year,'out_train_%s.root'% label)
-	      del ml_tools
+          elif bkgKey is "VBF":
+            print 'VBF bkg case using the same mass to ggf higgs'
+            for bkg in GGFClass_bkg[bkgKey]:
+              vbfmass = bkg.split('VbfM')[1]
+              if vbfmass == ggfmass:
+                if Debug:
+                  print "adding bkg", bkg
+                sgName = hGF.replace("HWW_", "")
+                bgName = bkg.replace("HWW_", "")
+      	        label = train_year+'_'+varKey+'_'+sgName+'vs'+bgName
+      	        sys.stdout = open('%s/log_%s.txt'% (LogDir,label),'w')
 
-              os.system('rm -rf %s/TClass_%s'% (TMVAClassDir, label))
-              os.system('mv TMVAClassification %s/TClass_%s'% (TMVAClassDir, label) )
-              os.system('rm -rf %s/out_train_%s_old.root'% (RootDir,label) )
-              os.system('mv %s/out_train_%s.root %s/out_train_%s_old.root' %(RootDir, label, RootDir, label ))
-              os.system('mv out_train_%s.root %s/'%(label, RootDir))
-              os.system('mv signal_reference_cut.txt %s/sig_refCut_%s.txt'%(LogDir, label))
-	      print 'Trainning End ================'
+                ml_tools =MLTools()
+                ml_tools.SetMLTools(TMVATools)
+                if Debug:
+                  print "add signal:",hGF
+                ml_tools.SetTrees(hGF, 'Events', file_names[train_year, hGF])
+                ml_tools.SetTrees(bkg, 'Events', file_names[train_year, bkg])
+      	        print 'For variables:', variables
+                ml_tools.SetVariables(variables)
+                ml_tools.SetSpectators(spectators)
+      	        print 'For cuts:',cuts
+                ml_tools.SetCuts(cuts)
+                ml_tools.SetOptions(options)
 
-	    elif bkgKey is "VBF":
-	      print 'VBF bkg case using the same mass to ggf higgs'
-	      for bkg in GGFClass_bkg[bkgKey]:
-	        vbfmass = bkg.split('VbfM')[1]
-	        if vbfmass == ggfmass:
-	          if Debug:
-	            print "adding bkg", bkg
-                  sgName = hGF.replace("HWW_", "")
-                  bgName = bkg.replace("HWW_", "")
-		  label = train_year+'_'+varKey+'_'+sgName+'vs'+bgName
-		  sys.stdout = open('%s/log_%s.txt'% (LogDir,label),'w')
+                ml_tools.doTrain(
+                    ['%s_Events'% hGF ],
+                    ['%s_Events'% bkg ],
+                    '%s'%train_year,'out_train_%s.root'% label)
+                del ml_tools
 
-                  ml_tools =MLTools()
-                  ml_tools.SetMLTools(TMVATools)
-	          if Debug:
-	            print "add signal:",hGF
-	          ml_tools.SetTrees(hGF, 'Events', file_names[train_year, hGF])
-	          ml_tools.SetTrees(bkg, 'Events', file_names[train_year, bkg])
-		  print 'For variables:', variables
-                  ml_tools.SetVariables(variables)
-                  ml_tools.SetSpectators(spectators)
-		  print 'For cuts:',cuts
-                  ml_tools.SetCuts(cuts)
-                  ml_tools.SetOptions(options)
+                os.system('rm -rf %s/TClass_%s'% (TMVAClassDir, label))
+                os.system('mv TMVAClassification %s/TClass_%s'% (TMVAClassDir, label) )
+                
+                os.system('rm -rf %s/out_train_%s_old.root'% (RootDir,label) )
+                os.system('mv %s/out_train_%s.root %s/out_train_%s_old.root' %(RootDir, label, RootDir, label ))
+                os.system('mv out_train_%s.root %s/'%(label, RootDir))
+                os.system('mv signal_reference_cut.txt %s/sig_refCut_%s.txt'%(LogDir, label))
 
-                  ml_tools.doTrain(
-                      ['%s_Events'% hGF ],
-                      ['%s_Events'% bkg ],
-                      '%s'%train_year,'out_train_%s.root'% label)
-	          del ml_tools
-
-                  os.system('rm -rf %s/TClass_%s'% (TMVAClassDir, label))
-                  os.system('mv TMVAClassification %s/TClass_%s'% (TMVAClassDir, label) )
-                  
-                  os.system('rm -rf %s/out_train_%s_old.root'% (RootDir,label) )
-                  os.system('mv %s/out_train_%s.root %s/out_train_%s_old.root' %(RootDir, label, RootDir, label ))
-                  os.system('mv out_train_%s.root %s/'%(label, RootDir))
-                  os.system('mv signal_reference_cut.txt %s/sig_refCut_%s.txt'%(LogDir, label))
-		  print 'Trainning End ================'
-
-	    #  else: # ggf EW comparision
-	    #    if Debug:
-	    #      print "adding bkg",bkg 
-	    #    ml_tools.SetTrees(bkg, 'Events', file_names[train_year, bkg])
-
-            #    #ml_tools.SetTrees(bkg,'Events',file_names[train_year, bkg])
-
-
+      	  print 'Trainning End ================'
 

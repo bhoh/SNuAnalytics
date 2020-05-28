@@ -1,9 +1,9 @@
 
 # To make the tree for MELA cut study
-python test_MELA_catCut.py
+python highMH_MVA.py
 
 # dont use this because the logs are saved at dedicated files in Logs dir
-#python test_MELA_catCut.py | tee log.txt
+#python highMH_MVA.py | tee log.txt
 
 # Copy MELA cut tree which is the output of TMVA cuts
 #scp -r kistiUi20:Latino/CMSSW10215pch2/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/nAODv5v6_MVA/Out_Roots_Allp400p1500 .
