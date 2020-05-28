@@ -1,7 +1,7 @@
 ONLY_FINAL=True
 print "ONLY_FINAL=",ONLY_FINAL
 #-----Variable Deinition-----#
-from WPandCut2017 import *
+from WPandCut2016 import *
 _ALGO="_"+ALGO
 _ALGO_="_"+ALGO+"_"
 

@@ -1,16 +1,16 @@
 ONLY_FINAL=True
 print "ONLY_FINAL=",ONLY_FINAL
 #-----Variable Deinition-----#
-from WPandCut2017 import *
+from WPandCut2016 import *
 _ALGO="_"+ALGO
 _ALGO_="_"+ALGO+"_"
 
 import sys
 #cuts={}
-#opt.cutsFile=''
+#scriptname=''
 
+scriptname=opt.cutsFile
 
-print 'opt.cutsFile=',opt.cutsFile
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 LepCut="(  Lepton_pt[0]>30 \
 && ( fabs(Lepton_eta[0])  < 2.5*(abs(Lepton_pdgId[0])==11) \
@@ -35,9 +35,9 @@ METtype="PuppiMET"
 
 
 LepCats={}
-if 'ele' in opt.cutsFile:
+if 'ele' in scriptname:
     LepCats['eleCH']='(Lepton_isTightElectron_'+eleWP+'[0]>0.5)'
-elif 'mu' in opt.cutsFile:
+elif 'mu' in scriptname:
     LepCats['muCH']='(Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 else:
     LepCats={
@@ -48,23 +48,26 @@ else:
 
 ##-----Basic categorization-----##
 
-ResolvedProdCats={}
-
-if 'GGF' in opt.cutsFile :ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
-if 'VBF' in opt.cutsFile :ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
+ResolvedProdCats={
+    'Resolved'   :'isResol'+_ALGO_+'nom',
+    'ResolvedggF':'isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom',
+    'ResolvedVBF':'isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom',
     
-
+}
 ResolvedRegionCats={}
 ##--type in kin var module'_
-if 'SR' in opt.cutsFile :ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
-if 'SB' in opt.cutsFile :ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
-if 'TOP' in opt.cutsFile :ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
+ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+ResolvedRegionCats['Top'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 
 
 
-
-
+if 'SR' in scriptname :
+    del ResolvedRegionCats['SB']
+    del ResolvedRegionCats['Top']
+elif 'CR' in scriptname:
+    del ResolvedRegionCats['SR']
 
 
 ResolvedMETCat={}
