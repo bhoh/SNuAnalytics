@@ -84,15 +84,15 @@ VBF_samples = [
 
 
 HWWggf_samples = [
-        #'HWW_GgfM200',
+        'HWW_GgfM200',
         'HWW_GgfM400',
-        #'HWW_GgfM800',
-        #'HWW_GgfM1000',
+        'HWW_GgfM800',
+        'HWW_GgfM1000',
         'HWW_GgfM1500',
-        #'HWW_GgfM2000',
-        #'HWW_GgfM3000',
-        #'HWW_GgfM4000',
-        #'HWW_GgfM5000',
+        'HWW_GgfM2000',
+        'HWW_GgfM3000',
+        'HWW_GgfM4000',
+        'HWW_GgfM5000',
 ]
 
 
@@ -109,10 +109,13 @@ cuts = {}
 
 # settings for isHighMassGGFClass --------------
 isHighMassGGFClass = True
-#W_recoCats = ["Boost"]
-W_recoCats = ["Boost", "Resol"]
+W_recoCats = ["Boost"]
+#W_recoCats = ["Resol"]
+#W_recoCats = ["Boost", "Resol"]
 #meWorkPTs = ["1500"]
-meWorkPTs = ["400","1500"]
+#meWorkPTs = ["200"]
+meWorkPTs = ["900"]
+#meWorkPTs = ["400","1500"]
 GGFClass_bkg = {'EW': EW_samples}
 #GGFClass_bkg = {'EW': EW_samples, 'VBF': VBF_samples}
 ##----------------------------------------
@@ -355,8 +358,8 @@ for train_year in train_years:
           definition = 'KD:= '+ mePggf_Bst_S+'/(' + mePggf_Bst_S + ' + 0.002*'+mePggf_Bst_B+ ')'
           #definition = 'P_SovB:= meP'+meWP+'_BstNoT_ggf_S/meP'+meWP+'_BstNoT_ggf_B'
         elif idxW is "Resol":
-	  if meWP == "1500":
-	    continue
+	  #if meWP == "1500":
+	  #  continue
           if Debug:
             print "i'm Resolved"
           cuts['sig'] = ResolNoVbfSR
