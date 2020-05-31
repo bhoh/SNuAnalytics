@@ -20,128 +20,88 @@ dict_TColor={
 scriptname=opt.plotFile
 
 
-#groupPlot['QCD'] = {
-#        'nameHR' : 'QCD',
-#        'isSignal' : 0,
-#        'color' :  dict_TColor['gray'],
-#        'isData'   : 0,
-#        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
-#    }
-groupPlot['TTV'] = {
-        'nameHR' : 'TTV',
+
+
+groupPlot['nonTT'] = {
+        'nameHR' : 'nonTT',
         'isSignal' : 0,
-        'color' : dict_TColor['green'],
+        'color' :  dict_TColor['magenta'],
         'isData'   : 0,
-        'samples' : ['TTWjets','TTZjets'],
-    }
-groupPlot['VV'] = {
-        'nameHR' : 'VV',
-        'isSignal' : 0,
-        'color' : dict_TColor['cyan'],
-        'isData'   : 0,
-        'samples' : ['WW','WZ','ZZ'],
+        'samples' : ['TTWjets','TTZjets','WW','WZ','ZZ','DY','Wjets','ST'],
     }
 
 
+groupPlot['QCD']  = {
+    'nameHR' : 'QCD',
+    'isSignal' : 0,
+    'color': dict_TColor['gray'],
+    'isData'   : 0,
+    'samples'  : ['QCD_MU','QCD_EM','QCD_bcToE']
+}
 
-groupPlot['V+jets'] = {
-        'nameHR' : 'V+jets',
-        'isSignal' : 0,
-        'color' : dict_TColor['red'],
-        'isData'   : 0,
-        'samples' : ['DY','Wjets'],
-    }
 
-groupPlot['ST'] = {
-        'nameHR' : 'ST',
-        'isSignal' : 0,
-        'color' : dict_TColor['pink'],
-        'isData'   : 0,
-        'samples' : ['ST'],
-    }
-groupPlot['TTLL'] = {
-        'nameHR' : 'TTLL',
-        'isSignal': 0,
-        'color'   :  dict_TColor['magenta'],
-        'isData'  : 0,
-        'samples' : ['TTLL'],
-    }
-
-groupPlot['TTLJ+jj']  = {
-                  'nameHR' : 'TTLJ+jj',
+groupPlot['TT+jj']  = {
+                  'nameHR' : 'TT+jj',
                   'isSignal' : 0,
                   'color': dict_TColor['orange'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+jj']
+                  'samples'  : ['TTLJ+jj','TTLL+jj']
               }
-
-groupPlot['TTLJ+cc']  = {
-                  'nameHR' : 'TTLJ+cc',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+4,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+cc']
-              }
-
-groupPlot['TTLJ+bj']  = {
-                  'nameHR' : 'TTLJ+bj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+1,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bj']
-              }
-
-groupPlot['TTLJ+bb']  = {
-                  'nameHR' : 'TTLJ+bb',
+#groupPlot['TTLJ+jj']  = {
+#                  'nameHR' : 'TTLJ+jj',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['orange'],
+#                  'isData'   : 0,                 
+#                  'samples'  : ['TTLJ+jj']
+#              }
+groupPlot['TT+bb']  = {
+                  'nameHR' : 'TT+bb',
                   'isSignal' : 0,
                   'color': dict_TColor['blue'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bb']
+                  'samples'  : ['TTLJ+bb','TTLJ+bj','TTLL+bb','TTLL+bj']
               }
-#for mass in ['075','080','085','090','100','110','120','130','140','150']:
-for mass, color in [('090','green'),('120','red'),('150','blue')]:
-    sample_name = 'CHToCB_M{0}'.format(mass) 
-    groupPlot[sample_name]={
-        'nameHR':'M{0}(BR=0.01)'.format(mass),
-        'scale' : 2*(0.01)*(1-0.01),
+groupPlot['TT+cc']  = {
+                  'nameHR' : 'TT+cc',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+4,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+cc','TTLL+cc']
+              }
+#groupPlot['TTLL']  = {
+#                  'nameHR' : 'TTLL',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['magenta'],
+#                  'isData'   : 0,                 
+#                  'samples'  : ['TTLL']
+#              }
+
+if not 'ele' in scriptname:
+    plot['QCD_MU']  = {
+        'nameHR' : 'QCD_MU',
+        'isSignal' : 0,
+        'color': dict_TColor['gray'],
         'isData'   : 0,
-        'isSignal' : 2,
-        'color':dict_TColor[color],
-        'samples' : [sample_name]
+        
+        'samples'  : ['QCD_MU']
     }
 
+if not 'mu' in scriptname:
+    plot['QCD_EM']  = {
+        'nameHR' : 'QCD_EM',
+        'isSignal' : 0,
+        'color': dict_TColor['gray'],
+        'isData'   : 0,
+        'samples'  : ['QCD_EM']
+    }
 
-
-
-
-
-
-#if not 'ele' in scriptname:
-#    plot['QCD_MU']  = {
-#        'nameHR' : 'QCD_MU',
-#        'isSignal' : 0,
-#        'color': dict_TColor['gray'],
-#        'isData'   : 0,
-#        
-#        'samples'  : ['QCD_MU']
-#    }
-#
-#if not 'mu' in scriptname:
-#    plot['QCD_EM']  = {
-#        'nameHR' : 'QCD_EM',
-#        'isSignal' : 0,
-#        'color': dict_TColor['gray'],
-#        'isData'   : 0,
-#        'samples'  : ['QCD_EM']
-#    }
-#
-#    plot['QCD_bcToE']  = {
-#        'nameHR' : 'QCD_bcToE',
-#        'isSignal' : 0,
-#        'color': dict_TColor['gray']+1,
-#        'isData'   : 0,
-#        'samples'  : ['QCD_bcToE']
-#    }
+    plot['QCD_bcToE']  = {
+        'nameHR' : 'QCD_bcToE',
+        'isSignal' : 0,
+        'color': dict_TColor['gray']+1,
+        'isData'   : 0,
+        'samples'  : ['QCD_bcToE']
+    }
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,
@@ -249,19 +209,18 @@ plot['DATA']  = {
                   'isSignal' : 0,
                   'color': 1, 
                   'isData'   : 1 ,
-		  'isBlind'  : 0,
+                  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
 
-#for mass in ['075','080','085','090','100','110','120','130','140','150']:
-for mass, color in [('090','green'),('120','red'),('150','blue')]:
+for mass in ['075','080','085','090','100','110','120','130','140','150']:
     sample_name = 'CHToCB_M{0}'.format(mass) 
     plot[sample_name]={
         'nameHR':'M{0}(BR=0.01)'.format(mass),
         'scale' : 2*(0.01)*(1-0.01),
         'isData'   : 0,
         'isSignal' : 2,
-        'color':dict_TColor[color],
+        'color':dict_TColor['green'],
         'samples' : [sample_name]
     }
 

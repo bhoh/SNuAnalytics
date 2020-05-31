@@ -98,6 +98,7 @@ groupPlot['TTLJ+bb']  = {
                   'isData'   : 0,                 
                   'samples'  : ['TTLJ+bb']
               }
+
 #for mass in ['075','080','085','090','100','110','120','130','140','150']:
 for mass, color in [('090','green'),('120','red'),('150','blue')]:
     sample_name = 'CHToCB_M{0}'.format(mass) 
@@ -245,11 +246,11 @@ plot['TTZjets']  = {
               }
 
 plot['DATA']  = {
-                  'nameHR' : 'DATA',
+                  'nameHR' : 'SingleElectron',
                   'isSignal' : 0,
                   'color': 1, 
                   'isData'   : 1 ,
-		  'isBlind'  : 0,
+                  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
 

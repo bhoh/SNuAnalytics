@@ -5,9 +5,9 @@ tag='2017_SKIM7'
 
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
-plotFile='plot.py' ##color code and some format-related things
+plotFile='plot_noSig.py' ##color code and some format-related things
 
-samplesFile = 'samples_2017_ttbarCat.py'
+samplesFile = 'samples_2017.py'
 
 lumi=41.5
 
@@ -20,7 +20,7 @@ aliasesFile='aliases.py'
 #nuisancesFile = 'nuisances_weight_based.py'
 nuisancesFile = 'nuisances_all.py'
 
-#structureFile = 'structure.py'
+structureFile = 'structure.py'
 
 
 #outputDirDatacard='DataCards'
