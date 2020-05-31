@@ -1,0 +1,2 @@
+GRID_INPUT='/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2017/StackNew_comb/scripts/combine//higgsCombineM075Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.r0.000010to0.024960.AsymptoticLimits.mH75.12345.root'
+python doCombi.py -Year='All' -options='--getLimitFromGrid '$GRID_INPUT
