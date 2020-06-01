@@ -1065,3 +1065,20 @@ samples['CHToCB_M120']              .extend( ['xsec=364.35',	'kfact=1.000',	    
 samples['CHToCB_M130']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M140']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M150']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+
+#TTSyst
+#TuneCP5
+samples['TTToSemiLeptonic_TuneCP5Up']    .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTToSemiLeptonic_TuneCP5Down']  .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTTo2L2Nu_TuneCP5Up']           .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )
+samples['TTTo2L2Nu_TuneCP5Down']         .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )
+#hdamp
+samples['TTToSemiLeptonic_hdampUp']      .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTToSemiLeptonic_hdampDown']    .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTTo2L2Nu_hdampUp']             .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )
+samples['TTTo2L2Nu_hdampDown']           .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )
+#mass
+samples['TTToSemiLeptonic_mtopUp']       .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTToSemiLeptonic_mtopDown']     .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['TTTo2L2Nu_mtopUp']              .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )
+samples['TTTo2L2Nu_mtopDown']            .extend( ['xsec=87.310',	'kfact=1.000',		'ref=E'] )

@@ -1,0 +1,8 @@
+combine -M MultiDimFit -d ../workspace/M130Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.txt.root  -m 130 --saveWorkspace --robustFit 1  --algo singles --points 40000 -t -1 -n _bestfit &> logs/bestfit.log
+#combine -M MultiDimFit -d ../workspace/M130Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.txt.root  -m 130 --saveWorkspace --robustFit 1 --algo singles --points 40000 -n _bestfit &> logs/bestfit.log
+
+combine -M MultiDimFit --freezeNuisanceGroups experimental  --robustFit 1 --algo singles -t -1 -d higgsCombine_bestfit.MultiDimFit.mH130.root  -w w --snapshotName "MultiDimFit" -n _frozen_experimental &> logs/frozen_experimental.log
+combine -M MultiDimFit --freezeParameters rgx{^CMS_btag}  --robustFit 1 --algo singles -t -1 -d higgsCombine_bestfit.MultiDimFit.mH130.root  -w w --snapshotName "MultiDimFit" -n _frozen_btag &> logs/frozen_btag.log
+combine -M MultiDimFit --freezeParameters rgx{^CMS_jes}  --robustFit 1 --algo singles -t -1 -d higgsCombine_bestfit.MultiDimFit.mH130.root  -w w --snapshotName "MultiDimFit" -n _frozen_jes &> logs/frozen_jes.log
+combine -M MultiDimFit --freezeNuisanceGroups theory  --robustFit 1 --algo singles -t -1 -d higgsCombine_bestfit.MultiDimFit.mH130.root  -w w --snapshotName "MultiDimFit" -n _frozen_theory &> logs/frozen_theory.log
+combine -M MultiDimFit --freezeNuisanceGroups=experimental,theory --algo singles -t -1 --robustFit 1 -d higgsCombine_bestfit.MultiDimFit.mH130.root  -w w --snapshotName "MultiDimFit" -n _frozen_syst &> logs/frozen_syst.log

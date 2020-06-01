@@ -39,7 +39,7 @@ datacfg='--datacfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Productions_cfg.py'
 
 #for CHToCB samples
 #for single signal samples, interactive
-mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018 -s GenKinFitTTSemiLep_2018 -T CHToCB_M120
+mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018 -s GenKinFitTTSemiLep_2018 -T CHToCB_M120 -R
 
 #for single signal samples, batch
 #mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018 -s GenKinFitTTSemiLep_2018 -b -T CHToCB_M120

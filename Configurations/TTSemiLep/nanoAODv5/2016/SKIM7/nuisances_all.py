@@ -14,10 +14,47 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
 
+def CalcLenBranch(samples,branch):
+
+    passes={}
+
+    for s in samples:
+      print "---",s,"---"
+      if len(samples[s]['name'])==0:continue
+      FirstFile=samples[s]['name'][0].replace("###","")
+      print FirstFile
+      f=ROOT.TFile.Open(FirstFile)
+      tree=f.Get("Events")
+      if tree.GetListOfBranches().FindObject(branch):
+        print 'Length$("%s")'%branch
+        tree.Draw('Length$(%s)'%branch)
+        htemp=ROOT.gPad.GetPrimitive("htemp")
+        n= int(htemp.GetMean())
+        print n
+        if not n in passes:
+          passes[n]=[]
+        passes[n].append(s)
+      f.Close()
+
+    return passes
 
 
-eleWP='mvaFall17V1Iso_WP90'
-muWP='cut_Tight_HWWW'
+#CalcLenBranch
+nMember_sample=CalcLenBranch(samples,'LHEPdfWeight') ## {33:[DY,Wjets...]}
+PDF4LHC15_nnlo_30_pdfas={}
+NNPDF={}
+PDF_ALL={}
+for n in nMember_sample:
+  if n==33:
+    for s in nMember_sample[n]:
+      PDF4LHC15_nnlo_30_pdfas[s]=['LHEPdfWeight[%s]/LHEPdfWeight[0]'%i for i in range(n)]
+      #PDF4LHC15_nnlo_30_pdfas
+  elif n>=100:
+    for s in nMember_sample[n]:
+      NNPDF[s]=['LHEPdfWeight[%s]/LHEPdfWeight[0]'%i for i in range(n)]
+PDF_ALL.update(PDF4LHC15_nnlo_30_pdfas)
+PDF_ALL.update(NNPDF)
+
 
 
 mc = [skey for skey in samples if skey != 'DATA']
@@ -274,24 +311,24 @@ nuisances['mtop'] = {
 #}
 
 
-
-lhe_scale_syst = [ 'LHEScaleWeight[%s]'%i for i in range(9) ]
+## This should work for samples with either 8 or 9 LHE scale weights (Length$(LHEScaleWeight) == 8 or 9)
+lhe_scale_syst = ['LHEScaleWeight[0]', 'LHEScaleWeight[1]', 'LHEScaleWeight[3]', 'LHEScaleWeight[Length$(LHEScaleWeight)-4]', 'LHEScaleWeight[Length$(LHEScaleWeight)-2]', 'LHEScaleWeight[Length$(LHEScaleWeight)-1]']
 nuisances['LHEScaleWeight'] = {
     'name': 'CMS_LHEScaleWeight',
     'type': 'shape',
     'kind': 'weight_envelope',
-    'samples':dict((skey, lhe_scale_syst) for skey in mc),
+    'samples':dict((skey, lhe_scale_syst) for skey in mc if skey not in ['WW','WZ','ZZ','QCD_MU','QCD_EM','QCD_bcToE']),
         
 }
 
-##will add LHEPdfWeight
-# ST samples have 102 set of weights, will do later for this
-#lhe_pdf_weight_syst = [ 'LHEPdfWeight[%s]'%i for i in range(33) ] #TT samples : 100 replicas, CHToCB samples: 33 replicas
-#nuisances['LHEPdfWeight'] = {
-#    'name': 'CMS_LHEPdfWeight',
-#    'type': 'shape',
-#    'kind': 'weight_envelope',
-#    'samples':dict((skey, lhe_pdf_weight_syst) for skey in ttmc), #for now, do for ttbar samples
-#}
+#PDF4LHC15_nnlo_30_pdfas
+#NNPDF
+#PDF_ALL
+nuisances['LHEPdfWeight'] = {
+    'name': 'CMS_LHEPdfWeight',
+    'type': 'shape',
+    'kind': 'weight_rms',
+    'samples': PDF_ALL,
+}
 
 

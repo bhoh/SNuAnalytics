@@ -222,7 +222,13 @@ samples = {
                 'WWG',
                 'WpWmJJ_EWK_QCD_noHiggs',
             ],
-        ('<prod>','MC_ttsyst') :[
+        ('Summer16_102X_nAODv5_Full2016v6','MC_ttsyst') :[
+                'TT_TuneCUETP8M2T4Up',
+                'TT_TuneCUETP8M2T4Down',
+                'TT_hdampUp',
+                'TT_hdampDown',
+                'TT_mtopUp',
+                'TT_mtopDown',
             ],
         ('Summer16_102X_nAODv5_Full2016v6','MC_signal') :[
                 'CHToCB_M060',
@@ -405,7 +411,19 @@ samples = {
                 'WWZ',
                 'WpWmJJ_EWK_QCD_noHiggs',
             ],
-        ('<prod>','MC_ttsyst') :[
+        ('Fall2017_102X_nAODv5_Full2017v6','MC_ttsyst') :[
+                'TTToSemiLeptonic_TuneCP5Up',
+                'TTToSemiLeptonic_TuneCP5Down',
+                'TTTo2L2Nu_TuneCP5Up',
+                'TTTo2L2Nu_TuneCP5Down',
+                'TTToSemiLeptonic_hdampUp',
+                'TTToSemiLeptonic_hdampDown',
+                'TTTo2L2Nu_hdampUp',
+                'TTTo2L2Nu_hdampDown',
+                'TTToSemiLeptonic_mtopUp',
+                'TTToSemiLeptonic_mtopDown',
+                'TTTo2L2Nu_mtopUp', 
+                'TTTo2L2Nu_mtopDown',
             ],
         ('Fall2017_102X_nAODv5_Full2017v6','MC_signal') :[
                 'CHToCB_M050',
@@ -586,6 +604,18 @@ samples = {
 
             ],
         ('Autumn18_102X_nAODv6_Full2018v6','MC_ttsyst') :[
+                'TTToSemiLeptonic_TuneCP5Up',
+                'TTToSemiLeptonic_TuneCP5Down',
+                'TTTo2L2Nu_TuneCP5Up',
+                'TTTo2L2Nu_TuneCP5Down',
+                'TTToSemiLeptonic_hdampUp',
+                'TTToSemiLeptonic_hdampDown',
+                'TTTo2L2Nu_hdampUp',
+                'TTTo2L2Nu_hdampDown',
+                'TTToSemiLeptonic_mtopUp',
+                'TTToSemiLeptonic_mtopDown',
+                'TTTo2L2Nu_mtopUp', 
+                'TTTo2L2Nu_mtopDown',
             ],
         ('Autumn18_102X_nAODv6_Full2018v6','MC_signal') :[
                      'CHToCB_M075',
