@@ -1,3 +1,4 @@
+# location to put: LatinoAnalysis/NanoGardener/python/data
 ###configuration###
 ##https://twiki.cern.ch/twiki/bin/view/CMS/JetWtagging
 ##W taggers
@@ -81,7 +82,7 @@ WJID={
             'effSF':{'nom':1.,'up':1.06,'down':0.94},
         },
 
-        'HP40':{
+        'HP55':{
             'C_DDT':0.,
             'tau21min':-1.,
             'tau21max':0.55,

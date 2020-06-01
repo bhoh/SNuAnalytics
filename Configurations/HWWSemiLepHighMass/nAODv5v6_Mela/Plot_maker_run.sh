@@ -30,8 +30,8 @@ StartTime=$(date +%s)
 #
 #done
 
-#mkPlot.py --pycfg=configuration.py --inputFile=rootFile_melaKD_2017/plots_melaKD_2017.root  --outputDirPlots=plots_melaKD_2017_SR  --linearOnly --onlyPlot=c --scaleToPlot=1.7
-mkPlot.py --pycfg=configuration.py --inputFile=rootFile_melaKD_2017_Test/plots_melaKD_2017_Test.root  --outputDirPlots=plots_melaKD_2017_SR_Test  --linearOnly --onlyPlot=c --scaleToPlot=1.7
+mkPlot.py --pycfg=configuration.py --inputFile=rootFile_melaKD_2017/plots_melaKD_2017.root  --outputDirPlots=plots_melaKD_2017_SR  --linearOnly --onlyPlot=c --scaleToPlot=1.7
+#mkPlot.py --pycfg=configuration.py --inputFile=rootFile_melaKD_2017_Test/plots_melaKD_2017_Test.root  --outputDirPlots=plots_melaKD_2017_SR_Test  --linearOnly --onlyPlot=c --scaleToPlot=1.7
 
 ##--CR
 #mkPlot.py --pycfg=configuration_CR.py --inputFile=rootFile_2017_CR/plots_2017_CR.root --plotFile=plot_CR.py --outputDirPlots=plots_2017_CR

@@ -47,7 +47,11 @@ dobatch=''
 
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s HMFull_sys_test -T GluGluHToWWToLNuQQ_M400
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi8_fatjetsys -T GluGluHToWWToLNuQQ_M400
-mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi8_jetsysup_uncorrelate -T GluGluHToWWToLNuQQ_M400
+#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s HMFull_jhchoi8_jetsysup_uncorrelate -T GluGluHToWWToLNuQQ_M400
 
 
 #mkPostProc.py ${modcfg} -p Run2018_102X_nAODv6_Full2018v6 -i DATAl1loose2018v6__HMSemilepSKIMv6_10_data -s HMFull_jhchoi8_data_test -T SingleMuon_Run2018D-Nano25Oct2019_ver2-v1
+
+
+#mkPostProc.py ${modcfg} -p Run2017_102X_nAODv5_Full2017v6 -i TEST -s HMFull_jhchoi9_data_test
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i TEST -s HMFull_jhchoi9_nom_test

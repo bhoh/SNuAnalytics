@@ -1,4 +1,4 @@
-
+import ROOT
 import math
 
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetSmearer import jetSmearer
@@ -27,7 +27,7 @@ from LatinoAnalysis.NanoGardener.data.Wtagger_cfg import WJID,FATJETCUTS
 #msoftdrop without JMR/JMS ->FatJet_msoftdrop_raw* FatJet_msoftdrop_corr_PUPPI * FatJet_corr_JER ->then JMS/JMR
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection,Object
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
-jecTagsMC = {'2016' : 'Summer16_07Aug2017_V11_MC',
+jecTagsMC = {'2016' : 'Summer16_07aug2017_V11_MC',
              '2017' : 'Fall17_17Nov2017_V32_MC',
              '2018' : 'Autumn18_V19_MC'}
 jerTagsMC = {'2016' : 'Summer16_25nsV1_MC',
@@ -82,7 +82,8 @@ class WtaggerProducer(Module):
                 for x in ['pt','eta','phi','mass','tau21ddt']:
                     collname='WtaggerFatjet_'+tagname+'_'+var
                     self.out.branch(collname+'_'+x, "F", lenVar="n"+collname )
-        
+                self.out.branch(collname+"_fjetIdx","I",lenVar="n"+collname)
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         print "--endFile--"
         pass
@@ -94,6 +95,9 @@ class WtaggerProducer(Module):
 
         self.jets = Collection(event, self.jetBranchName )
         self.subJets = Collection(event, self.subJetBranchName )
+        self.lepton = Object(event,"Lepton",index=0) ##Take primary lepton
+        lepton_eta=self.lepton.eta
+        lepton_phi=self.lepton.eta
 
         ptmin=FATJETCUTS[str(self.year)]['ptmin']
         etamax=FATJETCUTS[str(self.year)]['etamax']
@@ -119,6 +123,7 @@ class WtaggerProducer(Module):
                     'phi':[],
                     'mass':[],
                     'tau21ddt':[],
+                    'fjetIdx':[],
                     #'effSF':[],
                     #'effSFup':[],
                     #'effSFdown':[],
@@ -147,13 +152,12 @@ class WtaggerProducer(Module):
 
 
 
-            for jet in self.jets:##FatJet loop
+            for ij, jet in enumerate(self.jets):##FatJet loop
                 ##puppi sd correction##
                 if jet.subJetIdx1 >= 0 and jet.subJetIdx2 >= 0 :
                     groomedP4 = self.subJets[ jet.subJetIdx1 ].p4() + self.subJets[ jet.subJetIdx2].p4() #check subjet jecs
                 else :
                     groomedP4 = None ## [jhchoi]non 2 subjets cases
-                jet_msdcorr_raw = groomedP4.M() if groomedP4 != None else 0.0
                 puppisd_total=jet.msoftdrop_corr_PUPPI
                 if groomedP4 != None:
                     groomedP4.SetPtEtaPhiM(groomedP4.Perp(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
@@ -204,6 +208,7 @@ class WtaggerProducer(Module):
                     if abs(eta) > etamax : isWtagged=False
                     if mass < msdmin : isWtagged=False
                     if mass > msdmax : isWtagged=False
+                    if self.getDeltaR(phi,eta,lepton_phi,lepton_eta) < 0.8 : isWtagged=False
                     if isWtagged:
                         #for x in ['pt','eta','phi','mass','tau21ddt','effSF']:
                         WtaggerColl[tagname][var]['pt'].append(pt)
@@ -211,6 +216,7 @@ class WtaggerProducer(Module):
                         WtaggerColl[tagname][var]['phi'].append(phi)
                         WtaggerColl[tagname][var]['mass'].append(mass)
                         WtaggerColl[tagname][var]['tau21ddt'].append(tau21ddt)
+                        WtaggerColl[tagname][var]['fjetIdx'].append(ij)
                         #WtaggerColl[tagname][var]['effSF'].append(effSF['nom'])
                         #WtaggerColl[tagname][var]['effSFup'].append(effSF['up'])
                         #WtaggerColl[tagname][var]['effSFdown'].append(effSF['down'])
@@ -252,18 +258,14 @@ class WtaggerProducer(Module):
         pt=jet.pt_jesTotalUp
         eta=jet.eta
         phi=jet.phi
-        msoftdrop=0
-        if jet.msoftdrop_nom!=0:
-            msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal*jet.msoftdrop_jesTotalUp/jet.msoftdrop_nom
+        msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal
         return pt,eta,phi,msoftdrop
 
     def SetJetP4_jesdown(self,jet,jet_msdcorr_jmrNomVal,jmsNomVal, jmsDownVal, jmsUpVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal):
         pt=jet.pt_jesTotalDown
         eta=jet.eta
         phi=jet.phi
-        msoftdrop=0
-        if jet.msoftdrop_nom!=0:
-            msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal*jet.msoftdrop_jesTotalDown/jet.msoftdrop_nom
+        msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal
         return pt,eta,phi,msoftdrop
 
 
@@ -274,16 +276,14 @@ class WtaggerProducer(Module):
         phi=jet.phi
         msoftdrop=0
         if jet.msoftdrop_nom!=0:
-            msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal*jet.msoftdrop_jerUp/jet.msoftdrop_nom
+            msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal
         return pt,eta,phi,msoftdrop
 
     def SetJetP4_jerdown(self,jet,jet_msdcorr_jmrNomVal,jmsNomVal, jmsDownVal, jmsUpVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal):
         pt=jet.pt_jerDown
         eta=jet.eta
         phi=jet.phi
-        msoftdrop=0
-        if jet.msoftdrop_nom!=0:
-            msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal*jet.msoftdrop_jerDown/jet.msoftdrop_nom
+        msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrNomVal*jmsNomVal
         return pt,eta,phi,msoftdrop
 
     ###--JMS--###
@@ -317,3 +317,10 @@ class WtaggerProducer(Module):
         phi=jet.phi
         msoftdrop=jet.msoftdrop_raw*jet.msoftdrop_corr_PUPPI*jet.corr_JER*jet_msdcorr_jmrDownVal*jmsNomVal
         return pt,eta,phi,msoftdrop
+    def getDeltaR(self, phi1, eta1, phi2, eta2):
+        dphi = phi1 - phi2
+        if dphi > ROOT.TMath.Pi(): dphi -= 2*ROOT.TMath.Pi()
+        if dphi < -ROOT.TMath.Pi(): dphi += 2*ROOT.TMath.Pi()
+        deta = eta1 - eta2
+        deltaR = math.sqrt((deta*deta) + (dphi*dphi))
+        return deltaR

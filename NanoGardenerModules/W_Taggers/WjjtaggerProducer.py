@@ -10,15 +10,35 @@ Wmass=80.4
 
 
 class WjjtaggerProducer(Module):
-    def __init__(self, year,pairalgos=['dMchi2Resolution','dM'],sysvars='all'):
+    def __init__(self, year,pairalgos=['dMchi2Resolution','dM'],sysvars='all',jsyssources="all"):
         self.sysvars=sysvars
         self.year=str(int(year))
-        if sysvars=='all':
+        #jsources=[]
+        ##--ak4jet uncertainty sources
+        if jsyssources=="all":
+            jsources=['jesFlavorQCD','jesRelativeBal','jesHF','jesBBEC1','jesEC2','jesAbsolute','jesAbsolute_'+str(year),'jesHF_'+str(year),'jesEC2_'+str(year),'jesRelativeSample_'+str(year),'jesBBEC1_'+str(year),'jesTotal','jer']
+        if jsyssources=="correlate":
+                jsources=['jesFlavorQCD','jesRelativeBal','jesHF','jesBBEC1','jesEC2','jesAbsolute','jesTotal']
+        if jsyssources=="uncorrelate":
+            jsources=['jesAbsolute_'+str(year),'jesHF_'+str(year),'jesEC2_'+str(year),'jesRelativeSample_'+str(year),'jesBBEC1_'+str(year),'jer']
+
+        
+
+
+
+
+        if sysvars=='all' or sysvars=='up' or sysvars=='down':
+            directions=[]
+            if sysvars=='all':directions=['Up','Down']
+            if sysvars=="up":directions=["Up"]
+            if sysvars=="down":directions=["Down"]
             print "[WjjtaggerProducer]Run all regrouped set of sys"
-            self.sysvars=[]
-            for s in ['jesFlavorQCD','jesRelativeBal','jesHF','jesBBEC1','jesEC2','jesAbsolute','jesAbsolute_'+str(year),'jesHF_'+str(year),'jesEC2_'+str(year),'jesRelativeSample_'+str(year),'jesBBEC1_'+str(year),'jesTotal','jer']:
-                for d in ['Up','Down']:
+            self.sysvars=['nom']
+            for s in jsources:
+                for d in directions:
                     self.sysvars.append(s+d)
+            print "[directions]=",directions
+            print "[jsources]",jsources
         self.pairalgos=pairalgos
         self.init_JetResolution(year)
                     
@@ -124,12 +144,12 @@ class WjjtaggerProducer(Module):
         for i_cj in range(0,N):
             pt1,eta1,phi1,mass1, qgl1 = self.CleanJet_PtEtaPhiMQgl(i_cj,var)
             if pt1 < JETCUTS[self.year]['ptmin'] : continue
-            if abs(eta1) < JETCUTS[self.year]['etamax'] : continue
+            if abs(eta1) > JETCUTS[self.year]['etamax'] : continue
             for j_cj in range(0,N):
                 if j_cj <= i_cj : continue
                 pt2,eta2,phi2,mass2,qgl2 = self.CleanJet_PtEtaPhiMQgl(j_cj,var)
                 if pt2 < JETCUTS[self.year]['ptmin'] : continue
-                if abs(eta2) < JETCUTS[self.year]['etamax'] : continue
+                if abs(eta2) > JETCUTS[self.year]['etamax'] : continue
                 
                 thisScore = sys.float_info.max
                 if algo=="dM":
@@ -168,8 +188,8 @@ class WjjtaggerProducer(Module):
 
     def CleanJet_PtEtaPhiMQgl(self,cjidx,var):
         jidx=self.CleanJet_col[cjidx].jetIdx ##original jet index
-        exec("mass=self.Jet_col[jidx].mass_"+var) ##mass
-        exec("pt=self.Jet_col[jidx].pt_"+var) ##mass
+        mass=self.Jet_col[jidx].mass
+        exec("pt=self.Jet_col[jidx].pt_"+var) 
         eta=self.Jet_col[jidx].eta
         phi=self.Jet_col[jidx].phi
         qgl=self.Jet_col[jidx].qgl
@@ -201,17 +221,17 @@ class WjjtaggerProducer(Module):
         resol2= self.getJetPtResolution(v2,self.rho)
         M=(v1+v2).M()
         ##--j1 up--##
-        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1*(1+resol1) )
+        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1 )
         M_j1up = (v1+v2).M()
         ##--j1 do--##
-        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1*(1-resol1) )
+        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1 )
         M_j1do = (v1+v2).M()
         ##--j2 up--##
         v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
-        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2*(1+resol2))
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
         M_j2up = (v1+v2).M()
         ##--j2 do--##
-        v2.SetPtEtaPhiM(pt2*(1-resol2),eta2,phi2,mass2*(1-resol2))
+        v2.SetPtEtaPhiM(pt2*(1-resol2),eta2,phi2,mass2)
         M_j2do = (v1+v2).M()
         sigma2=(M-M_j1up)**2 + (M-M_j1do)**2 +(M-M_j2up)**2 +(M-M_j2do)**2
         this_Chi2=(M-Wmass)**2/sigma2
@@ -234,17 +254,17 @@ class WjjtaggerProducer(Module):
         resol2= self.getJetPtResolution(v2,self.rho)
         M=(v1+v2).M()
         ##--j1 up--##
-        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1*(1+resol1) )
+        v1.SetPtEtaPhiM(pt1*(1+resol1), eta1, phi1, mass1 )
         M_j1up = (v1+v2).M()
         ##--j1 do--##
-        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1*(1-resol1) )
+        v1.SetPtEtaPhiM(pt1*(1-resol1), eta1, phi1, mass1 )
         M_j1do = (v1+v2).M()
         ##--j2 up--##
         v1.SetPtEtaPhiM(pt1,eta1,phi1,mass1)
-        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2*(1+resol2))
+        v2.SetPtEtaPhiM(pt2*(1+resol2),eta2,phi2,mass2)
         M_j2up = (v1+v2).M()
         ##--j2 do--##
-        v2.SetPtEtaPhiM(pt2*(1-resol2),eta2,phi2,mass2*(1-resol2))
+        v2.SetPtEtaPhiM(pt2*(1-resol2),eta2,phi2,mass2)
         M_j2do = (v1+v2).M()
         sigma2=(M-M_j1up)**2 + (M-M_j1do)**2 +(M-M_j2up)**2 +(M-M_j2do)**2
         this_Msigma=math.sqrt(sigma2)

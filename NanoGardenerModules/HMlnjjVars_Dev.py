@@ -215,7 +215,6 @@ class HMlnjjVarsClass_Dev(Module):
         self.out.branch('isVBF_Resol','O')
         self.out.branch('VBFjjResol_dEta','F')
         self.out.branch('VBFjjResol_mjj','F')
-        self.out.branch('VBFjjResol_dEta','F')
         self.out.branch('max_mjj_Resol','F')
 
         self.out.branch('lnjj_pt', 'F')
@@ -432,6 +431,10 @@ class HMlnjjVarsClass_Dev(Module):
 	########################
 
         if (not self._isBoost) and (not self._isResol) and self.doSkim: return False
+
+        #if event.event % 10000 ==1 :##To flush memory of ttree
+	#  self.out._tree.AutoSave()
+	#self.out._tree.AutoSave("FlushBaskets")
 
         return True
 
@@ -759,7 +762,7 @@ class HMlnjjVarsClass_Dev(Module):
 
 	  elif all( allCut_ResolSR_NonVBF ): ############ Resol NonVBF ################
 	    if self.debug:
-	      print "allCut_ResolSR_NoT begin"
+	      print "allCut_ResolSR_NoTag begin"
 	    ResNoVbf_as_ids = ROOT.vector('int')()
 	    ResNoVbf_as_4Vs = ROOT.vector('TLorentzVector')()
             tmp_4V = ROOT.TLorentzVector()
@@ -767,7 +770,7 @@ class HMlnjjVarsClass_Dev(Module):
 	      if i_cj in [self._Whad_cjidx1, self._Whad_cjidx2 ]: continue
 	      tmp_4V = self.CleanJet_4V(i_cj)
 	      if tmp_4V.Pt()  < self.cut_jet_pt: continue
-	      if abs(tmp_4V.Eta()) < self.cut_jet_pt: continue
+	      if abs(tmp_4V.Eta()) < self.cut_jet_eta: continue
 	      ResNoVbf_as_ids.push_back( int(0) )
 	      ResNoVbf_as_4Vs.push_back( tmp_4V )
             if self.debug:
