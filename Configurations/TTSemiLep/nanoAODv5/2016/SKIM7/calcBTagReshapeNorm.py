@@ -3,10 +3,14 @@ import numpy as np
 import os
 
 CMSSW     = os.environ["CMSSW_BASE"]
-BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/SKIM7"
+
+BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/SKIM7/"
 
 variables_BTag   = BASE_PATH + "/ReshapeNorm_BTagSF/variables.py"
 variables_NoBTag = BASE_PATH + "/ReshapeNorm_NoBTagSF/variables.py"
+
+samples_BTag     = BASE_PATH + "/ReshapeNorm_BTagSF/samples_2016.py"
+samples_NoBTag   = BASE_PATH + "/ReshapeNorm_NoBTagSF/samples_2016.py"
 
 rootfile_BTag   = BASE_PATH + "/rootFile_2016_ReshapeNorm_BTagSF/hadd.root"
 rootfile_NoBTag = BASE_PATH + "/rootFile_2016_ReshapeNorm_NoBTagSF/hadd.root"
@@ -31,13 +35,13 @@ def GetRatio(hist_BTag, hist_NoBTag):
       ratio = 1.
     return ratio
 
-def GetVariableKeys(variables_path):
-    variables={}
-    print("load variables from: %s"%variables_path)
-    handle = open(variables_path)
+def GetKeys(dict_path,dict_name):
+    print("load keys from: %s"%dict_path)
+    exec('%s = {}'%dict_name)
+    handle = open(dict_path)
     exec(handle)
     handle.close()
-    return variables.keys()
+    return locals()[dict_name].keys()
 
 def WriteRatio(key_list, ratio_list):
     def binParser(key_list, flavour, variable):
@@ -101,36 +105,53 @@ def WriteRatio(key_list, ratio_list):
     ratio_hist["c"].SetBinContent(1,1, 1.)
 
     for key in ratio_hist:
+      ratio_hist[key].SetOption('COLZ')
       ratio_hist[key].Write()
     
     return
 
-# test GetVariableKeys
-#print(GetVariableKeys(variables_BTag))
-#print(GetVariableKeys(variables_NoBTag))
-
-ratio_list=[]
-key_list=[]
-for key in GetVariableKeys(variables_BTag):
-  if key=="Event":
-      continue
-
-  #rootFile_2018_ReshapeNorm_BTagSF
-  #rootFile_2018_ReshapeNorm_NoBTagSF
-  #"Lep__Top" + key + "histo_top"
-  histName = "Lep__Top/%s/histo_top"%key
-  # test GetHist
-  #print(GetHist(tfile_BTag, histName))
-  #print(GetHist(tfile_NoBTag, histName))
-  # test GetRatio
-  #print(GetRatio(GetHist(tfile_BTag, histName),GetHist(tfile_NoBTag, histName)))
-  ratio = GetRatio(GetHist(tfile_BTag, histName),GetHist(tfile_NoBTag, histName))
-  ratio_list.append(ratio)
-  key_list.append(key)
+# test GetKeys
+#print(GetKeys(variables_BTag,"variables"))
+#print(GetKeys(variables_NoBTag,"variables"))
 
 out_rootfile = ROOT.TFile("BTagReshapeNorm.root","RECREATE")
 out_rootfile.cd()
-WriteRatio(key_list,ratio_list)
+
+ROOT.gStyle.SetOptStat(0)
+#ROOT.gStyle.SetPalette()
+
+ratio_list={} #dict, key : sample top, wjet
+variable_list={}   # dict,
+# loop for sample
+for sample_key in GetKeys(samples_BTag,"samples"):
+  for variable_key in GetKeys(variables_BTag,"variables"):
+    if variable_key=="Event":
+        continue
+  
+    #rootFile_2017_ReshapeNorm_BTagSF
+    #rootFile_2017_ReshapeNorm_NoBTagSF
+    #"Lep__Top" + variable_key + "histo_top"
+    histName = "Lep__Top/%s/histo_%s"%(variable_key,sample_key)
+    # test GetHist
+    #print(GetHist(tfile_BTag, histName))
+    #print(GetHist(tfile_NoBTag, histName))
+    # test GetRatio
+    #print(GetRatio(GetHist(tfile_BTag, histName),GetHist(tfile_NoBTag, histName)))
+    ratio = GetRatio(GetHist(tfile_BTag, histName),GetHist(tfile_NoBTag, histName))
+    if sample_key in ratio_list:
+      ratio_list[sample_key].append(ratio)
+    else:
+      ratio_list[sample_key] = [ratio]
+    if sample_key in variable_list:
+      variable_list[sample_key].append(variable_key)
+    else:
+      variable_list[sample_key] = [variable_key]
+
+  out_rootfile.mkdir(sample_key)
+  out_rootfile.cd(sample_key)
+  WriteRatio(variable_list[sample_key],ratio_list[sample_key])
+  out_rootfile.cd()
+
 out_rootfile.Close()
 
 
