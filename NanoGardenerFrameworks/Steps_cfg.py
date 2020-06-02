@@ -1693,22 +1693,182 @@ Steps = {
                   'module'     : 'Dummy()',
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
               },
-    'genCHToCB_2018' : {
-                  'isChain'    : False ,
+
+    'genCHToCB_2016' : {
+                  'isChain'    : True,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                  #XXX
+                  #2016 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.4\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.6321\
+                                       )>=2))\
+                                  "',
+                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+              },
+
+    'genCHToCB_2017' : {
+                  'isChain'    : True,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  #XXX
+                  #2017 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5\
                                        ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4941\
+                                       )>=2))\
+                                  "',
+                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+              },
+
+    'genCHToCB_2018' : {
+                  'isChain'    : True,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  #XXX
+                  #2018 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
                                         abs(CleanJet_eta) < 2.5 &&\
                                         Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
                                        )>=2))\
                                   "',
-                  'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
-                  'module'     : 'genCHToCB()',
+                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
+
+    'genCHToCB' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
+                  'module'     : 'genCHToCB()',
+                  'onlySample' : [
+                                  'TTTo2L2Nu',
+                                  'TTTo2L2Nu_PSWeights_CP5Down',
+                                  'TTTo2L2Nu_PSWeights_CP5Up',
+                                  'TTTo2L2Nu_PSWeights',
+                                  'TTTo2L2Nu_TuneCP5Up',
+                                  'TTTo2L2Nu_TuneCP5Down',
+                                  'TTTo2L2Nu_hdampUp',
+                                  'TTTo2L2Nu_hdampDown',
+                                  'TTTo2L2Nu_mtopUp',
+                                  'TTTo2L2Nu_mtopDown',
+                                  'TTToSemiLeptonic',
+                                  'TTToSemiLeptonic_ext3',
+                                  'TTToSemiLeptonic_TuneCP5Up',
+                                  'TTToSemiLeptonic_TuneCP5Down',
+                                  'TTToSemiLeptonic_hdampUp',
+                                  'TTToSemiLeptonic_hdampDown',
+                                  'TTToSemiLeptonic_mtopUp',
+                                  'TTToSemiLeptonic_mtopDown',
+                                  'TT_TuneCUETP8M2T4Up',
+                                  'TT_TuneCUETP8M2T4Down',
+                                  'TT_hdampUp',
+                                  'TT_hdampDown',
+                                  'TT_mtopUp',
+                                  'TT_mtopDown',
+                                  'TTWjets',
+                                  'TTWjets_ext1'
+                                  'TTZjets',
+                                  'TTZjets_ext1',
+                                  'ST_s-channel',
+                                  'ST_s-channel_ext1',
+                                  'ST_t-channel_antitop',
+                                  'ST_t-channel_top',
+                                  'ST_tW_antitop',
+                                  'ST_tW_antitop_ext1',
+                                  'ST_tW_top',
+                                  'ST_tW_top_ext1',
+                                  'CHToCB_M075',
+                                  'CHToCB_M080',
+                                  'CHToCB_M085',
+                                  'CHToCB_M090',
+                                  'CHToCB_M100',
+                                  'CHToCB_M110',
+                                  'CHToCB_M120',
+                                  'CHToCB_M130',
+                                  'CHToCB_M140',
+                                  'CHToCB_M150',
+                                  'CHToCB_M160',
+                                 ]
+              },
+
+
+   'TopGenVars_CHToCB' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.TopGenVarsProducer' ,
+                  'declare'    : 'TopGenVars = lambda : TopGenVarsProducer()',
+                  'module'     : 'TopGenVars()',
+                  'onlySample' : [
+                                  'TTTo2L2Nu',
+                                  'TTTo2L2Nu_PSWeights_CP5Down',
+                                  'TTTo2L2Nu_PSWeights_CP5Up',
+                                  'TTTo2L2Nu_PSWeights',
+                                  'TTTo2L2Nu_TuneCP5Up',
+                                  'TTTo2L2Nu_TuneCP5Down',
+                                  'TTTo2L2Nu_hdampUp',
+                                  'TTTo2L2Nu_hdampDown',
+                                  'TTTo2L2Nu_mtopUp',
+                                  'TTTo2L2Nu_mtopDown',
+                                  'TTToSemiLeptonic',
+                                  'TTToSemiLeptonic_ext3',
+                                  'TTToSemiLeptonic_TuneCP5Up',
+                                  'TTToSemiLeptonic_TuneCP5Down',
+                                  'TTToSemiLeptonic_hdampUp',
+                                  'TTToSemiLeptonic_hdampDown',
+                                  'TTToSemiLeptonic_mtopUp',
+                                  'TTToSemiLeptonic_mtopDown',
+                                  'TT_TuneCUETP8M2T4Up',
+                                  'TT_TuneCUETP8M2T4Down',
+                                  'TT_hdampUp',
+                                  'TT_hdampDown',
+                                  'TT_mtopUp',
+                                  'TT_mtopDown',
+                                  'TTWjets',
+                                  'TTWjets_ext1'
+                                  'TTZjets',
+                                  'TTZjets_ext1',
+                                  'ST_s-channel',
+                                  'ST_s-channel_ext1',
+                                  'ST_t-channel_antitop',
+                                  'ST_t-channel_top',
+                                  'ST_tW_antitop',
+                                  'ST_tW_antitop_ext1',
+                                  'ST_tW_top',
+                                  'ST_tW_top_ext1',
+                                  'CHToCB_M075',
+                                  'CHToCB_M080',
+                                  'CHToCB_M085',
+                                  'CHToCB_M090',
+                                  'CHToCB_M100',
+                                  'CHToCB_M110',
+                                  'CHToCB_M120',
+                                  'CHToCB_M130',
+                                  'CHToCB_M140',
+                                  'CHToCB_M150',
+                                  'CHToCB_M160',
+                                 ]
+                  } ,
 ## ------- MODULES: Object Handling
 
   'Dummy' : {

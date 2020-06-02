@@ -22,21 +22,21 @@ class GenKinFitterProducer(KinFitterProducer):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = mappedOutputTree(wrappedOutputTree, mapname=self._branch_map)
         self.newbranches_F = [
-            'initial_dijet_M',
-            'initial_dijet_M_high',
-            'corrected_dijet_M',
-            'corrected_dijet_M_high',
-            'fitted_dijet_M',
-            'fitted_dijet_M_high',
-            'hadronic_top_M',
-            'hadronic_top_pt',
-            'leptonic_top_M',
-            'leptonic_W_M',
-            'best_chi2',
-            'fitter_status',
-            'hadronic_top_b_jet_pull',
-            'w_ch_up_type_jet_pull',
-            'w_ch_down_type_jet_pull',
+            'gen_initial_dijet_M',
+            'gen_initial_dijet_M_high',
+            'gen_corrected_dijet_M',
+            'gen_corrected_dijet_M_high',
+            'gen_fitted_dijet_M',
+            'gen_fitted_dijet_M_high',
+            'gen_hadronic_top_M',
+            'gen_hadronic_top_pt',
+            'gen_leptonic_top_M',
+            'gen_leptonic_W_M',
+            'gen_best_chi2',
+            'gen_fitter_status',
+            'gen_hadronic_top_b_jet_pull',
+            'gen_w_ch_up_type_jet_pull',
+            'gen_w_ch_down_type_jet_pull',
           ]
         self.newbranches_I = [
           ]
@@ -114,23 +114,23 @@ class GenKinFitterProducer(KinFitterProducer):
           fitter.FitCurrentPermutation()
 
         variables = {}
-        variables['initial_dijet_M']         = fitter.GetBestInitialDijetMass()
-        variables['initial_dijet_M_high']    = fitter.GetBestInitialDijetMass_high()
-        variables['corrected_dijet_M']       = fitter.GetBestCorrectedDijetMass()
-        variables['corrected_dijet_M_high']  = fitter.GetBestCorrectedDijetMass_high()
-        variables['fitted_dijet_M']          = fitter.GetBestFittedDijetMass()
-        variables['fitted_dijet_M_high']     = fitter.GetBestFittedDijetMass_high()
-        variables['best_chi2']               = fitter.GetBestChi2()
-        variables['fitter_status']           = fitter.GetBestStatus()
+        variables['gen_initial_dijet_M']         = fitter.GetBestInitialDijetMass()
+        variables['gen_initial_dijet_M_high']    = fitter.GetBestInitialDijetMass_high()
+        variables['gen_corrected_dijet_M']       = fitter.GetBestCorrectedDijetMass()
+        variables['gen_corrected_dijet_M_high']  = fitter.GetBestCorrectedDijetMass_high()
+        variables['gen_fitted_dijet_M']          = fitter.GetBestFittedDijetMass()
+        variables['gen_fitted_dijet_M_high']     = fitter.GetBestFittedDijetMass_high()
+        variables['gen_best_chi2']               = fitter.GetBestChi2()
+        variables['gen_fitter_status']           = fitter.GetBestStatus()
          
-        variables['hadronic_top_b_jet_pull'] = fitter.GetBestHadronicTopBJetPull()
-        variables['w_ch_up_type_jet_pull']   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
-        variables['w_ch_down_type_jet_pull'] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
+        variables['gen_hadronic_top_b_jet_pull'] = fitter.GetBestHadronicTopBJetPull()
+        variables['gen_w_ch_up_type_jet_pull']   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
+        variables['gen_w_ch_down_type_jet_pull'] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
 
-        variables['hadronic_top_M']          = fitter.GetBestHadronicTopMass()
-        variables['hadronic_top_pt']          = fitter.GetBestHadronicTopPt()
-        variables['leptonic_top_M']          = fitter.GetBestLeptonicTopMass()
-        variables['leptonic_W_M']            = fitter.GetBestLeptonicWMass()
+        variables['gen_hadronic_top_M']          = fitter.GetBestHadronicTopMass()
+        variables['gen_hadronic_top_pt']          = fitter.GetBestHadronicTopPt()
+        variables['gen_leptonic_top_M']          = fitter.GetBestLeptonicTopMass()
+        variables['gen_leptonic_W_M']            = fitter.GetBestLeptonicWMass()
 
         for nameBranches in self.newbranches_F:
           self.out.fillBranch(nameBranches  ,  variables[nameBranches]);
