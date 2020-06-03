@@ -50,20 +50,15 @@ else:
 
 ResolvedProdCats={}
 
-#if 'GGF' in opt.cutsFile :
-ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
-#if 'VBF' in opt.cutsFile :
-ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
+if 'GGF' in opt.cutsFile :ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
+if 'VBF' in opt.cutsFile :ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
     
 
 ResolvedRegionCats={}
 ##--type in kin var module'_
-#if 'SR' in opt.cutsFile :
-ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
-#if 'SB' in opt.cutsFile :
-ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
-#if 'TOP' in opt.cutsFile :
-ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+if 'SR' in opt.cutsFile :ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
+if 'SB' in opt.cutsFile :ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+if 'TOP' in opt.cutsFile :ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 
 
