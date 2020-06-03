@@ -430,7 +430,7 @@ class LeptonSFMaker_BHO(Module):
            reco_sf, reco_sf_dwn, reco_sf_up = 0., 0., 0.
            # Lepton id's
            if abs(lepton_col[iLep]['pdgId']) == 11:
-              sceta = eta - electron_col[lepton_col[iLep]['electronIdx']]['deltaEtaSC'] #BHO
+              sceta = eta + electron_col[lepton_col[iLep]['electronIdx']]['deltaEtaSC'] #BHO
               for wp in self.ElectronWP[self.cmssw]['TightObjWP']:
                   if not did_reco:
                       reco_sf, reco_sf_dwn, reco_sf_up = self.get_reco_SF(pdgId, pt, sceta, nvtx, wp, run_period)
