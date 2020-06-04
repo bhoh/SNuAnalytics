@@ -321,8 +321,8 @@ void TKinFitterDriver::SetMETShift(double met_shiftX, double met_shiftY){
 void TKinFitterDriver::SetNeutrino(TLorentzVector met_, int i){
 
   double Pz = neutrino_pz_sol[i];
-  neutrino_pxpy.SetPxPyPzE(met_.Px(),met_.Py(), 0., met_.E());
-  neutrino_pz.SetPxPyPzE(0., 0., Pz, fabs(Pz));
+  neutrino_pxpy.SetPxPyPzE(met_.Px(),met_.Py(), 0., TMath::Sqrt(met_.E()*met_.E()+Pz*Pz));
+  neutrino_pz.SetPxPyPzE(0., 0., Pz, 0.); //XXX Set energy as ZERO!!!
 
   //double MET_error_px2=0., MET_error_py2=0.;
   //for(unsigned int i(0); i<jet_pt_resolution_vector.size(); i++){

@@ -1,0 +1,4 @@
+#combineTool.py -M Impacts -d ../workspace/M130Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.txt.root   -m 130  --doInitialFit --robustFit 1  --points 40000 -t -1
+#combineTool.py -M Impacts -d ../workspace/M130Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.txt.root   -m 130  --robustFit 1  --doFits   --points 50000 -t -1
+#combineTool.py -M Impacts -d ../workspace/M130Y2016muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2017muCH4j2b__4j3b__eleCH4j2b__4j3b__Y2018muCH4j2b__HEMveto4j3b__HEMvetoeleCH4j2b__HEMveto4j3b__HEMveto.txt.root   -m 130 -o impacts.json --exclude rgx{^prop_bin}
+plotImpacts.py -i impacts.json -o impacts

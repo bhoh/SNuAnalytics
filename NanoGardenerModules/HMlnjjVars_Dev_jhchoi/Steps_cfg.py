@@ -218,6 +218,18 @@ Steps['WlepMakerKR_data'] = {
 }
 
 ###--Analyzer
+Steps['HMlnjjVars_V11pre_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
+    ##Use for data/nom
+    'isChain': False,
+    'do4MC': True,
+    'do4Data': True,
+    'import': 'LatinoAnalysis.NanoGardener.modules.HMlnjjVars_V11_pre',
+    'declare': 'hmlnjjvar = lambda:HMlnjjVarsClass_Dev(year=RPLME_YEAR,METtype="PuppiMET",fjsysvars=["nom"],jetsysvars=["nom"],pairalgos=["dMchi2Resolution","dM"])',
+    'module':  'hmlnjjvar()',
+
+}
+
+
 Steps['HMlnjjVars_Dev_jhchoi10_nom'] = {#    def __init__(self, year, METtype='PuppiMET',fjsysvars=['nom','jesup','jesdown','jerup','jerdown','jmsup','jmsdown','jmrup','jmrdown'],jetsysvars='all',pairalgos=['dMchi2Resolution','dM'], doSkim=False, doHardSkim=False):
     ##Use for data/nom
     'isChain': False,
@@ -361,6 +373,14 @@ Steps['HMlnjjVars_Dev_jhchoi10_fatjetsys'] = {#    def __init__(self, year, METt
 
 
 ##--Chain
+Steps['HMFull_V11pre_nom']={
+    'isChain':True,
+    'do4MC':True,
+    'do4Data':False,
+
+    'subTargets':['WlepMakerKR_nom','WtaggerProducer_nom','WjjtaggerProducer_nom','HMlnjjVars_V11pre_nom'],
+
+}
 Steps['HMFull_jhchoi10_nom']={
     'isChain':True,
     'do4MC':True,
