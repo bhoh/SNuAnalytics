@@ -14,6 +14,7 @@ Samples["CHToCB_M120"] = {'nanoAOD':'/ChargedHiggsToCB_M120_TuneCP5_PSweights_13
 Samples["CHToCB_M130"] = {'nanoAOD':'/ChargedHiggsToCB_M130_TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17NanoAODv5-PU2017_12Apr2018_Nano1June2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'}
 Samples["CHToCB_M140"] = {'nanoAOD':'/ChargedHiggsToCB_M140_TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17NanoAODv5-PU2017_12Apr2018_Nano1June2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'}
 Samples["CHToCB_M150"] = {'nanoAOD':'/ChargedHiggsToCB_M150_TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17NanoAODv5-PU2017_12Apr2018_Nano1June2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'}
+Samples["CHToCB_M160"] = {'nanoAOD':'/ChargedHiggsToCB_M160_TuneCP5_PSweights_13TeV-madgraph-pythia8/RunIIFall17NanoAODv5-PU2017_12Apr2018_Nano1June2019_102X_mc2017_realistic_v7-v1/NANOAODSIM'}
 
 
 #TTSyst
