@@ -1,0 +1,1 @@
+text2workspace.py combine_M1000_2017.txt -P HiggsAnalysis.CombinedLimit.HiggsCombinePhysicsModel.HighMassScalar.HighMassScalarSemilepNoI:GGFONLY --mass 1000
