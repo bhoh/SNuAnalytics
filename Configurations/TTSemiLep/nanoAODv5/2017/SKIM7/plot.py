@@ -20,13 +20,13 @@ dict_TColor={
 scriptname=opt.plotFile
 
 
-groupPlot['QCD'] = {
-        'nameHR' : 'QCD',
-        'isSignal' : 0,
-        'color' :  dict_TColor['gray'],
-        'isData'   : 0,
-        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
-    }
+#groupPlot['QCD'] = {
+#        'nameHR' : 'QCD',
+#        'isSignal' : 0,
+#        'color' :  dict_TColor['gray'],
+#        'isData'   : 0,
+#        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
+#    }
 groupPlot['TTV'] = {
         'nameHR' : 'TTV',
         'isSignal' : 0,
@@ -116,32 +116,32 @@ for mass, color in [('090','green'),('120','red'),('150','blue')]:
 
 
 
-if not 'ele' in scriptname:
-    plot['QCD_MU']  = {
-        'nameHR' : 'QCD_MU',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        
-        'samples'  : ['QCD_MU']
-    }
-
-if not 'mu' in scriptname:
-    plot['QCD_EM']  = {
-        'nameHR' : 'QCD_EM',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        'samples'  : ['QCD_EM']
-    }
-
-    plot['QCD_bcToE']  = {
-        'nameHR' : 'QCD_bcToE',
-        'isSignal' : 0,
-        'color': dict_TColor['gray']+1,
-        'isData'   : 0,
-        'samples'  : ['QCD_bcToE']
-    }
+#if not 'ele' in scriptname:
+#    plot['QCD_MU']  = {
+#        'nameHR' : 'QCD_MU',
+#        'isSignal' : 0,
+#        'color': dict_TColor['gray'],
+#        'isData'   : 0,
+#        
+#        'samples'  : ['QCD_MU']
+#    }
+#
+#if not 'mu' in scriptname:
+#    plot['QCD_EM']  = {
+#        'nameHR' : 'QCD_EM',
+#        'isSignal' : 0,
+#        'color': dict_TColor['gray'],
+#        'isData'   : 0,
+#        'samples'  : ['QCD_EM']
+#    }
+#
+#    plot['QCD_bcToE']  = {
+#        'nameHR' : 'QCD_bcToE',
+#        'isSignal' : 0,
+#        'color': dict_TColor['gray']+1,
+#        'isData'   : 0,
+#        'samples'  : ['QCD_bcToE']
+#    }
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,

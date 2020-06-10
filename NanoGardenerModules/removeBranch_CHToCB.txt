@@ -41,7 +41,7 @@ drop nGenJet
 drop Calo*
 drop HTXS*
 drop gen_ptllmet
-drop gen_ptll
+keep gen_ptll
 drop gen_mll
 drop gen_llchannel
 drop gen_mlvlv

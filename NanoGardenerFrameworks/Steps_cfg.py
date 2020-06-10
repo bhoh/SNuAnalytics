@@ -213,6 +213,7 @@ def prepare_CHToCB_syst(base_name):
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
                   'declare'    : 'kinFitting_{0}{1} = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix="{0}{1}")'.format(syst,j),
                   'module'     : 'kinFitting_{0}{1}()'.format(syst,j),
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
 
     #make chain
@@ -221,18 +222,21 @@ def prepare_CHToCB_syst(base_name):
                   'do4MC'      : True ,
                   'do4Data'    : False ,
                   'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Up','Down']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
     dictionary[base_name+"_"+"jetMETSyst_uncorr"] = {
                   'isChain'    : True,
                   'do4MC'      : True ,
                   'do4Data'    : False ,
                   'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Up','Down']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
     dictionary[base_name+"_"+"jetMETSyst_corr"] = {
                   'isChain'    : True,
                   'do4MC'      : True ,
                   'do4Data'    : False ,
                   'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Up','Down']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
 
     return dictionary
@@ -1681,13 +1685,13 @@ Steps = {
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.Dummy',
                   'module'     : 'Dummy()',
               },
-    'prune_CHToCB_2018' : {
+    'pruneNorm' : {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
                   'do4Data'    : True  ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.Dummy',
                   'module'     : 'Dummy()',
-                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+                  'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
               },
     'genCHToCB_2018' : {
                   'isChain'    : False ,

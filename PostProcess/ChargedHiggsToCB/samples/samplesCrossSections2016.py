@@ -973,3 +973,14 @@ samples['CHToCB_M120']              .extend( ['xsec=364.35',	'kfact=1.000',	    
 samples['CHToCB_M130']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M140']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M150']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+
+#TTSyst
+#TuneCUETP8M2T4
+samples['TT_TuneCUETP8M2T4Up']       .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_TuneCUETP8M2T4Down']     .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+#hdamp
+samples['TT_hdampUp']                .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_hdampDown']              .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+#mass
+samples['TT_mtopUp']                 .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_mtopDown']               .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )

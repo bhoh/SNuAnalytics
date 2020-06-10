@@ -1,6 +1,8 @@
 import ROOT
 import math
-
+import sys
+maxfloat=sys.float_info.max
+minfloat=sys.float_info.min
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetSmearer import jetSmearer
 from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection, matchObjectCollectionMultiple
 from LatinoAnalysis.NanoGardener.data.Wtagger_cfg import WJID,FATJETCUTS
@@ -79,7 +81,7 @@ class WtaggerProducer(Module):
                 objname="isBoost_"+tagname+"_"+var
                 self.out.branch(objname,"O")
                 #for x in ['pt','eta','phi','mass','tau21ddt','effSF','effSFup','effSFdown']:
-                for x in ['pt','eta','phi','mass','tau21ddt']:
+                for x in ['pt','eta','phi','mass','tau21ddt','deepTag','deepTagMD']:
                     collname='WtaggerFatjet_'+tagname+'_'+var
                     self.out.branch(collname+'_'+x, "F", lenVar="n"+collname )
                 self.out.branch(collname+"_fjetIdx","I",lenVar="n"+collname)
@@ -123,6 +125,8 @@ class WtaggerProducer(Module):
                     'phi':[],
                     'mass':[],
                     'tau21ddt':[],
+                    'deepTag':[],
+                    'deepTagMD':[],
                     'fjetIdx':[],
                     #'effSF':[],
                     #'effSFup':[],
@@ -131,9 +135,20 @@ class WtaggerProducer(Module):
             
         for tagname, wtag in self.WtaggerConfig.items(): ## from WJID
             #if tagname!='HP45':continue
-            C_DDT=wtag['C_DDT']
-            tau21min=wtag['tau21min']
-            tau21max=wtag['tau21max']
+            C_DDT=0
+            tau21min=minfloat
+            tau21max=maxfloat
+            deepTag_min=minfloat
+            deepTagMD_min=minfloat
+            if 'tau21min' in wtag:
+                C_DDT=wtag['C_DDT']
+                tau21min=wtag['tau21min']
+                tau21max=wtag['tau21max']
+            if 'deepTag_min' in wtag:
+                deepTag_min=wtag['deepTag_min']
+            if 'deepTagMD_min' in wtag:
+                deepTagMD_min=wtag['deepTagMD_min']
+
             #effSF=[1,1,1]
             jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal = 1, 1, 1
             jmsNomVal,jmsDownVal,jmsUpVal = 1, 1, 1
@@ -143,7 +158,7 @@ class WtaggerProducer(Module):
             
 
             
-            if not self.isData : ##for MC, get JMR/JMS values
+            if (not self.isData) and ('JMR' in wtag) and ('JMS' in wtag): ##for MC, get JMR/JMS values
                 self.jetSmearer.jmr_vals=[ wtag['JMR']['nom'], wtag['JMR']['up'], wtag['JMR']['down'] ]
                 jmsNomVal, jmsDownVal, jmsUpVal = [ wtag['JMS']['nom'], wtag['JMS']['up'], wtag['JMS']['down'] ] ##jms for each id
 
@@ -196,14 +211,18 @@ class WtaggerProducer(Module):
                     exec("pt,eta,phi,mass=self.SetJetP4_"+var+"(jet,jet_msdcorr_jmrNomVal,jmsNomVal, jmsDownVal, jmsUpVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal)")
                     #print "pt,eta,phi,mass",pt,eta,phi,mass
                     #tau21=999999.
-                    tau21ddt=999999.
+                    tau21ddt=maxfloat
                     tau1=jet.tau1
                     tau2=jet.tau2
+                    deepTag=jet.deepTag_WvsQCD
+                    deepTagMD=jet.deepTagMD_WvsQCD
                     if tau1!=0 and mass !=0:
                         tau21 = tau2/tau1
                         tau21ddt=tau21+C_DDT*math.log(mass**2/pt)##use tau21ddt generally(if not ddt id, tau21ddt=tau21
                     if tau21ddt > tau21max: isWtagged=False
                     if tau21ddt < tau21min: isWtagged=False
+                    if deepTag < deepTag_min : isWtagged=False
+                    if deepTagMD < deepTagMD_min : isWtagged=False
                     if pt < ptmin : isWtagged=False
                     if abs(eta) > etamax : isWtagged=False
                     if mass < msdmin : isWtagged=False
@@ -216,6 +235,8 @@ class WtaggerProducer(Module):
                         WtaggerColl[tagname][var]['phi'].append(phi)
                         WtaggerColl[tagname][var]['mass'].append(mass)
                         WtaggerColl[tagname][var]['tau21ddt'].append(tau21ddt)
+                        WtaggerColl[tagname][var]['deepTag'].append(deepTag)
+                        WtaggerColl[tagname][var]['deepTagMD'].append(deepTagMD)
                         WtaggerColl[tagname][var]['fjetIdx'].append(ij)
                         #WtaggerColl[tagname][var]['effSF'].append(effSF['nom'])
                         #WtaggerColl[tagname][var]['effSFup'].append(effSF['up'])

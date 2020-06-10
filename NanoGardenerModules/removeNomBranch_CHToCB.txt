@@ -1,0 +1,7 @@
+drop *
+keep *Up
+keep *Down
+drop Lepton_*
+drop MET_*
+keep MET_CHToCB*
+drop *nom
