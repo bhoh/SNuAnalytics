@@ -147,7 +147,7 @@ class WtaggerProducer(Module):
             if 'deepTag_min' in wtag:
                 deepTag_min=wtag['deepTag_min']
             if 'deepTagMD_min' in wtag:
-                deepTagMD_min=tag['deepTagMD_min']
+                deepTagMD_min=wtag['deepTagMD_min']
 
             #effSF=[1,1,1]
             jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal = 1, 1, 1
