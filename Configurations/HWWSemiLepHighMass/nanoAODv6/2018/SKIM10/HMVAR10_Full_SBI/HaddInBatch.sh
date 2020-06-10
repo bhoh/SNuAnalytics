@@ -1,0 +1,2 @@
+python python_tool/latino/SetupHaddInBatch.py -n 30 -a rootFile_2018_Boosted_SKIM10_HMVar10_Fullvar_SBI -t rootFile_2018_Boosted_SKIM10_HMVar10_Fullvar_SBI
+#python python_tool/latino/SetupHaddInBatch.py -n 20 -a rootFile_2018_Resolved_SKIM10_HMVar10_Fullvar_SBI -t rootFile_2018_Resolved_SKIM10_HMVar10_Fullvar_SBI

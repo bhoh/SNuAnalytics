@@ -1,0 +1,27 @@
+0)Predefine
+-kfactor 
+>python MakeKfactor.py
+-Melacut 
+>python MakeMELAWeightCut.py
+-QCD/PDF/PS
+>MakeQCDscalePdfPsNuisancePy.py
+
+
+
+1)HistoFactory
+->[Please Check]
+>>UseRegroupJES=True in nuisances.py
+>>CombineMultiV=False , CombineWjets=False in nuisances.py & sample_2018.py
+>HistoFactory.sh
+
+2)Make PDF/QCD scale shape
+>>RunMakeQCDscale_SymhessianAs_Shape.sh
+>>CombineMultiV=False , CombineWjets=False in nuisances.py & sample_2018.py
+
+
+3)Hadd
+>HaddInBatch.sh
+ 
+4)Combine VV(all years) & Wjets(not for 2016) &h125
+>>CombineMultiV=False , CombineWjets=False in nuisances.py & sample_2018.py
+
