@@ -11,8 +11,35 @@
 ###dictionary structure WJID[year][name] = {isDDT,tau21min:,tau21max:,}              
 
 ##https://twiki.cern.ch/twiki/bin/view/CMS/DeepAK8Tagging2018WPsSFs#DeepAK8_Nominal_W_boson_tagging
+#https://raw.githubusercontent.com/cms-jet/deepAK8ScaleFactors/master/DeepAK8V2_Top_W_SFs.csv
 ##in Nano : FatJet_deepTag_WvsQCD
 #https://cms-nanoaod-integration.web.cern.ch/integration/master-102X/mc102X_doc.html#FatJet
+
+
+FATJETCUTS={
+    '2018':{
+        'ptmin':200.,
+        'etamax':2.5,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+    '2017':{
+        'ptmin':200.,
+        'etamax':2.5,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+
+    '2016':{
+        'ptmin':200.,
+        'etamax':2.4,
+        'msdmin':40.,
+        'msdmax':250.,
+    },
+
+
+}
+
 WJID={
     '2018':{
         'HP35':{
@@ -196,29 +223,438 @@ WJID={
         
     }
 }
-    
 
 
-FATJETCUTS={
-    '2018':{
-        'ptmin':200.,
-        'etamax':2.5,
-        'msdmin':40.,
-        'msdmax':250.,
-    },
-    '2017':{
-        'ptmin':200.,
-        'etamax':2.5,
-        'msdmin':40.,
-        'msdmax':250.,
-    },
+##Add effSF for DeepAK8 ##python python Parser_DeepAK8SF.py
+WJID['2018']['DeepAK8WP0p5']['effSF']={
 
-    '2016':{
-        'ptmin':200.,
-        'etamax':2.4,
-        'msdmin':40.,
-        'msdmax':250.,
-    },
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*0.87+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.85+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.85\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.97\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*0.81+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.81+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.8+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.75\
+    ',        
+}
+WJID['2018']['DeepAK8WP0p5MD']['effSF']={
 
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.67+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.75+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.75\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.8+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.89\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.67+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.61+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.67+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.59\
+    ',        
+}
+WJID['2018']['DeepAK8WP1']['effSF']={
 
+    'nom':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*0.97+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.91\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.98+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*1.05\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.77\
+    ',        
+}
+WJID['2018']['DeepAK8WP1MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.77+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.78+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.78\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.92+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.81+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.83+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.88\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.8+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.68\
+    ',        
+}
+WJID['2018']['DeepAK8WP2p5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.1+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*1.04\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.17+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*1.16+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*1.28\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.01+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*0.89+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*0.84\
+    ',        
+}
+WJID['2018']['DeepAK8WP2p5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.9\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.98\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.83+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.82\
+    ',        
+}
+WJID['2018']['DeepAK8WP5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.07+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.07\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.06+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.12+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.11+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.15\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.02+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*0.99\
+    ',        
+}
+WJID['2018']['DeepAK8WP5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.96\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*1.02\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.9\
+    ',        
+}
+WJID['2017']['DeepAK8WP0p5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*1.0+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.78+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.82\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*1.08+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.98\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.67+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.74+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.66\
+    ',        
+}
+WJID['2017']['DeepAK8WP0p5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.78+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.79+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.79\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.97+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.86+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.93\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.83+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.72+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.65\
+    ',        
+}
+WJID['2017']['DeepAK8WP1']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.88\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.12+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.97+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*1.06\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.8+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.72\
+    ',        
+}
+WJID['2017']['DeepAK8WP1MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.85+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.85+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.85\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.87+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.97\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.79+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.77+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.79+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.73\
+    ',        
+}
+WJID['2017']['DeepAK8WP2p5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.19+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*0.95\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.23+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*1.15+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*1.08+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*1.21\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.15+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*0.73\
+    ',        
+}
+WJID['2017']['DeepAK8WP2p5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.92+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.93\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.98+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*1.03\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.89+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.83\
+    ',        
+}
+WJID['2017']['DeepAK8WP5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.05+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.09+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.09\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.09+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.15+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.17+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.25\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.01+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.01+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*0.93\
+    ',        
+}
+WJID['2017']['DeepAK8WP5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*1.0+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.95\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.97+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.98+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*1.01\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.92+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.89\
+    ',        
+}
+WJID['2016']['DeepAK8WP0p5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.68+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.68\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*1.14+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.79+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.9\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<300 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<400 )*0.83+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5_nom_pt<800 )*0.57+\
+    (WtaggerFatjet_DeepAK8WP0p5_nom_pt>=800)*0.46\
+    ',        
+}
+WJID['2016']['DeepAK8WP0p5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.82\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.97+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.98\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<300 )*0.74+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<400 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP0p5MD_nom_pt<800 )*0.75+\
+    (WtaggerFatjet_DeepAK8WP0p5MD_nom_pt>=800)*0.68\
+    ',        
+}
+WJID['2016']['DeepAK8WP1']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.13+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.73+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.73\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.25+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*1.0+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.91\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1_nom_pt<300 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1_nom_pt<400 )*0.81+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1_nom_pt<800 )*0.64+\
+    (WtaggerFatjet_DeepAK8WP1_nom_pt>=800)*0.55\
+    ',        
+}
+WJID['2016']['DeepAK8WP1MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.91+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.89+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.89\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*1.0+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.96+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*1.03\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<300 )*0.83+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<400 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP1MD_nom_pt<800 )*0.82+\
+    (WtaggerFatjet_DeepAK8WP1MD_nom_pt>=800)*0.75\
+    ',        
+}
+WJID['2016']['DeepAK8WP2p5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.18+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*0.95\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.26+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*1.1+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*1.09+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*1.23\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<300 )*1.1+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<400 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5_nom_pt<800 )*0.84+\
+    (WtaggerFatjet_DeepAK8WP2p5_nom_pt>=800)*0.73\
+    ',        
+}
+WJID['2016']['DeepAK8WP2p5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.93\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*1.01+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.99+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*1.05\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<300 )*0.9+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<400 )*0.95+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP2p5MD_nom_pt<800 )*0.87+\
+    (WtaggerFatjet_DeepAK8WP2p5MD_nom_pt>=800)*0.81\
+    ',        
+}
+WJID['2016']['DeepAK8WP5']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.05+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.07+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.09+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.09\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.07+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.11+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*1.25+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*1.41\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5_nom_pt<300 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5_nom_pt<400 )*1.03+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5_nom_pt<800 )*0.93+\
+    (WtaggerFatjet_DeepAK8WP5_nom_pt>=800)*0.77\
+    ',        
+}
+WJID['2016']['DeepAK8WP5MD']['effSF']={
+
+    'nom':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*1.05+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*1.01+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.94+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.94\
+    ',
+    'up':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*1.08+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*1.04+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*1.0+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*1.06\
+    ',
+    'down':'    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=200 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<300 )*1.02+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=300 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<400 )*0.98+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=400 && WtaggerFatjet_DeepAK8WP5MD_nom_pt<800 )*0.88+\
+    (WtaggerFatjet_DeepAK8WP5MD_nom_pt>=800)*0.82\
+    ',        
 }
