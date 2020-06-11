@@ -207,6 +207,7 @@ if CombineMultiV:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('MultiV')
     print "doQCDScale for MultiV"
 if CombineH125:
@@ -216,6 +217,7 @@ if CombineH125:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('h125')
     print "doQCDScale for h125"
 
@@ -250,6 +252,7 @@ if CombineMultiV:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('MultiV')
     print "dopdfAccept for MultiV"
 
@@ -260,6 +263,7 @@ if CombineH125:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('h125')
     print "dopdfAccept for h125"
 
@@ -312,6 +316,7 @@ if CombineMultiV:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('MultiV')
     print "doPS for MultiV"
 
@@ -322,6 +327,7 @@ if CombineH125:
     if int(n)==0:continue
     if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
   if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
     nMember_sample[4].append('h125')
     print "doPS for h125"
 

@@ -1,3 +1,4 @@
+# location to put: LatinoAnalysis/NanoGardener/python/data
 ###configuration###
 ##https://twiki.cern.ch/twiki/bin/view/CMS/JetWtagging
 ##W taggers

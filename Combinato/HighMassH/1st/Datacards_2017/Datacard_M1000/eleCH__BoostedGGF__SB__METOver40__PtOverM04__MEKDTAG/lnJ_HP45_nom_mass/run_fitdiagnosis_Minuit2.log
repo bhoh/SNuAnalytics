@@ -1,0 +1,150 @@
+ <<< Combine >>> 
+Configured fallback algorithm , type Minuit2, algo Migrad, strategy 1, tolerance 0.1
+>>> method used is FitDiagnostics
+>>> random number generator seed is 123456
+ PDF CHECKING 
+--- RooAbsArg ---
+  Value State: DIRTY
+  Shape State: DIRTY
+  Attributes:  [SnapShot_ExtRefClone,forceGenBinned] 
+  Address: 0x8985110
+  Clients: 
+    (0x8d4f070,V-) RooSimultaneousOpt::model_s "model_s"
+  Servers: 
+    (0x8986760,V-) RooRealSumPdf::pdf_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG_nuis ""
+    (0x8a80410,V-) RooProdPdf::pdfbins_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG ""
+    (0x895bf70,V-) SimpleGaussianConstraint::lumi_13TeV_2017_Pdf "lumi_13TeV_2017_Pdf"
+    (0x8960c40,V-) SimpleGaussianConstraint::lumi_13TeV_XYFact_Pdf "lumi_13TeV_XYFact_Pdf"
+    (0x8980dc0,V-) SimpleGaussianConstraint::lumi_13TeV_LSCale_Pdf "lumi_13TeV_LSCale_Pdf"
+    (0x89831f0,V-) SimpleGaussianConstraint::lumi_13TeV_BBDefl_Pdf "lumi_13TeV_BBDefl_Pdf"
+    (0x899aab0,V-) SimpleGaussianConstraint::lumi_13TeV_DynBeta_Pdf "lumi_13TeV_DynBeta_Pdf"
+    (0x899cf10,V-) SimpleGaussianConstraint::lumi_13TeV_CurrCalib_Pdf "lumi_13TeV_CurrCalib_Pdf"
+    (0x89a61b0,V-) SimpleGaussianConstraint::lumi_13TeV_Ghosts_Pdf "lumi_13TeV_Ghosts_Pdf"
+    (0x8774fc0,V-) SimpleGaussianConstraint::CMS_btag_lf_Pdf "CMS_btag_lf_Pdf"
+    (0x89984d0,V-) SimpleGaussianConstraint::CMS_btag_hf_Pdf "CMS_btag_hf_Pdf"
+    (0x89c3140,V-) SimpleGaussianConstraint::CMS_btag_hfstats1_2017_Pdf "CMS_btag_hfstats1_2017_Pdf"
+    (0x89c6fc0,V-) SimpleGaussianConstraint::CMS_btag_hfstats2_2017_Pdf "CMS_btag_hfstats2_2017_Pdf"
+    (0x89bf2d0,V-) SimpleGaussianConstraint::CMS_btag_lfstats1_2017_Pdf "CMS_btag_lfstats1_2017_Pdf"
+    (0x89cae40,V-) SimpleGaussianConstraint::CMS_btag_lfstats2_2017_Pdf "CMS_btag_lfstats2_2017_Pdf"
+    (0x89cec50,V-) SimpleGaussianConstraint::CMS_btag_cferr1_Pdf "CMS_btag_cferr1_Pdf"
+    (0x89d2a40,V-) SimpleGaussianConstraint::CMS_btag_cferr2_Pdf "CMS_btag_cferr2_Pdf"
+    (0x89d6890,V-) SimpleGaussianConstraint::CMS_eff_hwwtrigger_2017_Pdf "CMS_eff_hwwtrigger_2017_Pdf"
+    (0x89da710,V-) SimpleGaussianConstraint::CMS_eff_prefiring_2017_Pdf "CMS_eff_prefiring_2017_Pdf"
+    (0x89ef710,V-) SimpleGaussianConstraint::CMS_eff_e_2017_Pdf "CMS_eff_e_2017_Pdf"
+    (0x8a03fe0,V-) SimpleGaussianConstraint::CMS_eff_m_2017_Pdf "CMS_eff_m_2017_Pdf"
+    (0x8a23a50,V-) SimpleGaussianConstraint::CMS_eff_tau21_2017_Pdf "CMS_eff_tau21_2017_Pdf"
+    (0x8b518d0,V-) SimpleGaussianConstraint::CMS_fatjes_2017_Pdf "CMS_fatjes_2017_Pdf"
+    (0x8b54030,V-) SimpleGaussianConstraint::CMS_fatjer_2017_Pdf "CMS_fatjer_2017_Pdf"
+    (0x8b56790,V-) SimpleGaussianConstraint::CMS_fatjms_2017_Pdf "CMS_fatjms_2017_Pdf"
+    (0x8b58ef0,V-) SimpleGaussianConstraint::CMS_fatjmr_2017_Pdf "CMS_fatjmr_2017_Pdf"
+    (0x8b5b670,V-) SimpleGaussianConstraint::CMS_scale_muon_2017_Pdf "CMS_scale_muon_2017_Pdf"
+    (0x8b49840,V-) SimpleGaussianConstraint::CMS_scale_electron_2017_Pdf "CMS_scale_electron_2017_Pdf"
+    (0x8a3ad20,V-) SimpleGaussianConstraint::CMS_scale_met_2017_Pdf "CMS_scale_met_2017_Pdf"
+    (0x8a55790,V-) SimpleGaussianConstraint::CMS_PU_2017_Pdf "CMS_PU_2017_Pdf"
+    (0x89a8e80,V-) SimpleGaussianConstraint::UE_CP5_Pdf "UE_CP5_Pdf"
+    (0x8a747e0,V-) SimpleGaussianConstraint::QCDscaleAccept_Pdf "QCDscaleAccept_Pdf"
+    (0x8b0ba10,V-) SimpleGaussianConstraint::pdfAccept_Pdf "pdfAccept_Pdf"
+    (0x8a9b0c0,V-) SimpleGaussianConstraint::CMS_jesFlavorQCD_Pdf "CMS_jesFlavorQCD_Pdf"
+    (0x8ab6da0,V-) SimpleGaussianConstraint::CMS_jesRelativeBal_Pdf "CMS_jesRelativeBal_Pdf"
+    (0x8adee60,V-) SimpleGaussianConstraint::CMS_jesHF_Pdf "CMS_jesHF_Pdf"
+    (0x8ac5b30,V-) SimpleGaussianConstraint::CMS_jesBBEC1_Pdf "CMS_jesBBEC1_Pdf"
+    (0x8aa4ae0,V-) SimpleGaussianConstraint::CMS_jesEC2_Pdf "CMS_jesEC2_Pdf"
+    (0x8a928e0,V-) SimpleGaussianConstraint::CMS_jesAbsolute_Pdf "CMS_jesAbsolute_Pdf"
+    (0x8abf930,V-) SimpleGaussianConstraint::CMS_jesAbsolute_2017_Pdf "CMS_jesAbsolute_2017_Pdf"
+    (0x8ae76b0,V-) SimpleGaussianConstraint::CMS_jesHF_2017_Pdf "CMS_jesHF_2017_Pdf"
+    (0x8aad350,V-) SimpleGaussianConstraint::CMS_jesEC2_2017_Pdf "CMS_jesEC2_2017_Pdf"
+    (0x8ace570,V-) SimpleGaussianConstraint::CMS_jesRelativeSample_2017_Pdf "CMS_jesRelativeSample_2017_Pdf"
+    (0x8af12c0,V-) SimpleGaussianConstraint::CMS_jesBBEC1_2017_Pdf "CMS_jesBBEC1_2017_Pdf"
+    (0x8afbb40,V-) SimpleGaussianConstraint::CMS_jer_2017_Pdf "CMS_jer_2017_Pdf"
+    (0x8b89e80,V-) SimpleGaussianConstraint::pdf_Higgs_gg_Pdf "pdf_Higgs_gg_Pdf"
+    (0x8b8c570,V-) SimpleGaussianConstraint::QCDscale_Higgs_gg_Pdf "QCDscale_Higgs_gg_Pdf"
+    (0x8b16110,V-) SimpleGaussianConstraint::pdf_Higgs_qqbar_Pdf "pdf_Higgs_qqbar_Pdf"
+    (0x8b18890,V-) SimpleGaussianConstraint::QCDscale_Higgs_qqbar_Pdf "QCDscale_Higgs_qqbar_Pdf"
+    (0x89ab950,V-) SimpleGaussianConstraint::QCDnorm2017_Pdf "QCDnorm2017_Pdf"
+    (0x8b91c40,V-) RooUniform::cutBoostedGG0_top_norm2017_Pdf "cutBoostedGG0_top_norm2017_Pdf"
+    (0x8b9bf00,V-) RooUniform::cutBoostedGG0_Wjets_norm2017_Pdf "cutBoostedGG0_Wjets_norm2017_Pdf"
+    (0x8a77140,V-) RooUniform::cutBoostedGG1_Wjets_norm2017_Pdf "cutBoostedGG1_Wjets_norm2017_Pdf"
+    (0x8a78c40,V-) RooUniform::cutBoostedVBF_Wjets_norm2017_Pdf "cutBoostedVBF_Wjets_norm2017_Pdf"
+    (0x8a7a740,V-) RooUniform::cutResolvedGG0_Wjets_norm2017_Pdf "cutResolvedGG0_Wjets_norm2017_Pdf"
+    (0x8a7c240,V-) RooUniform::cutResolvedGG1_Wjets_norm2017_Pdf "cutResolvedGG1_Wjets_norm2017_Pdf"
+    (0x8b3f6b0,V-) SimpleGaussianConstraint::dynorm2017_Pdf "dynorm2017_Pdf"
+    (0x8a7dd40,V-) SimpleGaussianConstraint::MultiVnorm2017_Pdf "MultiVnorm2017_Pdf"
+  Proxies: 
+    !pdfs -> 
+      1)                                               lumi_13TeV_2017_Pdf
+      2)                                             lumi_13TeV_XYFact_Pdf
+      3)                                             lumi_13TeV_LSCale_Pdf
+      4)                                             lumi_13TeV_BBDefl_Pdf
+      5)                                            lumi_13TeV_DynBeta_Pdf
+      6)                                          lumi_13TeV_CurrCalib_Pdf
+      7)                                             lumi_13TeV_Ghosts_Pdf
+      8)                                                   CMS_btag_lf_Pdf
+      9)                                                   CMS_btag_hf_Pdf
+     10)                                        CMS_btag_hfstats1_2017_Pdf
+     11)                                        CMS_btag_hfstats2_2017_Pdf
+     12)                                        CMS_btag_lfstats1_2017_Pdf
+     13)                                        CMS_btag_lfstats2_2017_Pdf
+     14)                                               CMS_btag_cferr1_Pdf
+     15)                                               CMS_btag_cferr2_Pdf
+     16)                                       CMS_eff_hwwtrigger_2017_Pdf
+     17)                                        CMS_eff_prefiring_2017_Pdf
+     18)                                                CMS_eff_e_2017_Pdf
+     19)                                                CMS_eff_m_2017_Pdf
+     20)                                            CMS_eff_tau21_2017_Pdf
+     21)                                               CMS_fatjes_2017_Pdf
+     22)                                               CMS_fatjer_2017_Pdf
+     23)                                               CMS_fatjms_2017_Pdf
+     24)                                               CMS_fatjmr_2017_Pdf
+     25)                                           CMS_scale_muon_2017_Pdf
+     26)                                       CMS_scale_electron_2017_Pdf
+     27)                                            CMS_scale_met_2017_Pdf
+     28)                                                   CMS_PU_2017_Pdf
+     29)                                                        UE_CP5_Pdf
+     30)                                                QCDscaleAccept_Pdf
+     31)                                                     pdfAccept_Pdf
+     32)                                              CMS_jesFlavorQCD_Pdf
+     33)                                            CMS_jesRelativeBal_Pdf
+     34)                                                     CMS_jesHF_Pdf
+     35)                                                  CMS_jesBBEC1_Pdf
+     36)                                                    CMS_jesEC2_Pdf
+     37)                                               CMS_jesAbsolute_Pdf
+     38)                                          CMS_jesAbsolute_2017_Pdf
+     39)                                                CMS_jesHF_2017_Pdf
+     40)                                               CMS_jesEC2_2017_Pdf
+     41)                                    CMS_jesRelativeSample_2017_Pdf
+     42)                                             CMS_jesBBEC1_2017_Pdf
+     43)                                                  CMS_jer_2017_Pdf
+     44)                                                  pdf_Higgs_gg_Pdf
+     45)                                             QCDscale_Higgs_gg_Pdf
+     46)                                               pdf_Higgs_qqbar_Pdf
+     47)                                          QCDscale_Higgs_qqbar_Pdf
+     48)                                                   QCDnorm2017_Pdf
+     49)                                    cutBoostedGG0_top_norm2017_Pdf
+     50)                                  cutBoostedGG0_Wjets_norm2017_Pdf
+     51)                                  cutBoostedGG1_Wjets_norm2017_Pdf
+     52)                                  cutBoostedVBF_Wjets_norm2017_Pdf
+     53)                                 cutResolvedGG0_Wjets_norm2017_Pdf
+     54)                                 cutResolvedGG1_Wjets_norm2017_Pdf
+     55)                                                    dynorm2017_Pdf
+     56)                                                MultiVnorm2017_Pdf
+     57)  pdf_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG_nuis
+     58)   pdfbins_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG
+--- RooAbsReal ---
+
+  Plot label is "pdf_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG"
+--- RooAbsPdf ---
+Cached value = 0
+DataStore eleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG (eleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG)
+  Contains 16 entries
+  Observables: 
+    1)  CMS_th1x = 15.5  L(0 - 16) B(16)  "CMS_th1x"
+    2)    weight = 0  L(-1e+09 - 1e+09)  "weight"
+  Dataset variable "_weight_" is interpreted as the event weight
+ ------------ 
+[utils::makePlots] Number of events for pdf in eleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG_CMS_th1x, pdf pdf_bineleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG = 6320.81
+Error in <TList::Clear>: A list is accessing an object (0x8daef9c) already deleted (list name = TList)
+Info in <TCanvas::Print>: png file ./eleCH__BoostedGGF__SB__METOver40__PtOverM04__MEKDTAG_CMS_th1x_prefit.png has been created
+
+ --- FitDiagnostics ---
+Fit failed.
+Done in 0.42 min (cpu), 0.42 min (real)

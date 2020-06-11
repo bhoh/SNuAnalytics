@@ -15,16 +15,17 @@
 >HistoFactory.sh
 
 2)Make PDF/QCD scale shape
->>RunMakeQCDscale_SymhessianAs_Shape.sh
+>>git clone git@github.com:soarnsoar/python_tool.git
+>>[2016]RunMakeQCDscale_Rms_Shape.sh
+>>[2017/2018]RunMakeQCDscale_SymhessianAs_Shape.sh
 
 
 3)Hadd
 >HaddInBatch.sh
  
 4)Combine VV(all years) & Wjets(not for 2016) &h125
->>MakeMultiVShape.sh
-
->>MakeWjetsShape.sh
+[2016]MakeMultiV_H125_Shape.sh
+[2017,2018]MakeMultiV_Wjets_H125_Shape.sh
 
 
 5-1)Draw plots
