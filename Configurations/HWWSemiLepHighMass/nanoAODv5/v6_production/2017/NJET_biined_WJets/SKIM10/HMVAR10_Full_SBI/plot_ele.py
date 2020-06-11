@@ -376,19 +376,19 @@ legend['lumi'] = 'L = 41.5/fb'
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 
 ###--Test
-groupPlot={}
-plot={}
-groupPlot['h125']={
-    'nameHR' : 'h125',
-    'isSignal' : 0,
-    'color': dict_TColor['magenta'],
-    'isData'   : 0,
-    'samples'  : 'h125',
+#groupPlot={}
+#plot={}
+#groupPlot['h125']={
+#    'nameHR' : 'h125',
+#    'isSignal' : 0,
+#    'color': dict_TColor['magenta'],
+#    'isData'   : 0,
+#    'samples'  : 'h125',
 
-}
-plot['h125']  = {
-    'nameHR' : 'h125',
-    'isSignal' : 0,
-    'color': dict_TColor['pink'],
-    'isData'   : 0,
-}
+#}
+#plot['h125']  = {
+#    'nameHR' : 'h125',
+#    'isSignal' : 0,
+#    'color': dict_TColor['pink'],
+#    'isData'   : 0,
+#}

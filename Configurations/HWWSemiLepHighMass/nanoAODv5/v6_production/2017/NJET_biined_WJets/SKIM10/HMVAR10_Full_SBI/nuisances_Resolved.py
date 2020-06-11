@@ -1,9 +1,9 @@
 
-CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting 
+CombineMultiV=True ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting 
 MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=False
+CombineWjets=True
 Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=False
+CombineH125=True
 H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
        'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
 
@@ -255,6 +255,42 @@ QCDscale={}
 handle=open('QCDscale/nuisance_QCDscale.py','r')
 exec(handle)
 handle.close()
+if CombineMultiV:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('MultiV')
+    print "doQCDScale for MultiV"
+
+
+
+if CombineWjets:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(Wjets))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('Wjets')
+    print "doQCDScale for Wjets"
+if CombineH125:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('h125')
+    print "doQCDScale for h125"
+
+
+
 for n in nMember_sample:
   print "# of member->",n
   if int(n)==0:continue
@@ -279,6 +315,37 @@ pdfAccept={}
 handle=open('PDF/nuisance_pdf.py','r')
 exec(handle)
 handle.close()
+if CombineMultiV:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('MultiV')
+    print "dopdfAccept for MultiV"
+    
+if CombineWjets:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(Wjets))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('Wjets')
+    print "dopdfAccept for Wjets"
+if CombineH125:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('h125')
+    print "dopdfAccept for h125"
 for n in nMember_sample:
   print "# of member->",n
   if int(n)==0:continue
@@ -318,7 +385,37 @@ if TEST_PS:nuisances={}
 handle=open('PS/nuisance_PS.py','r')
 exec(handle)
 handle.close()
+if CombineMultiV:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(MultiV))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('MultiV')
+    print "doPS for MultiV"
 
+if CombineWjets:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(Wjets))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('Wjets')
+    print "dopPS for Wjets"
+if CombineH125:
+  ##Check whether any MultiV sample has this nuisance variation
+  doVar=False
+  for n in nMember_sample:
+    if int(n)==0:continue
+    if len(set(nMember_sample[n]) & set(H125))!=0:doVar=True
+  if doVar:
+    if not 4 in nMember_sample:nMember_sample[4]=[]
+    nMember_sample[4].append('h125')
+    print "doPS for h125"
 PSWeightISR={}
 PSWeightFSR={}
 for n in nMember_sample:
