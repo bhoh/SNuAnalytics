@@ -15,6 +15,7 @@
 >HistoFactory.sh
 
 2)Make PDF/QCD scale shape
+>>git clone git@github.com:soarnsoar/python_tool.git
 >>RunMakeQCDscale_SymhessianAs_Shape.sh
 
 
