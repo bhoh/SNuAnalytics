@@ -20,6 +20,30 @@
 >>[2017/2018]RunMakeQCDscale_SymhessianAs_Shape.sh
 
 
+2-1)Combine ggWW--
+>>a)Check high stat mass points
+>>RunCheckEntriesInSR_per_process.sh
+>>>cat rootFile_2017_Boosted_SKIM10_HMVar10_Full_SBI/hadddir_ggHWWlnuqq_M*/*.txt
+>>>cat rootFile_2017_Resolved_SKIM10_HMVar10_Full_SBI/hadddir_ggHWWlnuqq_M*/*.txt
+>>choose the mass points to use for ggWW and make list in Make_ggww_shape.sh
+
+>>b)combine high stat samples
+>>Make_ggww_shape.sh
+
+2-2)Combine VV,Wjets,h125
+a)Make hadd files for each process
+>>source HaddWjetsH125MultiV.sh
+b)Make Combined Shapes
+>>MakeWjetsH125MultiVShape.sh
+
+
+2-3)Make SBI shape using S/I/ggWW,WWJJ/h125
+a)Make hadd files for S,B,I
+>>source HaddSBI.sh
+b)Make SBI Shapes
+>>source MakeSBIshape.sh
+~40min
+
 3)Hadd
 >HaddInBatch.sh
  

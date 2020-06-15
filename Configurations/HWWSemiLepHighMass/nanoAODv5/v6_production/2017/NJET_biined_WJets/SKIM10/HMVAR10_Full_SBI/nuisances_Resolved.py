@@ -1,12 +1,12 @@
 
-CombineMultiV=True ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting 
+CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting 
 MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=True
+CombineWjets=False
 Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=True
+CombineH125=False
 H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
        'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-
+CombineSBI=True
 
 
 UseRegroupJES=True
