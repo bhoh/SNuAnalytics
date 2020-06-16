@@ -1,5 +1,11 @@
 StartTime=$(date +%s)
 
+python TurnOnCombinedSamples.py nuisances.py CombineMultiV
+python TurnOnCombinedSamples.py nuisances.py CombineH125
+python TurnOnCombinedSamples.py nuisances.py CombineWjets
+python TurnOnCombinedSamples.py samples_2017.py CombineMultiV
+python TurnOnCombinedSamples.py samples_2017.py CombineH125
+python TurnOnCombinedSamples.py samples_2017.py CombineWjets
 
 
 

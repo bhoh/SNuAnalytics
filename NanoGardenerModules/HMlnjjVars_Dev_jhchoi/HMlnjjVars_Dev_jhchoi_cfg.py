@@ -60,7 +60,7 @@ HMlnjjVarsCuts={
     },
     
 }
-HMlnjjVarsCuts['2017']= HMlnjjVarsCuts['2018']
+#HMlnjjVarsCuts['2017']= HMlnjjVarsCuts['2018']
 
 MELAcfg={
     '2018':{

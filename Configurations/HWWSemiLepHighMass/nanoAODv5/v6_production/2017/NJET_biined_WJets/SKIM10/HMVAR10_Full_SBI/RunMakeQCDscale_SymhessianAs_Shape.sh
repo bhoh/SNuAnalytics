@@ -1,4 +1,10 @@
 StartTime=$(date +%s)
+python TurnOffCombinedSamples.py nuisances.py CombineMultiV
+python TurnOffCombinedSamples.py nuisances.py CombineH125
+python TurnOffCombinedSamples.py nuisances.py CombineWjets
+python TurnOffCombinedSamples.py samples_2017.py CombineMultiV
+python TurnOffCombinedSamples.py samples_2017.py CombineH125
+python TurnOffCombinedSamples.py samples_2017.py CombineWjets
 
 #ARR_REGION=(TOP SB SR)
 #ARR_PROC=(GGF VBF)

@@ -1,9 +1,9 @@
 TESTRUN=False
-CombineMultiV=True
+CombineMultiV=False
 MultiV=['WWJJ','WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=True
+CombineWjets=False
 Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=True
+CombineH125=False
 H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
        'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','WmHtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
 
@@ -90,6 +90,11 @@ for MX in List_MX:
                                                  'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+cut,
                                                  'FilesPerJob' : 4,
                                                }
+  #samples['ggHWWlnuqq_M'+str(MX)+'_SBI'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
+  #                                               #'weight' : 'XSWeight*SFweight*METFilter_MC'+'*('+model+'+'model+'_B'+'+'+model+'_I'+')*'+cut,
+  #                                           'weight' : 'XSWeight*SFweight*METFilter_MC'+'*('+model+'+'+model+'_B'+'+'+model+'_I'+model+'_I_HB'+'+'+model+'_H'+')*'+cut,
+  #                                               'FilesPerJob' : 4,
+  #                                             }
   samples['ggHWWlnuqq_M'+str(MX)+'_B'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
                                                  'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'_B'+'*'+cut,
                                                  'FilesPerJob' : 4,
@@ -101,6 +106,7 @@ for MX in List_MX:
 
 
   addSampleWeight(samples, 'ggHWWlnuqq_M'+str(MX)+'_S', 'GluGluHToWWToLNuQQ_M'+str(MX), kfactor['ggHWWlnuqq_M'+str(MX)])
+  #addSampleWeight(samples, 'ggHWWlnuqq_M'+str(MX)+'_SBI', 'GluGluHToWWToLNuQQ_M'+str(MX), kfactor['ggHWWlnuqq_M'+str(MX)])
   addSampleWeight(samples, 'ggHWWlnuqq_M'+str(MX)+'_B', 'GluGluHToWWToLNuQQ_M'+str(MX), kfactor['ggHWWlnuqq_M'+str(MX)])
   addSampleWeight(samples, 'ggHWWlnuqq_M'+str(MX)+'_I', 'GluGluHToWWToLNuQQ_M'+str(MX), kfactor['ggHWWlnuqq_M'+str(MX)])
     
@@ -110,6 +116,12 @@ for MX in List_MX_VBF:
                                                  'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+cut,
                                                  'FilesPerJob' : 4,
                                                }
+  #samples['vbfHWWlnuqq_M'+str(MX)+'_SBI'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
+  #                                            #'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+cut,
+  #                                            #'weight' : 'XSWeight*SFweight*METFilter_MC'+'*('+model+'+'model+'_B'+'+'+model+'_I'+')*'+cut,xs
+  #                                            'weight' : 'XSWeight*SFweight*METFilter_MC'+'*('+model+'+'+model+'_B'+'+'+model+'_I'+model+'_I_HB'+'+'+model+'_H'+')*'+cut,
+  ##                                            'FilesPerJob' : 4,
+  #}
   samples['vbfHWWlnuqq_M'+str(MX)+'_B'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
                                                  'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'_B'+'*'+cut,
                                                  'FilesPerJob' : 4,
@@ -119,6 +131,7 @@ for MX in List_MX_VBF:
                                                  'FilesPerJob' : 4,
                                                }
   addSampleWeight(samples, 'vbfHWWlnuqq_M'+str(MX)+'_S', 'VBFHToWWToLNuQQ_M'+str(MX), kfactor['vbfHWWlnuqq_M'+str(MX)])
+  #addSampleWeight(samples, 'vbfHWWlnuqq_M'+str(MX)+'_SBI', 'VBFHToWWToLNuQQ_M'+str(MX), kfactor['vbfHWWlnuqq_M'+str(MX)])
   addSampleWeight(samples, 'vbfHWWlnuqq_M'+str(MX)+'_B', 'VBFHToWWToLNuQQ_M'+str(MX), kfactor['vbfHWWlnuqq_M'+str(MX)])
   addSampleWeight(samples, 'vbfHWWlnuqq_M'+str(MX)+'_I', 'VBFHToWWToLNuQQ_M'+str(MX), kfactor['vbfHWWlnuqq_M'+str(MX)])
 
