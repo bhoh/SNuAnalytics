@@ -1,15 +1,3 @@
-UseRegroupJES=True
-print "UseRegroupJES=",UseRegroupJES
-
-CombineMultiV=True ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
-MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=True
-Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=True
-H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
-       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-
-
 from FatJet_Jet_SysBranches import *
 from WPandCut2018 import *
 
@@ -49,6 +37,15 @@ if CombineH125:
   mc+=['h125']
   for s in H125:
     if s in mc : mc.remove(s)
+if Combine_ggWW:
+  mc+=['Combine_ggWW']
+if Combine_qqWWqq:
+  mc+=['Combine_qqWWqq']
+if CombineSBI:
+  for MX in List_MX:
+    mc+=['ggHWWlnuqq_M'+str(MX)+'_SBI']
+  for MX in List_MX_VBF:
+    mc+=['vbfHWWlnuqq_M'+str(MX)+'_SBI']
 
 
 
@@ -147,6 +144,7 @@ for s in ['fatjes','fatjer','fatjms','fatjmr']:
     'name': 'CMS_'+s+'_2018',
     'kind': 'tree',
     'type': 'shape',
+    'kind': 'branch_custom',
     'samples': dict((skey, ['1', '1']) for skey in mc),
     'folderUp': xrootdPath+'/'+treeBaseDir+'/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
     'folderDown': xrootdPath+'/'+treeBaseDir+'/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',

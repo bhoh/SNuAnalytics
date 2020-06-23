@@ -1,12 +1,3 @@
-UseRegroupJES=True
-CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
-MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineH125=False
-H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
-       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-
-
-
 from WPandCut2016 import *
 from FatJet_Jet_SysBranches import *
 print "UseRegroupJES=",UseRegroupJES
@@ -42,10 +33,15 @@ if CombineH125:
   mc+=['h125']
   for s in H125:
     if s in mc: mc.remove(s)
-
-
-
-
+if Combine_ggWW:
+  mc+=['Combine_ggWW']
+if Combine_qqWWqq:
+  mc+=['Combine_qqWWqq']
+if CombineSBI:
+  for MX in List_MX:
+    mc+=['ggHWWlnuqq_M'+str(MX)+'_SBI']
+  for MX in List_MX_VBF:
+    mc+=['vbfHWWlnuqq_M'+str(MX)+'_SBI']
 
 nuisances['lumi_Uncorrelated'] = {
     'name': 'lumi_13TeV_2016',
@@ -150,8 +146,25 @@ nuisances['eff_m'] = {
 }
 
 
+for s in ['fatjes','fatjer','fatjms','fatjmr']:
+  nuisances[s] = {
+    'name': 'CMS_'+s+'_2018',
+    'type': 'shape',
+    'kind': 'branch_custom',
+    'samples': dict((skey, ['1', '1']) for skey in mc),
+    'folderUp': xrootdPath+'/'+treeBaseDir+'/Summer16_102X_nAODv5_Full2016v6/MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
+    'folderDown': xrootdPath+'/'+treeBaseDir+'/Summer16_102X_nAODv5_Full2016v6/MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
 
-nuisances['muonpt'] = {
+  }
+  nuisances[s]['BrFromToUp']={}
+  nuisances[s]['BrFromToDown']={}
+  for br in HMBoostBranches+WBranches:
+    nuisances[s]['BrFromToUp'][br]=br.replace("nom",s.replace('fat','')+"up")
+    nuisances[s]['BrFromToDown'][br]=br.replace("nom",s.replace('fat','')+"down")
+
+
+
+nuisances['mupt'] = {
     'name': 'CMS_scale_m_2016',
     'kind': 'tree',
     'type': 'shape',
@@ -493,4 +506,6 @@ nuisances['MultiVnorm']={
       'ZZZ':'1.1',
     }
 }
+
+
 
