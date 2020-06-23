@@ -28,7 +28,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
 METtype="PuppiMET"
 #met>30
-#supercut +='&&!isBoost_'+WTAG+'_nom'
+supercut +='&&!isBoost_'+WTAG+'_nom'
 
 ##---Lepton Categorization---##
 
@@ -66,6 +66,9 @@ ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+
 ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 
+if 'SR' in opt.cutsFile :
+    ResolvedRegionCats={}
+    ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
 
 
 
