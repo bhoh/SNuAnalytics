@@ -530,7 +530,7 @@ class HMlnjjVarsClass_Dev(Module):
             pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
             if pt1 < self.cut_VBFjet_pt: continue
             if abs(eta1) > self.cut_VBFjet_eta : continue
-            if abs(eta1) > self.cut_jet_horn_etamin and abs(eta1) < self.cut_jet_horn_etammax: ##if in jet horn region
+            if abs(eta1) > self.cut_jet_horn_etamin and abs(eta1) < self.cut_jet_horn_etamax: ##if in jet horn region
                 if pt1 < self.cut_jet_horn_ptmin: continue
             if self.getDeltaR(wphi,weta,phi1,eta1) < 0.8 : continue ##jet cleaning
             for j_cj in range(0,N):
@@ -538,7 +538,7 @@ class HMlnjjVarsClass_Dev(Module):
                 pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
                 if pt2 < self.cut_VBFjet_pt: continue
                 if abs(eta2) > self.cut_VBFjet_eta : continue
-                if abs(eta2) > self.cut_jet_horn_etamin and abs(eta2) < self.cut_jet_horn_etammax: ##if in jet horn region
+                if abs(eta2) > self.cut_jet_horn_etamin and abs(eta2) < self.cut_jet_horn_etamax: ##if in jet horn region
                     if pt2 < self.cut_jet_horn_ptmin: continue
                 if self.getDeltaR(wphi,weta,phi2,eta2)< 0.8 : continue ##jet cleaning
                 this_dEta=abs(eta1-eta2)
