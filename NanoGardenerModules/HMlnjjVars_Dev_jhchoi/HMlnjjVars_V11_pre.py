@@ -365,6 +365,7 @@ class HMlnjjVarsClass_Dev(Module):
 	            self._CandSumPt += self._MET_4v.Pt() 
                     self._CandSumPt += self._Whad_j1_4v.Pt()
                     self._CandSumPt += self._Whad_j2_4v.Pt()
+                    #self._CandSumPt += self._WhadBoost_4v
 
 	            if self._isVBF_Boost:
                       tmp_pt, tmp_eta, tmp_phi, tmp_mass = self.CleanJet_PtEtaPhiM(self._VBFjjBoost_cjidx1)
