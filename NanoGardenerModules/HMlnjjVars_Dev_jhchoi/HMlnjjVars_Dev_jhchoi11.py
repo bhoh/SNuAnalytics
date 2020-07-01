@@ -495,7 +495,7 @@ class HMlnjjVarsClass_Dev(Module):
             pt1,eta1,phi1,mass1 = self.CleanJet_PtEtaPhiM(i_cj)
             if pt1 < self.cut_VBFjet_pt: continue
             if abs(eta1) > self.cut_VBFjet_eta : continue
-            if abs(eta1) > self.cut_jet_horn_etamin and abs(eta1) < self.cut_jet_horn_etammax: ##if in jet horn region
+            if abs(eta1) > self.cut_jet_horn_etamin and abs(eta1) < self.cut_jet_horn_etamax: ##if in jet horn region
                 if pt1 < self.cut_jet_horn_ptmin: continue
             if self.getDeltaR(wphi,weta,phi1,eta1) < 0.8 : continue ##jet cleaning
             for j_cj in range(0,N):
@@ -503,7 +503,7 @@ class HMlnjjVarsClass_Dev(Module):
                 pt2,eta2,phi2,mass2 = self.CleanJet_PtEtaPhiM(j_cj)
                 if pt2 < self.cut_VBFjet_pt: continue
                 if abs(eta2) > self.cut_VBFjet_eta : continue
-                if abs(eta2) > self.cut_jet_horn_etamin and abs(eta2) < self.cut_jet_horn_etammax: ##if in jet horn region
+                if abs(eta2) > self.cut_jet_horn_etamin and abs(eta2) < self.cut_jet_horn_etamax: ##if in jet horn region
                     if pt2 < self.cut_jet_horn_ptmin: continue
                 if self.getDeltaR(wphi,weta,phi2,eta2)< 0.8 : continue ##jet cleaning
                 this_dEta=abs(eta1-eta2)
@@ -677,7 +677,7 @@ class HMlnjjVarsClass_Dev(Module):
                     print "check ggf prob."
 
 
-                
+                '''
                 naddjet=len(self._AddJetBoost['pt'])
                 tmp_4V = ROOT.TLorentzVector()
                 for i in range(naddjet):
@@ -691,7 +691,7 @@ class HMlnjjVarsClass_Dev(Module):
                     #print 'pt, eta, phi, mass=',pt, eta, phi, mass
                     NoVBF_associate_ids.push_back( int(0) )
                     NoVBF_associate_4Vs.push_back( tmp_4V )
-                
+                '''
                 
                 self.mela.setCandidateDecayMode(ROOT.TVar.CandidateDecay_WW)
                 self.mela.setupDaughtersNoMom(
@@ -706,7 +706,7 @@ class HMlnjjVarsClass_Dev(Module):
                 # TVar.CandidateDecay_WW     case: h->WW, ProdP : not supported -> same value for sig,bkg 
                 #mePgg = self.mela.computeProdP(ROOT.TVar.HSMHiggs, ROOT.TVar.JHUGen, True)
                 self.P_ggf_S[mH] = self.mela.computeDecP(ROOT.TVar.HSMHiggs, ROOT.TVar.MCFM, False)
-                self.P_ggf_B[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
+                self.P_ggf_B[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, False)
                 #self.P_ggf_B2[mH] = self.mela.computeDecP2(ROOT.TVar.bkgWW,    ROOT.TVar.MCFM, True)
 
 
@@ -933,7 +933,7 @@ class HMlnjjVarsClass_Dev(Module):
     def GetBJetsBoost(self):
         bWP=self.bWP
         N=len(self._CleanJet_col)
-        if N < 2: return
+        
         wphi=self._WhadBoost_4v.Phi()
         weta=self._WhadBoost_4v.Eta()
         for i_cj in range(0,N): #
@@ -952,10 +952,9 @@ class HMlnjjVarsClass_Dev(Module):
             if bAlgo < bWP:continue
             self._BJetBoost['cjidx'].append(i_cj) ## fill index of CleanJet 
 	    if self._isVBF_Boost:
-	      if i_cj != self._VBFjjBoost_cjidx1:
+	      if i_cj != self._VBFjjBoost_cjidx1 and i_cj != self._VBFjjBoost_cjidx2:
                   self._BJetBstNotVBF['cjidx'].append(i_cj)
-              elif i_cj != self._VBFjjBoost_cjidx2:
-                  self._BJetBstNotVBF['cjidx'].append(i_cj)
+
 
     def GetBJetsResol(self):
         ##->Set self._BJetResol_cjidx
@@ -979,10 +978,9 @@ class HMlnjjVarsClass_Dev(Module):
             if bAlgo < bWP:continue
             self._BJetResol['cjidx'].append(i_cj) ## fill index of CleanJet
 	    if self._isVBF_Resol:
-	      if i_cj != self._VBFjjResol_cjidx1 : 
+	      if i_cj != self._VBFjjResol_cjidx1 and i_cj !=  self._VBFjjResol_cjidx2 : 
                   self._BJetResNotVBF['cjidx'].append(i_cj)
-              elif i_cj != self._VBFjjResol_cjidx2 : 
-                  self._BJetResNotVBF['cjidx'].append(i_cj)
+
 
             
 

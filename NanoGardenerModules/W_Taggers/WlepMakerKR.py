@@ -61,6 +61,7 @@ class WlepMakerKR(Module):
             self.out.branch(self.METtype+_suffix_+'pz2', "F")
             self.out.branch(self.METtype+_suffix_+'px', "F")
             self.out.branch(self.METtype+_suffix_+'py', "F")
+            self.out.branch(self.METtype+_suffix_+'pt', "F")
             self.out.branch(self.METtype+_suffix_+'E', "F")
             self.out.branch(self.METtype+_suffix_+'pz', "F")
             self.out.branch(self.METtype+_suffix_+'big_E', "F")
@@ -68,7 +69,7 @@ class WlepMakerKR(Module):
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
-    def Get_MET_pt_phi(self):
+    def Get_MET_pt_phi(self): ##propagate jet momentum sysvar to MET
         self.JetPxSum_old=0
         self.JetPySum_old=0
         self.GetJetPxPySum_old()
@@ -180,6 +181,7 @@ class WlepMakerKR(Module):
             
             self.out.fillBranch(self.METtype+_suffix_+'px',met_px) ##MET_pz = pz1+-sqrt(pz2)
             self.out.fillBranch(self.METtype+_suffix_+'py',met_py) ##MET_pz = pz1+-sqrt(pz2)
+            self.out.fillBranch(self.METtype+_suffix_+'pt',met_pt) ##MET_pz = pz1+-sqrt(pz2)
             
             self.out.fillBranch(self.METtype+_suffix_+'E',met_E) ##MET_pz = pz1+-sqrt(pz2)
             self.out.fillBranch(self.METtype+_suffix_+'pz',met_pz)

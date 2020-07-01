@@ -17,4 +17,5 @@ ln -s ${PWD}/WjjtaggerProducer.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/
 
 
 rm ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/WlepMaker.py
-ln -s ${PWD}/WlepMaker.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/WlepMaker.py
+rm ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/WlepMakerKR.py
+ln -s ${PWD}/WlepMakerKR.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/WlepMakerKR.py
