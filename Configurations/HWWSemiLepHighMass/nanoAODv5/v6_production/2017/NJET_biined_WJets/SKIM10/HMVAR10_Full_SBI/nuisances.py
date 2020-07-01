@@ -1,21 +1,3 @@
-
-CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting 
-MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=False
-Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=False
-H125=['ggHWWlnuqq_M125','vbfHWWlnuqq_M125','ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
-       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-CombineSBI=True
-
-
-UseRegroupJES=True
-print "UseRegroupJES=",UseRegroupJES
-TEST_PS=False
-print "TEST_PS=",TEST_PS
-TEST_QCD_SCALE=False
-TEST_PDF=False
-
 import os
 from FatJet_Jet_SysBranches import * 
 from WPandCut2017 import *
@@ -56,6 +38,15 @@ if CombineH125:
   mc+=['h125']
   for s in H125:
     if s in mc : mc.remove(s)
+if Combine_ggWW:
+  mc+=['Combine_ggWW']
+if Combine_qqWWqq:
+  mc+=['Combine_qqWWqq']
+if CombineSBI:
+  for MX in List_MX:
+    mc+=['ggHWWlnuqq_M'+str(MX)+'_SBI']
+  for MX in List_MX_VBF:
+    mc+=['vbfHWWlnuqq_M'+str(MX)+'_SBI']
 
 
 
@@ -183,8 +174,8 @@ if 'Boosted' in opt.nuisancesFile:
 for s in ['fatjes','fatjer','fatjms','fatjmr']:
   nuisances[s] = {
     'name': 'CMS_'+s+'_2017',
-    'kind': 'tree',
     'type': 'shape',
+    'kind': 'branch_custom',
     'samples': dict((skey, ['1', '1']) for skey in mc),
     'folderUp': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
     'folderDown': xrootdPath+'/'+treeBaseDir+'/Fall2017_102X_nAODv5_Full2017v6/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
@@ -194,6 +185,7 @@ for s in ['fatjes','fatjer','fatjms','fatjmr']:
   nuisances[s]['BrFromToDown']={}
   for br in HMBoostBranches+WBranches:
     nuisances[s]['BrFromToUp'][br]=br.replace("nom",s.replace('fat','')+"up")
+    print nuisances[s]['BrFromToUp'][br]
     nuisances[s]['BrFromToDown'][br]=br.replace("nom",s.replace('fat','')+"down")
 
 nuisances['mupt'] = {
@@ -381,7 +373,6 @@ nuisances['pdfAccept'] = {
 
 
 
-if TEST_PS:nuisances={}
 handle=open('PS/nuisance_PS.py','r')
 exec(handle)
 handle.close()
@@ -644,6 +635,22 @@ nuisances['stat'] = {
 
 
 
-
-
+#for n in sorted(nuisances): 
+#  #USEONLY
+#  if not n in USEONLY:
+#    del nuisances[n]
 print "nNuisances=",len(nuisances)
+
+'''
+CombineMultiV=True ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
+MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
+CombineWjets=True
+Wjets=['Wjets0j','Wjets1j','Wjets2j']
+CombineH125=True
+H125=['ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
+       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
+CombineSBI=True
+qqWWqq=['WWJJ','vbfHWWlnuqq_M125']
+Combine_ggWW=False
+CombineSBI=True
+'''

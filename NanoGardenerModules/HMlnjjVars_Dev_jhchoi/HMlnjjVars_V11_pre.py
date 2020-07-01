@@ -29,7 +29,7 @@ class HMlnjjVarsClass_Dev(Module):
         year=str(year)
         ##tagging methods for W->FJ or W->jj
         self.pairalgos=pairalgos
-        self.WtaggerConfig=WJID[year]
+        self.WtagWPs=WJID[year]
         ##systematics
         self.fjsysvars=fjsysvars
         self.jetsysvars=jetsysvars
@@ -147,7 +147,7 @@ class HMlnjjVarsClass_Dev(Module):
 
         '''
         ##for boosted region##
-        for wtag in self.WtaggerConfig:
+        for wtag in self.WtagWPs:
             for fjsysvar in self.fjsysvars:
                 for jsysvar in self.jetsysvars:
                     
@@ -336,7 +336,7 @@ class HMlnjjVarsClass_Dev(Module):
 
         self.event=event
         # Boost ########################
-        for wtag in self.WtaggerConfig: ##for wtaggers:
+        for wtag in self.WtagWPs: ##for wtaggers:
             #continue ## to test resol
             for fjsysvar in self.fjsysvars: ##for fatjet sys
                 for jsysvar in self.jetsysvars: ##for jey sys
@@ -976,7 +976,7 @@ class HMlnjjVarsClass_Dev(Module):
     def GetBJetsBoost(self):
         bWP=self.bWP
         N=len(self._CleanJet_col)
-        if N < 2: return
+        if N < 1: return
         wphi=self._WhadBoost_4v.Phi()
         weta=self._WhadBoost_4v.Eta()
         for i_cj in range(0,N): #
