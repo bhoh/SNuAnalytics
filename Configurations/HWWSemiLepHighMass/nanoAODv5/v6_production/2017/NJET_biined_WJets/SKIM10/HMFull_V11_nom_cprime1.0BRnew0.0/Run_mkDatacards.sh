@@ -28,7 +28,7 @@ ARR_MASS=$DefineList
 #inputBoost=`ls rootFile*Boost*/hadd.root`
 #inputResol=`ls rootFile*Resol*/hadd.root`
 
-#ARR_MASS=(1000)
+ARR_MASS=(1000)
 TOTAL_MX=""
 for MX in ${ARR_MASS[@]};do
     TOTAL_MX="$TOTAL_MX,${MX}"
@@ -49,7 +49,7 @@ for MX in ${ARR_MASS[@]};do
 	
 	#echo ${input}
 	for rg in ${ListRegion[@]};do
-	    input=`ls rootFile*Boost*/hadd.root`
+	    input=`ls rootFile*Boosted*/hadd.root`
 	    cp cuts_Boosted.py cuts_Boosted_${flv}_${rg}.py
 
 	    sleep 1
@@ -58,7 +58,7 @@ for MX in ${ARR_MASS[@]};do
 
 	    sleep 1
 	
-	    input=`ls rootFile*Resol*/hadd.root`
+	    input=`ls rootFile*Resolved*/hadd.root`
 	    #echo ${input}
 	    cp cuts_Resolved.py cuts_Resolved_${flv}_${rg}.py
 
