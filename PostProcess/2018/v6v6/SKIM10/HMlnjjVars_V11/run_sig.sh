@@ -109,7 +109,7 @@ modcfg="--modcfg SNuAnalytics/NanoGardenerModules/HMlnjjVars_Dev_jhchoi/Steps_cf
 
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s BWReweight -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__HMFull_V11_nom -s BWReweight -b -T ${SAMPLE_LIST}
-mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_nom -b -T ${SAMPLE_LIST}
+#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_nom -b -T ${SAMPLE_LIST}
 
 
 
@@ -121,13 +121,18 @@ mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__
 
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10 -s HMFull_V11_fatjetsys -b -T ${SAMPLE_LIST}
 
-#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_uncorrelate -b -T ${SAMPLE_LIST}
-#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_uncorrelate -b -T ${SAMPLE_LIST}
+
+
+
+
+
+mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_uncorrelate -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_uncorrelate -b -T ${SAMPLE_LIST}
 
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_correlate -b -T ${SAMPLE_LIST}
 #mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_correlate -b -T ${SAMPLE_LIST}
 
-#mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_fatjetsys -b -T ${SAMPLE_LIST}
+mkPostProc.py ${modcfg} -p Autumn18_102X_nAODv6_Full2018v6 -i  MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_fatjetsys -b -T ${SAMPLE_LIST}
 
 
 
