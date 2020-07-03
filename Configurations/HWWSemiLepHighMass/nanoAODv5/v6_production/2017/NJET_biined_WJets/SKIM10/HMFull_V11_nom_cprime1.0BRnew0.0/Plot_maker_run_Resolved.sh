@@ -1,11 +1,11 @@
 StartTime=$(date +%s)
 
-python TurnOnCombinedSamples.py WPandCut2017.py CombineMultiV
-python TurnOnCombinedSamples.py WPandCut2017.py CombineH125
-python TurnOnCombinedSamples.py WPandCut2017.py CombineWjets
-python TurnOnCombinedSamples.py WPandCut2017.py Combine_ggWW
-python TurnOnCombinedSamples.py WPandCut2017.py Combine_qqWWqq
-python TurnOnCombinedSamples.py WPandCut2017.py CombineSBI
+python TurnOffCombinedSamples.py WPandCut2017.py CombineMultiV
+python TurnOffCombinedSamples.py WPandCut2017.py CombineH125
+python TurnOffCombinedSamples.py WPandCut2017.py CombineWjets
+python TurnOffCombinedSamples.py WPandCut2017.py Combine_ggWW
+python TurnOffCombinedSamples.py WPandCut2017.py Combine_qqWWqq
+python TurnOffCombinedSamples.py WPandCut2017.py CombineSBI
 
 
 
@@ -59,7 +59,7 @@ cp nuisances.py nuisances_Resolved.py
 
 
 
-input=`ls rootFile*Resol*/hadd.root`
+input=`ls rootFile*Resolved*/hadd.root`
 FLV=(ele mu)
 for flv in ${FLV[@]};do
     cp plot.py plot_${flv}_Resol.py
@@ -67,9 +67,9 @@ for flv in ${FLV[@]};do
     
     cp cuts_Resolved.py cuts_Resolved_${flv}.py 
     sleep 1
-    (mkPlot.py --pycfg=configuration_Resolved.py --inputFile=${input} --plotFile=plot_${flv}_Resol.py --cutsFile=cuts_Resolved_${flv}.py --outputDirPlots=plots_2017_Resolved_${flv} &> Plot_maker_run_Resolved_${flv}.log;echo "DONE" >> Plot_maker_run_Resolved_${flv}.log)&
+    (mkPlot.py --pycfg=configuration_Resolved.py --inputFile=${input} --plotFile=plot_${flv}_Resol.py --cutsFile=cuts_Resolved_${flv}.py --outputDirPlots=plots_2017_Resolved_${flv}_${1} &> Plot_maker_run_Resolved_${flv}.log;echo "DONE" >> Plot_maker_run_Resolved_${flv}.log)&
     sleep 1
-    (mkPlot.py --pycfg=configuration_Resolved.py --inputFile=${input} --plotFile=plot_${flv}_ResolSR.py --cutsFile=cuts_Resolved_${flv}.py --outputDirPlots=plots_2017_Resolved_${flv}_blind &> Plot_maker_run_Resolved_${flv}.log;echo "DONE" >> Plot_maker_run_Resolved_${flv}.log)&
+    (mkPlot.py --pycfg=configuration_Resolved.py --inputFile=${input} --plotFile=plot_${flv}_ResolSR.py --cutsFile=cuts_Resolved_${flv}.py --outputDirPlots=plots_2017_Resolved_${flv}_${1}_blind &> Plot_maker_run_Resolved_${flv}.log;echo "DONE" >> Plot_maker_run_Resolved_${flv}.log)&
 done
 EndTime=$(date +%s)
 echo $EndTime

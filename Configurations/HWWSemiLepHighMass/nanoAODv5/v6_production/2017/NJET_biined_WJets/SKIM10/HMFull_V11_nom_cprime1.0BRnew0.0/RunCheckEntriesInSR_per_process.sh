@@ -36,7 +36,7 @@ for MX in ${ARR_MASS[@]};do
     #continue
     processname=ggHWWlnuqq_M${MX}_B
     #input=`ls rootFile*Boost*/hadd.root`
-    directorypath=`ls -d rootFile*Boost*/`
+    directorypath=`ls -d rootFile*Boosted*/`
     #echo ${input}
     #for cutname in ${ARR_CUT[@]};do
     command="cd ${CURDIR};python CheckEntriesInSR_per_process.py -c ${cutname} -v ${variablename} -d ${directorypath} -n ${minN} -p ${processname}"
@@ -56,7 +56,7 @@ cutname=___ResolvedGGF__SR__METOver30__PtOverM035__WlepMtOver50__WWMtOver60__Sco
 for MX in ${ARR_MASS[@]};do
     processname=ggHWWlnuqq_M${MX}_B
     #input=`ls rootFile*Boost*/hadd.root`
-    directorypath=`ls -d rootFile*Resol*/`
+    directorypath=`ls -d rootFile*Resolved*/`
     #echo ${input}
     #for cutname in ${ARR_CUT[@]};do
     command="cd ${CURDIR};python CheckEntriesInSR_per_process.py -c ${cutname} -v ${variablename} -d ${directorypath} -n ${minN} -p ${processname}"

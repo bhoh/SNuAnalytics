@@ -1,3 +1,4 @@
+mkdir -p logs/
 StartTime=$(date +%s)
 
 python TurnOffCombinedSamples.py WPandCut2017.py CombineMultiV
