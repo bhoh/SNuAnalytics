@@ -122,9 +122,9 @@ for MX in List_MX:
     
 for MX in List_MX_VBF:
   cut=melavbf[MX]
-  normS='('+kfactor['VBFHToWWToLNuQQ_M'+str(MX)]+')'
-  normI='('+str(math.sqrt(float(kfactor['VBFHToWWToLNuQQ_M'+str(MX)])*float(NormToPowheg['ggHWWlnuqq_M'+str(MX)])))+')' 
-  normB='('+NormToPowheg['VBFHToWWToLNuQQ_M'+str(MX)]+')'
+  normS='('+kfactor['vbfHWWlnuqq_M'+str(MX)]+')'
+  normI='('+str(math.sqrt(float(kfactor['vbfHWWlnuqq_M'+str(MX)])*float(NormToPowheg['vbfHWWlnuqq_M'+str(MX)])))+')' 
+  normB='('+NormToPowheg['vbfHWWlnuqq_M'+str(MX)]+')'
   samples['vbfHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
                                             'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+normS+'*'+cut,
                                             # 'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+cut,
