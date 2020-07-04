@@ -204,8 +204,8 @@ if not NotUseTreeBase:
       'samples': dict((skey, ['1', '1']) for skey in mc),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTdo',
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_MupTup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_MupTdo'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_MupTup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_MupTdo'),
     }
 
 
@@ -214,8 +214,8 @@ if not NotUseTreeBase:
       'kind': 'tree',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_ElepTup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_ElepTdo'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_ElepTup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_ElepTdo'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTdo',
       
@@ -227,8 +227,8 @@ if not NotUseTreeBase:
       'kind': 'tree',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_METup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_METup'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_METup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_METup'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METdo',
     }
@@ -500,8 +500,8 @@ if not NotUseTreeBase:
         'samples': dict((skey, ['1', '1']) for skey in mc),
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
-        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysup_correlate'),
-        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysdo_correlate'),
+        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
+        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_correlate'),
       }
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}
@@ -515,8 +515,8 @@ if not NotUseTreeBase:
         'kind': 'branch_custom',
         'type': 'shape',
         'samples': dict((skey, ['1', '1']) for skey in mc),
-        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysup_uncorrelate'),
-        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysdo_uncorrelate'),
+        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
+        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_uncorrelate'),
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_uncorrelate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_uncorrelate',
       }
@@ -535,8 +535,8 @@ if not NotUseTreeBase:
       'kind': 'branch_custom',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysup_correlate'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'STEP.replace('_nom','_jetsysdo_correlate'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_correlate'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
     }
