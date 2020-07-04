@@ -167,7 +167,7 @@ class WtaggerProducer(Module):
                     #'effSF':[],
                     #'effSFup':[],
                     #'effSFdown':[],
-                #}
+                }
             
         for tagname, wtag in self.WtaggerConfig.items(): ## from WJID
             #if tagname!='HP45':continue
