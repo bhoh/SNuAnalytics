@@ -168,14 +168,14 @@ nuisances['eff_m'] = {
 }
 
 
-eff_tau21_syst = ['tau21SFdown/tau21SFnom','tau21SFup/tau21SFnom']
+eff_Wtag_syst = ['WtaggerSFdown/WtaggerSFnom','WtaggerSFup/WtaggerSFnom']
 if 'Boosted' in opt.nuisancesFile: 
-  nuisances['eff_tau21'] = {
+  nuisances['eff_Wtag'] = {
     
-    'name': 'CMS_eff_tau21_2017',
+    'name': 'CMS_eff_Wtag_2017',
     'kind': 'weight',
     'type': 'shape',
-  'samples': dict((skey, eff_tau21_syst) for skey in mc),
+  'samples': dict((skey, eff_Wtag_syst) for skey in mc),
   
   }
 if not NotUseTreeBase:
@@ -699,6 +699,8 @@ nuisances['stat'] = {
 }
   
 
+for n in nuisances.values():
+    n['skipCMS'] = 1
 
 
 #for n in sorted(nuisances): 
