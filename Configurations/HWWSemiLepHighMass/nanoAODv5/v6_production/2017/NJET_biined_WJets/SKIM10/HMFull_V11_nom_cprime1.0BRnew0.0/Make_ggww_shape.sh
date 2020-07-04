@@ -58,7 +58,7 @@ for PROC in ${listB[@]};do
 done
 PROCINPUT=${PROCINPUT#,}
 #(python python_tool/latino/CombineShapesToAvg.py -c configuration_Boosted.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWWnoH -o;cp ${ggWWfile}_ggWW ${rootfiledir}/plot_ggWW.root)&> logs/Make_ggww_shape_Boosted.log&
-(python python_tool/latino/CombineShapesToAvg.py -c configuration_Boosted.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWWnoH -o)&> logs/Make_ggww_shape_Boosted.log&
+(python python_tool/latino/CombineShapesToAvg.py -c configuration_Boosted.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWWnoH -o)&> logs/Make_ggww_shape_Boosted.log
 ##ggWWnoH is created
 ##hadd ggWWnoH + ggHWWlnuqq_M125
 (mkdir -p ${rootfiledir}/ggWW/;hadd -f ${rootfiledir}/ggWW/plot_ggWW.root ${rootfiledir}/ggWWnoH/plots_ggWWnoH.root_ggWWnoH ${rootfiledir}/hadddir_ggHWWlnuqq_M125/hadd_ggHWWlnuqq_M125.root;python python_tool/latino/CombineShapes.py -c configuration_Boosted.py -f ${rootfiledir}/ggWW/plot_ggWW.root -s ggWWnoH,ggHWWlnuqq_M125 -n ggWW -o;cp ${rootfiledir}/ggWW/plot_ggWW.root_ggWW ${rootfiledir}/plot_ggWW.root;)
@@ -99,5 +99,5 @@ done
 PROCINPUT=${PROCINPUT#,}
 
 #(python python_tool/latino/CombineShapesToAvg.py -c configuration_Resolved.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWW -o;cp ${ggWWfile}_ggWW ${rootfiledir}/plot_ggWW.root)&> logs/Make_ggww_shape_Resolved.log&
-(python python_tool/latino/CombineShapesToAvg.py -c configuration_Resolved.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWWnoH -o)&> logs/Make_ggww_shape_Resolved.log&
+(python python_tool/latino/CombineShapesToAvg.py -c configuration_Resolved.py -f ${ggWWfile} -s ${PROCINPUT} -n ggWWnoH -o)&> logs/Make_ggww_shape_Resolved.log
 (mkdir -p ${rootfiledir}/ggWW/;hadd -f ${rootfiledir}/ggWW/plot_ggWW.root ${rootfiledir}/ggWWnoH/plots_ggWWnoH.root_ggWWnoH ${rootfiledir}/hadddir_ggHWWlnuqq_M125/hadd_ggHWWlnuqq_M125.root;python python_tool/latino/CombineShapes.py -c configuration_Resolved.py -f ${rootfiledir}/ggWW/plot_ggWW.root -s ggWWnoH,ggHWWlnuqq_M125 -n ggWW -o;cp ${rootfiledir}/ggWW/plot_ggWW.root_ggWW ${rootfiledir}/plot_ggWW.root)
