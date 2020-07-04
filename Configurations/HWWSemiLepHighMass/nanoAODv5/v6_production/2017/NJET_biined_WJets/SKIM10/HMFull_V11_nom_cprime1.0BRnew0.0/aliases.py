@@ -93,8 +93,8 @@ aliases['WtaggerSFdown']={
 
 ##---TrigSF
 aliases['trigWeight']={
-    #'expr' : 'TriggerEffWeight_1l*'+'(Lepton_isTightMuon_'+muWP+'[0]>0.5) + Trigger_sngEl*(Lepton_isTightElectron_'+eleWP+'[0]>0.5)', ##eletron trig_eff_SF isnot valid yet
-    'expr' : 'TriggerEffWeight_1l',
+    'expr' : 'TriggerEffWeight_1l*'+'(Lepton_isTightMuon_'+muWP+'[0]>0.5) + Trigger_sngEl*(Lepton_isTightElectron_'+eleWP+'[0]>0.5)', ##eletron trig_eff_SF isnot valid yet
+    #'expr' : 'TriggerEffWeight_1l',
     'samples':mc
 }
 ##--Lepton ISO/ID/RECO
