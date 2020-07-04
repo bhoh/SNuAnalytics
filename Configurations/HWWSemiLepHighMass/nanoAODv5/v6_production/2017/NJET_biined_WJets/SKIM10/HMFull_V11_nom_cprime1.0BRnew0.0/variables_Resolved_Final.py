@@ -93,7 +93,7 @@ variables ['PV_npvs']={
 
 
 variables[bAlgo]={
-    'name' : 'Jet_btag'+bAlgo+'[CleanJet_jetIdx[AddJetBoost_'+WTAG+'_nom_cjidx]]',
+    'name' : 'Jet_btag'+bAlgo+'[CleanJet_jetIdx[AddJetResol_'+ALGO+'_nom_cjidx]]',
     'range':(25,0,1),
     'xaxis':bAlgo,
     'fold':0
@@ -157,9 +157,9 @@ if isFinal:
 variables['lnjj'+_ALGO_+'nom_mass']={
     'name': 'lnjj'+_ALGO_+'nom_mass',
     'range':([0,200,210,230,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
-    'divideByBinWidth':1,
+    #'divideByBinWidth':1,
     'xaxis': 'lnjj_mass',
-    'fold':1
+    'fold':3
 }
 
 
@@ -167,7 +167,7 @@ variables['Event'] = {
     'name' : '1',
     'range':(1,0,2),
     'xaxis':'1',
-    'fold': 0
+    'fold': 3
 }
 
 

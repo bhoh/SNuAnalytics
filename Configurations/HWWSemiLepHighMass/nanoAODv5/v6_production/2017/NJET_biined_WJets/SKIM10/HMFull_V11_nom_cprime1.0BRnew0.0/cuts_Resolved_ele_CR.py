@@ -33,7 +33,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
 METtype="PuppiMET"
 #met>30
-supercut +='&&!isBoost_'+WTAG+'_nom'
+supercut +='&&!isBoostSR_'+WTAG+'_nom'
 
 ##---Lepton Categorization---##
 
@@ -102,7 +102,8 @@ if not ONLY_FINAL:ResolvedWWMtCats['NoWWMtOvercut']='1'
 ResolvedWWMtCats['WWMtOver60']='lnjj'+_ALGO_+'nom_Mt > 60'
 
 ScoreCats={}
-if not ONLY_FINAL : ScoreCats['ScoreALL']='(1)'
+#if not ONLY_FINAL : 
+ScoreCats['ScoreALL']='(1)'
 ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
 if not ONLY_FINAL : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
 

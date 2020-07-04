@@ -1,4 +1,4 @@
-isFinal=True
+isFinal=False
 print "isFinal=",isFinal
 import os
 import sys
@@ -8,12 +8,12 @@ sys.path.append(os.getcwd())
 CUTFLOW=False
 from WPandCut2017 import *
 
-scriptname=opt.variablesFile
+scriptname=''
 
 _ALGO="_"+ALGO
 _ALGO_="_"+ALGO+"_"
 #------End of Variable Definition-----#
-#variables={}
+variables={}
 
 variables['Event'] = {
     'name' : '1',
@@ -93,7 +93,7 @@ variables ['PV_npvs']={
 
 
 variables[bAlgo]={
-    'name' : 'Jet_btag'+bAlgo+'[CleanJet_jetIdx[AddJetResol_'+ALGO+'_nom_cjidx]]',
+    'name' : 'Jet_btag'+bAlgo+'[CleanJet_jetIdx[AddJetBoost_'+WTAG+'_nom_cjidx]]',
     'range':(25,0,1),
     'xaxis':bAlgo,
     'fold':0

@@ -40,8 +40,8 @@ elePtCut='38'
 muPtCut='30'
 
 ALGO="dMchi2Resolution"
-#WTAG="DeepAK8WP5"
-WTAG="HP45"
+WTAG="DeepAK8WP5"
+#WTAG="HP45"
 
 SFweight='puWeight*trigWeight*EMTFbug_veto*PrefireWeight*LepWPweight*LepWPCut*btagSF*PUJetIdSF'
 #if 'HP' in WTAG: SFweight+="*tau21SFnom"

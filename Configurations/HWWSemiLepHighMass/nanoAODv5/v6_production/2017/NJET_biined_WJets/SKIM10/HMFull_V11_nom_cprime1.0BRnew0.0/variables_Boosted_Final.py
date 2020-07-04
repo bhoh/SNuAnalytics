@@ -1,8 +1,10 @@
+#isFinal=False
 isFinal=True
 print "isFinal=",isFinal
 import os
 import sys
 sys.path.append(os.getcwd())
+
 
 #-----Variable Deinition-----#
 from WPandCut2017 import *
@@ -19,7 +21,7 @@ variables['Event'] = {
     'fold': 0
 }
 ##Wtagger kin##
-'''
+
 variables['WtaggerFatjet_'+WTAG+'_nom_pt']={
     'name':'WtaggerFatjet_'+WTAG+'_nom_pt[lnJ_'+WTAG+'_nom_widx]',
     'range':(100,0,1000),
@@ -27,7 +29,7 @@ variables['WtaggerFatjet_'+WTAG+'_nom_pt']={
     'fold': 0,
 
 }
-'''
+
 variables['WtaggerFatjet_'+WTAG+'_nom_mass']={
     'name':'WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx]',
     'range':(42,40,250),
@@ -35,13 +37,31 @@ variables['WtaggerFatjet_'+WTAG+'_nom_mass']={
     'fold': 0,
 
 }
-variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']={
-    'name':'WtaggerFatjet_'+WTAG+'_nom_tau21ddt[lnJ_'+WTAG+'_nom_widx]',
-    'range':(20,0,1),
-    'xaxis':'WtaggerFatjet_tau21(DDT)',
-    'fold': 0,
-
-}
+if 'HP' in WTAG:
+    variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']={
+        'name':'WtaggerFatjet_'+WTAG+'_nom_tau21ddt[lnJ_'+WTAG+'_nom_widx]',
+        'range':(20,0,1),
+        'xaxis':'WtaggerFatjet_tau21(DDT)',
+        'fold': 0,
+    
+    }
+if 'DeepAK8WP5' in WTAG:
+    if not 'MD' in WTAG:
+        variables['WtaggerFatjet_'+WTAG+'_nom_deepTag']={
+            'name':'WtaggerFatjet_'+WTAG+'_nom_deepTag[lnJ_'+WTAG+'_nom_widx]',
+            'range':(20,0,1),
+            'xaxis':'WtaggerFatjet_deepTag',
+            'fold': 0,
+            
+        }
+    else:
+        variables['WtaggerFatjet_'+WTAG+'_nom_deepTagMD']={
+            'name':'WtaggerFatjet_'+WTAG+'_nom_deepTagMD[lnJ_'+WTAG+'_nom_widx]',
+            'range':(20,0,1),
+            'xaxis':'WtaggerFatjet_deepTagMD',
+            'fold': 0,
+            
+        }
 ##--Bjet
 '''
 variables['nBJetBoost_'+WTAG+'_nom']={
@@ -85,7 +105,7 @@ variables['AddJetBoost_'+WTAG+'_nom_eta']={
     'xaxis':'eta(AddionalJets)',
     'fold':0,
 }
-
+'''
 variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
@@ -99,7 +119,7 @@ variables['Lepton_eta[0]']={
     'xaxis':'Lepton #eta',
     'fold':0
 }
-
+'''
 
 
 variables[bAlgo]={
@@ -121,6 +141,13 @@ variables['Wlep_Mt']={
     'name' : 'Wlep_nom_Mt',
     'range':(60,0,300),
     'xaxis':'Wlep_Mt',
+    'fold':0
+}
+
+variables['Wlep_pt']={
+    'name' : 'Wlep_nom_pt',
+    'range':(100,0,1000),
+    'xaxis':'Wlep_pt',
     'fold':0
 }
 '''
@@ -171,7 +198,7 @@ if isFinal: variables={}
 variables['lnJ_'+WTAG+'_nom_mass']={
     'name': 'lnJ_'+WTAG+'_nom_mass',
     'range':([0,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
-    'divideByBinWidth':1,
+    #'divideByBinWidth':1,
     'xaxis': 'lnJ_mass',
     'fold':3
 }
@@ -179,7 +206,7 @@ variables['Event'] = {
     'name' : '1',
     'range':(1,0,2),
     'xaxis':'1',
-    'fold': 0
+    'fold': 3
 }
 
 

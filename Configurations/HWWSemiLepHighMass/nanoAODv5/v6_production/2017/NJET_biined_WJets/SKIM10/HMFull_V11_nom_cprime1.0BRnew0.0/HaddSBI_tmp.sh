@@ -1,16 +1,17 @@
-python TurnOffCombinedSamples.py nuisances.py CombineMultiV
-python TurnOffCombinedSamples.py nuisances.py CombineH125
-python TurnOffCombinedSamples.py nuisances.py CombineWjets
-python TurnOffCombinedSamples.py samples_2017.py CombineMultiV
-python TurnOffCombinedSamples.py samples_2017.py CombineH125
-python TurnOffCombinedSamples.py samples_2017.py CombineWjets
+python TurnOffCombinedSamples.py WPandCut2017.py CombineMultiV
+python TurnOffCombinedSamples.py WPandCut2017.py CombineH125
+python TurnOffCombinedSamples.py WPandCut2017.py CombineWjets
+python TurnOffCombinedSamples.py WPandCut2017.py Combine_ggWW
+python TurnOffCombinedSamples.py WPandCut2017.py Combine_qqWWqq
+python TurnOffCombinedSamples.py WPandCut2017.py CombineSBI
+
 
 DefineList=`python MassPoints/List_MX.py` ## ggfhww mass points
 #echo ARR_MASS=$DefineList
 ARR_MASS=$DefineList
 #CURDIR=$PWD
 for MX in ${ARR_MASS[@]};do
-    #continue
+    continue
     ###--- GGF
     COMBINED_PROC=ggHWWlnuqq_M${MX}_SBI
     PROCLIST=(ggHWWlnuqq_M${MX}_S ggHWWlnuqq_M${MX}_I ggWW)
@@ -48,10 +49,9 @@ done
 DefineList=`python MassPoints/List_MX_VBF.py` ## vbfhww mass points
 ARR_MASS=$DefineList
 for MX in ${ARR_MASS[@]};do
-    continue
     ###--VBF
     COMBINED_PROC=vbfHWWlnuqq_M${MX}_SBI
-    PROCLIST=(vbfHWWlnuqq_M${MX}_S vbfHWWlnuqq_M${MX}_I h125 ggWW)
+    PROCLIST=(vbfHWWlnuqq_M${MX}_S vbfHWWlnuqq_M${MX}_I qqWWqq)
     
     ARR_BOOST=(Boosted Resolved)
     CURDIR=${PWD}
@@ -68,7 +68,7 @@ for MX in ${ARR_MASS[@]};do
 	for f in ${haddfiles[@]};do
             haddlist=$haddlist" "$f
 	done
-	#echo "haddlist=$haddlist"
+	echo "haddlist=$haddlist"
 	#hadd -f $rootfiledir/hadddir_${COMBINED_PROC}/plots_${COMBINED_PROC}.root ${haddlist}
 	
 	

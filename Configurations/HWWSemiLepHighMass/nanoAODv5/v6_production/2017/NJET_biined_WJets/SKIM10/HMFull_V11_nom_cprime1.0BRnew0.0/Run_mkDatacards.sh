@@ -44,20 +44,23 @@ ListFlavor=(mu ele)
 ListRegion=(SR CR)
 #ListProc=(VBF GGF)
 #mkdir -p 
-for MX in ${ARR_MASS[@]};do
-    
-    for flv in ${ListFlavor[@]};do
-	#input=`ls rootFile*Boost*/backup2/hadd.root`
-	
-	#echo ${input}
-	for rg in ${ListRegion[@]};do
-	    input=`ls rootFile*Boosted*/hadd.root`
-	    cp cuts_Boosted.py cuts_Boosted_${flv}_${rg}.py
 
+    
+for flv in ${ListFlavor[@]};do
+    #input=`ls rootFile*Boost*/backup2/hadd.root`
+    
+    #echo ${input}
+    for rg in ${ListRegion[@]};do
+
+	cp cuts_Boosted.py cuts_Boosted_${flv}_${rg}.py
+	cp cuts_Resolved.py cuts_Resolved_${flv}_${rg}.py
+	sleep 1
+	for MX in ${ARR_MASS[@]};do
 	    #sleep 1
 
 	    #mkDatacards.py --pycfg=configuration_Boosted.py --structureFile=MassPoints/structure_M${MX}_${flv}_${rg}.py --cutsFile=cuts_Boosted_${flv}_${rg}.py --inputFile=$input --outputDirDatacard=Datacards_${YEAR}/Datacard_M${MX} --samplesFile=MassPoints/samples_${YEAR}limit_M${MX}_${flv}_${rg}.py --variablesFile=variables_Boosted_Final.py &> logs/Run_mkDatacards_cuts_Boosted_${flv}_M${MX}_${rg}.log&
 	    #command="cd ${CURDIR};mkDatacards.py --pycfg=configuration_Boosted.py --structureFile=MassPoints/structure_M${MX}_${flv}_${rg}.py --cutsFile=cuts_Boosted_${flv}_${rg}.py --inputFile=$input --outputDirDatacard=Datacards_${YEAR}/Datacard_M${MX} --samplesFile=MassPoints/samples_${YEAR}limit_M${MX}_${flv}_${rg}.py --variablesFile=variables_Boosted_Final.py &> logs/Run_mkDatacards_cuts_Boosted_${flv}_M${MX}_${rg}.log"
+	    input=`ls rootFile*Boosted*/hadd.root`
 	    command="cd ${CURDIR};mkDatacards.py --pycfg=configuration_Boosted.py --structureFile=MassPoints/structure_M${MX}_${flv}_${rg}.py --cutsFile=cuts_Boosted_${flv}_${rg}.py --inputFile=$input --outputDirDatacard=Datacards_${YEAR}/Datacard_M${MX} --samplesFile=MassPoints/samples_${YEAR}limit_M${MX}_${flv}_${rg}.py --variablesFile=variables_Boosted_Final.py"
 	    python python_tool/ExportShellCondorSetup.py -c "$command" -d "Run_mkDatacards/Boosted_M${MX}_${flv}_${rg}/" -n "Run_mkDatacards_M${MX}_${flv}_${rg}_Boosted" -s
 	    
@@ -66,7 +69,7 @@ for MX in ${ARR_MASS[@]};do
 	
 	    input=`ls rootFile*Resolved*/hadd.root`
 	    #echo ${input}
-	    cp cuts_Resolved.py cuts_Resolved_${flv}_${rg}.py
+	    
 
 	    #sleep 1
 

@@ -68,7 +68,7 @@ for MX in ${ARR_MASS[@]};do
 	for f in ${haddfiles[@]};do
             haddlist=$haddlist" "$f
 	done
-	#echo "haddlist=$haddlist"
+	echo "haddlist=$haddlist"
 	#hadd -f $rootfiledir/hadddir_${COMBINED_PROC}/plots_${COMBINED_PROC}.root ${haddlist}
 	
 	
