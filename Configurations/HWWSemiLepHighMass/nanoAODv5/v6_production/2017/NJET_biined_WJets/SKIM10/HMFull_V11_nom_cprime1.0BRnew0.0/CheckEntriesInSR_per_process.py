@@ -73,7 +73,7 @@ if N > int(nevent):
     elif 'vbfHWWlnuqq_M' in processname:
         MX=processname.replace('vbfHWWlnuqq_M','').replace('_B','')
         #normfactor=float(NormToPowheg['vbfHWWlnuqq_M'+MX])/float(kfactor['vbfHWWlnuqq_M'+MX])
-    print MX,'Entries=',N,'integral',integral,'normfactor=',normfactor
+    print MX,'Entries=',N,'integral',integral
     f=open(workdir+'/info.txt','w')
     f.write(str(MX)+' Entries='+str(N)+' integral='+str(integral)+'\n')
     f.close()
