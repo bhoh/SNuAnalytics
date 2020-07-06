@@ -71,7 +71,7 @@ import sys
 sys.path.insert(0, "MassPoints")
 from List_MX import *
 from List_MX_VBF import *
-BR='0.1086*3*0.6741'
+BR='0.1086*3*0.6741*2'
 for MX in List_MX:
     this_xsec=HiggsXS.GetHiggsProdXS('YR4','13TeV','ggH',int(MX),'bsm')*HiggsXS.GetHiggsBR('YR4','H_WW',int(MX),'bsm')
     kfactor['ggHWWlnuqq_M'+str(MX)]={
