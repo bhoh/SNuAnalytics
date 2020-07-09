@@ -1,0 +1,11 @@
+SAMPLES+=(
+GluGluHToTauTau_M125
+VBFHToTauTau_M125
+HZJ_HToTauTau_M125
+HWminusJ_HToTauTau_M125
+HWplusJ_HToTauTau_M125
+HZJ_HToWW_M125
+HWminusJ_HToWW_M125
+HWplusJ_HToWW_M125
+WpWmJJ_EWK_noTop
+)

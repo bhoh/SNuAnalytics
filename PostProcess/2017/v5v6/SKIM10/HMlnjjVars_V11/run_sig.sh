@@ -3,7 +3,7 @@
 # changed to /xrd/store/user/jhchoi/Latino/HWWNano/
 # L1Loose
 
-#source TurnOnDryRun.sh
+source TurnOnDryRun.sh
 
 
 
@@ -147,11 +147,11 @@ mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__M
 
 
 ##--after BWR
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_uncorrelate -T ${SAMPLE_LIST} -b
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_uncorrelate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_uncorrelate -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_uncorrelate -T ${SAMPLE_LIST} -b
 #mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysdown_correlate -T ${SAMPLE_LIST} -b
 #mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_jetsysup_correlate -T ${SAMPLE_LIST} -b
-#mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_fatjetsys -T ${SAMPLE_LIST} -b
+mkPostProc.py ${modcfg} -p Fall2017_102X_nAODv5_Full2017v6 -i MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight -s HMFull_V11_fatjetsys -T ${SAMPLE_LIST} -b
 
 
 ##--Test--
@@ -192,6 +192,6 @@ EXCLUDE=()
 
 
 
-#unset -f condor_submit
+unset -f condor_submit
 
 

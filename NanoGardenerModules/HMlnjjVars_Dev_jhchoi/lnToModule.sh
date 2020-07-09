@@ -13,4 +13,5 @@
 
 
 #ln -s ${PWD}/HMlnjjVars_Dev_jhchoi10.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/HMlnjjVars_Dev_jhchoi10.py
-ln -s ${PWD}/HMlnjjVars_Dev_jhchoi11.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/HMlnjjVars_Dev_jhchoi11.py
+#ln -s ${PWD}/HMlnjjVars_Dev_jhchoi11.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/HMlnjjVars_Dev_jhchoi11.py
+ln -s ${PWD}/HMlnjjVars_V11.py ${CMSSW_BASE}/src/LatinoAnalysis/NanoGardener/python/modules/HMlnjjVars_V11.py
