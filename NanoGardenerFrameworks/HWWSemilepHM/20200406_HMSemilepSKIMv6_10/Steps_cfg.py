@@ -189,7 +189,7 @@ Steps['wwNLOEWK'] = {
     'declare'    : 'wwNLOEWK = lambda : vvNLOEWKcorrectionWeightProducer("ww")',
     'module'     : 'wwNLOEWK()',
     'onlySample' : [ 'WWTo2L2Nu', 'WWTo2L2Nu_CP5Up', 'WWTo2L2Nu_CP5Down',
-                     'WmToLNu_WmTo2J_QCD', 'WpToLNu_WpTo2J_QCD', 'WpToLNu_WmTo2J_QCD', 'WpTo2J_WmToLNu_QCD'
+                     'WmToLNu_WmTo2J_QCD', 'WpToLNu_WpTo2J_QCD', 'WpToLNu_WmTo2J_QCD', 'WpTo2J_WmToLNu_QCD','WW-LO','WWToLNuQQ','WpWmJJ_EWK_noTop','WpWmJJ_QCD_noTop','WpWmJJ_EWK_QCD_noHiggs','WpWmJJ_EWK_QCD_noTop_noHiggs','WWToLNuQQ','WWToLNuQQ_AMCNLOFXFX','WWToLNuQQ_AMCATNLO'
                  ]
 } 
 Steps['wzNLOEWK'] = {
@@ -200,7 +200,7 @@ Steps['wzNLOEWK'] = {
     'declare'    : 'wzNLOEWK = lambda : vvNLOEWKcorrectionWeightProducer("wz")',
     'module'     : 'wzNLOEWK()',
     'onlySample' : ['WZTo3LNu', 'WZTo3LNu_ext1', 'WZTo2L2Q', 'WZTo3LNu_mllmin01', 'WZTo3LNu_powheg',
-                    'WmTo2J_ZTo2L_QCD', 'WmToLNu_ZTo2J_QCD', 'WpTo2J_ZTo2L_QCD', 'WpToLNu_ZTo2J_QCD'
+                    'WmTo2J_ZTo2L_QCD', 'WmToLNu_ZTo2J_QCD', 'WpTo2J_ZTo2L_QCD', 'WpToLNu_ZTo2J_QCD','WZ','WZ_ext',
                 ]
 } 
 Steps['zzNLOEWK'] = {
@@ -211,7 +211,7 @@ Steps['zzNLOEWK'] = {
     'declare'    : 'zzNLOEWK = lambda : vvNLOEWKcorrectionWeightProducer("zz")',
     'module'     : 'zzNLOEWK()',
     'onlySample' : ['ZZTo2L2Nu','ZZTo2L2Nu_ext1','ZZTo2L2Nu_ext2', 'ZZTo4L','ZZTo4L_ext1','ZZTo4L_ext2', 'ZZTo2L2Q',
-                    'ZTo2L_ZTo2J_QCD'
+                    'ZTo2L_ZTo2J_QCD','ZZ','ZZ_ext1',
             ]
 } 
 Steps['wNLOEWK'] = {
@@ -224,11 +224,12 @@ Steps['wNLOEWK'] = {
     'onlySample' : [
         ####                                                                                                                                            
         'WJetsToLNu-LO','WJetsToLNu-LO_ext1'
-        'WJetsToLNu',
+        'WJetsToLNu','WJetsToLNu_ext2',
         'WJetsToLNu_HT70_100','WJetsToLNu_HT100_200',
         'WJetsToLNu_HT200_400','WJetsToLNu_HT400_600',
         'WJetsToLNu_HT600_800','WJetsToLNu_HT800_1200',
         'WJetsToLNu_HT1200_2500','WJetsToLNu_HT2500_inf',
+        'WJetsToLNu-0J','WJetsToLNu-1J','WJetsToLNu-2J',
     ]
 } 
 Steps['zNLOEWK'] = {
@@ -265,6 +266,7 @@ Steps['zNLOEWK'] = {
         'DYJetsToLL_M-50_HT-800to1200',
         'DYJetsToLL_M-50_HT-1200to2500',
         'DYJetsToLL_M-50_HT-2500toInf',
+        ''
     ]
 }
 
