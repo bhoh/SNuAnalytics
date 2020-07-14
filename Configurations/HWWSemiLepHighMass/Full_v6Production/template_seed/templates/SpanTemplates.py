@@ -47,7 +47,7 @@ for cp in LIST_CP:
     fnew.close()
 
 ##---simple cp
-LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py'] 
+LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc'] 
 for cp in LIST_CP:
     os.system('cp '+cp+' ../')
 
