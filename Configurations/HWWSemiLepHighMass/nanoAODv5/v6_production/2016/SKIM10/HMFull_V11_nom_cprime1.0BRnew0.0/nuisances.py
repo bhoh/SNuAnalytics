@@ -21,6 +21,7 @@ elif  'sdfarm' in SITE:
 
 
 
+
 mc = [skey for skey in samples if (skey != 'DATA' and skey !='PseudoData')]
 print mc
 if CombineMultiV:
@@ -191,13 +192,13 @@ nuisances['trigg'] = {
 
 prefire_syst = ['PrefireWeight_Up/PrefireWeight < 10 ? PrefireWeight_Up/PrefireWeight : 1', 'PrefireWeight_Down/PrefireWeight < 10 ? PrefireWeight_Down/PrefireWeight : 1']
 
-
-nuisances['prefire'] = {
+if not Year=='2018':
+  nuisances['prefire'] = {
     'name': 'CMS_eff_prefiring_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, prefire_syst) for skey in mc),
-}
+  }
 
 
 
@@ -536,6 +537,31 @@ for n in nMember_sample:
      PSWeightISR[s]=["PSWeight[0]","PSWeight[1]"]
      PSWeightFSR[s]=["PSWeight[2]","PSWeight[3]"]
 
+
+##--Wjet's PS
+if Year!='2018': ##Use cleangenjet-parameterized PS systematic
+  nuisances['PS_ISR_Wjets']={
+    'name':'PS_ISR',
+    'samples':{
+      'Wjets2j':['(nCleanGenJet==0)*1.02073379725 + (nCleanGenJet==1)*1.00825569824 + (nCleanGenJet==2)*0.990047642726 + (nCleanGenJet>=3)*1.03131711638', '(nCleanGenJet==0)*1.08896203086 + (nCleanGenJet==1)*1.01920761264 + (nCleanGenJet==2)*0.95445991422 + (nCleanGenJet>=3)*0.943177239895'],
+      'Wjets1j':['(nCleanGenJet==0)*1.01196205511 + (nCleanGenJet==1)*0.988257181952 + (nCleanGenJet==2)*1.00024240789 + (nCleanGenJet>=3)*1.00733695938', '(nCleanGenJet==0)*1.03784403902 + (nCleanGenJet==1)*0.974773803373 + (nCleanGenJet==2)*0.967005316899 + (nCleanGenJet>=3)*0.913844099339'],
+      'Wjets0j':['(nCleanGenJet==0)*0.998308713597 + (nCleanGenJet==1)*1.024326639 + (nCleanGenJet==2)*1.00490579097 + (nCleanGenJet>=3)*1.06382313494', '(nCleanGenJet==0)*0.994847559816 + (nCleanGenJet==1)*0.970837169317 + (nCleanGenJet==2)*0.921111283973 + (nCleanGenJet>=3)*0.92527429617'],
+      #'Wjets0j':['(nCleanGenJet==0)*1 + (nCleanGenJet==1)*1.024 + (nCleanGenJet==2)*1.005 + (nCleanGenJet>=3)*1.064', '(nCleanGenJet==0)*1 + (nCleanGenJet==1)*0.9708 + (nCleanGenJet==2)*0.9211 + (nCleanGenJet>=3)*0.9253'],
+      #'Wjets1j':[,],
+      #'Wjets2j':[,],
+    }
+  }
+  nuisances['PS_FSR_Wjets']={
+    'name':'PS_FSR',
+    'samples':{
+      'Wjets2j':['(nCleanGenJet==0)*0.9846688642 + (nCleanGenJet==1)*0.993822455978 + (nCleanGenJet==2)*1.0079856078 + (nCleanGenJet>=3)*0.97516930436', '(nCleanGenJet==0)*0.937933929929 + (nCleanGenJet==1)*0.977731417079 + (nCleanGenJet==2)*1.01892148352 + (nCleanGenJet>=3)*1.01657862777'],
+      'Wjets1j':['(nCleanGenJet==0)*0.991040655987 + (nCleanGenJet==1)*1.00926231553 + (nCleanGenJet==2)*0.999811374034 + (nCleanGenJet>=3)*0.994856261395', '(nCleanGenJet==0)*0.97184106935 + (nCleanGenJet==1)*1.00937459351 + (nCleanGenJet==2)*1.00975969923 + (nCleanGenJet>=3)*1.03411262896'],
+      'Wjets0j':['(nCleanGenJet==0)*1.00123043904 + (nCleanGenJet==1)*0.981416928606 + (nCleanGenJet==2)*0.996876072693 + (nCleanGenJet>=3)*0.952268350583', '(nCleanGenJet==0)*0.999474629797 + (nCleanGenJet==1)*1.0091202521 + (nCleanGenJet==2)*1.03597884808 + (nCleanGenJet>=3)*1.02589781018'],
+    }
+  }
+
+
+
 nuisances['PS_ISR']={
   'name': 'PS_ISR',
   'kind': 'weight',
@@ -549,6 +575,7 @@ nuisances['PS_FSR']={
   'type': 'shape',
   'samples':PSWeightFSR,
 }
+
 
 
 if not NotUseTreeBase:
