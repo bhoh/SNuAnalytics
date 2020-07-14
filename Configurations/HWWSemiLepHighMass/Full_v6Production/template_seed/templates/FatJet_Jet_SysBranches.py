@@ -37,7 +37,7 @@ WBranches=[
     "WtaggerFatjet_"+WTAG+"_nom_phi",
     "WtaggerFatjet_"+WTAG+"_nom_mass",
     "WtaggerFatjet_"+WTAG+"_nom_tau21ddt",
-    "WtaggerFatjet_"+WTAG+"_nom__fjetIdx",
+    "WtaggerFatjet_"+WTAG+"_nom_fjetIdx",
 ]
 WjjBranches=[
     "isResol"+_ALGO_+"nom",
