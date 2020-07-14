@@ -232,3 +232,10 @@ aliases['dPhi_WW_boosted']={
 aliases['dPhi_WW_resolved']={
     'expr':'(Whad'+_ALGO_+'nom_phi-Wlep_nom_phi)-2*3.1415927*(  (Whad'+_ALGO_+'nom_phi-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((Whad'+_ALGO_+'nom_phi-Wlep_nom_phi) < 3.1415927)'
 }
+
+
+aliases['nCleanGenJet'] = {
+    'linesToAdd': ['.L '+os.getcwd()+'/ngenjet.cc+'
+    ],
+    'class': 'CountGenJet',
+}
