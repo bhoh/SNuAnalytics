@@ -33,7 +33,7 @@ ALGO="dMchi2Resolution"
 #WTAG="DeepAK8WP5MD"
 WTAG="DeepAK8WP2p5"
 
-SFweight='puWeight*trigWeight*EMTFbug_veto*LepWPCut*LepWPweight*btagSF*PUJetIdSF*HEMweight'
+SFweight='puWeight*trigWeight[0]*EMTFbug_veto*LepWPCut[0]*LepWPweight[0]*btagSF*PUJetIdSF*HEMweight'
 
 #SFweight+='*WtaggerSFnom'
 

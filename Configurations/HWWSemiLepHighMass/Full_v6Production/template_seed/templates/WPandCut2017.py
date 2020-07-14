@@ -46,7 +46,7 @@ WTAG="DeepAK8WP2p5"
 #WTAG="DeepAK8WP5"
 #WTAG="HP45"
 
-SFweight='puWeight*trigWeight*EMTFbug_veto*PrefireWeight*LepWPweight*LepWPCut*btagSF*PUJetIdSF'
+SFweight='puWeight*trigWeight[0]*EMTFbug_veto*PrefireWeight*LepWPweight[0]*LepWPCut[0]*btagSF*PUJetIdSF'
 #if 'HP' in WTAG: SFweight+="*tau21SFnom"
 #if 'DeepAK8' in WTAG: SFweight+="*deepAK8SFnom"
 #SFweight+='*WtaggerSFnom'

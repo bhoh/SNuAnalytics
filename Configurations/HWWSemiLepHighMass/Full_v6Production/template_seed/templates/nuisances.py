@@ -1,5 +1,6 @@
 NotUseTreeBase=False
 import os
+import sys
 from FatJet_Jet_SysBranches import * 
 from WPandCut2016 import *
 
@@ -543,27 +544,27 @@ for n in nMember_sample:
      PSWeightFSR[s]=["PSWeight[2]","PSWeight[3]"]
 
 
-##--Wjet's PS
+##--Wjet's PS ->GenJet_HT based
 
 if (not 'Wjets2j' in PSWeightISR) and ('Wjets2j' in mc):
-  PSWeightISR['Wjets2j']=['(nCleanGenJet==0)*1.02073379725 + (nCleanGenJet==1)*1.00825569824 + (nCleanGenJet==2)*0.990047642726 + (nCleanGenJet>=3)*1.03131711638', '(nCleanGenJet==0)*1.08896203086 + (nCleanGenJet==1)*1.01920761264 + (nCleanGenJet==2)*0.95445991422 + (nCleanGenJet>=3)*0.943177239895']
-
+  #PSWeightISR['Wjets2j']=['(nCleanGenJet==0)*1.02073379725 + (nCleanGenJet==1)*1.00825569824 + (nCleanGenJet==2)*0.990047642726 + (nCleanGenJet>=3)*1.03131711638', '(nCleanGenJet==0)*1.08896203086 + (nCleanGenJet==1)*1.01920761264 + (nCleanGenJet==2)*0.95445991422 + (nCleanGenJet>=3)*0.943177239895']
+  PSWeightISR['Wjets2j']=['0+(GenJet_HT > 400)*1.02282764557+(GenJet_HT > 70 && GenJet_HT <= 120)*0.974387625178+(GenJet_HT > 30 && GenJet_HT <= 70)*0.988087051534+(GenJet_HT > 200 && GenJet_HT <= 400)*1.01679418064+(GenJet_HT <= 30)*1.0+(GenJet_HT > 120 && GenJet_HT <= 200)*0.997271021553','0+(GenJet_HT > 400)*0.950626120853+(GenJet_HT > 70 && GenJet_HT <= 120)*1.00105914046+(GenJet_HT > 30 && GenJet_HT <= 70)*1.11648762101+(GenJet_HT > 200 && GenJet_HT <= 400)*0.959141678475+(GenJet_HT <= 30)*1.0+(GenJet_HT > 120 && GenJet_HT <= 200)*0.972278737036']
 if (not 'Wjets1j' in PSWeightISR) and ('Wjets1j' in mc):
-  PSWeightISR['Wjets1j']=['(nCleanGenJet==0)*1.01196205511 + (nCleanGenJet==1)*0.988257181952 + (nCleanGenJet==2)*1.00024240789 + (nCleanGenJet>=3)*1.00733695938', '(nCleanGenJet==0)*1.03784403902 + (nCleanGenJet==1)*0.974773803373 + (nCleanGenJet==2)*0.967005316899 + (nCleanGenJet>=3)*0.913844099339']
-
+  #PSWeightISR['Wjets1j']=['(nCleanGenJet==0)*1.01196205511 + (nCleanGenJet==1)*0.988257181952 + (nCleanGenJet==2)*1.00024240789 + (nCleanGenJet>=3)*1.00733695938', '(nCleanGenJet==0)*1.03784403902 + (nCleanGenJet==1)*0.974773803373 + (nCleanGenJet==2)*0.967005316899 + (nCleanGenJet>=3)*0.913844099339']
+  PSWeightISR['Wjets1j']=['0+(GenJet_HT > 400)*0.962973193021+(GenJet_HT > 70 && GenJet_HT <= 120)*0.990586097447+(GenJet_HT > 30 && GenJet_HT <= 70)*0.966548822569+(GenJet_HT > 200 && GenJet_HT <= 400)*1.00452326609+(GenJet_HT <= 30)*1.00021481431+(GenJet_HT > 120 && GenJet_HT <= 200)*1.01441122134','0+(GenJet_HT > 400)*0.968428606677+(GenJet_HT > 70 && GenJet_HT <= 120)*0.987822393319+(GenJet_HT > 30 && GenJet_HT <= 70)*1.01186216922+(GenJet_HT > 200 && GenJet_HT <= 400)*0.967129636404+(GenJet_HT <= 30)*1.1354746121+(GenJet_HT > 120 && GenJet_HT <= 200)*0.971849089095']
 if (not 'Wjets0j' in PSWeightISR) and ('Wjets0j' in mc):
-  PSWeightISR['Wjets0j']=['(nCleanGenJet==0)*0.998308713597 + (nCleanGenJet==1)*1.024326639 + (nCleanGenJet==2)*1.00490579097 + (nCleanGenJet>=3)*1.06382313494', '(nCleanGenJet==0)*0.994847559816 + (nCleanGenJet==1)*0.970837169317 + (nCleanGenJet==2)*0.921111283973 + (nCleanGenJet>=3)*0.92527429617']
-
+  #PSWeightISR['Wjets0j']=['(nCleanGenJet==0)*0.998308713597 + (nCleanGenJet==1)*1.024326639 + (nCleanGenJet==2)*1.00490579097 + (nCleanGenJet>=3)*1.06382313494', '(nCleanGenJet==0)*0.994847559816 + (nCleanGenJet==1)*0.970837169317 + (nCleanGenJet==2)*0.921111283973 + (nCleanGenJet>=3)*0.92527429617']
+  PSWeightISR['Wjets0j']=['0+(GenJet_HT > 400)*1.01589926595+(GenJet_HT > 70 && GenJet_HT <= 120)*1.05279090416+(GenJet_HT > 30 && GenJet_HT <= 70)*0.994167274582+(GenJet_HT > 200 && GenJet_HT <= 400)*1.11410733613+(GenJet_HT <= 30)*0.972590691039+(GenJet_HT > 120 && GenJet_HT <= 200)*1.09252671572','0+(GenJet_HT > 400)*0.956427381446+(GenJet_HT > 70 && GenJet_HT <= 120)*0.97125484587+(GenJet_HT > 30 && GenJet_HT <= 70)*0.996834396868+(GenJet_HT > 200 && GenJet_HT <= 400)*0.928136301813+(GenJet_HT <= 30)*1.00340682861+(GenJet_HT > 120 && GenJet_HT <= 200)*0.945789565124']
 
 if (not 'Wjets2j' in PSWeightFSR) and ('Wjets2j' in mc) :
-  PSWeightFSR['Wjets2j']=['(nCleanGenJet==0)*0.9846688642 + (nCleanGenJet==1)*0.993822455978 + (nCleanGenJet==2)*1.0079856078 + (nCleanGenJet>=3)*0.97516930436', '(nCleanGenJet==0)*0.937933929929 + (nCleanGenJet==1)*0.977731417079 + (nCleanGenJet==2)*1.01892148352 + (nCleanGenJet>=3)*1.01657862777']
-
+  #PSWeightFSR['Wjets2j']=['(nCleanGenJet==0)*0.9846688642 + (nCleanGenJet==1)*0.993822455978 + (nCleanGenJet==2)*1.0079856078 + (nCleanGenJet>=3)*0.97516930436', '(nCleanGenJet==0)*0.937933929929 + (nCleanGenJet==1)*0.977731417079 + (nCleanGenJet==2)*1.01892148352 + (nCleanGenJet>=3)*1.01657862777']
+  PSWeightFSR['Wjets2j']=['0+(GenJet_HT > 400)*0.982469024476+(GenJet_HT > 70 && GenJet_HT <= 120)*1.02011365404+(GenJet_HT > 30 && GenJet_HT <= 70)*1.00943633943+(GenJet_HT > 200 && GenJet_HT <= 400)*0.987254123282+(GenJet_HT <= 30)*1.0+(GenJet_HT > 120 && GenJet_HT <= 200)*1.00211192118','0+(GenJet_HT > 400)*1.00805854648+(GenJet_HT > 70 && GenJet_HT <= 120)*0.996068598342+(GenJet_HT > 30 && GenJet_HT <= 70)*0.933550970907+(GenJet_HT > 200 && GenJet_HT <= 400)*1.00974061831+(GenJet_HT <= 30)*1.0+(GenJet_HT > 120 && GenJet_HT <= 200)*1.00824420762']
 if (not 'Wjets1j' in PSWeightFSR) and ('Wjets1j' in mc):
-  PSWeightFSR['Wjets1j']=['(nCleanGenJet==0)*0.991040655987 + (nCleanGenJet==1)*1.00926231553 + (nCleanGenJet==2)*0.999811374034 + (nCleanGenJet>=3)*0.994856261395', '(nCleanGenJet==0)*0.97184106935 + (nCleanGenJet==1)*1.00937459351 + (nCleanGenJet==2)*1.00975969923 + (nCleanGenJet>=3)*1.03411262896']
-
+  #PSWeightFSR['Wjets1j']=['(nCleanGenJet==0)*0.991040655987 + (nCleanGenJet==1)*1.00926231553 + (nCleanGenJet==2)*0.999811374034 + (nCleanGenJet>=3)*0.994856261395', '(nCleanGenJet==0)*0.97184106935 + (nCleanGenJet==1)*1.00937459351 + (nCleanGenJet==2)*1.00975969923 + (nCleanGenJet>=3)*1.03411262896']
+  PSWeightFSR['Wjets1j']=['0+(GenJet_HT > 400)*1.03034688294+(GenJet_HT > 70 && GenJet_HT <= 120)*1.00719341905+(GenJet_HT > 30 && GenJet_HT <= 70)*1.02626748142+(GenJet_HT > 200 && GenJet_HT <= 400)*0.997839658777+(GenJet_HT <= 30)*1.00022649931+(GenJet_HT > 120 && GenJet_HT <= 200)*0.989330418078','0+(GenJet_HT > 400)*1.0093271222+(GenJet_HT > 70 && GenJet_HT <= 120)*1.002599001+(GenJet_HT > 30 && GenJet_HT <= 70)*0.991653890057+(GenJet_HT > 200 && GenJet_HT <= 400)*1.00648469672+(GenJet_HT <= 30)*0.928268111893+(GenJet_HT > 120 && GenJet_HT <= 200)*1.00676394444']
 if (not 'Wjets0j' in PSWeightFSR) and ('Wjets0j' in mc):
-  PSWeightFSR['Wjets0j']=['(nCleanGenJet==0)*1.00123043904 + (nCleanGenJet==1)*0.981416928606 + (nCleanGenJet==2)*0.996876072693 + (nCleanGenJet>=3)*0.952268350583', '(nCleanGenJet==0)*0.999474629797 + (nCleanGenJet==1)*1.0091202521 + (nCleanGenJet==2)*1.03597884808 + (nCleanGenJet>=3)*1.02589781018']
-
+  #PSWeightFSR['Wjets0j']=['(nCleanGenJet==0)*1.00123043904 + (nCleanGenJet==1)*0.981416928606 + (nCleanGenJet==2)*0.996876072693 + (nCleanGenJet>=3)*0.952268350583', '(nCleanGenJet==0)*0.999474629797 + (nCleanGenJet==1)*1.0091202521 + (nCleanGenJet==2)*1.03597884808 + (nCleanGenJet>=3)*1.02589781018']
+  PSWeightFSR['Wjets0j']=['0+(GenJet_HT > 400)*0.988386923979+(GenJet_HT > 70 && GenJet_HT <= 120)*0.960571370528+(GenJet_HT > 30 && GenJet_HT <= 70)*1.00413680652+(GenJet_HT > 200 && GenJet_HT <= 400)*0.920648615188+(GenJet_HT <= 30)*1.02084551484+(GenJet_HT > 120 && GenJet_HT <= 200)*0.933572771743','0+(GenJet_HT > 400)*0.981072393971+(GenJet_HT > 70 && GenJet_HT <= 120)*1.00668035334+(GenJet_HT > 30 && GenJet_HT <= 70)*0.999048338812+(GenJet_HT > 200 && GenJet_HT <= 400)*1.01007665629+(GenJet_HT <= 30)*0.997023948153+(GenJet_HT > 120 && GenJet_HT <= 200)*1.00954342867']
 
 
 nuisances['PS_ISR']={
