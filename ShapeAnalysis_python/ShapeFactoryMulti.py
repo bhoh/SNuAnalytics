@@ -640,19 +640,19 @@ class ShapeFactory:
 
           # tree-type nuisances
           for nuisanceName in nuisanceDrawers.keys():
-            tmpROOTFile = ROOT.TFile.Open(tmpfile.name, 'recreate')#jhchoi
-            tmpROOTFile.cd()#jhchoi
+
             ndrawers = nuisanceDrawers.pop(nuisanceName)
             for var, ndrawer in ndrawers.iteritems():
-
+              tmpROOTFile = ROOT.TFile.Open(tmpfile.name, 'recreate')#jhchoi
+              tmpROOTFile.cd()#jhchoi
               print 'Start', nuisanceName + var, 'histogram fill'
               ndrawer.execute(nevents, firstEvent)
 
-            tmpROOTFile.Close()#jhchoi
-            if os.path.exists(tmpfile.name):
-              _size=os.path.getsize(tmpfile.name)
-              print "[jhchoi] <<tmp file size>>",_size/1000000,'MB'
-              os.unlink(tmpfile.name)
+              tmpROOTFile.Close()#jhchoi
+              if os.path.exists(tmpfile.name):
+                _size=os.path.getsize(tmpfile.name)
+                print "[jhchoi] <<tmp file size>>",_size/1000000,'MB'
+                os.unlink(tmpfile.name)
           #tmpROOTFile.Close()
           #print "[jhchoi] <<tmp file size>>",tmpfile.name
 
