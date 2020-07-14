@@ -2,7 +2,7 @@
 
 cp -r ${CMSSW_BASE}/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/Full_v6Production/template_seed/templates <your_workspace>
 
-2) 
+2)  in your workspace
 cd templates
 python SpanTemplates.py <Year>
 cd ../
