@@ -1,4 +1,7 @@
 FilesPerJob=10
+FilesPerJobMainBKG=2
+FilesPerJobDATA=40
+
 TESTRUN=False
 
 import math
@@ -127,8 +130,8 @@ for MX in List_MX_VBF:
 
 samples['Wjets'] = {    'name'   :   getSampleFiles(directory,'WJetsToLNu_ext2',False,'nanoLatino_'),
                         'weight' : 'XSWeight*SFweight*METFilter_MC',
-                        'FilesPerJob' : FilesPerJob,
-                        'EventsPerJob' : 100000,
+                        'FilesPerJob' : FilesPerJobMainBKG,
+                        #'EventsPerJob' : 100000,
                  }
 
 
@@ -156,8 +159,8 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_') 
                       ,
                       'weight' : 'XSWeight*SFweight*METFilter_MC',
-                      'FilesPerJob' : FilesPerJob,
-                      'EventsPerJob' : 100000,
+                      'FilesPerJob' : FilesPerJobMainBKG,
+                      #'EventsPerJob' : 100000,
                       #'FilesPerJob' : 40,
                     }
 addSampleWeight(samples,'top','TTTo2L2Nu','Top_pTrw')
@@ -291,7 +294,7 @@ samples['DATA']  = {   'name': [ ] ,
                        'weight' : 'METFilter_DATA*LepWPCut' ,
                        'weights' : [ ],
                        'isData': ['all'],
-                       'FilesPerJob' : 20,
+                       'FilesPerJob' : FilesPerJobDATA,
                   }
 
 #print samples['DATA']
