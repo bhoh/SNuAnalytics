@@ -1,0 +1,46 @@
+ <<< Combine >>> 
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 3
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+Set Default Value of Parameter fvbf To : 1
+WARNING: underflow to -0.00298575 in pdf_binele_Resolved_VBF_SR_2017_obsOnly for bin 18, weight 3.06738e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Resolved_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Resolved_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 1,fvbf = 1,sigma = 0.1 +/- 1)
+FASTEXIT from pdf_binele_Resolved_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0362167 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 1,fvbf = 1,sigma = 0.1 +/- 1)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00126215 in pdf_binmu_Resolved_VBF_SR_2017_obsOnly for bin 19, weight 4.44261e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 1,fvbf = 1,sigma = 0.1 +/- 1)
+FASTEXIT from pdf_binmu_Resolved_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00298575 in pdf_binele_Resolved_VBF_SR_2017_obsOnly for bin 18, weight 3.06738e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Resolved_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Resolved_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 5.02223,fvbf = 1,sigma = 0.1 +/- 0.00536738)
+FASTEXIT from pdf_binele_Resolved_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0362167 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 5.02223,fvbf = 1,sigma = 0.1 +/- 0.00536738)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00126215 in pdf_binmu_Resolved_VBF_SR_2017_obsOnly for bin 19, weight 4.44261e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 5.02223,fvbf = 1,sigma = 0.1 +/- 0.00536738)
+FASTEXIT from pdf_binmu_Resolved_VBF_SR_2017_obsOnly
+
+ -- AsymptoticLimits ( CLs ) --
+
+Done in 0.09 min (cpu), 0.09 min (real)

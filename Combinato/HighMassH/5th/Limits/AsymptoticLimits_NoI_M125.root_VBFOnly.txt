@@ -1,0 +1,49 @@
+ <<< Combine >>> 
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 7
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+Set Default Value of Parameter fvbf To : 1
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(pdf_binele_Boosted_VBF_SR_2018_obsOnly) evaluation error, 
+ origin       : RooAddPdf::pdf_binele_Boosted_VBF_SR_2018_obsOnly[ n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S * shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE * shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j * shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_top * shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j * shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_DY * shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S * shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf ]
+ message      : p.d.f value is less than zero (-0.000338), forcing value to zero
+ server values: !refCoefNorm=(), !pdfs=(shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf = 9.92473e-10/1,shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf = 9.99492e-10/1,shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf = 0.0454545/1,shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1), !coefficients=(n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S = 0,n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE = 117.312,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j = 663.649,n_exp_binele_Boosted_VBF_SR_2018_proc_top = 321.94,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j = -8.5252,n_exp_binele_Boosted_VBF_SR_2018_proc_DY = 50.4419,n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S = 0)
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=13.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=14.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=15.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=16.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=17.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=18.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=19.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=20.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=21.5
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(pdf_binele_Boosted_VBF_SR_2018_nuis) evaluation error, 
+ origin       : RooAddPdf::pdf_binele_Boosted_VBF_SR_2018_nuis[ n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S * shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE * shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j * shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_top * shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j * shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_DY * shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S * shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf ]
+ message      : p.d.f value is less than zero (-0.000338), forcing value to zero
+ server values: !refCoefNorm=(), !refCoefNorm=(), !pdfs=(shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf = 9.92473e-10,shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf = 9.99492e-10,shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf = 0.0454545,shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09), !coefficients=(n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S = 0,n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE = 117.312,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j = 663.649,n_exp_binele_Boosted_VBF_SR_2018_proc_top = 321.94,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j = -8.5252,n_exp_binele_Boosted_VBF_SR_2018_proc_DY = 50.4419,n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S = 0)
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(pdf_binele_Boosted_VBF_SR_2018_nuis) evaluation error, 
+ origin       : RooAddPdf::pdf_binele_Boosted_VBF_SR_2018_nuis[ n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S * shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE * shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j * shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_top * shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j * shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_DY * shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S * shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf ]
+ message      : p.d.f value is less than zero (-0.000338), forcing value to zero
+ server values: !refCoefNorm=(), !refCoefNorm=(), !pdfs=(shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf = 9.92473e-10,shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf = 9.99492e-10,shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf = 0.0454545,shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09,shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09), !coefficients=(n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S = 0,n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE = 117.312,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j = 663.649,n_exp_binele_Boosted_VBF_SR_2018_proc_top = 321.94,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j = -8.5252,n_exp_binele_Boosted_VBF_SR_2018_proc_DY = 50.4419,n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S = 0)
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(pdf_binele_Boosted_VBF_SR_2018_obsOnly) evaluation error, 
+ origin       : RooAddPdf::pdf_binele_Boosted_VBF_SR_2018_obsOnly[ n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S * shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE * shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j * shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_top * shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j * shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_DY * shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf + n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S * shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf ]
+ message      : p.d.f value is less than zero (-0.000338), forcing value to zero
+ server values: !refCoefNorm=(), !pdfs=(shapeSig_ggHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeBkg_QCD_bcToE_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeBkg_Wjets2j_ele_Boosted_VBF_SR_2018_rebinPdf = 9.92473e-10/1,shapeBkg_top_ele_Boosted_VBF_SR_2018_rebinPdf = 9.99492e-10/1,shapeBkg_Wjets1j_ele_Boosted_VBF_SR_2018_rebinPdf = 0.0454545/1,shapeBkg_DY_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1,shapeSig_vbfHWWlnuqq_M125_S_ele_Boosted_VBF_SR_2018_rebinPdf = 1e-09/1), !coefficients=(n_exp_binele_Boosted_VBF_SR_2018_proc_ggHWWlnuqq_M125_S = 0,n_exp_binele_Boosted_VBF_SR_2018_proc_QCD_bcToE = 117.312,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets2j = 663.649,n_exp_binele_Boosted_VBF_SR_2018_proc_top = 321.94,n_exp_binele_Boosted_VBF_SR_2018_proc_Wjets1j = -8.5252,n_exp_binele_Boosted_VBF_SR_2018_proc_DY = 50.4419,n_exp_binele_Boosted_VBF_SR_2018_proc_vbfHWWlnuqq_M125_S = 0)
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=13.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=14.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=15.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=16.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=17.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=18.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=19.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=20.5
+[#0] WARNING:Plotting -- WARNING: Function evaluation error(s) at coordinates [x]=21.5
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: sigma < 9.0630
+Expected 16.0%: sigma < 12.0901
+Expected 50.0%: sigma < 16.8125
+Expected 84.0%: sigma < 23.5140
+Expected 97.5%: sigma < 31.3873
+
+Done in 0.00 min (cpu), 0.00 min (real)

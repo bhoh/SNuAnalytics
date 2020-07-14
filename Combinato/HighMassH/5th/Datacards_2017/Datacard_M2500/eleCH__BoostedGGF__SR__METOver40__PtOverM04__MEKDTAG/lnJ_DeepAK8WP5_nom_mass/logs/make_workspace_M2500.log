@@ -1,0 +1,87 @@
+<setPhysicsOptions>
+<doParametersOfInterest>
+mass= 2500
+SM Xsec ggHlnuqq= 4.79518680504e-05
+SM Xsec qqHlnuqq= 0.000636481488182
+SM Xsec ggH= 0.0001091692
+SM Xsec qqH= 0.00144904
+expr::r_ggH("@0*(1-@1)/4.79518680504e-05", sigma,fvbf)
+expr::r_qqH("@0*@1/0.000636481488182", sigma,fvbf)
+<getYieldScale>
+qqWWqq
+->qqH_b_func
+<getYieldScale>
+vbfHWWlnuqq_M2500_SBI
+->qqH_sbi_func
+<getYieldScale>
+MultiV
+->1
+<getYieldScale>
+QCD_bcToE
+->1
+<getYieldScale>
+top
+->1
+<getYieldScale>
+vbfHWWlnuqq_M2500_S
+->qqH_s_func
+<getYieldScale>
+ggHWWlnuqq_M2500_S
+->ggH_s_func
+<getYieldScale>
+QCD_EM
+->1
+<getYieldScale>
+ggWW
+->ggH_b_func
+<getYieldScale>
+Wjets
+->1
+<getYieldScale>
+DY
+->1
+<getYieldScale>
+h125
+->1
+<getYieldScale>
+ggHWWlnuqq_M2500_SBI
+->ggH_sbi_func
+<getYieldScale>
+qqWWqq
+->qqH_b_func
+<getYieldScale>
+vbfHWWlnuqq_M2500_SBI
+->qqH_sbi_func
+<getYieldScale>
+MultiV
+->1
+<getYieldScale>
+QCD_bcToE
+->1
+<getYieldScale>
+top
+->1
+<getYieldScale>
+vbfHWWlnuqq_M2500_S
+->qqH_s_func
+<getYieldScale>
+ggHWWlnuqq_M2500_S
+->ggH_s_func
+<getYieldScale>
+QCD_EM
+->1
+<getYieldScale>
+ggWW
+->ggH_b_func
+<getYieldScale>
+Wjets
+->1
+<getYieldScale>
+DY
+->1
+<getYieldScale>
+h125
+->1
+<getYieldScale>
+ggHWWlnuqq_M2500_SBI
+->ggH_sbi_func
