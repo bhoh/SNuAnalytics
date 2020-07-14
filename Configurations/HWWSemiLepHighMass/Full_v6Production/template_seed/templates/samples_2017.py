@@ -247,7 +247,7 @@ for QCD in QCD_bcToE:
 
 samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
-                     'FilesPerJob' : FilesPerJob,                 
+                     'FilesPerJob' : FilesPerJobMainBKG,                 
 }##
 ##--diagram--##
 #http://147.47.242.40/qqww/qqww.png
