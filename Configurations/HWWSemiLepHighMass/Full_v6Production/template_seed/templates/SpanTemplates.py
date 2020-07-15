@@ -70,12 +70,15 @@ os.system('cp GetXsecInNtuple.py ../')
 LIST_FLV=['elemu','ele','mu']
 LIST_BOOST=['Boosted','Resolved']
 #LIST_REGION=['SB','SR','TOP']
-for flv in LIST_FLV:
-    for reg in LIST_REGION:#configuration_Boosted_template.py
-        for bst in LIST_BOOST:
+
+os.system('mkdir -p logs/')
+for reg in LIST_REGION:#configuration_Boosted_template.py
+    for bst in LIST_BOOST:
+        f=open('../PlotMakerRun_'+bst+'_'+reg+'.sh','w')    
+        for flv in LIST_FLV:
             os.system('cp plot.py ../plot_'+flv+'_'+bst+'.py')
             os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
-            f=open('../PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh','w')
+
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
-            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv)
-            f.close()
+            f.write('(mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+' &> logs/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.log)&\n')
+        f.close()
