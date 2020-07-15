@@ -47,11 +47,7 @@ for cp in LIST_CP:
     fnew.close()
 
 ##---simple cp
-LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc','MakeEnvelopShape.py'] 
-if Year!='2016':
-    LIST_CP.append('RunMakeQCDscale_SymhessianAs_Shape.sh')
-    LIST_CP.append('MakeSymhessianAsShape.py')
-
+LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc'] 
 for cp in LIST_CP:
     os.system('cp '+cp+' ../')
 
@@ -69,3 +65,17 @@ os.system('cp -r MassPoints'+Year+' ../MassPoints')
 os.system('cp TurnOnCombinedSamples.py ../')
 os.system('cp TurnOffCombinedSamples.py ../')
 os.system('cp GetXsecInNtuple.py ../')
+
+##--Make PlotMakerRunning
+LIST_FLV=['elemu','ele','mu']
+LIST_BOOST=['Boosted','Resolved']
+#LIST_REGION=['SB','SR','TOP']
+for flv in LIST_FLV:
+    for reg in LIST_REGION:#configuration_Boosted_template.py
+        for bst in LIST_BOOST:
+            os.system('cp plot.py ../plot_'+flv+'_'+bst+'.py')
+            os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
+            f=open('PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh','w')
+            f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
+            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv)
+            f.close()
