@@ -3,10 +3,10 @@ import os
 #for yr in yrlist:
 if os.path.exists('samples_2016.py'):
     fdummy=open('samples_2016_dummy.py','w')
-    fdummy.write('samples={}')
+    fdummy.write('samples={}\n')
     
-    f=open('samples_'+yr+'.py','r')
+    f=open('samples_2016.py','r')
     exec(f)
     for s in samples:
-        fdummy.write('samples['+s+']={}\n')
+        fdummy.write('samples["'+s+'"]={}\n')
         
