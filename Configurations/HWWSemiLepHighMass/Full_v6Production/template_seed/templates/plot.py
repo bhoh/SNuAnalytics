@@ -78,9 +78,9 @@ QCD_bcToE=[
 
 
 if 'mu' in scriptname:
-    groupPlot['QCD']['samples']=['QCD_MU']
+    groupPlot['QCD']['samples']+=['QCD_MU']
 if 'ele' in scriptname:
-    groupPlot['QCD']['samples']=['QCD_EM','QCD_bcToE']
+    groupPlot['QCD']['samples']+=['QCD_EM','QCD_bcToE']
 
 
 
