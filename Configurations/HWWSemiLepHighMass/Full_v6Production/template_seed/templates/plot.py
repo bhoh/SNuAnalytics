@@ -299,6 +299,7 @@ if 'SR' in scriptname:
     if not UsePseudoData : plot['DATA']['isBlind']=1
 if "Boost" in scriptname:
     MList=[3000]
+    if Year=='2016':MList=[2500]
     scale=10000
 else:
     MList=[400]
