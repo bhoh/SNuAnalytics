@@ -12,7 +12,8 @@
 >python MakeMELAWeightCut.py
 -QCD/PDF/PS
 >MakeQCDscalePdfPsNuisancePy.py
-
+-dummy samplefile for faster run
+>python MakeDummySamplePY.py
 
 
 1)HistoFactory
