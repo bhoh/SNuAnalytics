@@ -53,7 +53,7 @@ import sys
 sys.path.insert(0, "MassPoints")
 from List_MX import *
 from List_MX_VBF import *
-BR='0.1086*3*0.6741*2'
+BR='0.1086*2*0.6741*2' ##only mu,e decay for Wlep
 HWW_XSEC={
 'GGF':{},
 'VBF':{},
