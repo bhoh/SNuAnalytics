@@ -76,7 +76,7 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
     for bst in LIST_BOOST:
         f=open('../PlotMakerRun_'+bst+'_'+reg+'.sh','w')    
         for flv in LIST_FLV:
-            os.system('cp plot.py ../plot_'+flv+'_'+bst+'.py')
+            os.system('cp ../plot.py ../plot_'+flv+'_'+bst+'.py')
             os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
 
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
