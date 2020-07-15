@@ -74,11 +74,28 @@ LIST_BOOST=['Boosted','Resolved']
 os.system('mkdir -p logs/')
 for reg in LIST_REGION:#configuration_Boosted_template.py
     for bst in LIST_BOOST:
-        f=open('../PlotMakerRun_'+bst+'_'+reg+'.sh','w')    
+        frun=open('../RunPlotMakerRun_'+bst+'_'+reg+'.sh','w')    
+        fsub=open('../SubmitPlotMakerRun_'+bst+'_'+reg+'.sh','w')        
         for flv in LIST_FLV:
+            f=open('../PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh','w')    
             os.system('cp ../plot.py ../plot_'+flv+'_'+bst+'.py')
             os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
 
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
-            f.write('(mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+' &> logs/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.log)&\n')
-        f.close()
+            f.write('(mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
+            f.close()
+            
+
+            frun.write('source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh &> logs/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.log& \n')
+
+            fsub.write('MYDIR=${PWD};command="cd ${MYDIR};source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh";python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -n '+'PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -m 1 -s;')
+        frun.close()
+
+        
+
+
+
+
+        
+        #fsub.write('MYDIR=${PWD};command="input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root;python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+' -n "PlotMakerRun_'+bst+'_'+reg+" -m 1')
+        fsub.close()
