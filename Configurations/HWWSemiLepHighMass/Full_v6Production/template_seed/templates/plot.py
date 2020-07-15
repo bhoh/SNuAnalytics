@@ -121,11 +121,12 @@ groupPlot['Wjets']={
                   'isSignal' : 0,
                   'color': dict_TColor['green'],
                   'isData'   : 0,
-                  'samples'  : Wjets
+
 }
 if CombineWjets or (Year=='2016'):
     groupPlot['Wjets']['samples']=['Wjets']
-
+else:
+    groupPlot['Wjets']['samples'] = Wjets
 
 groupPlot['top']={
     'nameHR' : 'Top',
