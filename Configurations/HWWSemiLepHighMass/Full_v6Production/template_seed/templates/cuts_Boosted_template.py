@@ -64,12 +64,12 @@ BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
 BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
 
 
-#if 'GGF' in configration_py : 
-#    BoostedProdCats={}
-#    BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
-#if 'VBF' in configration_py : 
-#    BoostedProdCats={}
-#    BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
+if 'GGF' in configration_py : 
+    BoostedProdCats={}
+    BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
+if 'VBF' in configration_py : 
+    BoostedProdCats={}
+    BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
 
 
 

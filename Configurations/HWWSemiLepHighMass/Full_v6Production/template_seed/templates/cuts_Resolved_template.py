@@ -61,11 +61,15 @@ else:
 ##-----Basic categorization-----##
 
 ResolvedProdCats={}
-
-#if 'GGF' in configration_py :
 ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
-#if 'VBF' in configration_py :
 ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
+
+if 'GGF' in configration_py :
+    ResolvedProdCats={}
+    ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
+if 'VBF' in configration_py :
+    ResolvedProdCats={}
+    ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
     
 
 ResolvedRegionCats={}
