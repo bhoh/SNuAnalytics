@@ -88,7 +88,7 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
 
             frun.write('source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh &> logs/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.log& \n')
 
-            fsub.write('MYDIR=${PWD};command="cd ${MYDIR};source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh";python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -n '+'PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -m 1 -s;')
+            fsub.write('MYDIR=${PWD};command="cd ${MYDIR};source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh";python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -n '+'PlotMakerRun_'+bst+'_'+reg+'_'+flv+'_'+Year+' -m 1 -s;')
         frun.close()
 
         
