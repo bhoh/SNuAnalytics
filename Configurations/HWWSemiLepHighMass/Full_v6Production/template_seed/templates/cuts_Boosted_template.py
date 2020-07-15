@@ -78,18 +78,18 @@ BoostedRegionCats={}
 ##BJetBstNotVBF_DeepAK8WP1_nom_cjidx
 #nBJetBstNotVBF_DeepAK8WP1_nom
 #nBJetBoost_'+WTAG+'_nom
-BoostedRegionCats['SR']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSR_'+WTAG+'_nom)'
-BoostedRegionCats['TOP'] ='(nBJetBstNotVBF_'+WTAG+'_nom > 0) && (isBoost_'+WTAG+'_nom)'
-BoostedRegionCats['SB']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSB_'+WTAG+'_nom)'
+BoostedRegionCats['SR']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSR_'+WTAG+'_nom)'
+BoostedRegionCats['TOP'] ='(nBJetBoost_'+WTAG+'_nom  > 0) && (isBoost_'+WTAG+'_nom)'
+BoostedRegionCats['SB']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSB_'+WTAG+'_nom)'
 if 'SR' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats={'SR':'(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSR_'+WTAG+'_nom)'}
+    BoostedRegionCats={'SR':'(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSR_'+WTAG+'_nom)'}
 if 'TOP' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats['TOP'] ='(nBJetBstNotVBF_'+WTAG+'_nom > 0) && (isBoost_'+WTAG+'_nom)'
+    BoostedRegionCats['TOP'] ='(nBJetBoost_'+WTAG+'_nom  > 0) && (isBoost_'+WTAG+'_nom)'
 if 'SB' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats['SB']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSB_'+WTAG+'_nom)'
+    BoostedRegionCats['SB']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSB_'+WTAG+'_nom)'
 
 BoostedMETCat={}
 if not ONLY_FINAL : BoostedMETCat['NoMET']='1'

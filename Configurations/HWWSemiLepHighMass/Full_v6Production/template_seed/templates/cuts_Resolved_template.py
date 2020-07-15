@@ -74,21 +74,21 @@ ResolvedRegionCats={}
 #nBJetResol'+_ALGO_+'nom
 #nBJetResNotVBF_dM_nom
 #if 'SR' in configration_py :
-ResolvedRegionCats['SR'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
+ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
 #if 'SB' in configration_py :
-ResolvedRegionCats['SB'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
 #if 'TOP' in configration_py :
-ResolvedRegionCats['TOP'] = '(nBJetResNotVBF'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 if 'SR' in configration_py :
     ResolvedRegionCats={}
-    ResolvedRegionCats={'SR':'(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'}
+    ResolvedRegionCats={'SR':'(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'}
 if 'SB' in configration_py:
     ResolvedRegionCats={}
-    ResolvedRegionCats['SB'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+    ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
 if 'TOP' in configration_py:
     ResolvedRegionCats={}
-    ResolvedRegionCats['TOP'] = '(nBJetResNotVBF'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+    ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 
 
