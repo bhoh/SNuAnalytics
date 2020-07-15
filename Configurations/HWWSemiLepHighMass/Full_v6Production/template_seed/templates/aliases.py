@@ -242,7 +242,7 @@ aliases['dPhi_WW_resolved']={
 
 #}
 
-aliases['GenJet_HT'] = {
-    'expr':'Sum$(GenJet_pt)'
-    'samples':mc
-}
+#aliases['GenJet_HT'] = {
+#    'expr':'Sum$(GenJet_pt)',
+#    'samples':mc
+#}

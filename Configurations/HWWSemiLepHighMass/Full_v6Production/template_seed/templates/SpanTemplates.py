@@ -47,7 +47,11 @@ for cp in LIST_CP:
     fnew.close()
 
 ##---simple cp
-LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc'] 
+LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc','MakeEnvelopShape.py'] 
+if Year!='2016':
+    LIST_CP.append('RunMakeQCDscale_SymhessianAs_Shape.sh')
+    LIST_CP.append('MakeSymhessianAsShape.py')
+
 for cp in LIST_CP:
     os.system('cp '+cp+' ../')
 

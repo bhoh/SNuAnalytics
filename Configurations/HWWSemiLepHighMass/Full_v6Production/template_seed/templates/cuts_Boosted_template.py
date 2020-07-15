@@ -107,7 +107,7 @@ BoostedMEKDCat['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOO
 
 
 BoostedDphiCat={}
-BoostedDphiCat['dphiww2']='(dPhi_WW_boosted > 2.0)'
+BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
 BoostedDphiCat['_']='(1)'
 
 ##--BoostedProdCats, BoostedRegionCats, BoostedPtOverMlnJCat
