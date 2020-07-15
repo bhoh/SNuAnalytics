@@ -155,6 +155,21 @@ for M_MELA in MELA_MASS_RESOL:
 
 
 
+variables['VBFjjResol_dEta_'+ALGO+'_nom']={
+    'name':'VBFjjResol_dEta_'+ALGO+'_nom',
+    'range':(20,0,8),
+    'xaxis':'VBFjjResol_dEta_'+ALGO+'_nom',
+    'fold':3
+}
+variables['VBFjjResol_mjj_'+ALGO+'_nom']={
+    'name':'VBFjjResol_mjj_'+ALGO+'_nom',
+    'range':(40,0,1400),
+    'xaxis':'VBFjjResol_mjj_'+ALGO+'_nom',
+    'fold':3
+}
+
+
+
 if isFinal:
     variables={}
 

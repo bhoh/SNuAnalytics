@@ -183,9 +183,22 @@ variables ['PV_npvs']={
 
 variables['lnJ_'+WTAG+'_nom_minPtWOverM']={
     'name':'lnJ_'+WTAG+'_nom_minPtWOverM',
-    'range':(10,0,1),
+    'range':(20,0,1),
     'xaxis':'minPtWOverMlnJ',
     'fold':0
+}
+
+variables['VBFjjBoost_dEta_'+WTAG+'_nom']={
+    'name':'VBFjjBoost_dEta_'+WTAG+'_nom',
+    'range':(20,0,8),
+    'xaxis':'VBFjjBoost_dEta_'+WTAG+'_nom',
+    'fold':3
+}
+variables['VBFjjBoost_mjj_'+WTAG+'_nom']={
+    'name':'VBFjjBoost_mjj_'+WTAG+'_nom',
+    'range':(40,0,1400),
+    'xaxis':'VBFjjBoost_mjj_'+WTAG+'_nom',
+    'fold':3
 }
 
 for M_MELA in MELA_MASS_BOOST:
@@ -200,6 +213,8 @@ for M_MELA in MELA_MASS_BOOST:
             'xaxis':'MEKD_Bst_C_'+C+'_M'+str(M),
             'fold':0
         }
+
+
 
 
 if isFinal: variables={}
