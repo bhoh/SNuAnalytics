@@ -32,7 +32,7 @@ for reg in LIST_REGION:
 #PowhegXsec.py
 #plot.py
 #MakeKfactor.py
-LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py']
+LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py','MakeDummySamplePY.py']
 
 for cp in LIST_CP:
     ftemplate=open(cp,'r')
