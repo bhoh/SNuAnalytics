@@ -1,6 +1,6 @@
 FilesPerJob=30
 FilesPerJobMainBKG=2
-FilesPerJobDATA=60
+FilesPerJobDATA=50
 
 TESTRUN=False
 
