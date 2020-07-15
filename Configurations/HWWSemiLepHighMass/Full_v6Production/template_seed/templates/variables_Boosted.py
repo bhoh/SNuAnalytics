@@ -52,7 +52,8 @@ if 'HP' in WTAG:
         'fold': 3,
     
     }
-    if variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']['xaxis']+='(DDT)'
+    if 'DDT' in WTAG:
+        variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']['xaxis']+='(DDT)'
 
 if 'DeepAK8' in WTAG:
     if not 'MD' in WTAG:
