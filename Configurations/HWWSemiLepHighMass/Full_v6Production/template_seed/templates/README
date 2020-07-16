@@ -5,6 +5,6 @@ cp -r ${CMSSW_BASE}/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/Full_v6Pr
 2)  in your workspace
 cd templates
 python SpanTemplates.py <Year>
-cd ../
+cd ../<Year>
 
 3) Then follow steps in "RunSequence.txt"
