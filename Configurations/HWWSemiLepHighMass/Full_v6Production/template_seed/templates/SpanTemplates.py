@@ -9,6 +9,9 @@ LIST_TEMPLATE=['configuration_Boosted_template.py','configuration_Resolved_templ
 LIST_REGION=['SB','TOP','SR']
 
 
+workspace='../'+Year
+os.system('mkdir -p '+workspace)
+
 ###----Make config/cuts
 #for prod in LIST_PROD:
 for reg in LIST_REGION:
@@ -16,7 +19,7 @@ for reg in LIST_REGION:
         ftemplate=open(template,'r')
         lines=ftemplate.readlines()
         newfile=template.replace('template',reg)
-        fnew=open('../'+newfile,'w')
+        fnew=open(workspace+'/'+newfile,'w')
         for line in lines:
             #line=line.replace('__PROD__',prod)
             line=line.replace('__REG__',reg)
@@ -24,7 +27,7 @@ for reg in LIST_REGION:
             #line=line.replace('__PROD__',prod)
             fnew.write(line)
         #newfile=template.replace('template',prod+'_'+reg)
-        os.system('cp '+template+' ../'+newfile)
+        os.system('cp '+template+' '+workspace+'/'+newfile)
         fnew.close()
         ftemplate.close()
 ##---cp
@@ -36,7 +39,7 @@ LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py',
 
 for cp in LIST_CP:
     ftemplate=open(cp,'r')
-    fnew=open('../'+cp,'w')
+    fnew=open(workspace+'/'+cp,'w')
     lines=ftemplate.readlines()
     for line in lines:
         line=line.replace('WPandCut2016','WPandCut'+Year)
@@ -49,22 +52,22 @@ for cp in LIST_CP:
 ##---simple cp
 LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc'] 
 for cp in LIST_CP:
-    os.system('cp '+cp+' ../')
+    os.system('cp '+cp+' '+workspace+'/')
 
 ##--cp module
-os.system('cp LHEPartWlepPt.cc ../')
+os.system('cp LHEPartWlepPt.cc '+workspace+'/')
 
 ##--cp WPfile
-os.system('cp WPandCut'+Year+'.py ../')
+os.system('cp WPandCut'+Year+'.py '+workspace+'/')
 
 ##--cp MassPoints
-os.system('rm -rf ../MassPoints')
-os.system('cp -r MassPoints'+Year+' ../MassPoints')
+os.system('rm -rf '+workspace+'/MassPoints')
+os.system('cp -r MassPoints'+Year+' '+workspace+'/MassPoints')
 
 ##--cp TurnOn/OffCombinedSamples.py
-os.system('cp TurnOnCombinedSamples.py ../')
-os.system('cp TurnOffCombinedSamples.py ../')
-os.system('cp GetXsecInNtuple.py ../')
+os.system('cp TurnOnCombinedSamples.py '+workspace+'/')
+os.system('cp TurnOffCombinedSamples.py '+workspace+'/')
+os.system('cp GetXsecInNtuple.py '+workspace+'/')
 
 ##--Make PlotMakerRunning
 LIST_FLV=['elemu','ele','mu']
@@ -74,12 +77,12 @@ LIST_BOOST=['Boosted','Resolved']
 os.system('mkdir -p logs/')
 for reg in LIST_REGION:#configuration_Boosted_template.py
     for bst in LIST_BOOST:
-        frun=open('../RunPlotMakerRun_'+bst+'_'+reg+'.sh','w')    
-        fsub=open('../SubmitPlotMakerRun_'+bst+'_'+reg+'.sh','w')        
+        frun=open(workspace+'/RunPlotMakerRun_'+bst+'_'+reg+'.sh','w')    
+        fsub=open(workspace+'/SubmitPlotMakerRun_'+bst+'_'+reg+'.sh','w')        
         for flv in LIST_FLV:
-            f=open('../PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh','w')    
-            os.system('cp ../plot.py ../plot_'+flv+'_'+bst+'.py')
-            os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
+            f=open(workspace+'/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh','w')    
+            os.system('cp '+workspace+'/plot.py '+workspace+'/plot_'+flv+'_'+bst+'.py')
+            os.system('cp '+workspace+'/cuts_'+bst+'_'+reg+'.py '+workspace+'/cuts_'+bst+'_'+reg+'_'+flv+'.py')
 
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
             f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --samplesFile=samples_'+Year+'_dummy.py --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
