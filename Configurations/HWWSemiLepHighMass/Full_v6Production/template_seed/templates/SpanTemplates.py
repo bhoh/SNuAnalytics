@@ -32,7 +32,7 @@ for reg in LIST_REGION:
 #PowhegXsec.py
 #plot.py
 #MakeKfactor.py
-LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py','MakeDummySamplePY.py']
+LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py','MakeDummySamplePY.py','HaddInBatch.sh']
 
 for cp in LIST_CP:
     ftemplate=open(cp,'r')
@@ -82,7 +82,7 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
             os.system('cp ../cuts_'+bst+'_'+reg+'.py ../cuts_'+bst+'_'+reg+'_'+flv+'.py')
 
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
-            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --samplesFile=samples_'+Year+'_dummpy.py --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
+            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --samplesFile=samples_'+Year+'_dummy.py --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
             f.close()
             
 
