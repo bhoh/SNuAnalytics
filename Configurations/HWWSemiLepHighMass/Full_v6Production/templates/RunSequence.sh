@@ -1,14 +1,16 @@
 #00) Make configuration
-<<Comment1
 echo "Make configuration ==============================="
-pushd templates
+#pushd templates
 python SpanTemplates.py 2017
-popd
+#popd
+
+
+<<Comment1
 Comment1
 
+<<Comment2
 #0)Predefine
 echo "Making kfactor ===================================="
-<<Comment2
 #python MakeKfactor.py
 #-Melacut 
 #>python MakeMELAWeightCut.py
@@ -21,6 +23,7 @@ git clone git@github.com:soarnsoar/python_tool.git
 
 Comment2
 
+<<Comment3
 #1)HistoFactory
 echo 'Making Histograms'
 
@@ -30,7 +33,6 @@ echo 'Making Histograms'
 #HistoFactory.sh
 . Histo_factory_run.sh
 
-<<Comment3
 2)Make PDF/QCD scale shape
 >>git clone git@github.com:soarnsoar/python_tool.git
 >>[2016]RunMakeQCDscale_Rms_Shape.sh
