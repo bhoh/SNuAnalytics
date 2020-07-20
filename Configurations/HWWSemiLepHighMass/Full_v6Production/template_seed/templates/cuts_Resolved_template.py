@@ -61,15 +61,15 @@ else:
 ##-----Basic categorization-----##
 
 ResolvedProdCats={}
-ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
-ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
+ResolvedProdCats['ResolvedGGF']='(isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom)'
+ResolvedProdCats['ResolvedVBF']='(isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom)'
 
 if 'GGF' in configration_py :
     ResolvedProdCats={}
-    ResolvedProdCats['ResolvedGGF']='isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom'
+    ResolvedProdCats['ResolvedGGF']='(isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom)'
 if 'VBF' in configration_py :
     ResolvedProdCats={}
-    ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom'
+    ResolvedProdCats['ResolvedVBF']='(isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom)'
     
 
 ResolvedRegionCats={}
@@ -108,15 +108,15 @@ ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom
 
 ResolvedPtOverMCats = {}
 if not ONLY_FINAL:ResolvedPtOverMCats['NoPtOverMcut'] = '1'
-ResolvedPtOverMCats['PtOverM035'] = 'lnjj'+_ALGO_+'nom_minPtWOverM>0.35'
+ResolvedPtOverMCats['PtOverM035'] = '(lnjj'+_ALGO_+'nom_minPtWOverM>0.35)'
 
 ResolvedWlepMtCats = {}
 if not ONLY_FINAL:ResolvedWlepMtCats['NoWlepMtcut'] = '1'
-ResolvedWlepMtCats['WlepMtOver50'] = 'Wlep_nom_Mt > 50'
+ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
 
 ResolvedWWMtCats={}
 if not ONLY_FINAL:ResolvedWWMtCats['NoWWMtOvercut']='1'
-ResolvedWWMtCats['WWMtOver60']='lnjj'+_ALGO_+'nom_Mt > 60'
+ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
 
 ScoreCats={}
 #if not ONLY_FINAL : 

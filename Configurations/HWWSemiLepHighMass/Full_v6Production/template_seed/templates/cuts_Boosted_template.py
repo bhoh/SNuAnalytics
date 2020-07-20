@@ -60,16 +60,16 @@ else:
 ##---Boosted---##
 ##---common categorization -> GGF/VBF
 BoostedProdCats={}
-BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
-BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
+BoostedProdCats['BoostedGGF']='(isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom)'
+BoostedProdCats['BoostedVBF']='(isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom)'
 
 
 if 'GGF' in configration_py : 
     BoostedProdCats={}
-    BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
+    BoostedProdCats['BoostedGGF']='(isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom)'
 if 'VBF' in configration_py : 
     BoostedProdCats={}
-    BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
+    BoostedProdCats['BoostedVBF']='(isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom)'
 
 
 
@@ -98,7 +98,7 @@ BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'##PuppiMET_nom_p
 
 BoostedPtOverMlnJCat= {}
 if not ONLY_FINAL: BoostedPtOverMlnJCat['NoPtOverMcut']='1'
-BoostedPtOverMlnJCat['PtOverM04']='lnJ_'+WTAG+'_nom_minPtWOverM > 0.4'
+BoostedPtOverMlnJCat['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
 
 BoostedMEKDCat={}
 BoostedMEKDCat['_']='1'
