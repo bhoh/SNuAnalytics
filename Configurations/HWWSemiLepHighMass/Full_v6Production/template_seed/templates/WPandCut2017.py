@@ -15,6 +15,7 @@ STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_V11_nom"
 CAMPAIGN_DATA='Run2017_102X_nAODv5_Full2017v6'
 STEP_DATA="DATAl1loose2017v6__HMSemilepSKIMv6_10_data__HMFull_V11_data"
 
+directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
 
 os.system('cp '+configurations+'/Wtagger_cfg.py .')
