@@ -225,7 +225,7 @@ aliases['EWK_W_correction_uncert'] = {
 }
 
 aliases['dPhi_WW_boosted']={
-    'expr':'(WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi)-2*3.1415927*(  (WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi) < 3.1415927)'
+    'expr':' isBoost_'+WTAG+'_nom ? (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi)-2*3.1415927*(  (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) < 3.1415927) : -100.'
 }
 
 
@@ -234,8 +234,15 @@ aliases['dPhi_WW_resolved']={
 }
 
 
-aliases['nCleanGenJet'] = {
-    'linesToAdd': ['.L '+os.getcwd()+'/ngenjet.cc+'
-    ],
-    'class': 'CountGenJet',
-}
+#aliases['nCleanGenJet'] = {
+#    'linesToAdd': ['.L '+os.getcwd()+'/ngenjet.cc+'
+#    ],
+#    'class': 'CountGenJet',
+#    'samples': mc
+
+#}
+
+#aliases['GenJet_HT'] = {
+#    'expr':'Sum$(GenJet_pt)',
+#    'samples':mc
+#}

@@ -60,16 +60,16 @@ else:
 ##---Boosted---##
 ##---common categorization -> GGF/VBF
 BoostedProdCats={}
-BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
-BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
+BoostedProdCats['BoostedGGF']='(isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom)'
+BoostedProdCats['BoostedVBF']='(isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom)'
 
 
-#if 'GGF' in configration_py : 
-#    BoostedProdCats={}
-#    BoostedProdCats['BoostedGGF']='isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom'
-#if 'VBF' in configration_py : 
-#    BoostedProdCats={}
-#    BoostedProdCats['BoostedVBF']='isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom'
+if 'GGF' in configration_py : 
+    BoostedProdCats={}
+    BoostedProdCats['BoostedGGF']='(isBoost_'+WTAG+'_nom&&!isVBF_Boost_'+WTAG+'_nom)'
+if 'VBF' in configration_py : 
+    BoostedProdCats={}
+    BoostedProdCats['BoostedVBF']='(isBoost_'+WTAG+'_nom&&isVBF_Boost_'+WTAG+'_nom)'
 
 
 
@@ -78,18 +78,18 @@ BoostedRegionCats={}
 ##BJetBstNotVBF_DeepAK8WP1_nom_cjidx
 #nBJetBstNotVBF_DeepAK8WP1_nom
 #nBJetBoost_'+WTAG+'_nom
-BoostedRegionCats['SR']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSR_'+WTAG+'_nom)'
-BoostedRegionCats['TOP'] ='(nBJetBstNotVBF_'+WTAG+'_nom > 0) && (isBoost_'+WTAG+'_nom)'
-BoostedRegionCats['SB']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSB_'+WTAG+'_nom)'
+BoostedRegionCats['SR']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSR_'+WTAG+'_nom)'
+BoostedRegionCats['TOP'] ='(nBJetBoost_'+WTAG+'_nom  > 0) && (isBoost_'+WTAG+'_nom)'
+BoostedRegionCats['SB']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSB_'+WTAG+'_nom)'
 if 'SR' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats={'SR':'(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSR_'+WTAG+'_nom)'}
+    BoostedRegionCats={'SR':'(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSR_'+WTAG+'_nom)'}
 if 'TOP' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats['TOP'] ='(nBJetBstNotVBF_'+WTAG+'_nom > 0) && (isBoost_'+WTAG+'_nom)'
+    BoostedRegionCats['TOP'] ='(nBJetBoost_'+WTAG+'_nom  > 0) && (isBoost_'+WTAG+'_nom)'
 if 'SB' in configration_py:
     BoostedRegionCats={}
-    BoostedRegionCats['SB']='(nBJetBstNotVBF_'+WTAG+'_nom==0) && (isBoostSB_'+WTAG+'_nom)'
+    BoostedRegionCats['SB']='(nBJetBoost_'+WTAG+'_nom ==0) && (isBoostSB_'+WTAG+'_nom)'
 
 BoostedMETCat={}
 if not ONLY_FINAL : BoostedMETCat['NoMET']='1'
@@ -98,7 +98,7 @@ BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'##PuppiMET_nom_p
 
 BoostedPtOverMlnJCat= {}
 if not ONLY_FINAL: BoostedPtOverMlnJCat['NoPtOverMcut']='1'
-BoostedPtOverMlnJCat['PtOverM04']='lnJ_'+WTAG+'_nom_minPtWOverM > 0.4'
+BoostedPtOverMlnJCat['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
 
 BoostedMEKDCat={}
 BoostedMEKDCat['_']='1'
@@ -107,7 +107,7 @@ BoostedMEKDCat['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOO
 
 
 BoostedDphiCat={}
-BoostedDphiCat['dphiww2']='(dPhi_WW_boosted > 2.0)'
+BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
 BoostedDphiCat['_']='(1)'
 
 ##--BoostedProdCats, BoostedRegionCats, BoostedPtOverMlnJCat

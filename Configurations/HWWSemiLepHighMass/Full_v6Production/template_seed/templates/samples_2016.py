@@ -1,6 +1,6 @@
 FilesPerJob=30
 FilesPerJobMainBKG=2
-FilesPerJobDATA=60
+FilesPerJobDATA=50
 
 TESTRUN=False
 
@@ -143,10 +143,10 @@ ptllDYW_LO = '((0.632927+0.0456956*gen_ptll-0.00154485*gen_ptll*gen_ptll+2.64397
 samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50-LO_ext2',False,'nanoLatino_')
                      + getSampleFiles(directory,'DYJetsToLL_M-10to50-LO',False,'nanoLatino_'),
                      'weight' : 'XSWeight*SFweight*METFilter_MC',
-                     'FilesPerJob' : FilesPerJob,
+                     'FilesPerJob' : FilesPerJobMainBKG,
 }
 #addSampleWeight(samples,'DY','DYJetsToLL_M-50',ptllDYW_NLO)
-#addSampleWeight(samples,'DY','DYJetsToLL_M-10to50-LO',ptllDYW_LO)
+addSampleWeight(samples,'DY','DYJetsToLL_M-10to50-LO',ptllDYW_LO)
 
                  
 
@@ -209,7 +209,7 @@ samples['QCD_bcToE'] = {'name'   :
 ##--MultiBoson
 samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
-                     'FilesPerJob' : FilesPerJob,                 
+                     'FilesPerJob' : FilesPerJobMainBKG,                 
 }
 
 

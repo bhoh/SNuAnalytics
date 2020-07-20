@@ -1,6 +1,6 @@
 UsePseudoData=False
 print "UsePseudoData=",UsePseudoData
-
+print "CombineWjets=",CombineWjets
 import sys
 sys.path.append(os.getcwd())
 #-----Variable Deinition-----#
@@ -78,11 +78,9 @@ QCD_bcToE=[
 
 
 if 'mu' in scriptname:
-
-    groupPlot['QCD']['samples']=['QCD_MU']
+    groupPlot['QCD']['samples']+=['QCD_MU']
 if 'ele' in scriptname:
-
-    groupPlot['QCD']['samples']=['QCD_EM','QCD_bcToE']
+    groupPlot['QCD']['samples']+=['QCD_EM','QCD_bcToE']
 
 
 
@@ -123,11 +121,12 @@ groupPlot['Wjets']={
                   'isSignal' : 0,
                   'color': dict_TColor['green'],
                   'isData'   : 0,
-                  #'samples'  : Wjets
+
 }
 if CombineWjets or (Year=='2016'):
     groupPlot['Wjets']['samples']=['Wjets']
-
+else:
+    groupPlot['Wjets']['samples'] = Wjets
 
 groupPlot['top']={
     'nameHR' : 'Top',
@@ -248,26 +247,7 @@ else:
 
         }
         idx+=1
-        '''
-    plot['Wjets0j']  = {
-        'nameHR' : 'Wjets0j',
-        'isSignal' : 0,
-        'color': dict_TColor['green'],
-        'isData'   : 0,
-    }
-    plot['Wjets1j']  = {
-        'nameHR' : 'Wjets1j',
-        'isSignal' : 0,
-        'color': dict_TColor['green']-3,
-        'isData'   : 0,
-    }
-    plot['Wjets2j']  = {
-        'nameHR' : 'Wjets2j',
-        'isSignal' : 0,
-        'color': dict_TColor['green']+1,
-        'isData'   : 0,
-    }
-        '''
+
 
 if CombineH125:
     plot['h125']  = {
@@ -319,6 +299,7 @@ if 'SR' in scriptname:
     if not UsePseudoData : plot['DATA']['isBlind']=1
 if "Boost" in scriptname:
     MList=[3000]
+    if Year=='2016':MList=[2500]
     scale=10000
 else:
     MList=[400]
@@ -378,7 +359,8 @@ if Year=='2018':
     lumi=59.7
 
 
-legend['lumi'] = 'L = '+lumi+'/fb'
+legend['lumi'] = 'L = '+str(lumi)+'/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 
+print '[DEBUG!!!!!]',groupPlot['Wjets']['samples']

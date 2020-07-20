@@ -18,6 +18,7 @@ CAMPAIGN='Autumn18_102X_nAODv6_Full2018v6'
 STEP="MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__HMFull_V11_nom/"
 CAMPAIGN_DATA='Run2018_102X_nAODv6_Full2018v6'
 STEP_DATA="DATAl1loose2018v6__HMSemilepSKIMv6_10_data__HMFull_V11_data/"
+directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
 
 
@@ -33,7 +34,7 @@ ALGO="dMchi2Resolution"
 #WTAG="DeepAK8WP5MD"
 WTAG="DeepAK8WP2p5"
 
-SFweight='puWeight*trigWeight*EMTFbug_veto*LepWPCut*LepWPweight*btagSF*PUJetIdSF*HEMweight'
+SFweight='puWeight*trigWeight[0]*EMTFbug_veto*LepWPCut[0]*LepWPweight[0]*btagSF*PUJetIdSF*HEMweight'
 
 #SFweight+='*WtaggerSFnom'
 

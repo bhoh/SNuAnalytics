@@ -24,40 +24,44 @@ variables['Event'] = {
     'name' : '1',
     'range':(1,0,2),
     'xaxis':'1',
-    'fold': 0
+    'fold': 3,
 }
 ##Wtagger kin##
 
 variables['WtaggerFatjet_'+WTAG+'_nom_pt']={
     'name':'WtaggerFatjet_'+WTAG+'_nom_pt[lnJ_'+WTAG+'_nom_widx]',
-    'range':(100,0,1000),
+    #'range':(100,0,1000),
+    'range':([200,230,260,290,320,350,380,410,500,700,1000],),
     'xaxis':'WtaggerFatjet_pt',
-    'fold': 0,
+    'fold': 3,
 
 }
 
 variables['WtaggerFatjet_'+WTAG+'_nom_mass']={
     'name':'WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx]',
-    'range':(42,40,250),
+    'range':([40,45,50,55,65,70,75,80,85,90,95,100,105,110,115,120,125,130,150,170,200,250],),
     'xaxis':'WtaggerFatjet_mass',
-    'fold': 0,
-
+    'fold': 3,
 }
+
 if 'HP' in WTAG:
     variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']={
         'name':'WtaggerFatjet_'+WTAG+'_nom_tau21ddt[lnJ_'+WTAG+'_nom_widx]',
         'range':(20,0,1),
-        'xaxis':'WtaggerFatjet_tau21(DDT)',
-        'fold': 0,
+        'xaxis':'WtaggerFatjet_tau21',
+        'fold': 3,
     
     }
+    if 'DDT' in WTAG:
+        variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']['xaxis']+='(DDT)'
+
 if 'DeepAK8' in WTAG:
     if not 'MD' in WTAG:
         variables['WtaggerFatjet_'+WTAG+'_nom_deepTag']={
             'name':'WtaggerFatjet_'+WTAG+'_nom_deepTag[lnJ_'+WTAG+'_nom_widx]',
             'range':(20,0,1),
             'xaxis':'WtaggerFatjet_deepTag',
-            'fold': 0,
+            'fold': 3,
             
         }
     else:
@@ -65,7 +69,7 @@ if 'DeepAK8' in WTAG:
             'name':'WtaggerFatjet_'+WTAG+'_nom_deepTagMD[lnJ_'+WTAG+'_nom_widx]',
             'range':(20,0,1),
             'xaxis':'WtaggerFatjet_deepTagMD',
-            'fold': 0,
+            'fold': 3,
             
         }
 ##--Bjet
@@ -74,7 +78,7 @@ variables['nBJetBoost_'+WTAG+'_nom']={
     'name':'nBJetBoost_'+WTAG+'_nom',
     'range':(5,0,5),
     'xaxis':'nBJetBoost',
-    'fold':0,
+    'fold':3,
 }
 
 
@@ -82,92 +86,92 @@ variables['JetMultplicity']={
     'name':'JetMultplicity',
     'range':(10,0,10),
     'xaxis':'JetMultplicity',
-    'fold':0,
+    'fold':3,
 }
 variables['JetMultplicity_eta4p7']={
     'name':'JetMultplicity_eta4p7',
     'range':(10,0,10),
     'xaxis':'JetMultplicity_eta4p7',
-    'fold':0,
+    'fold':3,
 }
 variables['nAddBoost_'+WTAG+'_nom']={
     'name':'nAddBoost_'+WTAG+'_nom',
     'range':(10,0,10),
     'xaxis':'nAddionalJets',
-    'fold':0,
+    'fold':3,
 }
 
 variables['AddJetBoost_'+WTAG+'_nom_pt']={
     'name':'AddJetBoost_'+WTAG+'_nom_pt',
-    'range':(50,25,600),
+    'range':(100,25,600),
     'xaxis':'pT(AddionalJets)',
-    'fold':0,
+    'fold':3,
 }
 
 
 variables['AddJetBoost_'+WTAG+'_nom_eta']={
     'name':'AddJetBoost_'+WTAG+'_nom_eta',
-    'range':(50,-5,5),
+    'range':(30,-5,5),
     'xaxis':'eta(AddionalJets)',
-    'fold':0,
+    'fold':3,
 }
 
 variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
-    'range':(50,25,600),
+    'range':(20,25,600),
     'xaxis':'Lepton P_{T} [GeV]',
-    'fold':0
+    'fold':3
 
 }
 variables['Lepton_eta[0]']={
     'name' : 'Lepton_eta[0]',
-    'range':(50,-5,5),
+    'range':(30,-5,5),
     'xaxis':'Lepton #eta',
-    'fold':0
+    'fold':3
 }
 
 
 
 variables[bAlgo]={
     'name' : 'Jet_btag'+bAlgo+'[CleanJet_jetIdx[AddJetBoost_'+WTAG+'_nom_cjidx]]',
-    'range':(25,0,1),
+    'range':(20,0,1),
     'xaxis':bAlgo,
-    'fold':0
+    'fold':3
 
 }
 
 variables['PuppiMet']={
     'name' : 'PuppiMET_nom_pt',
-    'range':(50,0,600),
+    'range':(30,0,600),
     'xaxis':'MET [GeV]',
-    'fold':0
+    'fold':3
 }
 
 variables['Wlep_Mt']={
     'name' : 'Wlep_nom_Mt',
-    'range':(60,0,300),
+    'range':(20,0,200),
     'xaxis':'Wlep_Mt',
-    'fold':0
+    'fold':3
 }
 
 variables['Wlep_pt']={
     'name' : 'Wlep_nom_pt',
-    'range':(100,0,1000),
+    'range':(35,150,500),
     'xaxis':'Wlep_pt',
-    'fold':0
+    'fold':3
 }
 
 variables['Wlep_nom_mass']={
     'name' : 'Wlep_nom_mass',
-    'range':(60,0,300),
+    'range':(15,70,100),
     'xaxis':'Wlep_mass',
-    'fold':0
+    'fold':3
 }
 variables['Wlep_nom_pt']={
     'name' : 'Wlep_nom_pt',
-    'range':(100,0,300),
+    'range':(60,100,400),
     'xaxis':'Wlep_pt',
-    'fold':0
+    'fold':3
 }
 
 variables ['PV_npvs']={
@@ -185,6 +189,19 @@ variables['lnJ_'+WTAG+'_nom_minPtWOverM']={
     'fold':0
 }
 
+variables['VBFjjBoost_dEta_'+WTAG+'_nom']={
+    'name':'VBFjjBoost_dEta_'+WTAG+'_nom',
+    'range':(20,0,8),
+    'xaxis':'VBFjjBoost_dEta_'+WTAG+'_nom',
+    'fold':3
+}
+variables['VBFjjBoost_mjj_'+WTAG+'_nom']={
+    'name':'VBFjjBoost_mjj_'+WTAG+'_nom',
+    'range':(40,0,1400),
+    'xaxis':'VBFjjBoost_mjj_'+WTAG+'_nom',
+    'fold':3
+}
+
 for M_MELA in MELA_MASS_BOOST:
     for C in MELA_C_BOOST:
         
@@ -193,10 +210,12 @@ for M_MELA in MELA_MASS_BOOST:
         C=str(C)
         variables['MEKD_Bst_C_'+C+'_M'+str(M)]={
             'name':'MEKD_Bst_C_'+C+'_M'+str(M),
-            'range':(50,0,1),
+            'range':(10,0,1),
             'xaxis':'MEKD_Bst_C_'+C+'_M'+str(M),
             'fold':0
         }
+
+
 
 
 if isFinal: variables={}

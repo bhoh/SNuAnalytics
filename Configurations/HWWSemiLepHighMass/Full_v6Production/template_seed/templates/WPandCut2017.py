@@ -15,6 +15,7 @@ STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_V11_nom"
 CAMPAIGN_DATA='Run2017_102X_nAODv5_Full2017v6'
 STEP_DATA="DATAl1loose2017v6__HMSemilepSKIMv6_10_data__HMFull_V11_data"
 
+directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
 
 os.system('cp '+configurations+'/Wtagger_cfg.py .')
@@ -46,7 +47,7 @@ WTAG="DeepAK8WP2p5"
 #WTAG="DeepAK8WP5"
 #WTAG="HP45"
 
-SFweight='puWeight*trigWeight*EMTFbug_veto*PrefireWeight*LepWPweight*LepWPCut*btagSF*PUJetIdSF'
+SFweight='puWeight*trigWeight[0]*EMTFbug_veto*PrefireWeight*LepWPweight[0]*LepWPCut[0]*btagSF*PUJetIdSF'
 #if 'HP' in WTAG: SFweight+="*tau21SFnom"
 #if 'DeepAK8' in WTAG: SFweight+="*deepAK8SFnom"
 #SFweight+='*WtaggerSFnom'
