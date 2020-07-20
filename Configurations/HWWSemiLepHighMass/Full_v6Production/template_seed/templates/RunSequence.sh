@@ -14,6 +14,11 @@ echo "Making kfactor ===================================="
 #>python MakeMELAWeightCut.py
 #-QCD/PDF/PS
 python MakeQCDscalePdfPsNuisancePy.py
+#--Make dummy version of sample.py for  improvement of speed and batch run 
+python MakeDummySamplePY.py
+#--python tool repository
+git clone git@github.com:soarnsoar/python_tool.git
+
 Comment2
 
 #1)HistoFactory
