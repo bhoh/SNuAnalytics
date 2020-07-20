@@ -85,7 +85,7 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
             os.system('cp '+workspace+'/cuts_'+bst+'_'+reg+'.py '+workspace+'/cuts_'+bst+'_'+reg+'_'+flv+'.py')
 
             f.write('input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root`\n')
-            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --samplesFile=samples_'+Year+'_dummy.py --plotFile=plot_'+flv+'_'+bst+'.py --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
+            f.write('mkPlot.py --pycfg=configuration_'+bst+'_'+reg+'.py --inputFile=${input} --samplesFile=samples_'+Year+'_dummy.py --plotFile=plot_'+flv+'_'+bst+'.py ----showIntegralLegend=1 --cutsFile=cuts_'+bst+'_'+reg+'_'+flv+'.py --outputDirPlots=plots_'+Year+'_'+bst+'_'+reg+'_'+flv+'\n')
             f.close()
             
 
