@@ -9,7 +9,7 @@ LIST_TEMPLATE=['configuration_Boosted_template.py','configuration_Resolved_templ
 LIST_REGION=['SB','TOP','SR']
 
 
-workspace='../'+Year
+workspace='../../'+Year
 os.system('mkdir -p '+workspace)
 
 ###----Make config/cuts
