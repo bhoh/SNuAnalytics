@@ -1,24 +1,31 @@
-00) Make configuration
->pushd templates
->python SpanTemplates.py <YEAR>
->popd
+#00) Make configuration
+<<Comment1
+echo "Make configuration ==============================="
+pushd templates
+python SpanTemplates.py 2017
+popd
+Comment1
 
+#0)Predefine
+echo "Making kfactor ===================================="
+<<Comment2
+#python MakeKfactor.py
+#-Melacut 
+#>python MakeMELAWeightCut.py
+#-QCD/PDF/PS
+python MakeQCDscalePdfPsNuisancePy.py
+Comment2
 
-0)Predefine
--kfactor 
->python MakeKfactor.py
--Melacut 
->python MakeMELAWeightCut.py
--QCD/PDF/PS
->MakeQCDscalePdfPsNuisancePy.py
+#1)HistoFactory
+echo 'Making Histograms'
 
+#->[Please Check] actually defined at WPandCut2017
+#>>UseRegroupJES=True in nuisances.py
+#>>CombineMultiV=False , CombineWjets=False in nuisances.py & sample_2018.py, CombineH125 =False
+#HistoFactory.sh
+. Histo_factory_run.sh
 
-1)HistoFactory
-->[Please Check]
->>UseRegroupJES=True in nuisances.py
->>CombineMultiV=False , CombineWjets=False in nuisances.py & sample_2018.py, CombineH125 =False
->HistoFactory.sh
-
+<<Comment3
 2)Make PDF/QCD scale shape
 >>git clone git@github.com:soarnsoar/python_tool.git
 >>[2016]RunMakeQCDscale_Rms_Shape.sh
@@ -69,3 +76,5 @@ b)Make SBI Shapes
 
 5-1)Draw plots
 [in plot.py,nuisances.py]CombineMultiV=True , CombineWjets=True in nuisances.py & sample_2017.py, CombineH125 =True
+
+Comment3
