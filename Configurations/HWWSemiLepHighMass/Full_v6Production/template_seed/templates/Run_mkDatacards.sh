@@ -1,16 +1,16 @@
 CURDIR=$PWD
 StartTime=$(date +%s)
 
-python TurnOnCombinedSamples.py WPandCut2017.py CombineMultiV
-python TurnOnCombinedSamples.py WPandCut2017.py CombineH125
-python TurnOnCombinedSamples.py WPandCut2017.py CombineWjets
-python TurnOnCombinedSamples.py WPandCut2017.py Combine_ggWW
-python TurnOnCombinedSamples.py WPandCut2017.py Combine_qqWWqq
-python TurnOnCombinedSamples.py WPandCut2017.py CombineSBI
+python TurnOnCombinedSamples.py WPandCut2016.py CombineMultiV
+python TurnOnCombinedSamples.py WPandCut2016.py CombineH125
+python TurnOnCombinedSamples.py WPandCut2016.py CombineWjets
+python TurnOnCombinedSamples.py WPandCut2016.py Combine_ggWW
+python TurnOnCombinedSamples.py WPandCut2016.py Combine_qqWWqq
+python TurnOnCombinedSamples.py WPandCut2016.py CombineSBI
 
 
 
-YEAR=2017
+YEAR=2016
 NSPLIT=15
 mkdir -p Datacards_${YEAR}
 cp nuisances.py nuisances_Boosted.py

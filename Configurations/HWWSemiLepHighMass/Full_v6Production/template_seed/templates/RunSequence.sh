@@ -1,8 +1,12 @@
 #00) Make configuration
 echo "Make configuration ==============================="
+echo "Your choice if you use SpanTemplates.py or SpanTemplates_incConfDir.py"
 #pushd templates
-python SpanTemplates.py 2017
+#python SpanTemplates.py 2017
 #popd
+
+echo "Using SpanTemplates_incConfDir.py"
+python SpanTemplates_incConfDir.py 2017
 
 
 <<Comment1
