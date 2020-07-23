@@ -36,6 +36,26 @@ if not Year=='2016':
         },
         
     }
+else:
+    kfactor={
+        'Wjets0j':{
+            'samplename':'WJetsToLNu_0J',
+            'target_xsec':'50131.98',
+            'kfactor':'1',
+        },
+        'Wjets1j':{
+            'samplename':'WJetsToLNu_1J',
+            'target_xsec':'8426.09',
+            'kfactor':'1',
+        },
+        'Wjets2j':{
+            'samplename':'WJetsToLNu_2J',
+            'target_xsec':'3172.96',
+            'kfactor':'1',
+        },
+
+    }
+
 NormToPowheg={
 
 }

@@ -128,11 +128,38 @@ for MX in List_MX_VBF:
 #############  BACKGROUNDS  ###############                                                                                                  
 ###########################################                                                                                                  
 
-samples['Wjets'] = {    'name'   :   getSampleFiles(directory,'WJetsToLNu_ext2',False,'nanoLatino_'),
-                        'weight' : 'XSWeight*SFweight*METFilter_MC',
-                        'FilesPerJob' : FilesPerJobMainBKG,
-                        #'EventsPerJob' : 100000,
-                 }
+#samples['Wjets'] = {    'name'   :   getSampleFiles(directory,'WJetsToLNu_ext2',False,'nanoLatino_'),
+#                        'weight' : 'XSWeight*SFweight*METFilter_MC',
+#                        'FilesPerJob' : FilesPerJobMainBKG,
+#                        #'EventsPerJob' : 100000,
+#                 }
+samples['Wjets0j'] = {    'name'   :
+                          getSampleFiles(directory,'WJetsToLNu_0J',False,'nanoLatino_')
+                          ,
+                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          #'FilesPerJob' : 4,
+                          'FilesPerJob' : FilesPerJobMainBKG,
+                        }
+samples['Wjets1j'] = {    'name'   :
+                          getSampleFiles(directory,'WJetsToLNu_1J',False,'nanoLatino_')
+                          ,
+                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          #'FilesPerJob' : 4,
+                          'FilesPerJob' : FilesPerJobMainBKG,
+                        }
+samples['Wjets2j'] = {    'name'   :
+                          getSampleFiles(directory,'WJetsToLNu_2J',False,'nanoLatino_')
+                          ,
+                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          #'FilesPerJob' : 4,
+                          'FilesPerJob' : FilesPerJobMainBKG,
+                        }
+##https://indico.cern.ch/event/673253/contributions/2756806/attachments/1541203/2416962/20171016_VJetsXsecsUpdate_PH-GEN.pdf
+
+addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu_0J', kfactor['Wjets0j'])
+addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu_1J', kfactor['Wjets1j'])
+addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu_2J', kfactor['Wjets2j'])
+
 
 
 ############ DY ############                                                                                                   

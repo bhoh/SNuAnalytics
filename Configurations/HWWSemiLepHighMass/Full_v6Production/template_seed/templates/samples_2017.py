@@ -177,7 +177,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_s-channel',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_antitop',False,'nanoLatino_')
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_')
-                      #+ getSampleFiles(directory,'TTTo2L2Nu_PSWeights',False,'nanoLatino_') 
+                      + getSampleFiles(directory,'TTTo2L2Nu_PSWeights',False,'nanoLatino_') 
                       ,
                       'weight' : 'XSWeight*SFweight*METFilter_MC',
                       #'FilesPerJob' : 3,
