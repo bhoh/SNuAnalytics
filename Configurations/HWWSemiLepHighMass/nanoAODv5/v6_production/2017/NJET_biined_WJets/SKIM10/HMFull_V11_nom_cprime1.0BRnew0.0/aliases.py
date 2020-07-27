@@ -6,6 +6,7 @@ import numpy as np
 ##---WP2017---##
 from WPandCut2017 import *
 _ALGO="_"+ALGO
+_ALGO_="_"+ALGO+"_"
 
 ##-End WP--##
 configurations = '%s/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/' % os.getenv('CMSSW_BASE')
@@ -29,7 +30,8 @@ aliases['btagSF'] = {
     'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>20 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<20 || abs(CleanJet_eta)>2.5))))',
     'samples': mc
 }
-for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+#for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+for shift in ['lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
     #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
     aliases['Jet_btagSF%sup_shapeFix' % shift] = {
         'class': 'BtagSF',
@@ -153,16 +155,34 @@ for M_MELA in MELA_MASS_RESOL:
 
 
 ##--some missing branch
-#PuppiMET_nom_pt
-#aliases['PuppiMET_nom_pt']={
-#    'expr':'sqrt(PuppiMET_nom_px*PuppiMET_nom_px+PuppiMET_nom_py*PuppiMET_nom_py)'
-#}
+if Year=='2018':
+    lastcopy = (1 << 13)
+    aliases['topGenPtOTF'] = {
+        'expr': 'Sum$((GenPart_pdgId == 6 && TMath::Odd(GenPart_statusFlags / %d)) * GenPart_pt)' % lastcopy,
+        'samples': ['top']
+    }
 
-aliases['Top_pTrw'] = {
-    'expr': '(topGenPt * antitopGenPt > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPt) - 0.000134*topGenPt + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPt) - 0.000134*antitopGenPt + 0.973))) + (topGenPt * antitopGenPt <= 0.)',
-    'samples': ['top']
-}
+    aliases['antitopGenPtOTF'] = {
+        'expr': 'Sum$((GenPart_pdgId == -6 && TMath::Odd(GenPart_statusFlags / %d)) * GenPart_pt)' % lastcopy,
+        'samples': ['top']
+    }
 
+    aliases['Top_pTrw'] = {
+        'expr': '(topGenPtOTF * antitopGenPtOTF > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPtOTF) - 0.000134*topGenPtOTF + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPtOTF) - 0.000134*antitopGenPtOTF + 0.973))) + (topGenPtOTF * antitopGenPtOTF <= 0.)',
+        #    'expr': '(topGenPt * antitopGenPt > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPt) - 0.000134*topGenPt + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPt) - 0.000134*antitopGenPt + 0.973))) + (topGenPt * antitopGenPt <= 0.)',                                                                                                                                                                  
+        'samples': ['top']
+    }
+
+
+if Year=='2017':
+
+    aliases['Top_pTrw'] = {
+        'expr': '(topGenPt * antitopGenPt > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPt) - 0.000134*topGenPt + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPt) - 0.000134*antitopGenPt + 0.973))) + (topGenPt * antitopGenPt <= 0.)',
+        'samples': ['top']
+    }
+
+if Year=='2016':
+    aliases['Top_pTrw']['expr']='(topGenPt * antitopGenPt > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPt) - 0.000134*topGenPt + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPt) - 0.000134*antitopGenPt + 0.973))) * (TMath::Sqrt(TMath::Exp(1.61468e-03 + 3.46659e-06*topGenPt - 8.90557e-08*topGenPt*topGenPt) * TMath::Exp(1.61468e-03 + 3.46659e-06*antitopGenPt - 8.90557e-08*antitopGenPt*antitopGenPt))) + (topGenPt * antitopGenPt <= 0.)', # Same Reweighting as other years, but with additional fix for tune CUET -> CP5                                                                                     
 
 
 aliases['LHEPartWlepPt'] = {
@@ -194,4 +214,13 @@ aliases['EWK_W_correction_uncert'] = {
     'expr': uncert_string,
     # 'samples': 'Wjets'
     'samples': ['Wjets0j', 'Wjets1j','Wjets2j']
+}
+
+aliases['dPhi_WW_boosted']={
+    'expr':'(WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi)-2*3.1415927*(  (WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((WtaggerFatjet_'+WTAG+'_nom_phi-Wlep_nom_phi) < 3.1415927)'
+}
+
+
+aliases['dPhi_WW_resolved']={
+    'expr':'(Whad'+_ALGO_+'nom_phi-Wlep_nom_phi)-2*3.1415927*(  (Whad'+_ALGO_+'nom_phi-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((Whad'+_ALGO_+'nom_phi-Wlep_nom_phi) < 3.1415927)'
 }

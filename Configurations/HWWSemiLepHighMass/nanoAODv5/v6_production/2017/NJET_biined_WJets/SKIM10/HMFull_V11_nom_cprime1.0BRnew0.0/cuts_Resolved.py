@@ -63,19 +63,22 @@ ResolvedProdCats['ResolvedVBF']='isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'no
 
 ResolvedRegionCats={}
 ##--type in kin var module'_
+#nBJetResol_dM_nom
+#nBJetResol'+_ALGO_+'nom
+#nBJetResNotVBF_dM_nom
 #if 'SR' in opt.cutsFile :
-ResolvedRegionCats['SR'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
+ResolvedRegionCats['SR'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'
 #if 'SB' in opt.cutsFile :
-ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+ResolvedRegionCats['SB'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
 #if 'TOP' in opt.cutsFile :
-ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+ResolvedRegionCats['TOP'] = '(nBJetResNotVBF'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 if 'SR' in opt.cutsFile :
-    ResolvedRegionCats={'SR':'(nBJetResol'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'}
+    ResolvedRegionCats={'SR':'(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSR'+_ALGO_+'nom'}
 if 'CR' in opt.cutsFile:
     ResolvedRegionCats={}
-    ResolvedRegionCats['SB'] = '(nBJetResol'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
-    ResolvedRegionCats['TOP'] = '(nBJetResol'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
+    ResolvedRegionCats['SB'] = '(nBJetResNotVBF'+_ALGO_+'nom == 0) && isResolSB'+_ALGO_+'nom'
+    ResolvedRegionCats['TOP'] = '(nBJetResNotVBF'+_ALGO_+'nom > 0) && isResol'+_ALGO_+'nom'
 
 
 
@@ -130,6 +133,7 @@ for LepCut in LepCats:
                                                          +'&&'+ResolvedWlepMtCats[WlepMtCut]\
                                                          +'&&'+ResolvedWWMtCats[WWMtCut]\
                                                          +'&&'+ScoreCats[ScoreCut]
+
                                 else:
                                     for MEKDCut in ResolvedMEKDCat:
                                         cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut+'__'+MEKDCut] = LepCats[LepCut]\

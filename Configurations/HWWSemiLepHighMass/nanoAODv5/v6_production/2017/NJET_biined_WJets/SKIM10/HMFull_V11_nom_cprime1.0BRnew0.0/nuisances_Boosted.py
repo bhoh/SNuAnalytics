@@ -1,4 +1,4 @@
-NotUseTreeBase=True
+NotUseTreeBase=False
 import os
 from FatJet_Jet_SysBranches import * 
 from WPandCut2017 import *
@@ -21,9 +21,6 @@ elif  'sdfarm' in SITE:
 
 
 
-eleWP='mvaFall17V1Iso_WP90'
-muWP='cut_Tight_HWWW'
-
 
 mc = [skey for skey in samples if (skey != 'DATA' and skey !='PseudoData')]
 print mc
@@ -31,7 +28,7 @@ if CombineMultiV:
   mc+=['MultiV']
   for s in MultiV:
     if s in mc: mc.remove(s)
-if CombineWjets:
+if CombineWjets and Year!='2016':
   mc+=['Wjets']
   for s in Wjets:
     if s in mc : mc.remove(s)
@@ -58,49 +55,111 @@ if CombineSBI:
 
 
 
-
-
-nuisances['lumi_Uncorrelated'] = {
-    'name': 'lumi_13TeV_2017',
+##---Luminosity---##
+##--Ref: https://twiki.cern.ch/twiki/bin/view/CMS/TWikiLUM#LumiComb
+if Year=='2016':
+  nuisances['lumi_Uncorrelated'] = {
+    'name': 'lumi_13TeV_2016',
     'type': 'lnN',
-    'samples': dict((skey, '1.02') for skey in mc )
-}
-
-nuisances['lumi_XYFact'] = {
+    'samples': dict((skey, '1.022') for skey in mc )
+  }
+  
+  nuisances['lumi_XYFact'] = {
     'name': 'lumi_13TeV_XYFact',
     'type': 'lnN',
-    'samples': dict((skey, '1.008') for skey in mc)
-}
-
-nuisances['lumi_LScale'] = {
-    'name': 'lumi_13TeV_LSCale',
-    'type': 'lnN',
-    'samples': dict((skey, '1.003') for skey in mc )
-}
-
-nuisances['lumi_BBDefl'] = {
+    'samples': dict((skey, '1.009') for skey in mc)
+  }
+  
+  
+  nuisances['lumi_BBDefl'] = {
     'name': 'lumi_13TeV_BBDefl',
     'type': 'lnN',
     'samples': dict((skey, '1.004') for skey in mc )
-}
+  }
 
-nuisances['lumi_DynBeta'] = {
+  nuisances['lumi_DynBeta'] = {
     'name': 'lumi_13TeV_DynBeta',
     'type': 'lnN',
     'samples': dict((skey, '1.005') for skey in mc )
-}
+  }
+  
+  nuisances['lumi_Ghosts'] = {
+    'name': 'lumi_13TeV_Ghosts',
+    'type': 'lnN',
+    'samples': dict((skey, '1.004') for skey in mc )
+  }
 
-nuisances['lumi_CurrCalib'] = {
+
+  
+
+if Year=='2017':
+  nuisances['lumi_Uncorrelated'] = {
+    'name': 'lumi_13TeV_2017',
+    'type': 'lnN',
+    'samples': dict((skey, '1.02') for skey in mc )
+  }
+  
+  nuisances['lumi_XYFact'] = {
+    'name': 'lumi_13TeV_XYFact',
+    'type': 'lnN',
+    'samples': dict((skey, '1.008') for skey in mc)
+  }
+  
+  nuisances['lumi_LScale'] = {
+    'name': 'lumi_13TeV_LSCale',
+    'type': 'lnN',
+    'samples': dict((skey, '1.003') for skey in mc )
+  }
+  
+  nuisances['lumi_BBDefl'] = {
+    'name': 'lumi_13TeV_BBDefl',
+    'type': 'lnN',
+    'samples': dict((skey, '1.004') for skey in mc )
+  }
+  
+  nuisances['lumi_DynBeta'] = {
+    'name': 'lumi_13TeV_DynBeta',
+    'type': 'lnN',
+    'samples': dict((skey, '1.005') for skey in mc )
+  }
+  
+  nuisances['lumi_CurrCalib'] = {
     'name': 'lumi_13TeV_CurrCalib',
     'type': 'lnN',
     'samples': dict((skey, '1.003') for skey in mc )
-}
-
-nuisances['lumi_Ghosts'] = {
+  }
+  
+  nuisances['lumi_Ghosts'] = {
     'name': 'lumi_13TeV_Ghosts',
     'type': 'lnN',
     'samples': dict((skey, '1.001') for skey in mc )
-}
+  }
+
+if Year=='2018':
+  nuisances['lumi_Uncorrelated'] = {
+    'name': 'lumi_13TeV_2018',
+    'type': 'lnN',
+    'samples': dict((skey, '1.02') for skey in mc )
+  }
+  
+  nuisances['lumi_XYFact'] = {
+    'name': 'lumi_13TeV_XYFact',
+    'type': 'lnN',
+    'samples': dict((skey, '1.008') for skey in mc)
+  }
+  
+  nuisances['lumi_LScale'] = {
+    'name': 'lumi_13TeV_LSCale',
+    'type': 'lnN',
+    'samples': dict((skey, '1.003') for skey in mc )
+  }
+  
+  nuisances['lumi_CurrCalib'] = {
+    'name': 'lumi_13TeV_CurrCalib',
+    'type': 'lnN',
+    'samples': dict((skey, '1.003') for skey in mc )
+  }
+
 
 
 #for shift in ['jes', 'lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
@@ -110,7 +169,7 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
     
     name = 'CMS_btag_%s' % shift
     if 'stats' in shift:
-        name += '_2017'
+        name += '_'+Year
 
     nuisances['btag_shape_%s' % shift] = {
         'name': name,
@@ -124,7 +183,7 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
 trig_syst = ['TriggerEffWeight_1l_u/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_u/TriggerEffWeight_1l : 1.0','TriggerEffWeight_1l_d/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_d/TriggerEffWeight_1l : 1.0']
 
 nuisances['trigg'] = {
-    'name': 'CMS_eff_hwwtrigger_2017',
+    'name': 'CMS_eff_hwwtrigger_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, trig_syst) for skey in mc),
@@ -133,13 +192,13 @@ nuisances['trigg'] = {
 
 prefire_syst = ['PrefireWeight_Up/PrefireWeight < 10 ? PrefireWeight_Up/PrefireWeight : 1', 'PrefireWeight_Down/PrefireWeight < 10 ? PrefireWeight_Down/PrefireWeight : 1']
 
-
-nuisances['prefire'] = {
-    'name': 'CMS_eff_prefiring_2017',
+if not Year=='2018':
+  nuisances['prefire'] = {
+    'name': 'CMS_eff_prefiring_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, prefire_syst) for skey in mc),
-}
+  }
 
 
 
@@ -150,7 +209,7 @@ nuisances['prefire'] = {
 eff_e_syst = ['Lepton_tightElectron_'+eleWP+'_TotSF_Up'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0] < 10 ? Lepton_tightElectron_'+eleWP+'_TotSF_Up'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0] : 1.0','Lepton_tightElectron_'+eleWP+'_TotSF_Down'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0] < 10 ? Lepton_tightElectron_'+eleWP+'_TotSF_Down'+'[0]/Lepton_tightElectron_'+eleWP+'_TotSF'+'[0] : 1.0']
 
 nuisances['eff_e'] = {
-    'name': 'CMS_eff_e_2017',
+    'name': 'CMS_eff_e_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, eff_e_syst) for skey in mc),
@@ -161,7 +220,7 @@ nuisances['eff_e'] = {
 eff_m_syst = ['Lepton_tightMuon_'+muWP+'_TotSF_Up'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0] < 10 ? Lepton_tightMuon_'+muWP+'_TotSF_Up'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0] : 1.0','Lepton_tightMuon_'+muWP+'_TotSF_Down'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0] < 10 ? Lepton_tightMuon_'+muWP+'_TotSF_Down'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0] : 1.0']
 
 nuisances['eff_m'] = {
-    'name': 'CMS_eff_m_2017',
+    'name': 'CMS_eff_m_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, eff_m_syst) for skey in mc),
@@ -172,21 +231,24 @@ eff_Wtag_syst = ['WtaggerSFdown/WtaggerSFnom','WtaggerSFup/WtaggerSFnom']
 if 'Boosted' in opt.nuisancesFile: 
   nuisances['eff_Wtag'] = {
     
-    'name': 'CMS_eff_Wtag_2017',
+    'name': 'CMS_eff_Wtag_'+Year,
     'kind': 'weight',
     'type': 'shape',
   'samples': dict((skey, eff_Wtag_syst) for skey in mc),
   
   }
 if not NotUseTreeBase:
-  for s in ['fatjes','fatjer','fatjms','fatjmr']:
+  fatjetsys=['fatjes','fatjer','fatjms','fatjmr']
+  if 'DeepAK8' in WTAG:
+    fatjetsys=['fatjes','fatjer']
+  for s in fatjetsys:
     nuisances[s] = {
-      'name': 'CMS_'+s+'_2017',
+      'name': 'CMS_'+s+'_'+Year,
       'type': 'shape',
       'kind': 'branch_custom',
       'samples': dict((skey, ['1', '1']) for skey in mc),
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_fatjetsys'),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_fatjetsys'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_fatjetsys'),
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
       
     }
@@ -198,24 +260,24 @@ if not NotUseTreeBase:
       nuisances[s]['BrFromToDown'][br]=br.replace("nom",s.replace('fat','')+"down")
       
     nuisances['mupt'] = {
-      'name': 'CMS_scale_muon_2017',
+      'name': 'CMS_scale_muon_'+Year,
       'kind': 'tree',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTdo',
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_MupTup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_MupTdo'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_MupTup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_MupTdo'),
     }
 
 
     nuisances['elept'] = {
-      'name': 'CMS_scale_electron_2017',
+      'name': 'CMS_scale_electron_'+Year,
       'kind': 'tree',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_ElepTup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_ElepTdo'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_ElepTup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_ElepTdo'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTdo',
       
@@ -223,12 +285,12 @@ if not NotUseTreeBase:
 
 
     nuisances['met'] = {
-      'name': 'CMS_scale_met_2017',
+      'name': 'CMS_scale_met_'+Year,
       'kind': 'tree',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
-      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_METup'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_METup'),
+      'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_METup'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_METup'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METdo',
     }
@@ -237,17 +299,17 @@ pu_syst=['puWeightUp/puWeight','puWeightDown/puWeight']
 
 
 nuisances['PU'] = {
-    'name': 'CMS_PU_2017',
+    'name': 'CMS_PU_'+Year,
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, pu_syst) for skey in mc),
 }
 
-nuisances['UE']  = {
-                'name'  : 'UE_CP5',
-                'type': 'lnN',
-                'samples': dict((skey, '1.015') for skey in mc),
-}
+#nuisances['UE']  = {
+#                'name'  : 'UE_CP5',
+#                'type': 'lnN',
+#                'samples': dict((skey, '1.015') for skey in mc),
+#}
 
 
 
@@ -275,7 +337,7 @@ if CombineMultiV:
 
 
 
-if CombineWjets:
+if CombineWjets and Year!='2016':
   ##Check whether any MultiV sample has this nuisance variation
   doVar=False
   for n in nMember_sample:
@@ -323,7 +385,7 @@ for n in nMember_sample:
   print "# of member->",n
   if int(n)==0:continue
   for s in nMember_sample[n]:
-    print s
+    #print s
     QCDscale[s]=["abs(LHEScaleWeight["+str(i)+"]/LHEScaleWeight[0]) < 10 ? LHEScaleWeight["+str(i)+"]/LHEScaleWeight[0] : 1.0" for i in range(n)] ## outlyer in top sample
 
 
@@ -354,7 +416,7 @@ if CombineMultiV:
     nMember_sample[4].append('MultiV')
     print "dopdfAccept for MultiV"
     
-if CombineWjets:
+if CombineWjets and Year!='2016':
   ##Check whether any MultiV sample has this nuisance variation
   doVar=False
   for n in nMember_sample:
@@ -409,7 +471,7 @@ for n in nMember_sample:
   #  for s in nMember_sample[n]:
   #    NNPDF31_nnlo_hessian_pdfas[s]=["LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0] < 10 ? LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0] : 1.0" for i in range(n)]
   for s in nMember_sample[n]:
-    print s
+    #print s
     pdfAccept[s]=["abs(LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0]) < 10 ? LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0] : 1.0" for i in range(n)] ## outlyer in top sample
 #nuisances['PDF4LHC15_nnlo_30_pdfas'] = {
 #    'name': 'PDF4LHC15_nnlo_30_pdfas',
@@ -447,7 +509,7 @@ if CombineMultiV:
     nMember_sample[4].append('MultiV')
     print "doPS for MultiV"
 
-if CombineWjets:
+if CombineWjets and Year!='2016':
   ##Check whether any MultiV sample has this nuisance variation
   doVar=False
   for n in nMember_sample:
@@ -492,6 +554,7 @@ nuisances['PS_FSR']={
 
 if not NotUseTreeBase:
   if UseRegroupJES :
+    print "--UseRegroupJES--"
     for s in ['jesFlavorQCD','jesRelativeBal','jesHF','jesBBEC1','jesEC2','jesAbsolute']: ##year-correlated
       nuisances[s] = {
         'name': 'CMS_'+s,
@@ -501,7 +564,7 @@ if not NotUseTreeBase:
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
         'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
-        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_correlate'),
+        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_correlate'),
       }
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}
@@ -509,18 +572,18 @@ if not NotUseTreeBase:
         nuisances[s]['BrFromToUp'][br]=br.replace("nom",s+"Up")
         nuisances[s]['BrFromToDown'][br]=br.replace("nom",s+"Down")
 
-    for s in ['jesAbsolute_2017','jesHF_2017','jesEC2_2017','jesRelativeSample_2017','jesBBEC1_2017','jer']: ##year-uncorrelated
+    for s in ['jesAbsolute_'+Year,'jesHF_'+Year,'jesEC2_'+Year,'jesRelativeSample_'+Year,'jesBBEC1_'+Year,'jer']: ##year-uncorrelated
       nuisances[s] = {
         'name': 'CMS_'+s,
         'kind': 'branch_custom',
         'type': 'shape',
         'samples': dict((skey, ['1', '1']) for skey in mc),
         'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
-        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_uncorrelate'),
+        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_uncorrelate'),
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_uncorrelate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_uncorrelate',
       }
-      if s=="jer": nuisances[s]['name']+='_2017'
+      if s=="jer": nuisances[s]['name']+='_'+Year
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}
       for br in JetBranches+WlepBranches+WjjBranches+HMBoostBranches+HMResolBranches:
@@ -529,14 +592,14 @@ if not NotUseTreeBase:
 
 
   else:
-
+    print "--Not UseRegroupJES--"
     nuisances['jesTotal'] = {
-      'name': 'CMS_jesTotal_2017',
+      'name': 'CMS_jesTotal_'+Year,
       'kind': 'branch_custom',
       'type': 'shape',
       'samples': dict((skey, ['1', '1']) for skey in mc),
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
-      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdo_correlate'),
+      'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_correlate'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
     }
@@ -546,6 +609,23 @@ if not NotUseTreeBase:
       nuisances['jesTotal']['BrFromToUp'][br]=br.replace("nom","jesTotalUp")
       nuisances['jesTotal']['BrFromToDown'][br]=br.replace("nom","jesTotalDown")
       
+    for s in ['jer']: ##year-uncorrelated
+      nuisances[s] = {
+        'name': 'CMS_'+s,
+        'kind': 'branch_custom',
+        'type': 'shape',
+        'samples': dict((skey, ['1', '1']) for skey in mc),
+        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
+        'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_uncorrelate'),
+        #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_uncorrelate',
+        #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_uncorrelate',
+      }
+      if s=="jer": nuisances[s]['name']+='_'+Year
+      nuisances[s]['BrFromToUp']={}
+      nuisances[s]['BrFromToDown']={}
+      for br in JetBranches+WlepBranches+WjjBranches+HMBoostBranches+HMResolBranches:
+        nuisances[s]['BrFromToUp'][br]=br.replace("nom",s+"Up")
+        nuisances[s]['BrFromToDown'][br]=br.replace("nom",s+"Down")
 
 ## Use the following if you want to apply the automatic combine MC stat nuisances.
 
@@ -604,7 +684,7 @@ for MX in List_MX_VBF:
 
 ##--norm
 nuisances['QCDnorm']={
-    'name': 'QCDnorm2017',
+    'name': 'QCDnorm'+Year,
     'type': 'lnN',
     'samples': {
       'QCD_MU':'1.1',
@@ -614,9 +694,20 @@ nuisances['QCDnorm']={
 }
 
 
-if CombineWjets:
+
+if Year=='2016':
   nuisances['Wnorm']={
-    'name': 'Wjetsnorm2017',
+    'name': 'Wjetsnorm'+Year,
+    #'type': 'lnN',
+    'type'  : 'rateParam',
+    'samples': {
+      #'Wjets':'1.1',
+      'Wjets':'1.0',
+    }
+  }
+elif CombineWjets:
+  nuisances['Wnorm']={
+    'name': 'Wjetsnorm'+Year,
     #'type': 'lnN',
     'type'  : 'rateParam',
     'samples': {
@@ -626,7 +717,7 @@ if CombineWjets:
   }
 else:
   nuisances['W0jnorm']={
-    'name': 'Wjets0jnorm2017',
+    'name': 'Wjets0jnorm'+Year,
     #'type': 'lnN',
     'type'  : 'rateParam',
     'samples': {
@@ -638,7 +729,7 @@ else:
 
   
   nuisances['W1jnorm']={
-  'name': 'Wjets1jnorm2017',
+  'name': 'Wjets1jnorm'+Year,
     #'type': 'lnN',
     'samples': {
       #'Wjets1j':'1.1',
@@ -651,7 +742,7 @@ else:
   
   
   nuisances['W2jnorm']={
-    'name': 'Wjets2jnorm2017',
+    'name': 'Wjets2jnorm'+Year,
     #'type': 'lnN',
     'samples': {
       #'Wjets2j':'1.1',
@@ -664,7 +755,7 @@ else:
   
   
 nuisances['topnorm']={
-    'name': 'topnorm2017',
+    'name': 'topnorm'+Year,
     #'type': 'lnN',
     'samples': {
       #'top':'1.1',
@@ -673,7 +764,7 @@ nuisances['topnorm']={
   'type'  : 'rateParam',
 }
 nuisances['dynorm']={
-    'name': 'dynorm2017',
+    'name': 'dynorm'+Year,
     'type': 'lnN',
     'samples': {
       'DY':'1.1',
@@ -682,7 +773,7 @@ nuisances['dynorm']={
 
 
 nuisances['MultiVnorm']={
-    'name': 'MultiVnorm2017',
+    'name': 'MultiVnorm'+Year,
     'type': 'lnN',
     'samples': {
       'MultiV':'1.1',
@@ -708,17 +799,3 @@ for n in nuisances.values():
 #  if not n in USEONLY:
 #    del nuisances[n]
 print "nNuisances=",len(nuisances)
-
-'''
-CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
-MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
-CombineWjets=False
-Wjets=['Wjets0j','Wjets1j','Wjets2j']
-CombineH125=False
-H125=['ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
-       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','Wmhtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-CombineSBI=True
-qqWWqq=['WWJJ','vbfHWWlnuqq_M125']
-Combine_ggWW=False
-CombineSBI=True
-'''

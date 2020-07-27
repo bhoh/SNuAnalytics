@@ -60,6 +60,7 @@ def GetMinMaxCuts(filelist,model,modes=['','_I','_B','_H','_I_HB'],nsigma=2):
         
     mydict['Nveto']=0
     mydict['Npass']=0
+    mydict['wSum']=0
     mydict['cut']='1'
         #Sum=0
         #Sum2=0
@@ -110,8 +111,8 @@ def GetMinMaxCuts(filelist,model,modes=['','_I','_B','_H','_I_HB'],nsigma=2):
             #print "===="+model+mode+"====="
             #mytree.Draw(model+mode, model+mode+'>'+str(mydict[mode]['max'])+'||'+model+mode+'<'+str(mydict[mode]['min']))
             cut+='||('+model+mode+'>'+str(mydict[mode]['max'])+')||('+model+mode+'<'+str(mydict[mode]['min'])+')'
-        #print cut
-        mytree.Draw('abs('+model+mode+')',cut)
+            #print cut
+        mytree.Draw('1',cut)
         #print "after draw"
             
         htemp=ROOT.gPad.GetPrimitive("htemp")
@@ -123,13 +124,16 @@ def GetMinMaxCuts(filelist,model,modes=['','_I','_B','_H','_I_HB'],nsigma=2):
             #print "veto's mean=0"
             mydict['Nveto']+=0
 
-        cut='1'
+        cut='(1'
         for mode in modes:
             cut+='&&('+model+mode+'<='+str(mydict[mode]['max'])+')&&('+model+mode+'>='+str(mydict[mode]['min'])+')'
+        cut+=')*'+model
         mytree.Draw('1',cut)
         htemp=ROOT.gPad.GetPrimitive("htemp")
         try:
             mydict['Npass']+=htemp.GetEntries()
+            mydict['wSum']+=htemp.Integral()
+            
         except AttributeError:
             mydict['Npass']+=0
         

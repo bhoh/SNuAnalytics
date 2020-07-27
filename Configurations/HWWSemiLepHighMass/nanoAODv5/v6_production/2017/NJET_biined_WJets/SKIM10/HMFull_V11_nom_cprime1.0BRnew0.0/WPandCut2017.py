@@ -11,9 +11,11 @@ treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
 ##--Set Campaign and Step--##
 CAMPAIGN='Fall2017_102X_nAODv5_Full2017v6'
 STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_V11_nom"
-#STEP="MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__BWReweight__HMFull_V11_nom"
+
 CAMPAIGN_DATA='Run2017_102X_nAODv5_Full2017v6'
 STEP_DATA="DATAl1loose2017v6__HMSemilepSKIMv6_10_data__HMFull_V11_data"
+
+
 
 os.system('cp '+configurations+'/Wtagger_cfg.py .')
 os.system('cp '+configurations+'/Wjjtagger_cfg.py .')
@@ -40,13 +42,14 @@ elePtCut='38'
 muPtCut='30'
 
 ALGO="dMchi2Resolution"
-WTAG="DeepAK8WP5"
+WTAG="DeepAK8WP2p5"
+#WTAG="DeepAK8WP5"
 #WTAG="HP45"
 
 SFweight='puWeight*trigWeight*EMTFbug_veto*PrefireWeight*LepWPweight*LepWPCut*btagSF*PUJetIdSF'
 #if 'HP' in WTAG: SFweight+="*tau21SFnom"
 #if 'DeepAK8' in WTAG: SFweight+="*deepAK8SFnom"
-SFweight+='*WtaggerSFnom'
+#SFweight+='*WtaggerSFnom'
 
 
 WtaggerSF=str(WJID['2017'][WTAG]['effSF']['nom']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
@@ -78,12 +81,13 @@ METcutRes='30'
 
 ##---MELA S/B/I reweight
 model='cprime1.0BRnew0.0'
+#model='RelW0.02'
 
 
 
-##---Setting flags                                                                                                                                                                
-UseRegroupJES=True
-CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting                                                                            
+##---Setting flags
+UseRegroupJES=False
+CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
 MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
 CombineH125=False
 H125=['ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',

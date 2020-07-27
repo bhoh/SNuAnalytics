@@ -34,9 +34,12 @@ print List_MX
 for MX in List_MX:
     print MX
     MELA_cuts=GetMinMaxCuts(getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),model)
+    weightSum=MELA_cuts['wSum']
+    print "weightSum/MELA_cuts['Npass']=",weightSum/MELA_cuts['Npass']
     cut=MELA_cuts['cut']
     eff=MELA_cuts['Npass']/(MELA_cuts['Npass']+MELA_cuts['Nveto'])
     cut+='*'+str(1/eff)
+    if 'RelW' in model : cut+='*'+str(MELA_cuts['Npass']/weightSum)
     print cut
     f.write('melaggf['+str(MX)+']="'+cut+'"\n')
 print "--vbf--"
@@ -44,8 +47,11 @@ print List_MX_VBF
 for MX in List_MX_VBF:
     print MX
     MELA_cuts=GetMinMaxCuts(getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),model)
+    weightSum=MELA_cuts['wSum']
+    print "weightSum/MELA_cuts['Npass']=",weightSum/MELA_cuts['Npass']
     cut=MELA_cuts['cut']
     eff=MELA_cuts['Npass']/(MELA_cuts['Npass']+MELA_cuts['Nveto'])
     cut+='*'+str(1/eff)
+    if 'RelW' in model : cut+='*'+str(MELA_cuts['Npass']/weightSum)
     print cut
     f.write('melavbf['+str(MX)+']="'+cut+'"\n')

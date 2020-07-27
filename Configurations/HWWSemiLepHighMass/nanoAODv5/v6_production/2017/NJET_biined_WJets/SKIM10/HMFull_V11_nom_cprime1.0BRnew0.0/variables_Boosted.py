@@ -1,5 +1,5 @@
-#isFinal=False
-isFinal=True
+isFinal=False
+#isFinal=True
 print "isFinal=",isFinal
 import os
 import sys
@@ -45,7 +45,7 @@ if 'HP' in WTAG:
         'fold': 0,
     
     }
-if 'DeepAK8WP5' in WTAG:
+if 'DeepAK8' in WTAG:
     if not 'MD' in WTAG:
         variables['WtaggerFatjet_'+WTAG+'_nom_deepTag']={
             'name':'WtaggerFatjet_'+WTAG+'_nom_deepTag[lnJ_'+WTAG+'_nom_widx]',
@@ -63,7 +63,7 @@ if 'DeepAK8WP5' in WTAG:
             
         }
 ##--Bjet
-'''
+
 variables['nBJetBoost_'+WTAG+'_nom']={
     'name':'nBJetBoost_'+WTAG+'_nom',
     'range':(5,0,5),
@@ -105,7 +105,7 @@ variables['AddJetBoost_'+WTAG+'_nom_eta']={
     'xaxis':'eta(AddionalJets)',
     'fold':0,
 }
-'''
+
 variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
     'range':(50,25,600),
@@ -119,7 +119,7 @@ variables['Lepton_eta[0]']={
     'xaxis':'Lepton #eta',
     'fold':0
 }
-'''
+
 
 
 variables[bAlgo]={
@@ -129,7 +129,7 @@ variables[bAlgo]={
     'fold':0
 
 }
-'''
+
 variables['PuppiMet']={
     'name' : 'PuppiMET_nom_pt',
     'range':(50,0,600),
@@ -150,7 +150,7 @@ variables['Wlep_pt']={
     'xaxis':'Wlep_pt',
     'fold':0
 }
-'''
+
 variables['Wlep_nom_mass']={
     'name' : 'Wlep_nom_mass',
     'range':(60,0,300),
@@ -163,7 +163,7 @@ variables['Wlep_nom_pt']={
     'xaxis':'Wlep_pt',
     'fold':0
 }
-'''
+
 variables ['PV_npvs']={
     'name' : 'PV_npvs',
     'range' : (80,0,80),
@@ -197,7 +197,7 @@ if isFinal: variables={}
 
 variables['lnJ_'+WTAG+'_nom_mass']={
     'name': 'lnJ_'+WTAG+'_nom_mass',
-    'range':([0,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
+    'range':([0,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],),
     #'divideByBinWidth':1,
     'xaxis': 'lnJ_mass',
     'fold':3

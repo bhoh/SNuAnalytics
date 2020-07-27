@@ -117,14 +117,15 @@ if CombineH125:
     groupPlot['h125']['samples']=['h125']
 
 
+
 groupPlot['Wjets']={
                   'nameHR' : 'W+jets',
                   'isSignal' : 0,
                   'color': dict_TColor['green'],
                   'isData'   : 0,
-                  'samples'  : Wjets
+                  #'samples'  : Wjets
 }
-if CombineWjets:
+if CombineWjets or (Year=='2016'):
     groupPlot['Wjets']['samples']=['Wjets']
 
 
@@ -228,7 +229,7 @@ plot['top']  = {
 
 
 
-if CombineWjets:
+if CombineWjets or (Year=='2016'):
     plot['Wjets']  = {
         'nameHR' : 'Wjets',
         'isSignal' : 0,
@@ -326,7 +327,8 @@ else:
 for MX in MList:
     
     plot['ggHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
         'scale' : scale,
         'isData'   : 0,
         'isSignal' : 2,
@@ -334,7 +336,8 @@ for MX in MList:
         'samples' : ['ggHWWlnuqq_M'+str(MX)+'_S']
     }
     groupPlot['ggHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
         'scale' : scale,
         'isData'   : 0,
         'isSignal' : 2,
@@ -346,7 +349,8 @@ for MX in MList:
 for MX in MList:
     #continue
     groupPlot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        #'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 2,
         'scale' : scale,
@@ -355,7 +359,8 @@ for MX in MList:
     }
     
     plot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        #'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 2,
         'scale' : scale,
@@ -365,24 +370,15 @@ for MX in MList:
 
     
 
-legend['lumi'] = 'L = 41.5/fb'
+if Year=='2016':
+    lumi=35.9
+if Year=='2017':
+    lumi=41.5
+if Year=='2018':
+    lumi=59.7
+
+
+legend['lumi'] = 'L = '+lumi+'/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 
-###--Test
-#groupPlot={}
-#plot={}
-#groupPlot['h125']={
-#    'nameHR' : 'h125',
-#    'isSignal' : 0,
-#    'color': dict_TColor['magenta'],
-#    'isData'   : 0,
-#    'samples'  : 'h125',
-
-#}
-#plot['h125']  = {
-#    'nameHR' : 'h125',
-#    'isSignal' : 0,
-#    'color': dict_TColor['pink'],
-#    'isData'   : 0,
-#}

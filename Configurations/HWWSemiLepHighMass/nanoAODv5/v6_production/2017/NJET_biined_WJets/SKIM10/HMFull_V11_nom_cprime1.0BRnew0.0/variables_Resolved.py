@@ -1,4 +1,4 @@
-isFinal=True
+isFinal=False
 print "isFinal=",isFinal
 import os
 import sys
@@ -21,7 +21,7 @@ variables['Event'] = {
     'xaxis':'1',
     'fold': 0
 }
-'''
+
 variables['Whad'+_ALGO_+'nom_pt']={
     'name':'Whad'+_ALGO_+'nom_pt',
     'range':(100,0,1000),
@@ -29,7 +29,7 @@ variables['Whad'+_ALGO_+'nom_pt']={
     'fold': 0,
 
 }
-'''
+
 variables['Whad'+_ALGO_+'nom_mass']={
     'name':'Whad'+_ALGO_+'nom_mass',
     'range':(42,40,250),
@@ -38,7 +38,7 @@ variables['Whad'+_ALGO_+'nom_mass']={
 
 }
 
-'''
+
 variables['nBJetResol'+_ALGO_+'nom']={
     'name':'nBJetResol'+_ALGO_+'nom',
     'range':(5,0,5),
@@ -82,7 +82,7 @@ variables['Lepton_eta[0]']={
     'fold':0
 }
 
-'''
+
 
 variables ['PV_npvs']={
     'name' : 'PV_npvs',
@@ -119,14 +119,14 @@ variables['Wlep_nom_mass']={
     'xaxis':'Wlep_mass',
     'fold':0
 }
-'''
+
 variables['Wlep_nom_pt']={
     'name' : 'Wlep_nom_pt',
     'range':(100,0,300),
     'xaxis':'Wlep_pt',
     'fold':0
 }
-'''
+
 
 
 variables['lnjj'+_ALGO_+'nom_minPtWOverM']={
@@ -156,7 +156,7 @@ if isFinal:
 
 variables['lnjj'+_ALGO_+'nom_mass']={
     'name': 'lnjj'+_ALGO_+'nom_mass',
-    'range':([0,200,210,230,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,2500,3000,4000],),
+    'range':([0,200,210,230,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],),
     #'divideByBinWidth':1,
     'xaxis': 'lnjj_mass',
     'fold':3

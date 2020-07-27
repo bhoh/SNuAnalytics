@@ -74,7 +74,9 @@ if DoPS:##PSWeight
   nMember_sample=CaclLenBranch(samples,'PSWeight')
   f.write("nMember_sample={}\n")
   for n in nMember_sample:
-    #print "# of member->",n
+    print "# of member->",n
+    for s in nMember_sample[n]:
+      print s
     if int(n)!=4:continue
     mylist=[]
     for s in nMember_sample[n]:

@@ -1,9 +1,14 @@
 NotUseTreeBase=False
+UseRegroupJES=False
 import os
 from FatJet_Jet_SysBranches import * 
 from WPandCut2017 import *
+samples={}
+nuisances={}
 
+UseRegroupJES=False
 
+print "UseRegroupJES=",UseRegroupJES
 
 SITE=os.uname()[1]
 
@@ -231,7 +236,7 @@ nuisances['eff_m'] = {
 
 
 eff_Wtag_syst = ['WtaggerSFdown/WtaggerSFnom','WtaggerSFup/WtaggerSFnom']
-if 'Boosted' in opt.nuisancesFile: 
+if 'Boosted' in '':
   nuisances['eff_Wtag'] = {
     
     'name': 'CMS_eff_Wtag_'+Year,
@@ -554,7 +559,7 @@ nuisances['PS_FSR']={
   'samples':PSWeightFSR,
 }
 
-
+print "UseRegroupJES=",UseRegroupJES
 if not NotUseTreeBase:
   if UseRegroupJES :
     print "--UseRegroupJES--"

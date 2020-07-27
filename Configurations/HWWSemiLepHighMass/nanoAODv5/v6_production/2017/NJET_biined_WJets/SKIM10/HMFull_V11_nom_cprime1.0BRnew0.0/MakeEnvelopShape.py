@@ -132,7 +132,7 @@ print(datetime.datetime.now() - begin_time)
    lines.append("cd "+os.getenv("CMSSW_BASE"))
    lines.append("eval `scramv1 ru -sh`")
    lines.append('cd '+os.getcwd()+'/'+WORKDIR)
-   lines.append('python run.py &> run.log')
+   lines.append('python run.py')
    for line in lines:
       f.write(line+'\n')
    f.close()

@@ -12,16 +12,23 @@ from WPandCut2017 import *
 
 
 #tag='simple2017'
-tag='2017_Resolved_SKIM10_HMFull_V11_nom_'+model+'_'+WTAG+'_'+ALGO
+tag=Year+'_Resolved_SKIM10_HMFull_V11_nom_'+model+'_'+WTAG+'_'+ALGO
 
 
 variablesFile='variables_Resolved.py' ##what variables to draw
 cutsFile='cuts_Resolved.py' ## event selection##region selection
 
 
-samplesFile = 'samples_2017.py'
+samplesFile = 'samples_'+Year+'.py'
 
-lumi=41.5
+lumi=1.
+if Year=='2016':
+    lumi=35.9
+if Year=='2017':
+    lumi=41.5
+if Year=='2018':
+    lumi=59.7
+
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag
@@ -37,3 +44,4 @@ nuisancesFile = 'nuisances_Resolved.py'
 #outputDirDatacard='DataCards'
 
 maxLogCratio=10000
+maxLogC=100000
