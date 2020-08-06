@@ -903,3 +903,4 @@ if StatOnly:
     'type': 'lnN',
     'samples': dict((skey, '1.0001') for skey in mc )
   }
+print "nNuisances=",len(nuisances)
