@@ -1,6 +1,6 @@
 FilesPerJob=30
 FilesPerJobMainBKG=2
-FilesPerJobDATA=50
+FilesPerJobDATA=100
 
 TESTRUN=False
 
@@ -159,6 +159,10 @@ samples['Wjets2j'] = {    'name'   :
 addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu_0J', kfactor['Wjets0j'])
 addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu_1J', kfactor['Wjets1j'])
 addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu_2J', kfactor['Wjets2j'])
+
+addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu_0J', 'MjjShape')
+addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu_1J', 'MjjShape')
+addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu_2J', 'MjjShape')
 
 
 

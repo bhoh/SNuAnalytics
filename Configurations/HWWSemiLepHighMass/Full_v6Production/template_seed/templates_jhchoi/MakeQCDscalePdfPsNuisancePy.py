@@ -1,3 +1,4 @@
+OnlySignal=True##for PDF,QCDscale
 DoPDF=True
 DoQCDscale=True
 DoPS=True
@@ -40,7 +41,9 @@ if DoPDF:
       #print "nMember_sample["+str(n)+"]=",mylist
     f.write("nMember_sample["+str(n)+"]=[")
     for s in mylist:
-      f.write('"'+s+'"'+',')
+      if OnlySignal:
+        if 'ggHWWlnuqq_M' in s or 'vbfHWWlnuqq_M' in s:
+          f.write('"'+s+'"'+',')
     f.write(']\n')
     #pdfAccept[s]=["abs(LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0]) < 10 ? LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0] : 1.0" for i in range(n)] ## outlyer in top sample
   f.close()
@@ -61,7 +64,9 @@ if DoQCDscale:
     #print "nMember_sample["+str(n)+"]=",mylist
     f.write("nMember_sample["+str(n)+"]=[")
     for s in mylist:
-      f.write('"'+s+'"'+',')
+      if OnlySignal:
+        if 'ggHWWlnuqq_M' in s or 'vbfHWWlnuqq_M' in s:
+          f.write('"'+s+'"'+',')
     f.write(']\n')
     #pdfAccept[s]=["abs(LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0]) < 10 ? LHEPdfWeight["+str(i)+"]/LHEPdfWeight[0] : 1.0" for i in range(n)] ## outlyer in top sample
   f.close()
@@ -112,5 +117,5 @@ nuisances['QCDscaleAccept'] = {
 
 
 
-#CaclLenBranch                                                                                                                                                                   
+#CaclLenBranch
 #nMember_sample=CaclLenBranch(samples,'LHEPdfWeight') ## {33:[DY,Wjets....]}

@@ -1,6 +1,6 @@
 FilesPerJob=30
 FilesPerJobMainBKG=2
-FilesPerJobDATA=50
+FilesPerJobDATA=100
 
 
 import math
@@ -255,11 +255,11 @@ samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'na
 ##http://147.47.242.40/qqww/powheg_ww_event_record.png
 
 
-samples['WWJJ'] = {    'name'   :   getSampleFiles(directory,'WpToLNu_WmTo2J',False,'nanoLatino_') ,
-                       getSampleFiles(directory,'WpTo2J_WmToLNu',False,'nanoLatino_') ,
+samples['WWJJ'] = {    'name'   :   getSampleFiles(directory,'WpToLNu_WmTo2J_QCD',False,'nanoLatino_')
+                       +getSampleFiles(directory,'WpTo2J_WmToLNu_QCD',False,'nanoLatino_'), 
                        
                       'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom*(Sum$(abs(GenPart_pdgId)==6 || GenPart_pdgId==25)==0)',
-                       'FilesPerJob' : FilesPerJob,                 
+                       'FilesPerJob' : FilesPerJobMainBKG,
                      }
 
 

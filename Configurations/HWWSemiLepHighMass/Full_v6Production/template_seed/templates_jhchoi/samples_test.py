@@ -351,8 +351,8 @@ for Run in DataRun :
                         samples['DATA']['weights'].append(DataTrig[DataSet])
                         
                         break
-                  break
-          break
+                break
+        break
 if TESTRUN:
   samples={}
   samples['GluGluHToWWToLNuQQ_M400'] = {    'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M400',False,'nanoLatino_') ,

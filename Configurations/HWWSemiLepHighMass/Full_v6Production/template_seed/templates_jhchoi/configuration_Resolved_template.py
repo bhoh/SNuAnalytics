@@ -17,10 +17,10 @@ REG='__REG__'
 
 
 #tag=Year+'_SKIM10_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+PROD+'_'+REG
-tag=Year+'_SKIM10_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+REG
+tag=Year+'_CRs_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+REG
 print tag
 
-variablesFile='variables_'+BOOST+'.py' ##what variables to draw
+variablesFile='variables_'+BOOST+'_'+REG+'.py' ##what variables to draw
 cutsFile='cuts_'+BOOST+'_'+REG+'.py' ## event selection##region selection
 
 
@@ -38,7 +38,7 @@ if Year=='2018':
 outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
-aliasesFile='aliases.py'
+aliasesFile='aliases_'+BOOST+'.py'
 nuisancesFile = 'nuisances_'+BOOST+'.py'
 
 maxLogCratio=100000

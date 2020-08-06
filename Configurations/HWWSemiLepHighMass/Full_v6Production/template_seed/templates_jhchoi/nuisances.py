@@ -182,9 +182,11 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
         'name': name,
         'kind': 'weight',
         'type': 'shape',
-        'samples': dict((skey, btag_syst) for skey in mc),
+        #'samples': dict((skey, btag_syst) for skey in mc),
+      'samples':{}
     }
-
+    for skey in mc:
+      nuisances['btag_shape_%s' % shift]['samples'][skey]=btag_syst
 
 
 trig_syst = ['TriggerEffWeight_1l_u/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_u/TriggerEffWeight_1l : 1.0','TriggerEffWeight_1l_d/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_d/TriggerEffWeight_1l : 1.0']
@@ -193,9 +195,12 @@ nuisances['trigg'] = {
     'name': 'CMS_eff_hwwtrigger_'+Year,
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, trig_syst) for skey in mc),
+    'samples': {},
 }
-
+for skey in mc:
+  nuisances['trigg']['samples'][skey]=trig_syst
+                                                         
+#              dict((skey, trig_syst) for skey in mc),
 
 prefire_syst = ['PrefireWeight_Up/PrefireWeight < 10 ? PrefireWeight_Up/PrefireWeight : 1', 'PrefireWeight_Down/PrefireWeight < 10 ? PrefireWeight_Down/PrefireWeight : 1']
 
@@ -204,8 +209,11 @@ if not Year=='2018':
     'name': 'CMS_eff_prefiring_'+Year,
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, prefire_syst) for skey in mc),
+    #'samples': dict((skey, prefire_syst) for skey in mc),
+    'samples':{}
   }
+  for skey in mc:
+    nuisances['prefire']['samples'][skey]=prefire_syst
 
 
 
@@ -219,8 +227,11 @@ nuisances['eff_e'] = {
     'name': 'CMS_eff_e_'+Year,
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, eff_e_syst) for skey in mc),
+    #'samples': dict((skey, eff_e_syst) for skey in mc),
+  'samples':{},
 }
+for skey in mc:
+  nuisances['eff_e']['samples'][skey]=eff_e_syst
 
 
 
@@ -230,8 +241,11 @@ nuisances['eff_m'] = {
     'name': 'CMS_eff_m_'+Year,
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, eff_m_syst) for skey in mc),
+    #'samples': dict((skey, eff_m_syst) for skey in mc),
+  'samples':{}
 }
+for skey in mc:
+  nuisances['eff_m']['samples'][skey]=eff_m_syst
 
 
 eff_Wtag_syst = ['WtaggerSFdown/WtaggerSFnom','WtaggerSFup/WtaggerSFnom']
@@ -241,9 +255,12 @@ if 'Boosted' in configration_py:
     'name': 'CMS_eff_Wtag_'+Year,
     'kind': 'weight',
     'type': 'shape',
-  'samples': dict((skey, eff_Wtag_syst) for skey in mc),
-  
+    #'samples': dict((skey, eff_Wtag_syst) for skey in mc),
+    'samples':{}
   }
+  for skey in mc:
+    nuisances['eff_Wtag']['samples'][skey]=eff_Wtag_syst
+
 if not NotUseTreeBase:
   fatjetsys=['fatjes','fatjer','fatjms','fatjmr']
   if 'DeepAK8' in WTAG:
@@ -253,12 +270,16 @@ if not NotUseTreeBase:
       'name': 'CMS_'+s+'_'+Year,
       'type': 'shape',
       'kind': 'branch_custom',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      #'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples':{},
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_fatjetsys'),
       'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_fatjetsys'),
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_fatjetsys',
       
     }
+    for skey in mc:
+      nuisances[s]['samples'][skey]=['1','1']
+
     nuisances[s]['BrFromToUp']={}
     nuisances[s]['BrFromToDown']={}
     for br in HMBoostBranches+WBranches:
@@ -270,37 +291,46 @@ if not NotUseTreeBase:
       'name': 'CMS_scale_muon_'+Year,
       'kind': 'tree',
       'type': 'shape',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples':{},
+      #'samples': dict((skey, ['1', '1']) for skey in mc),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_MupTdo',
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_MupTup'),
       'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_MupTdo'),
     }
+    for skey in mc:
+      nuisances['mupt']['samples'][skey]=['1','1']
 
 
     nuisances['elept'] = {
       'name': 'CMS_scale_electron_'+Year,
       'kind': 'tree',
       'type': 'shape',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      #'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples':{},
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_ElepTup'),
       'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_ElepTdo'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_ElepTdo',
       
     }
+    for skey in mc:
+      nuisances['elept']['samples'][skey]=['1','1']
 
 
     nuisances['met'] = {
       'name': 'CMS_scale_met_'+Year,
       'kind': 'tree',
       'type': 'shape',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      #'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples':{},
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_METup'),
       'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_nom_METup'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METup',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_nom_METdo',
     }
+    for skey in mc:
+      nuisances['met']['samples'][skey]=['1','1']
 
 pu_syst=['puWeightUp/puWeight','puWeightDown/puWeight']
 
@@ -309,8 +339,11 @@ nuisances['PU'] = {
     'name': 'CMS_PU_'+Year,
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, pu_syst) for skey in mc),
+    #'samples': dict((skey, pu_syst) for skey in mc),
+  'samples':{},
 }
+for skey in mc:
+  nuisances['PU']['samples'][skey]=pu_syst
 
 #nuisances['UE']  = {
 #                'name'  : 'UE_CP5',
@@ -599,12 +632,16 @@ if not NotUseTreeBase:
         'name': 'CMS_'+s,
         'kind': 'branch_custom',
         'type': 'shape',
-        'samples': dict((skey, ['1', '1']) for skey in mc),
+        #'samples': dict((skey, ['1', '1']) for skey in mc),
+        'samples':{},
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
         'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
         'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_correlate'),
       }
+      for skey in mc:
+        nuisances[s]['samples'][skey]=['1','1']
+
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}
       for br in JetBranches+WlepBranches+WjjBranches+HMBoostBranches+HMResolBranches:
@@ -616,12 +653,16 @@ if not NotUseTreeBase:
         'name': 'CMS_'+s,
         'kind': 'branch_custom',
         'type': 'shape',
-        'samples': dict((skey, ['1', '1']) for skey in mc),
+        #'samples': dict((skey, ['1', '1']) for skey in mc),
+        'samples':{},
         'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
         'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_uncorrelate'),
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_uncorrelate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_uncorrelate',
       }
+      for skey in mc:
+        nuisances[s]['samples'][skey]=['1','1']
+
       if s=="jer": nuisances[s]['name']+='_'+Year
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}
@@ -633,15 +674,20 @@ if not NotUseTreeBase:
   else:
     print "--Not UseRegroupJES--"
     nuisances['jesTotal'] = {
-      'name': 'CMS_jesTotal_'+Year,
+      #'name': 'CMS_jesTotal_'+Year,
+      'name': 'CMS_jesTotal',
       'kind': 'branch_custom',
       'type': 'shape',
-      'samples': dict((skey, ['1', '1']) for skey in mc),
+      #'samples': dict((skey, ['1', '1']) for skey in mc),
+      'samples':{},
       'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_correlate'),
       'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_correlate'),
       #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_correlate',
       #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_correlate',
     }
+    for skey in mc:
+      nuisances['jesTotal']['samples'][skey]=['1','1']
+
     nuisances['jesTotal']['BrFromToUp']={}
     nuisances['jesTotal']['BrFromToDown']={}
     for br in JetBranches+WlepBranches+WjjBranches+HMBoostBranches+HMResolBranches:
@@ -653,12 +699,16 @@ if not NotUseTreeBase:
         'name': 'CMS_'+s,
         'kind': 'branch_custom',
         'type': 'shape',
-        'samples': dict((skey, ['1', '1']) for skey in mc),
-        'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
+        #'samples': dict((skey, ['1', '1']) for skey in mc),
+        'samples':{},
+        'Folderup': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysup_uncorrelate'),
         'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/'+STEP.replace('_nom','_jetsysdown_uncorrelate'),
         #'folderUp': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysup_uncorrelate',
         #'folderDown': xrootdPath+'/'+treeBaseDir+'/'+CAMPAIGN+'/MCl1loose2017v6__MCCorr2017v6__HMSemilepSKIMv6_10__HMFull_jhchoi10_jetsysdown_uncorrelate',
       }
+      for skey in mc:
+        nuisances[s]['samples'][skey]=['1','1']
+
       if s=="jer": nuisances[s]['name']+='_'+Year
       nuisances[s]['BrFromToUp']={}
       nuisances[s]['BrFromToDown']={}

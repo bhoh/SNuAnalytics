@@ -38,7 +38,7 @@ if Year=='2018':
 outputDirPlots='plots_'+tag
 outputDir =           'rootFile_'+tag
 treeName='Events'
-aliasesFile='aliases.py'
+aliasesFile='aliases_'+BOOST+'.py'
 nuisancesFile = 'nuisances_'+BOOST+'.py'
 
 maxLogCratio=100000

@@ -76,7 +76,7 @@ aliases['PUJetIdSF'] = {
 aliases['WtaggerSFnom']={
     #'expr' : '('+WtaggerSF+')'+'*(isBoost_'+WTAG+'_nom) + 1*(!isBoost_'+WTAG+'_nom)',
     #'expr' : 'isBoost_'+WTAG+'_nom ? ('+WtaggerSF+')'+' : 1',
-    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) ) ? ('+WtaggerSF+')'+' : 1',,
+    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) ) ? ('+WtaggerSF+')'+' : 1',
     'samples' : mc
 }
 aliases['WtaggerSFup']={
@@ -176,8 +176,9 @@ if Year=='2018':
     }
 
     aliases['Top_pTrw'] = {
-        'expr': '(topGenPtOTF * antitopGenPtOTF > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPtOTF) - 0.000134*topGenPtOTF + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPtOTF) - 0.000134*antitopGenPtOTF + 0.973))) + (topGenPtOTF * antitopGenPtOTF <= 0.)',
+        #'expr': '(topGenPtOTF * antitopGenPtOTF > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPtOTF) - 0.000134*topGenPtOTF + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPtOTF) - 0.000134*antitopGenPtOTF + 0.973))) + (topGenPtOTF * antitopGenPtOTF <= 0.)',
         #    'expr': '(topGenPt * antitopGenPt > 0.) * (TMath::Sqrt((0.103*TMath::Exp(-0.0118*topGenPt) - 0.000134*topGenPt + 0.973) * (0.103*TMath::Exp(-0.0118*antitopGenPt) - 0.000134*antitopGenPt + 0.973))) + (topGenPt * antitopGenPt <= 0.)',
+        'expr':'1',
         'samples': ['top']
     }
 
@@ -228,7 +229,7 @@ aliases['EWK_W_correction_uncert'] = {
 }
 
 aliases['dPhi_WW_boosted']={
-    'expr':' isBoost_'+WTAG+'_nom ? (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi)-2*3.1415927*(  (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) < 3.1415927) : -100.'
+    'expr':' ((isBoost_'+WTAG+'_nom)&&(lnJ_'+WTAG+'_nom_widx >=0)) ? (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi)-2*3.1415927*(  (WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) > 3.1415927) + 2*3.1415927*((WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-Wlep_nom_phi) < 3.1415927) : -100.'
 }
 
 
@@ -249,3 +250,58 @@ aliases['dPhi_WW_resolved']={
 #    'expr':'Sum$(GenJet_pt)',
 #    'samples':mc
 #}
+
+##---python name
+if 'opt' in globals():
+    configration_py=opt.aliasesFile
+else:
+    configration_py=sys.argv[0]
+
+##---MjjShapeSys
+if 'Boosted' in configration_py:
+    bst='Boosted'
+    WmassVariable=' ((isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0)) ? WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] : -1)'
+if 'Resolved' in configration_py:
+    bst='Resolved'
+    WmassVariable='Whad'+_ALGO_+'nom_mass'
+
+print "[WmassVariable]",WmassVariable
+
+import sys
+sys.path.insert(0, "MjjShapeWeight")
+from MjjShapeWeight import DICT_MjjShapeW
+slope=DICT_MjjShapeW[Year][bst]['slope']
+intercept=DICT_MjjShapeW[Year][bst]['intercept']
+slope=str(slope)
+intercept=str(intercept)
+massbins=[40,45,50,55,65,70,75,80,85,90,95,100,105,110,115,120,125,130,150,170,200,250]
+for idx in range(0,len(massbins)-1):
+    lowbin=str(massbins[idx])
+    highbin=str(massbins[idx+1])
+    center=str((massbins[idx]+massbins[idx+1])/2)
+    bincenter_list.append(' ((  ('+WmassVariable+' > '+lowbin+') && ('+WmassVariable+' <='+highbin+')  )*'+center+') ') ##wmass * slope
+bincenter_list=[]
+for idx in range(0,len(massbins)-1):
+    lowbin=str(massbins[idx])
+    highbin=str(massbins[idx+1])
+    center=str((massbins[idx]+massbins[idx+1])/2)
+    bincenter_list.append(' ((  ('+WmassVariable+' > '+lowbin+') && ('+WmassVariable+' <='+highbin+')  )*'+center+') ') ##wmass * slope
+wmass='+'.join(bincenter_list) ##wmass
+##wmass bin center
+aliases['wmass']={
+    'expr':wmass
+}
+##--weight for make slope shape
+aliases['SlopeWeight']={
+    'expr':'wmass > 0 ? (250-wmass)/210. : 0'
+}
+##----reweight                                                                                                                                                                                             
+aliases['MjjShape']={
+    'expr':'wmass > 0 ? '+intercept+'+'+slope+'*(250-wmass)/210. : 0'
+}
+##----if not reweight (if you don't want it or to measure fitting param)
+if not MjjShapeCorr:
+    aliases['MjjShape']={
+        'expr':'1'
+    }
+

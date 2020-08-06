@@ -1,7 +1,7 @@
 import sys
 Year=str(sys.argv[1])
 import os
-LIST_TEMPLATE=['configuration_Boosted_template.py','configuration_Resolved_template.py','cuts_Boosted_template.py','cuts_Resolved_template.py']
+LIST_TEMPLATE=['configuration_Boosted_template.py','configuration_Resolved_template.py','cuts_Boosted_template.py','cuts_Resolved_template.py','variables_Boosted_template.py','variables_Resolved_template.py']
 #template='configuration_template.py'
 
 #LIST_BOOST=['Boosted','Resolved']
@@ -35,7 +35,7 @@ for reg in LIST_REGION:
 #PowhegXsec.py
 #plot.py
 #MakeKfactor.py
-LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py','MakeDummySamplePY.py','HaddInBatch.sh','Histo_factory_run_test.sh','samples_test.py']
+LIST_CP=['FatJet_Jet_SysBranches.py','PowhegXsec.py','plot.py','MakeKfactor.py','MakeQCDscalePdfPsNuisancePy.py','variables_Boosted.py','variables_Resolved.py','Histo_factory_run.sh','nuisances.py','MakeMELAWeightCut.py','FilterMelaReweights.py','aliases.py','MakeDummySamplePY.py','HaddInBatch.sh','Histo_factory_run_test.sh','samples_test.py','RunMakeQCDscale_SymhessianAs_Shape.py','MakeEnvelopShape.py','MakeSymhessianAsShape.py','Make_ggww_qqwwqq_shape.py','Run_Make_ggww_qqwwqq_shape.py',]
 
 for cp in LIST_CP:
     ftemplate=open(cp,'r')
@@ -50,7 +50,7 @@ for cp in LIST_CP:
     fnew.close()
 
 ##---simple cp
-LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc'] 
+LIST_CP=['samples_'+Year+'.py','LHEPartWlepPt.cc','WPandCut'+Year+'.py','TurnOnCombinedSamples.py','TurnOffCombinedSamples.py','GetXsecInNtuple.py','MakeSampleDict.py','ngenjet.cc','Setup.sh'] 
 for cp in LIST_CP:
     os.system('cp '+cp+' '+workspace+'/')
 
@@ -59,6 +59,14 @@ os.system('cp LHEPartWlepPt.cc '+workspace+'/')
 
 ##--cp WPfile
 os.system('cp WPandCut'+Year+'.py '+workspace+'/')
+
+##--cp workspace to workspace
+
+os.system('cp '+workspace+'/nuisances.py '+workspace+'/nuisances_Boosted.py')
+os.system('cp '+workspace+'/nuisances.py '+workspace+'/nuisances_Resolved.py')
+
+os.system('cp '+workspace+'/aliases.py '+workspace+'/aliases_Boosted.py')
+os.system('cp '+workspace+'/aliases.py '+workspace+'/aliases_Resolved.py')
 
 ##--cp MassPoints
 os.system('rm -rf '+workspace+'/MassPoints')
