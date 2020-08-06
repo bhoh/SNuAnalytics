@@ -516,15 +516,32 @@ if Resolved:
 
 ##--VBF--
 if Boosted:
-    aliases['mass_jj_VBF']={
-        'expr':'VBFjjBoost_dEta_'+WTAG+'_nom'
+    aliases['maxmjj_mass_jj_VBF']={
+        'expr':'max_mjj_Boost_'+WTAG+'_nom'
     }
+    aliases['maxmjj_dEta_jj_VBF']={
+        'expr':'dEta_of_max_mjj_Boost_'+WTAG+'_nom'
+    }
+
+
+    aliases['mass_jj_VBF']={
+        'expr':'VBFjjBoost_mjj_'+WTAG+'_nom'
+    }
+
     aliases['dEta_jj_VBF']={
         'expr':'VBFjjBoost_dEta_'+WTAG+'_nom'
     }
+
 if Resolved:
+    aliases['maxmjj_mass_jj_VBF']={
+        'expr':'max_mjj_Resol_'+ALGO+'_nom'
+    }
+    aliases['maxmjj_dEta_jj_VBF']={
+        'expr':'dEta_of_max_mjj_Resol_'+ALGO+'_nom'
+    }
+
     aliases['mass_jj_VBF']={
-        'expr':'VBFjjResol_dEta_'+ALGO+'_nom'
+        'expr':'VBFjjResol_mjj_'+ALGO+'_nom'
     }
     aliases['dEta_jj_VBF']={
         'expr':'VBFjjResol_dEta_'+ALGO+'_nom'

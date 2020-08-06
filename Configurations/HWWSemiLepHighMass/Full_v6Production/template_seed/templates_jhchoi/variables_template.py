@@ -318,6 +318,19 @@ variables['mass_jj_VBF']={
     'fold':3
 }
 
+variables['maxmjj_dEta_jj_VBF']={
+    'name':'maxmjj_dEta_jj_VBF',
+    'range':(20,0,8),
+    'xaxis':'#delta(#eta)(jj) VBF',
+    'fold':3
+}
+variables['maxmjj_mass_jj_VBF']={
+    'name':'maxmjj_mass_jj_VBF',
+    'range':(40,0,1400),
+    'xaxis':'M(jj) VBF [GeV])',
+    'fold':3
+}
+
 
 if Boosted:
     for M_MELA in MELA_MASS_BOOST:
