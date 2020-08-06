@@ -4,7 +4,7 @@ sys.path.append(os.getcwd())
 
 ##---Setting Flags
 StatOnly=True
-ONLY_FINALCUT=True
+ONLY_FINALCUT=False
 OnlyFinalVariable=False
 
 MjjShapeCorr=True

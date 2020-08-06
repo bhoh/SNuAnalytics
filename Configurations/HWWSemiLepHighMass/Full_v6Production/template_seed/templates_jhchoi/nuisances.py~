@@ -895,11 +895,3 @@ print "nNuisances=",len(nuisances)
 
 
 
-if StatOnly:
-  del nuisances
-  nuisances={}
-  nuisances['dummy']={
-    'name': 'dummy',
-    'type': 'lnN',
-    'samples': dict((skey, '1.0001') for skey in mc )
-  }

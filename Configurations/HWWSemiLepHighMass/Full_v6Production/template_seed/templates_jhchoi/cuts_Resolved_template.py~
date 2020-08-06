@@ -39,7 +39,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
 METtype="PuppiMET"
 #met>30
-supercut +='&&(!isFinalBoostSR) &&(isResol'+_ALGO_+'nom)'
+supercut +='&&(!isFinalBoostSR)'
 
 ##---Lepton Categorization---##
 
@@ -62,7 +62,6 @@ else:
 ResolvedProdCats={}
 ResolvedProdCats['ResolvedGGF']='(isResol'+_ALGO_+'nom && !isVBF_Resol'+_ALGO_+'nom)'
 ResolvedProdCats['ResolvedVBF']='(isResol'+_ALGO_+'nom && isVBF_Resol'+_ALGO_+'nom)'
-ResolvedProdCats['ResolvedALL']='(isResol'+_ALGO_+'nom)'
 
 if 'GGF' in configration_py :
     ResolvedProdCats={}
@@ -143,7 +142,7 @@ ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
 if not ONLY_FINALCUT : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
 
 ResolvedMEKDCat={}
-ResolvedMEKDCat['_']='1'
+#ResolvedMEKDCat['_']='1'
 ResolvedMEKDCat['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
 ResolvedMEKDCat['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
 if 'ALL' in configration_py:

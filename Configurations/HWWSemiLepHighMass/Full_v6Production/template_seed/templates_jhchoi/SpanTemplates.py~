@@ -8,6 +8,11 @@ import glob
 ##inputargument = yeartag
 VariableBlocks=[]
 Year=str(sys.argv[1])
+if sys.argv[2]:
+    VariableBlocks=['Final']
+
+else:
+    
 import os
 import subprocess
 from shutil import copyfile

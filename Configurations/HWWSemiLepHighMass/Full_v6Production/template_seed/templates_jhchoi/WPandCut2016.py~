@@ -4,8 +4,9 @@ sys.path.append(os.getcwd())
 
 ##---Setting Flags
 StatOnly=True
-ONLY_FINALCUT=True
+ONLY_FINALCUT=False
 OnlyFinalVariable=False
+
 
 MjjShapeCorr=True
 UseRegroupJES=False
@@ -29,11 +30,11 @@ configurations = '%s/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/data/' %
 xrootdPath = 'root://cms-xrdr.private.lo:2094'
 treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
 ##--Set Campaign and Step--##
-CAMPAIGN='Autumn18_102X_nAODv6_Full2018v6'
-STEP="MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__HMFull_V11_nom/"
+CAMPAIGN='Summer16_102X_nAODv5_Full2016v6'
+STEP="MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10__HMFull_V11_nom"
 
-CAMPAIGN_DATA='Run2018_102X_nAODv6_Full2018v6'
-STEP_DATA="DATAl1loose2018v6__HMSemilepSKIMv6_10_data__HMFull_V11_data/"
+CAMPAIGN_DATA='Run2016_102X_nAODv5_Full2016v6'
+STEP_DATA="DATAl1loose2016v6__HMSemilepSKIMv6_10_data__HMFull_V11_data"
 
 directory=treeBaseDir+CAMPAIGN+'/'+STEP
 
@@ -45,36 +46,36 @@ from Wtagger_cfg import WJID
 from Wjjtagger_cfg import MYALGO,JETCUTS
 
 ##----WP
-Year='2018'
-eleWP='mvaFall17V1Iso_WP90'
-muWP='cut_Tight_HWWW'
+Year='2016'
+eleWP='mva_90p_Iso2016'
+muWP='cut_Tight80x'
 ##---Btag
-btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_102XSF_V1.csv' % os.getenv('CMSSW_BASE')
+btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepCSV_2016LegacySF_V1.csv' % os.getenv('CMSSW_BASE')
 bAlgo='DeepB'
-bWP='0.1241'
+bWP='0.2217'
 
 
-elePtCut='35'
-muPtCut='27'
+elePtCut='30'
+muPtCut='30'
 
 ALGO="dMchi2Resolution"
-#WTAG="DeepAK8WP5MD"
+#WTAG="HP40"
+#WTAG="DeepAK8WP5"
 WTAG="DeepAK8WP2p5"
 
-
 ##---SF & Weight to use
-SFweight='puWeight*trigWeight[0]*EMTFbug_veto*LepWPCut[0]*LepWPweight[0]*btagSF*PUJetIdSF*HEMweight'
+SFweight='puWeight*EMTFbug_veto*PrefireWeight*trigWeight[0]*LepWPweight[0]*LepWPCut[0]*btagSF*PUJetIdSF'
 
 
-#WtaggerSF=str(WJID['2018'][WTAG]['effSF']['nom']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
-WtaggerSF=str(WJID['2018'][WTAG]['effSF']['nom'])
-#WtaggerSFup=str(WJID['2018'][WTAG]['effSF']['up']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
-WtaggerSFup=str(WJID['2018'][WTAG]['effSF']['up'])
-#WtaggerSFdown=str(WJID['2018'][WTAG]['effSF']['down']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
-WtaggerSFdown=str(WJID['2018'][WTAG]['effSF']['down'])
+#WtaggerSF=str(WJID['2016'][WTAG]['effSF']['nom']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
+WtaggerSF=str(WJID['2016'][WTAG]['effSF']['nom'])
+#WtaggerSFup=str(WJID['2016'][WTAG]['effSF']['up']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
+WtaggerSFup=str(WJID['2016'][WTAG]['effSF']['up'])
+#WtaggerSFdown=str(WJID['2016'][WTAG]['effSF']['down']).replace('WtaggerFatjet_'+WTAG+'_nom_pt','Alt$(WtaggerFatjet_'+WTAG+'_nom_pt,0)')
+WtaggerSFdown=str(WJID['2016'][WTAG]['effSF']['down'])
 
-jetptmin=str(JETCUTS['2018']['ptmin'])
-jetetamax=str(JETCUTS['2018']['etamax'])
+jetptmin=str(JETCUTS['2016']['ptmin'])
+jetetamax=str(JETCUTS['2016']['etamax'])
 
 
 ##---Mela WP----
@@ -101,5 +102,6 @@ METcutRes='30'
 ##---MELA signal scenario
 model='cprime1.0BRnew0.0'
 #model='RelW0.02'
+
 
 

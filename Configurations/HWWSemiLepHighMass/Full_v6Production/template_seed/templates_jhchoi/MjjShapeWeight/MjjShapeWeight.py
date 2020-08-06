@@ -13,14 +13,14 @@ DICT_MjjShapeW={
         },
 
     },
-
+    
     '2017':{
-
+        
         'Boosted':{
             'w_min':1,
             'w_max':1
         },
-
+        
         'Resolved':{
             'w_min':0.741,
             'w_max':1.073,
@@ -33,21 +33,37 @@ DICT_MjjShapeW={
     },
     
     '2016':{
-
+        
         'Boosted':{
             'w_min':1,
             'w_max':1
         },
-
+        
         'Resolved':{
             'w_min':0.848,
             'w_max':1.017,
             'w_min_err':0.016,
             'w_max_err':0.010,
         },
-
-        
     },
+    
+    'combined':{
+        
+        'Boosted':{
+            'w_min':1,
+            'w_max':1
+        },
+        
+        'Resolved':{
+            'w_min':0.760,
+            'w_max':1.082,
+            'w_min_err':0.009,
+            'w_max_err':0.006,
+        },
+        
+        
+    }
+    
     
 }
 for Year in DICT_MjjShapeW:
@@ -59,5 +75,5 @@ for Year in DICT_MjjShapeW:
         DICT_MjjShapeW[Year][bst]['intercept']=w_min
 
 
-        print DICT_MjjShapeW[Year][bst]['slope']
-        print DICT_MjjShapeW[Year][bst]['intercept']
+        #print DICT_MjjShapeW[Year][bst]['slope']
+        #print DICT_MjjShapeW[Year][bst]['intercept']

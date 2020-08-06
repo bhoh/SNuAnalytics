@@ -96,7 +96,7 @@ aliases['isBoostSR']={
     'expr':'(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (isBoostSR_'+WTAG+'_nom))'
 }
 aliases['isFinalBoostSR']={
-    'expr':'(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (isBoostSR_'+WTAG+'_nom) && ((nBJetBoost_'+WTAG+'_nom ==0)))'
+    'expr':'(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (isBoostSR_'+WTAG+'_nom))'
 }
 
 
