@@ -490,7 +490,19 @@ if Resolved:
     aliases['HadronicW_Score']={}
     aliases['HadronicW_Score']['expr']='Whad'+_ALGO_+'nom_ScoreToLeast'
 
-    ##--WW--##
+
+
+##--WW--##
+if Boosted:
+    aliases['WW_mass']={
+        'expr':'lnJ_'+WTAG+'_nom_mass'
+    }
+    aliases['WW_pt_over_mass']={
+        'expr':'lnJ_'+WTAG+'_nom_minPtWOverM'
+    }
+    
+
+if Resolved:
     aliases['WW_mass']={
         'expr':'lnjj_'+ALGO+'_nom_mass'
     }
