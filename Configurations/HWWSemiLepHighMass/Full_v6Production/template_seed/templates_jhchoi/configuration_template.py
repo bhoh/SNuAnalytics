@@ -17,7 +17,7 @@ REG='__REG__'
 
 
 #tag=Year+'_SKIM10_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+PROD+'_'+REG
-tag=Year+'_TEST_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+REG
+tag=Year+'_StatonlyFinalcut_'+BOOST+'_HMFull_V11_'+model+'_'+WTAG+'_'+ALGO+'_'+REG
 print tag
 
 variablesFile='variables_'+BOOST+'_'+REG+'.py' ##what variables to draw

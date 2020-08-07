@@ -34,7 +34,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 
 #------End of Variable Definition-----#
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
-supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&& (isBoost)'
+supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+' && ((isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0)))'
 
 
 ##---Lepton Categorization---##

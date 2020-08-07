@@ -6,7 +6,7 @@ VariableBlocks['Jet']=['nAK4Jet','nAK4Jet_eta4p7','LeadingJet_eta','LeadingJet_p
 VariableBlocks['AddJet']=['nAddJet','AddJet_BtagScore','AddJet_eta','AddJet_pt','nBJet','LeadingAddJet_BtagScore','LeadingAddJet_eta','LeadingAddJet_pt','SubLeadingAddJet_BtagScore','SubLeadingAddJet_pt','SubLeadingAddJet_eta']
 
 
-VariableBlocks['WW']=['Event','HadronicW_pt','HadronicW_mass','HadronicW_Score','dEta_jj_VBF','mass_jj_VBF','WW_Mt','WW_pt_over_mass','WW_mass','MEKD_Res_C_0.000001_M400']
+VariableBlocks['WW']=['Event','HadronicW_pt','HadronicW_mass','HadronicW_Score','dEta_jj_VBF','mass_jj_VBF','maxmjj_mass_jj_VBF','maxmjj_dEta_jj_VBF','WW_Mt','WW_pt_over_mass','WW_mass','MEKD_Res_C_0.000001_M400']
 
 
 ##
