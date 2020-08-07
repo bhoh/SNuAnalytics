@@ -9,6 +9,9 @@ import sys
 from collections import OrderedDict
 plot=OrderedDict()
 
+TOPS = [skey for skey in samples if ('TT' in skey or 'ST' in skey or 'top' in skey)]
+
+
 
 dict_TColor={
 'green':416+3,##darker greeen
@@ -126,15 +129,38 @@ groupPlot['Wjets']={
 if CombineWjets :
     groupPlot['Wjets']['samples']=['Wjets']
 else:
-    groupPlot['Wjets']['samples'] = Wjets
+    #groupPlot['Wjets']['samples'] = Wjets                                                                                                                                        
+    del groupPlot['Wjets']
+    idx=-1
+    for wjet in Wjets:
+        groupPlot[wjet]={
+            'nameHR' : wjet,
+            'isSignal' : 0,
+            'color': dict_TColor['green']+idx,
+            'isData'   : 0,
+            'samples':wjet
+        }
+        idx+=1
 
-groupPlot['top']={
-    'nameHR' : 'Top',
-    'isSignal' : 0,
-'color': dict_TColor['orange'],
-                  'isData'   : 0,
-                  'samples'  : ['top']
-}
+total=len(TOPS)
+idx=-1*int(total/2)
+
+for top in TOPS:
+    groupPlot[top]={
+        'nameHR' : top,
+        'isSignal' : 0,
+        'color': dict_TColor['orange']+idx,
+        'isData'   : 0,
+        'samples'  : [top]
+    }
+    plot[top]  = {
+        'nameHR' : top,
+        'isSignal' : 0,
+        'color': dict_TColor['orange']+idx,
+        'isData'   : 0,
+    }
+    idx+=1
+
 
 plot['DY']  = {
                   'nameHR' : 'DY',
@@ -218,17 +244,17 @@ else:
 #              }
 
 
-plot['top']  = {
-                  'nameHR' : 'Top',
-                  'isSignal' : 0,
-                  'color': dict_TColor['orange'],
-                  'isData'   : 0,                 
-              }
+#plot['top']  = {
+#                  'nameHR' : 'Top',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['orange'],
+#                  'isData'   : 0,                 
+#              }
 
 
 
 
-if CombineWjets or (Year=='2016'):
+if CombineWjets:
     plot['Wjets']  = {
         'nameHR' : 'Wjets',
         'isSignal' : 0,
