@@ -48,15 +48,18 @@ supercut +='&&(!isFinalBoostSR) &&(isResol'+_ALGO_+'nom)'
 LepCats={}
 if 'ele' in configration_py:
     LepCats['eleCH']='(Lepton_isTightElectron_'+eleWP+'[0]>0.5)'
-elif 'mu' in configration_py:
+if 'mu' in configration_py:
     LepCats['muCH']='(Lepton_isTightMuon_'+muWP+'[0]>0.5)'
-else:
+if not ('mu' in configration_py) and not ('ele' in configration_py):
     LepCats={
         '_':'1',
         'eleCH':'(Lepton_isTightElectron_'+eleWP+'[0]>0.5)',
         'muCH':'(Lepton_isTightMuon_'+muWP+'[0]>0.5)',
     }
-
+if ('ele' in configration_py) and ('mu' in configration_py): ##for plotting
+    LepCats={
+        '_':'1',
+    }
 ##-----Basic categorization-----##
 
 ResolvedProdCats={}

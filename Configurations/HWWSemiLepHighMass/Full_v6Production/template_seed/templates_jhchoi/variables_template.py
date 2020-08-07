@@ -49,6 +49,7 @@ variables['HadronicW_pt']={
     #'range':(100,0,1000),
     'range':([200,230,260,290,320,350,380,410,500,700,1000],),
     'xaxis':'P_{T}(Hadronic W boson) [GeV]',
+    'divideByBinWidth':1,
     'fold': 3,
 
 }
@@ -56,6 +57,7 @@ variables['HadronicW_pt']={
 variables['HadronicW_mass']={
     'name':'HadronicW_mass',
     'range':([40,45,50,55,65,70,75,80,85,90,95,100,105,110,115,120,125,130,150,170,200,250],),
+    'divideByBinWidth':1,
     'xaxis':'M(Hadronic W boson) [GeV]',
     'fold': 3,
 }

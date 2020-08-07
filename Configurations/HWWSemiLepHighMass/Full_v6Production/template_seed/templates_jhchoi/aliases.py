@@ -466,10 +466,10 @@ if Resolved:
 if Boosted:
     ##--Hadronic W--##
     aliases['HadronicW_mass']={
-        'expr':'WtaggerFatjet_'+WTAG+'_nom_mass'
+        'expr':'WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx]'
     }
     aliases['HadronicW_pt']={
-        'expr':'WtaggerFatjet_'+WTAG+'_nom_pt'
+        'expr':'WtaggerFatjet_'+WTAG+'_nom_pt[lnJ_'+WTAG+'_nom_widx]'
     }
     aliases['HadronicW_Score']={}
     if 'HP' in WTAG:

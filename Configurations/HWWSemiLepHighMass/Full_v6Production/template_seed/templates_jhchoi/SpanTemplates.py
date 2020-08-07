@@ -8,9 +8,20 @@ import glob
 ##inputargument = yeartag
 VariableBlocks=[]
 Year=str(sys.argv[1])
+
+
+    
+
 import os
 import subprocess
 from shutil import copyfile
+
+##---Take AreaName
+cwd=os.getcwd()
+AreaName="_".join(cwd.split('/')[-5:-1])
+WORKNAME=AreaName
+if sys.argv[2]:
+    WORKNAME=str(sys.argv[2])
 
 ##---change 
 #WPandCut2016 -> WPandCut<Year>
@@ -36,6 +47,8 @@ for template in LIST_TEMPLATE:
             ApplyYearTag(newtemplate,Year)
             ChangeString(newtemplate,'__REG__',reg)
             ChangeString(newtemplate,'__BST__',bst)
+            ChangeString(newtemplate,'__TEST__',WORKNAME)
+            
 ##--cp cuts
 LIST_TEMPLATE=['cuts_Boosted_template.py','cuts_Resolved_template.py']
 ###----Make config/cuts
@@ -50,8 +63,8 @@ for reg in LIST_REGION:
         command='cp '+template+' '+newtemplate
         #print command
         
-        if os.path.isfile(newtemplate):
-            print '!!clean',newtemplate
+        #if os.path.isfile(newtemplate):
+            #print '!!clean',newtemplate
             #os.system('rm '+newtemplate)
         os.system(command)
         #print 'cp ',template,newtemplate
@@ -59,7 +72,7 @@ for reg in LIST_REGION:
         #subprocess.call(command.split(' '))
         ApplyYearTag(newtemplate,Year)
         ChangeString(newtemplate,'__REG__',reg)
-
+        
 
 ##---cp directories
 
@@ -82,6 +95,10 @@ for cpdir in LIST_CPDIR:
     shlist=glob.glob(newdir+'/*.sh')
     for f in pylist+shlist:
         ApplyYearTag(f,Year) ## 2016 -> <Year>
+        if 'script' in cpdir:
+            ChangeString(f,'__AREA__',AreaName)
+            ChangeString(f,'2016',Year)
+            
 
 
 ##--cp files
@@ -134,7 +151,7 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
 
             frun.write('source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh &> logs/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.log& \n')
 
-            fsub.write('MYDIR=${PWD};command="cd ${MYDIR};source PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh";python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -n '+'PlotMakerRun_'+bst+'_'+reg+'_'+flv+'_'+Year+' -m 1 -s;')
+            fsub.write('MYDIR=${PWD};command="cd ${MYDIR};source '+scriptdir+'/PlotMakerRun_'+bst+'_'+reg+'_'+flv+'.sh";python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+'_'+flv+' -n '+'PlotMakerRun_'+bst+'_'+reg+'_'+flv+'_'+Year+' -m 1 -s;')
         frun.close()
 
         
@@ -153,3 +170,7 @@ os.system('cp -r myalias '+workspace+'/')
 ChangeString(aliasdir+'/set_alias.sh','__MAINDIR__',workspace)
 ChangeString(aliasdir+'/set_alias.sh','__YEAR__',Year)
 ##myalias
+
+
+##---SetupAndTest
+os.system('cp SetupAndTestRun.sh ../')
