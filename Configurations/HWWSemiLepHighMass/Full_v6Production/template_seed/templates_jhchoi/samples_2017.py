@@ -1,6 +1,6 @@
-FilesPerJob=30
-FilesPerJobMainBKG=2
-FilesPerJobDATA=100
+#FilesPerJob=30
+#FilesPerJobMainBKG=2
+#FilesPerJobDATA=100
 
 
 import math
@@ -51,6 +51,8 @@ DataTrig = {
            }
 
 
+mcCommonWeight='XSWeight*SFweight*METFilter_MC'
+
 import sys
 sys.path.insert(0, "MassPoints")
 from List_MX import *
@@ -82,17 +84,17 @@ for MX in List_MX:
 
 
   samples['ggHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                                 'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*'+model+'*'+normS+'*'+cut,
+                                                 'weight' : mcCommonWeight+'*WtaggerSFnom'+'*'+model+'*'+normS+'*'+cut,
                                                  'FilesPerJob' : FilesPerJob,
                                                }
 
   samples['ggHWWlnuqq_M'+str(MX)+'_B'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                                 'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*'+model+'_B'+'*'+normB+'*'+cut,
+                                                 'weight' : mcCommonWeight+'*WtaggerSFnom'+'*'+model+'_B'+'*'+normB+'*'+cut,
                                                  'FilesPerJob' : FilesPerJob,
                                                }
 
   samples['ggHWWlnuqq_M'+str(MX)+'_SI'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                                 'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*('+model+'*'+normS+'+'+model+'_I'+'*'+normI+')*'+cut,
+                                                 'weight' : mcCommonWeight+'*WtaggerSFnom'+'*('+model+'*'+normS+'+'+model+'_I'+'*'+normI+')*'+cut,
                                                  'FilesPerJob' : FilesPerJob,
                                                }
 
@@ -104,19 +106,19 @@ for MX in List_MX_VBF:
   normI='('+str(math.sqrt(float(kfactor['vbfHWWlnuqq_M'+str(MX)])*float(NormToPowheg['vbfHWWlnuqq_M'+str(MX)])))+')' 
   normB='('+NormToPowheg['vbfHWWlnuqq_M'+str(MX)]+')'
   samples['vbfHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                            'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*'+model+'*'+normS+'*'+cut,
-                                            # 'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'*'+cut,
+                                            'weight' : mcCommonWeight+'*WtaggerSFnom'+'*'+model+'*'+normS+'*'+cut,
+                                            # 'weight' : mcCommonWeight+'*'+model+'*'+cut,
                                                  'FilesPerJob' : FilesPerJob,
                                                }
 
   samples['vbfHWWlnuqq_M'+str(MX)+'_B'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                            # 'weight' : 'XSWeight*SFweight*METFilter_MC'+'*'+model+'_B'+'*'+cut,
-                                            'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*'+model+'_B'+'*'+normB+'*'+cut,
+                                            # 'weight' : mcCommonWeight+'*'+model+'_B'+'*'+cut,
+                                            'weight' : mcCommonWeight+'*WtaggerSFnom'+'*'+model+'_B'+'*'+normB+'*'+cut,
                                             'FilesPerJob' : FilesPerJob,
   }
 
   samples['vbfHWWlnuqq_M'+str(MX)+'_SI'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
-                                            'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom'+'*('+model+'*'+normS+'+'+model+'_I'+'*'+normI+')*'+cut,
+                                            'weight' : mcCommonWeight+'*WtaggerSFnom'+'*('+model+'*'+normS+'+'+model+'_I'+'*'+normI+')*'+cut,
                                             'FilesPerJob' : FilesPerJob,
   }
 
@@ -128,21 +130,21 @@ for MX in List_MX_VBF:
 samples['Wjets0j'] = {    'name'   :   
                           getSampleFiles(directory,'WJetsToLNu-0J',False,'nanoLatino_')
                           ,
-                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          'weight' : mcCommonWeight,
                           #'FilesPerJob' : 4,
                           'FilesPerJob' : FilesPerJobMainBKG,
                         }
 samples['Wjets1j'] = {    'name'   :   
                           getSampleFiles(directory,'WJetsToLNu-1J',False,'nanoLatino_')
                           ,
-                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          'weight' : mcCommonWeight,
                         #'FilesPerJob' : 4,
                           'FilesPerJob' : FilesPerJobMainBKG,
                         }
 samples['Wjets2j'] = {    'name'   :   
                           getSampleFiles(directory,'WJetsToLNu-2J',False,'nanoLatino_')
                           ,
-                          'weight' : 'XSWeight*SFweight*METFilter_MC',
+                          'weight' : mcCommonWeight,
                           #'FilesPerJob' : 4,
                           'FilesPerJob' : FilesPerJobMainBKG,
                         }
@@ -162,7 +164,7 @@ ptllDYW_LO = '((0.632927+0.0456956*gen_ptll-0.00154485*gen_ptll*gen_ptll+2.64397
 
 samples['DY'] = {    'name'   :   getSampleFiles(directory,'DYJetsToLL_M-50',False,'nanoLatino_')
                      + getSampleFiles(directory,'DYJetsToLL_M-10to50-LO',False,'nanoLatino_'),
-                     'weight' : 'XSWeight*SFweight*METFilter_MC',
+                     'weight' : mcCommonWeight,
                      #'FilesPerJob' : 10,
                      'FilesPerJob' : FilesPerJobMainBKG,
 }
@@ -179,7 +181,7 @@ samples['top'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',F
                       + getSampleFiles(directory,'ST_tW_top',False,'nanoLatino_')
                       + getSampleFiles(directory,'TTTo2L2Nu_PSWeights',False,'nanoLatino_') 
                       ,
-                      'weight' : 'XSWeight*SFweight*METFilter_MC',
+                      'weight' : mcCommonWeight,
                       #'FilesPerJob' : 3,
                       'FilesPerJob' : FilesPerJobMainBKG,
                       #'FilesPerJob' : 40,
@@ -222,31 +224,46 @@ QCD_bcToE=[
   'QCD_Pt_170to250_bcToE',
   'QCD_Pt_250toInf_bcToE',
 ]
-samples['QCD_MU'] = { 'name':[],
-                      'weight' : 'XSWeight*SFweight*METFilter_MC', 
-                      'FilesPerJob' : FilesPerJob,
-                    }
-samples['QCD_EM'] = { 'name':[],
-                      'weight' : 'XSWeight*SFweight*METFilter_MC', 
-                      'FilesPerJob' : FilesPerJob,
-                    }
-samples['QCD_bcToE'] = { 'name':[],
-                         'weight' : 'XSWeight*SFweight*METFilter_MC', 
-                         'FilesPerJob' : FilesPerJob,
-                       }
-for QCD in QCD_MU:
-  samples['QCD_MU']['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
-for QCD in QCD_EM:
-  samples['QCD_EM']['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
-for QCD in QCD_bcToE:
-  samples['QCD_bcToE']['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
+
+
+if not DIVIDEQCD:
+  for QCDin QCD_MU+QCD_EM+QCD_bcToE:
+    samples['QCD']['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
+    
+  for QCD in QCD_MU:
+    addSampleWeight(samples,'QCD',QCD,'(abs(Lepton_pdgId[0])==13)')
+    addSampleWeight(samples,'QCD',QCD,kfactor[QCD])
+  for QCD in QCD_EM:
+    addSampleWeight(samples,'QCD',QCD,'(abs(Lepton_pdgId[0])==11)')
+    addSampleWeight(samples,'QCD',QCD,kfactor[QCD])
+  for QCD in QCD_bcToE:
+    addSampleWeight(samples,'QCD',QCD,'(abs(Lepton_pdgId[0])==11)')
+    #addSampleWeight(samples,'QCD',QCD,kfactor[QCD])
+else:
+  for QCD in QCD_MU+QCD_EM+QCD_bcToE:
+    samples[QCD] = { 'name':[],
+                     'weight' : mcCommonWeight+'*('+mcCommonWeight+'<150)',
+                     'FilesPerJob' : FilesPerJob,
+                   }
+
+  for QCDin QCD_MU+QCD_EM+QCD_bcToE:
+    samples[QCD]['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
+    
+  for QCD in QCD_MU:
+    addSampleWeight(samples,QCD,QCD,'(abs(Lepton_pdgId[0])==13)')
+    addSampleWeight(samples,QCD,QCD,kfactor[QCD])
+  for QCD in QCD_EM:
+    addSampleWeight(samples,QCD,QCD,'(abs(Lepton_pdgId[0])==11)')
+    addSampleWeight(samples,QCD,QCD,kfactor[QCD])
+  for QCD in QCD_bcToE:
+    addSampleWeight(samples,QCD,QCD,'(abs(Lepton_pdgId[0])==11)')
 
 
   
 ##--MultiBoson
 
 samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
-                     'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                     'weight' : mcCommonWeight+'*WtaggerSFnom*(Sum$(GenJet_pt > 30) <= 4 )',
                      'FilesPerJob' : FilesPerJobMainBKG,                 
 }##
 ##--diagram--##
@@ -255,58 +272,58 @@ samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'na
 ##http://147.47.242.40/qqww/powheg_ww_event_record.png
 
 
-samples['WWJJ'] = {    'name'   :   getSampleFiles(directory,'WpToLNu_WmTo2J_QCD',False,'nanoLatino_')
+samples['qqWWqq'] = {    'name'   :   getSampleFiles(directory,'WpToLNu_WmTo2J_QCD',False,'nanoLatino_')
                        +getSampleFiles(directory,'WpTo2J_WmToLNu_QCD',False,'nanoLatino_'), 
                        
-                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom*(Sum$(abs(GenPart_pdgId)==6 || GenPart_pdgId==25)==0)',
+                         'weight' : mcCommonWeight+'*WtaggerSFnom* (Sum$(GenJet_pt > 30) >4 )*(Sum$(abs(GenPart_pdgId)==6 || GenPart_pdgId==25)==0)',
                        'FilesPerJob' : FilesPerJobMainBKG,
                      }
 
 
 samples['WZ'] = {    'name'   :   getSampleFiles(directory,'WZ',False,'nanoLatino_') ,
-                     'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                     'weight' : mcCommonWeight+'*WtaggerSFnom',
 }
 
 samples['ZZ'] = {    'name'   :   getSampleFiles(directory,'ZZ',False,'nanoLatino_') ,
-                     'weight' : 'XSWeight*SFweight*METFilter_MC',
+                     'weight' : mcCommonWeight,
 }
 
 
 samples['WWW'] = {    'name'   :   getSampleFiles(directory,'WWW',False,'nanoLatino_') ,
-                    'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                    'weight' : mcCommonWeight+'*WtaggerSFnom',
 }
 
 samples['WZZ'] = {    'name'   :   getSampleFiles(directory,'WZZ',False,'nanoLatino_') ,
-                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                      'weight' : mcCommonWeight+'*WtaggerSFnom',
 }
 samples['ZZZ'] = {    'name'   :   getSampleFiles(directory,'ZZZ',False,'nanoLatino_') ,
-                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                      'weight' : mcCommonWeight+'*WtaggerSFnom',
 }
 
 samples['WWZ'] = {    'name'   :   getSampleFiles(directory,'WWZ',False,'nanoLatino_') ,
-                      'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                      'weight' : mcCommonWeight+'*WtaggerSFnom',
 }
 
 
 samples['ggHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M125',False,'nanoLatino_'),
-                               'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                               'weight' : mcCommonWeight+'*WtaggerSFnom',
                                'FilesPerJob' : FilesPerJob,
 }
 
 samples['vbfHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M125',False,'nanoLatino_'),
-                                'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                                'weight' : mcCommonWeight+'*WtaggerSFnom',
                                 'FilesPerJob' : FilesPerJob,
 }
 samples['ZHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HZJ_HToWW_M125',False,'nanoLatino_'),
-                              'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                              'weight' : mcCommonWeight+'*WtaggerSFnom',
                               'FilesPerJob' : FilesPerJob,
 }
 samples['WpHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HWplusJ_HToWW_M125',False,'nanoLatino_'),
-                               'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                               'weight' : mcCommonWeight+'*WtaggerSFnom',
                                'FilesPerJob' : FilesPerJob,
 }
 samples['WmHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HWminusJ_HToWW_M125',False,'nanoLatino_'),
-                               'weight' : 'XSWeight*SFweight*METFilter_MC*WtaggerSFnom',
+                               'weight' : mcCommonWeight+'*WtaggerSFnom',
                                'FilesPerJob' : FilesPerJob,
 }
 
@@ -314,24 +331,24 @@ samples['WmHWWlnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HWminusJ_H
 
 
 samples['ggHtautaulnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'GluGluHToTauTau_M125_newpmx',False,'nanoLatino_'),
-                                   'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                   'weight' : mcCommonWeight,
                                    'FilesPerJob' : FilesPerJob,
 }
 
 samples['vbfHtautaulnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'VBFHToTauTau_M125',False,'nanoLatino_'),
-                                    'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                    'weight' : mcCommonWeight,
                                     'FilesPerJob' : FilesPerJob,
 }
 samples['WmHtautaulnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HWminusJ_HToTauTau_M125',False,'nanoLatino_'),
-                                   'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                   'weight' : mcCommonWeight,
                                    'FilesPerJob' : FilesPerJob,
 }
 samples['WpHtautaulnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HWplusJ_HToTauTau_M125',False,'nanoLatino_'),
-                                   'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                   'weight' : mcCommonWeight,
                                    'FilesPerJob' : FilesPerJob,
 }
 samples['ZHtautaulnuqq_M125'] = { 'name'   :   getSampleFiles(directory,'HZJ_HToTauTau_M125',False,'nanoLatino_'),
-                                  'weight' : 'XSWeight*SFweight*METFilter_MC',
+                                  'weight' : mcCommonWeight,
                                   'FilesPerJob' : FilesPerJob,
 }
 
@@ -365,7 +382,7 @@ for Run in DataRun :
       #  directory=_directory
       #  samples={}
       #  samples['ggHWWlnuqq_M400'] = {    'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M400',False,'nanoLatino_') ,
-      #                        'weight' : 'XSWeight*SFweight*METFilter_MC' ,
+      #                        'weight' : mcCommonWeight ,
       #  }
       
       
