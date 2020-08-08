@@ -20,19 +20,19 @@ os.system('python TurnOffCombinedSamples.py WPandCut2016.py CombineSBI')
 
 REGION_LIST=['SR','SB','TOP']
 BOOST_LIST=['Boosted','Resolved']
-PROC_LIST=['ggww','qqwwqq']
+PROC_LIST=['ggWW','qqWWqq']
 
 for reg in REGION_LIST:
     for bst in BOOST_LIST:
         for proc in PROC_LIST:
             command_list=[
                 'cd '+os.getcwd(),
-                'python Make_ggww_qqwwqq_shape.py --c configuration_'+bst+'_'+reg+'.py --p '+proc
+                'python ShapeFromMela/Make_ggww_qqwwqq_shape.py --c configuration_'+bst+'_'+reg+'.py --p '+proc
             ]
             command='&&'.join(command_list)
 
 
-            WORKDIR='WORKDIR__Make_'+proc+'_'+bst+'_'+reg
+            WORKDIR='WORKDIR_ShapeFromMELA/WORKDIR__Make_'+proc+'_'+bst+'_'+reg
             jobname='Make_'+proc+'_'+bst+'_'+reg
 
             ncpu=1
