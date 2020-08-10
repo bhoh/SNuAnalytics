@@ -53,6 +53,8 @@ variables['HadronicW_pt']={
     'fold': 3,
 
 }
+if Resolved:
+    variables['HadronicW_pt']['range']=([40,50,60,70,80,90,100,110,120,130,140,150,160,170,180,190,200,230,260,290,320,350,380,410,500,700,1000],)
 
 variables['HadronicW_mass']={
     'name':'HadronicW_mass',
@@ -256,7 +258,7 @@ variables['Wlep_Mt']={
 
 variables['Wlep_nom_pt']={
     'name' : 'Wlep_nom_pt',
-    'range':(35,150,500),
+    'range':(47,30,500),
     'xaxis':'P_{T}(LeptonicW) [GeV]',
     'fold':3
 }
@@ -313,7 +315,7 @@ if Resolved:
 variables['dEta_jj_VBF']={
     'name':'dEta_jj_VBF',
     'range':(20,0,8),
-    'xaxis':'#Delta(#eta)(jj) VBF',
+    'xaxis':'#Delta#eta(jj) VBF',
     'fold':0
 }
 variables['mass_jj_VBF']={

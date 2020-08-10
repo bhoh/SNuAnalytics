@@ -173,7 +173,7 @@ if 'ALL' in configration_py:
 ScoreCats={}
 #if not ONLY_FINALCUT : 
 ScoreCats['ScoreALL']='(1)'
-ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
+#ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
 #if not ONLY_FINALCUT : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
 
 ResolvedMEKDCat={}
@@ -232,19 +232,19 @@ for LepCut in LepCats:
                     for WlepMtCut in ResolvedWlepMtCats:
                         for WWMtCut in ResolvedWWMtCats:
                             for ScoreCut in ScoreCats:
-                                if 'VBF' in ProdCut:
-                                    cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut] = LepCats[LepCut]\
-                                                         +'&&'+ResolvedProdCats[ProdCut]\
-                                                         +'&&'+ResolvedRegionCats[RegionCut]\
-                                                         +'&&'+ResolvedMETCat[METCut]\
-                                                         +'&&'+ResolvedPtOverMCats[PtOvMCut]\
-                                                         +'&&'+ResolvedWlepMtCats[WlepMtCut]\
-                                                         +'&&'+ResolvedWWMtCats[WWMtCut]\
-                                                         +'&&'+ScoreCats[ScoreCut]
+                                #if 'VBF' in ProdCut:
+                                #    cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut] = LepCats[LepCut]\
+                                #                         +'&&'+ResolvedProdCats[ProdCut]\
+                                #                         +'&&'+ResolvedRegionCats[RegionCut]\
+                                #                         +'&&'+ResolvedMETCat[METCut]\
+                                #                         +'&&'+ResolvedPtOverMCats[PtOvMCut]\
+                                #                         +'&&'+ResolvedWlepMtCats[WlepMtCut]\
+                                #                         +'&&'+ResolvedWWMtCats[WWMtCut]\
+                                #                         +'&&'+ScoreCats[ScoreCut]
 
-                                else:
-                                    for MEKDCut in ResolvedMEKDCat:
-                                        cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut+'__'+MEKDCut] = LepCats[LepCut]\
+                                #else:
+                                for MEKDCut in ResolvedMEKDCat:
+                                    cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut+'__'+MEKDCut] = LepCats[LepCut]\
                                                          +'&&'+ResolvedProdCats[ProdCut]\
                                                          +'&&'+ResolvedRegionCats[RegionCut]\
                                                          +'&&'+ResolvedMETCat[METCut]\

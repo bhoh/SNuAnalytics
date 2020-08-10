@@ -233,19 +233,20 @@ from List_MX_VBF import *
 if 'SR' in scriptname:
     if not UsePseudoData : plot['DATA']['isBlind']=1
 if "Boost" in scriptname:
-    MList=[3000]
+    #MList=[3000]
+    MList=[900]
     if Year=='2016':MList=[2500]
-    scale=10000
+    scale=100
 else:
     MList=[400]
-    scale=10
+    scale=100
         
 for MX in MList:
     
     plot['ggHWWlnuqq_M'+str(MX)+'_S']={
         #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
         #'nameHR':'ggHWWlnuqq_M'+str(MX),
-        'nameHR':'GGF->X->lnuqq M'+str(MX)+' x'+str(scale),
+        'nameHR':'GGF'+str(MX)+' x'+str(scale),
         'scale' : scale,
         'isData'   : 0,
         'isSignal' : 2,
@@ -254,7 +255,7 @@ for MX in MList:
     }
     groupPlot['ggHWWlnuqq_M'+str(MX)+'_S']={
         #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
-        'nameHR':'ggF->lnuqq M'+str(MX)+' x'+str(scale),
+        'nameHR':'GGF'+str(MX)+' x'+str(scale),
         #'nameHR':'ggHWWlnuqq_M'+str(MX),
         'scale' : scale,
         'isData'   : 0,
@@ -267,7 +268,7 @@ for MX in MList:
 for MX in MList:
     #continue
     groupPlot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'VBF->X->lnuqq'+str(MX)+' x'+str(scale),
+        'nameHR':'VBF M'+str(MX)+' x'+str(scale),
         #'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 2,
@@ -277,7 +278,7 @@ for MX in MList:
     }
     
     plot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'VBF->X->lnuqq'+str(MX)+' x'+str(scale),
+        'nameHR':'VBF'+str(MX)+' x'+str(scale),
         #'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
         #'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,

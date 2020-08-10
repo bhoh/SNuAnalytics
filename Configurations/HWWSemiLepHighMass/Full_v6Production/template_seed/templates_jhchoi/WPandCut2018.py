@@ -15,7 +15,9 @@ ONLY_FINALCUT=True
 ###--Variable setting
 OnlyFinalVariable=False
 
+##--Corrections
 MjjShapeCorr=True
+PowhegNorm=False
 ##--For QCD norm fitting
 DIVIDEQCD=False
 
@@ -80,6 +82,7 @@ muPtCut='27'
 ALGO="dMchi2Resolution"
 #WTAG="DeepAK8WP5MD"
 WTAG="DeepAK8WP2p5"
+#WTAG="HP45"
 
 
 ##---SF & Weight to use

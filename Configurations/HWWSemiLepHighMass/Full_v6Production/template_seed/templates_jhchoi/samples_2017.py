@@ -79,8 +79,12 @@ for MX in List_MX:
 
   cut=melaggf[MX]
   normS='('+kfactor['ggHWWlnuqq_M'+str(MX)]+')'
-  normI='('+str(math.sqrt(float(kfactor['ggHWWlnuqq_M'+str(MX)])*float(NormToPowheg['ggHWWlnuqq_M'+str(MX)])))+')' 
-  normB='('+NormToPowheg['ggHWWlnuqq_M'+str(MX)]+')'
+
+  normI='(1)'
+  normB='(1)'
+  if PowhegNorm:
+    normI='('+str(math.sqrt(float(kfactor['ggHWWlnuqq_M'+str(MX)])*float(NormToPowheg['ggHWWlnuqq_M'+str(MX)])))+')' 
+    normB='('+NormToPowheg['ggHWWlnuqq_M'+str(MX)]+')'
 
 
   samples['ggHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'GluGluHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
@@ -103,8 +107,11 @@ for MX in List_MX:
 for MX in List_MX_VBF:
   cut=melavbf[MX]
   normS='('+kfactor['vbfHWWlnuqq_M'+str(MX)]+')'
-  normI='('+str(math.sqrt(float(kfactor['vbfHWWlnuqq_M'+str(MX)])*float(NormToPowheg['vbfHWWlnuqq_M'+str(MX)])))+')' 
-  normB='('+NormToPowheg['vbfHWWlnuqq_M'+str(MX)]+')'
+  normI='(1)'
+  normB='(1)'
+  if PowhegNorm:
+    normI='('+str(math.sqrt(float(kfactor['vbfHWWlnuqq_M'+str(MX)])*float(NormToPowheg['vbfHWWlnuqq_M'+str(MX)])))+')' 
+    normB='('+NormToPowheg['vbfHWWlnuqq_M'+str(MX)]+')'
   samples['vbfHWWlnuqq_M'+str(MX)+'_S'] = { 'name'   :   getSampleFiles(directory,'VBFHToWWToLNuQQ_M'+str(MX),False,'nanoLatino_'),
                                             'weight' : mcCommonWeight+'*WtaggerSFnom'+'*'+model+'*'+normS+'*'+cut,
                                             # 'weight' : mcCommonWeight+'*'+model+'*'+cut,
@@ -154,6 +161,9 @@ addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu-0J', kfactor['Wjets0j'])
 addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu-1J', kfactor['Wjets1j'])
 addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu-2J', kfactor['Wjets2j'])
 
+addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu_0J', 'MjjShape')
+addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu_1J', 'MjjShape')
+addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu_2J', 'MjjShape')
 
 
 

@@ -335,6 +335,9 @@ aliases['SlopeWeight']={
 aliases['MjjShape']={
     'expr':'wmass > 0 ? '+intercept+'+'+slope+'*(250-wmass)/210. : 0'
 }
+#aliases['MjjShapeMin']={ ##normalize factor
+#    'expr':'wmass > 0 ? '+intercept+' : 0'
+#}
 ##----if not reweight (if you don't want it or to measure fitting param)
 if not MjjShapeCorr:
     aliases['MjjShape']={

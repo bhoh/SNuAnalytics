@@ -174,16 +174,16 @@ for LepCut in LepCats:
             for METCut in BoostedMETCat:
                 for PtOvMCut in BoostedPtOverMlnJCat:
                     for dphiCut in BoostedDphiCat:
-                        if 'VBF' in ProdCut : 
-                            cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+dphiCut] = LepCats[LepCut]\
-                                                                        +'&&'+BoostedProdCats[ProdCut]\
-                                                                        +'&&'+BoostedRegionCats[RegionCut]\
-                                                                        +'&&'+BoostedMETCat[METCut]\
-                                                                        +'&&'+BoostedPtOverMlnJCat[PtOvMCut]\
-                                                                        +'&&'+BoostedDphiCat[dphiCut]
+                        #if 'VBF' in ProdCut : 
+                        #cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+dphiCut] = LepCats[LepCut]\
+                        #                                                +'&&'+BoostedProdCats[ProdCut]\
+                        #                                                +'&&'+BoostedRegionCats[RegionCut]\
+                        #                                                +'&&'+BoostedMETCat[METCut]\
+                        #                                                +'&&'+BoostedPtOverMlnJCat[PtOvMCut]\
+                        #                                                +'&&'+BoostedDphiCat[dphiCut]
                             
-                        else:
-                            for MEKDCut in BoostedMEKDCat:
+                        #else:
+                        for MEKDCut in BoostedMEKDCat:
                                 cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+"__"+MEKDCut+'__'+dphiCut] = LepCats[LepCut]\
                                                                         +'&&'+BoostedProdCats[ProdCut]\
                                                                         +'&&'+BoostedRegionCats[RegionCut]\

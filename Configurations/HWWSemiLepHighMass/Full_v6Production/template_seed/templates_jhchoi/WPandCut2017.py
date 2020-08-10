@@ -15,7 +15,9 @@ ONLY_FINALCUT=True
 ###--Variable setting
 OnlyFinalVariable=False
 
+##--Corretions
 MjjShapeCorr=True
+PowhegNorm=False
 ##--For QCD norm fitting
 DIVIDEQCD=False
 
