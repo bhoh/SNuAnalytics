@@ -12,7 +12,7 @@ ARR_DIR=(
 ARR_DIR=`ls -d rootFile*/`
 ##default is dryrun
 for d in ${ARR_DIR[@]};do
-    python python_tool/latino/SetupHaddInBatch.py -n 10 -a $d -t $d
+    python python_tool/latino/SetupHaddInBatch.py -n 5 -a $d -t $d
 
     
     #continue
