@@ -26,8 +26,8 @@ sys.path.insert(0, os.getcwd())
 import math
 from HistoParser import HistoParser
 
-def ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputdirpath):
-   print "[MakeEnvelopShape_a_sample]"
+def ExportMakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputdirpath):
+   print "[MakeRmsShape_a_sample]"
    print "samplename",samplename
    print "nuisacneName",nuisacneName
    print "len(cuts)",len(cuts)
@@ -67,7 +67,7 @@ def ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histo
 import datetime
 begin_time = datetime.datetime.now()
 histoana=HistoParser(this_dict)
-histoana.MakeEnvelopShape("histo_"+samplename+'_'+nuisacneName)
+histoana.MakeRmsShape("histo_"+samplename+'_'+nuisacneName)
    
 #f=ROOT.TFile.Open(outputdirpath+"/"+jobname+'_'+nuisacneName+'.root','UPDATE')
 f=ROOT.TFile.Open(histofile,'UPDATE')
@@ -121,8 +121,8 @@ print(datetime.datetime.now() - begin_time)
       print command
       os.system(command)
 
-def MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances):
-   print "[MakeEnvelopShape_a_sample]"
+def MakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances):
+   print "[MakeRmsShape_a_sample]"
    print "samplename",samplename
    print "nuisacneName",nuisacneName
    print "len(cuts)",len(cuts)
@@ -138,7 +138,7 @@ def MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,n
       },
    }
    histoana=HistoParser(this_dict)
-   histoana.MakeEnvelopShape("histo_"+samplename+'_'+nuisacneName)
+   histoana.MakeRmsShape("histo_"+samplename+'_'+nuisacneName)
    
    f=ROOT.TFile.Open(histofile,'UPDATE')
    for cut in sorted(cuts):
@@ -146,9 +146,9 @@ def MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,n
 
          f.cd(cut+'/'+var)
          print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisacneName+'Up'
-         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopUp'],"histo_"+samplename+'_'+nuisacneName+'Up')
+         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['rmsUp'],"histo_"+samplename+'_'+nuisacneName+'Up')
          print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisacneName+'Down'
-         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopDown'],"histo_"+samplename+'_'+nuisacneName+'Down')
+         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['rmsDown'],"histo_"+samplename+'_'+nuisacneName+'Down')
          
    f.Close()
    #c.SaveAs("test.pdf")
@@ -180,7 +180,7 @@ def RunInteractive():
    handle=open(conf,'r')
    exec(handle)
    handle.close()
-
+   samplesFile=samplesFile.replace('.py','_dummy.py')
    opt.samplesFile=samplesFile
    opt.variablesFile=variablesFile
    opt.cutsFile=cutsFile
@@ -219,7 +219,7 @@ def RunInteractive():
       print "--",samplename,"--"
       #histofiles=glob.glob(outputDir+'/plots_'+tag+'_ALL_'+samplename+'.*root')
       #for histofile in histofiles:
-      MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
+      MakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
       idx+=1
 
 if __name__ == '__main__':
@@ -245,6 +245,8 @@ if __name__ == '__main__':
    handle=open(conf,'r')
    exec(handle)
    handle.close()
+
+   samplesFile=samplesFile.replace('.py','_dummy.py')
    opt.samplesFile=samplesFile
    opt.variablesFile=variablesFile
    opt.cutsFile=cutsFile
@@ -272,7 +274,7 @@ if __name__ == '__main__':
    exec(handle)
    handle.close()
    ##--Run
-   MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
+   MakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
    #histofile=outputDir+'/'+histofile
    #os.system("mkdir -p "+outputDir+'/'+nuisacneName+'/')
    #idx=0
@@ -280,11 +282,11 @@ if __name__ == '__main__':
    #for samplename in nuisances[nuisacneName]['samples']:
    #   print idx,'/',total
    #   #print "--",samplename,"--"
-   #   #ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
+   #   #ExportMakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
 
    #   histofiles=glob.glob(outputDir+'/plots_'+tag+'_ALL_'+samplename+'.*root')
    #   for histofile in histofiles:                                                                                                            
-   #      ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
+   #      ExportMakeRmsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
    #   idx+=1
 
 

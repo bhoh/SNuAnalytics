@@ -29,29 +29,18 @@ if TurnOff:
 
 
 
-def MakeSampleList(rootfiledir,prod):
-    prefix=''
-    alias=''
-    if prod=='ggww':
-        prefix='ggHWWlnuqq'
-        List_Mass=List_MX
-    elif prod=='qqwwqq':
-        prefix='vbfHWWlnuqq'
-        List_Mass=List_MX_VBF
-    alias=prod.replace('ww','WW')
+def MakeSampleList(rootfiledir,inputlist):
     SampleList={}
-
-    for MX in List_Mass:
-        if MX < 300:continue
-        if MX > 900 : continue
-        MX=str(MX)
-        SampleList[prefix+'_M'+MX+'_B']=[]
+    for i in inputlist:
+        
+        SampleList[i]=[]
     return SampleList
     
-def HaddFiles(rootfiledir,prod):
+def HaddFiles(rootfiledir,inputlist,outputname):
 
-    alias=prod.replace('ww','WW')
-    SampleList=MakeSampleList(rootfiledir,prod)
+    #alias='_'.join(inputlist)
+    alias=outputname
+    SampleList=MakeSampleList(rootfiledir,inputlist)
     
 
     TotalList=[]
@@ -65,21 +54,21 @@ def HaddFiles(rootfiledir,prod):
     ##--Hadd
     tempdir=rootfiledir+'/_temp_'+alias+'/'
     os.system('mkdir -p '+tempdir)
-    HaddedFile=tempdir+'/'+'plots_'+alias+'_avg.root'
-    OutputFile=rootfiledir+'/plots_'+alias+'_avg.root'
+    HaddedFile=tempdir+'/'+'plots_'+alias+'.root'
+    OutputFile=rootfiledir+'/plots_'+alias+'.root'
     HaddInputs=' '.join(TotalList)
     os.system('hadd -f '+HaddedFile+' '+HaddInputs)
 
 
-def MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod,nuisance='',var=''):
-    alias=prod.replace('ww','WW')
-    SampleList=MakeSampleList(rootfiledir,prod)
+def MakeSUM(cuts,variables,samples,nuisances,rootfiledir,inputlist,outputname,nuisance='',var=''):
+    alias=outputname
+    SampleList=MakeSampleList(rootfiledir,inputlist)
 
     tempdir=rootfiledir+'/_temp_'+alias+'/'
-    HaddedFile=tempdir+'/'+'plots_'+alias+'_avg.root'
-    OutputFile=rootfiledir+'/plots_'+alias+'_avg.root'
+    HaddedFile=tempdir+'/'+'plots_'+alias+'.root'
+    OutputFile=rootfiledir+'/plots_'+alias+'.root'
 
-    samplename=alias
+    samplename=outputname
     ##---Make ggWW shape
     this_dict={#QCDscale
 
@@ -109,7 +98,7 @@ def MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod,nuisance='',var=''
         return False
     histoana=HistoParser(this_dict)
     
-    histoana.MakeWeightedAvgShape(HaddedHistoName)
+    #histoana.MakeWeightedAvgShape(HaddedHistoName)
 
     ##--Save the Shape
     #self.mydict[gr]['histo'][cut][variable]['WeightedAvg']
@@ -119,7 +108,9 @@ def MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod,nuisance='',var=''
             f.mkdir(cut+'/'+var)
             f.cd(cut+'/'+var)
             print "Store Shape on",cut+'/'+var+"/"+HaddedHistoName
-            ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'],HaddedHistoName)
+            histoana.mydict[samplename]['histo'][cut][var]['Sum'].SetTitle(HaddedHistoName)
+            histoana.mydict[samplename]['histo'][cut][var]['Sum'].SetName(HaddedHistoName)
+            ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['Sum'],HaddedHistoName)
             #print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisanceName+'Down'
             #ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopDown'],"histo_"+samplename+'_'+nuisanceName+'Down')
             
@@ -139,6 +130,7 @@ def LoadConfiguration(conf):
    handle=open(conf,'r')
    exec(handle)
    handle.close()
+   samplesFile=samplesFile.replace('.py','_dummy.py')
    opt.samplesFile=samplesFile
    opt.variablesFile=variablesFile
    opt.cutsFile=cutsFile
@@ -172,17 +164,20 @@ if __name__ == '__main__':
    usage = 'usage: %prog [options]'
    parser = optparse.OptionParser(usage)
    parser.add_option("-c","--conf",   dest="conf", help="configuration file's name")
-   parser.add_option("-p","--prod",   dest="prod", help="ggww or qqwwqq")
+   parser.add_option("-i","--inputlist",   dest="inputlist", help="inputlist")
+   parser.add_option("-o","--outputname",   dest="outputname", help="outputname")
    #parser.add_option("-f","--histofile",   dest="histofile", help="histofile's name")
    #parser.add_option("-n","--nuisanceName",   dest="nuisanceName", help="nuisanceName, for example QCDscale")
 
    (options, args) = parser.parse_args()
 
    conf=options.conf
-   prod=options.prod
-   if prod!='ggww' and prod!='qqwwqq':
-       print "!!!!Please --p ggww OR qqwwqq"
-       exit()
+   inputlist=options.inputlist
+   inputlist=inputlist.split(',')
+   outputname=options.outputname
+   #if prod!='ggww' and prod!='qqwwqq':
+   #    print "!!!!Please --p ggww OR qqwwqq"
+   #    exit()
 
    samples,variables,cuts,nuisances,rootfiledir=LoadConfiguration(conf)
    ##For nominal
@@ -190,10 +185,10 @@ if __name__ == '__main__':
    
 
    ##--Hadd
-   HaddFiles(rootfiledir,prod)
+   HaddFiles(rootfiledir,inputlist,outputname)
 
 
-   MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod)
+   MakeSUM(cuts,variables,samples,nuisances,rootfiledir,inputlist,outputname)
    
    #--SampleList
    #SampleList=MakeSampleList(rootfiledir,prod)

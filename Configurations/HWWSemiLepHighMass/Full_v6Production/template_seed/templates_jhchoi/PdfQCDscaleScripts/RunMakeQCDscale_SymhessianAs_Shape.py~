@@ -18,7 +18,6 @@ else:
 
 
 
-
 import glob
 print "[Turn off flags]"
 os.system('python TurnOffCombinedSamples.py WPandCut2016.py CombineMultiV')
@@ -33,8 +32,6 @@ print "[done]"
 
 ##---Module For batchjob
 sys.path.insert(0, "python_tool/")
-sys.path.insert(1, os.getcwd())
-from WPandCut2016 import *
 from ExportShellCondorSetup import Export 
 #def Export(WORKDIR,command,jobname,submit,ncpu):
 
@@ -63,21 +60,6 @@ def SubmitMakeSymhessianAsShape(nuisance,s,bst,reg):
     command='cd '+os.getcwd()+';'
     for f in filelist:
         command+='python PdfQCDscaleScripts/MakeSymhessianAsShape.py -c '+configuration+' -n '+nuisance+' -s '+s+' -f '+f+';'
-    print command
-    
-    WORKDIR="WORKDIR__"+nuisance+'/'+bst+'_'+reg+'/'+s
-    jobname=nuisance+'/'+bst+'_'+reg+'/'+s
-    
-    ncpu=1
-    Export(WORKDIR,command,jobname,submit,ncpu)
-
-def SubmitMakeRmsShape(nuisance,s,bst,reg):
-    configuration='configuration_'+bst+'_'+reg+'.py'
-    #nuisance='QCDscaleAccept'
-    filelist=glob.glob('rootFile*_*'+bst+'*_*'+reg+'*/*_'+s+'.*root')
-    command='cd '+os.getcwd()+';'
-    for f in filelist:
-        command+='python PdfQCDscaleScripts/MakeRmsShape.py -c '+configuration+' -n '+nuisance+' -s '+s+' -f '+f+';'
     print command
     
     WORKDIR="WORKDIR__"+nuisance+'/'+bst+'_'+reg+'/'+s
@@ -144,10 +126,7 @@ def Submit():
                     
                     
                     nuisance='pdfAccept'
-                    if Year=='2016':
-                        SubmitMakeRmsShape(nuisance,s,bst,reg)
-                    else:
-                        SubmitMakeSymhessianAsShape(nuisance,s,bst,reg)
+                    SubmitMakeSymhessianAsShape(nuisance,s,bst,reg)
 def Resub():
     shlist=[]
     nuisancelist=['QCDscaleAccept','pdfAccept']

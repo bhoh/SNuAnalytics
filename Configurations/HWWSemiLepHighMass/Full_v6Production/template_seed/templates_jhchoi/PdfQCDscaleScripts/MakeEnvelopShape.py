@@ -26,8 +26,8 @@ sys.path.insert(0, os.getcwd())
 import math
 from HistoParser import HistoParser
 
-def ExportMakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputdirpath):
-   print "[MakeSymhessianAsShape_a_sample]"
+def ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputdirpath):
+   print "[MakeEnvelopShape_a_sample]"
    print "samplename",samplename
    print "nuisacneName",nuisacneName
    print "len(cuts)",len(cuts)
@@ -67,7 +67,7 @@ def ExportMakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,
 import datetime
 begin_time = datetime.datetime.now()
 histoana=HistoParser(this_dict)
-histoana.MakeSymhessianAsShape("histo_"+samplename+'_'+nuisacneName)
+histoana.MakeEnvelopShape("histo_"+samplename+'_'+nuisacneName)
    
 #f=ROOT.TFile.Open(outputdirpath+"/"+jobname+'_'+nuisacneName+'.root','UPDATE')
 f=ROOT.TFile.Open(histofile,'UPDATE')
@@ -121,8 +121,8 @@ print(datetime.datetime.now() - begin_time)
       print command
       os.system(command)
 
-def MakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances):
-   print "[MakeSymhessianAsShape_a_sample]"
+def MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances):
+   print "[MakeEnvelopShape_a_sample]"
    print "samplename",samplename
    print "nuisacneName",nuisacneName
    print "len(cuts)",len(cuts)
@@ -138,7 +138,7 @@ def MakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histof
       },
    }
    histoana=HistoParser(this_dict)
-   histoana.MakeSymhessianAsShape("histo_"+samplename+'_'+nuisacneName)
+   histoana.MakeEnvelopShape("histo_"+samplename+'_'+nuisacneName)
    
    f=ROOT.TFile.Open(histofile,'UPDATE')
    for cut in sorted(cuts):
@@ -146,9 +146,9 @@ def MakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histof
 
          f.cd(cut+'/'+var)
          print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisacneName+'Up'
-         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['symhessianasUp'],"histo_"+samplename+'_'+nuisacneName+'Up')
+         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopUp'],"histo_"+samplename+'_'+nuisacneName+'Up')
          print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisacneName+'Down'
-         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['symhessianasDown'],"histo_"+samplename+'_'+nuisacneName+'Down')
+         ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopDown'],"histo_"+samplename+'_'+nuisacneName+'Down')
          
    f.Close()
    #c.SaveAs("test.pdf")
@@ -219,7 +219,7 @@ def RunInteractive():
       print "--",samplename,"--"
       #histofiles=glob.glob(outputDir+'/plots_'+tag+'_ALL_'+samplename+'.*root')
       #for histofile in histofiles:
-      MakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
+      MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
       idx+=1
 
 if __name__ == '__main__':
@@ -245,7 +245,6 @@ if __name__ == '__main__':
    handle=open(conf,'r')
    exec(handle)
    handle.close()
-
    samplesFile=samplesFile.replace('.py','_dummy.py')
    opt.samplesFile=samplesFile
    opt.variablesFile=variablesFile
@@ -274,7 +273,7 @@ if __name__ == '__main__':
    exec(handle)
    handle.close()
    ##--Run
-   MakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
+   MakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances)
    #histofile=outputDir+'/'+histofile
    #os.system("mkdir -p "+outputDir+'/'+nuisacneName+'/')
    #idx=0
@@ -282,11 +281,11 @@ if __name__ == '__main__':
    #for samplename in nuisances[nuisacneName]['samples']:
    #   print idx,'/',total
    #   #print "--",samplename,"--"
-   #   #ExportMakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
+   #   #ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
 
    #   histofiles=glob.glob(outputDir+'/plots_'+tag+'_ALL_'+samplename+'.*root')
    #   for histofile in histofiles:                                                                                                            
-   #      ExportMakeSymhessianAsShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
+   #      ExportMakeEnvelopShape_a_sample(samplename,nuisacneName,cuts,variables,histofile,nuisances,outputDir+'/'+nuisacneName)
    #   idx+=1
 
 

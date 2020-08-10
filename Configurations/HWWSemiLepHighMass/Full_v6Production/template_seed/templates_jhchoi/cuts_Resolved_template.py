@@ -108,50 +108,120 @@ if 'ALL' in configration_py:
 
 
 
+ResolvedWlepMtCats = {}
+
+if ONLY_FINALCUT :
+    ResolvedMETCat={}
+    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
+if ONLY_PRESELCUT:
+    ResolvedMETCat={}
+    ResolvedMETCat['NoMET']='1'
 
 
 
-ResolvedMETCat={}
-if not ONLY_FINALCUT : ResolvedMETCat['NoMET']='1'
-ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
 
 
 
+if ONLY_FINALCUT:
+    ResolvedPtOverMCats = {}
+    ResolvedPtOverMCats['PtOverM035'] = '(lnjj'+_ALGO_+'nom_minPtWOverM>0.35)'
 
-ResolvedPtOverMCats = {}
-if not ONLY_FINALCUT:ResolvedPtOverMCats['NoPtOverMcut'] = '1'
+if ONLY_PRESELCUT:
+    ResolvedPtOverMCats = {}
+    ResolvedPtOverMCats['NoPtOverMcut'] = '1'
+
+
 if 'ALL' in configration_py:
     ResolvedPtOverMCats = {}
     ResolvedPtOverMCats['ALL']='(1)'
-ResolvedPtOverMCats['PtOverM035'] = '(lnjj'+_ALGO_+'nom_minPtWOverM>0.35)'
+
+
+
 
 ResolvedWlepMtCats = {}
-if not ONLY_FINALCUT:ResolvedWlepMtCats['NoWlepMtcut'] = '1'
+ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
+if ONLY_PRESELCUT:
+    ResolvedWlepMtCats = {}
+    ResolvedWlepMtCats['NoWlepMtcut'] = '1'
+if ONLY_FINALCUT:
+    ResolvedWlepMtCats = {}
+    ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
+
+
 if 'ALL' in configration_py:
     ResolvedWlepMtCats = {}
     ResolvedWlepMtCats['ALL'] = '(1)'
-ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
+
 
 ResolvedWWMtCats={}
-if not ONLY_FINALCUT:ResolvedWWMtCats['NoWWMtOvercut']='1'
+ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
+
+if ONLY_PRESELCUT:
+    ResolvedWWMtCats={}
+    ResolvedWWMtCats['NoWWMtOvercut']='1'
+if ONLY_FINALCUT:
+    ResolvedWWMtCats={}
+    ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
+    
+
 if 'ALL' in configration_py:
     ResolvedWWMtCats={}
     ResolvedWWMtCats['ALL']='(1)'
-ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
+
 
 ScoreCats={}
 #if not ONLY_FINALCUT : 
 ScoreCats['ScoreALL']='(1)'
 ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
-if not ONLY_FINALCUT : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
+#if not ONLY_FINALCUT : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
 
 ResolvedMEKDCat={}
 ResolvedMEKDCat['_']='1'
 ResolvedMEKDCat['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
 ResolvedMEKDCat['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
+
+if ONLY_FINALCUT:
+    ResolvedMEKDCat={}
+    ResolvedMEKDCat['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
+    ResolvedMEKDCat['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
+if ONLY_PRESELCUT:
+    ResolvedMEKDCat={}
+    ResolvedMEKDCat['_']='1'
+    
 if 'ALL' in configration_py:
     ResolvedMEKDCat={}
     ResolvedMEKDCat['ALL']='(1)'
+
+
+
+##---QCD CR
+if 'QCDCR' in configration_py:
+    
+    ResolvedProdCats={}
+    ResolvedProdCats['ResolvedALL']='(isResol'+_ALGO_+'nom)'
+    
+    ResolvedRegionCats={}
+    ResolvedRegionCats['ALL'] = '( isResol'+_ALGO_+'nom)'
+
+    ResolvedMETCat={}
+    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt <= '+METcutRes+')' ##PuppiMET_nom_pt
+    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt > '+METcutRes+')' ##PuppiMET_nom_pt
+
+    ResolvedPtOverMCats = {}
+    ResolvedPtOverMCats['PtOverM035low'] = '(lnjj'+_ALGO_+'nom_minPtWOverM <= 0.35)'
+
+    ResolvedWlepMtCats = {}
+    ResolvedWlepMtCats['WlepMtUnder50'] = '(Wlep_nom_Mt <= 50)'
+
+    ResolvedWWMtCats={}
+    ResolvedWWMtCats['WWMtUnder60']='(lnjj'+_ALGO_+'nom_Mt <= 60)'
+
+    ScoreCats={}
+    ScoreCats['ScoreALL']='(1)'
+
+    ResolvedMEKDCat={}
+    ResolvedMEKDCat['_']='1'
+
 
 for LepCut in LepCats:
     for ProdCut in ResolvedProdCats:
@@ -186,4 +256,5 @@ for LepCut in LepCats:
 
 #cuts['isVBF']='isVBF'
 print "Ncuts=",len(cuts)
-
+for c in cuts:
+    print c

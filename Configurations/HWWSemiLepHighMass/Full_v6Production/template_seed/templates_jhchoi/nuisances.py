@@ -349,6 +349,20 @@ nuisances['PU'] = {
 for skey in mc:
   nuisances['PU']['samples'][skey]=pu_syst
 
+
+MjjShape_syst=['1/MjjShape','1']
+
+
+nuisances['MjjShape'] = {
+    'name': 'MjjShape',
+    'kind': 'weight',
+    'type': 'shape',
+    #'samples': dict((skey, pu_syst) for skey in mc),
+  'samples':{},
+}
+for skey in ['Wjets0','Wjets1j','Wjets2j']:
+  nuisances['MjjShape']['samples'][skey]=MjjShape_syst
+
 #nuisances['UE']  = {
 #                'name'  : 'UE_CP5',
 #                'type': 'lnN',

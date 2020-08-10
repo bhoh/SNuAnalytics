@@ -56,6 +56,7 @@ if ('ele' in configration_py) and ('mu' in configration_py): ##for plotting
     LepCats={
         '_':'1',
     }
+
 ##-----Basic categorization-----##
 
 
@@ -101,29 +102,70 @@ if 'ALL' in configration_py:
     BoostedRegionCats={}
     BoostedRegionCats['ALL']='(isBoost_'+WTAG+'_nom)'
 
-BoostedMETCat={}
-if not ONLY_FINALCUT : BoostedMETCat['NoMET']='1'
-BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'##PuppiMET_nom_pt
 
 
-BoostedPtOverMlnJCat= {}
-if not ONLY_FINALCUT: BoostedPtOverMlnJCat['NoPtOverMcut']='1'
-if 'ALL' in configration_py:
+if ONLY_PRESELCUT:
+    BoostedMETCat={}
+    BoostedMETCat['NoMET']='1'
+
     BoostedPtOverMlnJCat= {}
-    BoostedPtOverMlnJCat['ALL']='(1)'
-BoostedPtOverMlnJCat['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
+    BoostedPtOverMlnJCat['NoPtOverMcut']='1'
 
-BoostedMEKDCat={}
-BoostedMEKDCat['_']='1'
-BoostedMEKDCat['MEKDTAG']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"> 0.5)"
-BoostedMEKDCat['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"< 0.5)"
-if 'ALL' in configration_py:
+    BoostedDphiCat={}
+    BoostedDphiCat['_']='(1)'
+    #BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
+
     BoostedMEKDCat={}
-    BoostedMEKDCat['ALL']='(1)'
+    BoostedMEKDCat['_']='1'
 
-BoostedDphiCat={}
-#BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
-BoostedDphiCat['_']='(1)'
+
+if ONLY_FINALCUT : 
+    BoostedMETCat={}
+    BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'##PuppiMET_nom_pt
+
+    BoostedPtOverMlnJCat= {}
+    BoostedPtOverMlnJCat['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
+
+    BoostedDphiCat={}
+    BoostedDphiCat['_']='(1)'
+    
+    #BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
+    
+
+
+    BoostedMEKDCat={}
+    #BoostedMEKDCat['_']='1'
+    BoostedMEKDCat['MEKDTAG']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"> 0.5)"
+    BoostedMEKDCat['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"< 0.5)"
+#if 'ALL' in configration_py:
+#    BoostedMEKDCat={}
+#    BoostedMEKDCat['ALL']='(1)'
+
+
+
+### --- QCD CR
+if 'QCDCR' in configration_py:
+    BoostedProdCats={}
+    BoostedProdCats['BoostedALL']='(isBoost)'
+
+    BoostedRegionCats={}
+    BoostedRegionCats['ALL']='(isBoost_'+WTAG+'_nom)'
+    
+    BoostedMETCat={}
+    BoostedMETCat['METUnder40']='('+METtype+'_nom_pt <= '+METcutBst+')'##PuppiMET_nom_pt
+    BoostedMETCat['METOver40']='('+METtype+'_nom_pt > '+METcutBst+')'##PuppiMET_nom_pt
+    
+    BoostedPtOverMlnJCat= {}
+    BoostedPtOverMlnJCat['PtOverM04low']='(lnJ_'+WTAG+'_nom_minPtWOverM <= 0.4)'
+
+    BoostedMEKDCat={}
+    BoostedMEKDCat['_']='1'
+
+    BoostedDphiCat={}
+    BoostedDphiCat['_']='(1)'
+
+
+
 
 ##--BoostedProdCats, BoostedRegionCats, BoostedPtOverMlnJCat
 for LepCut in LepCats:
@@ -154,3 +196,5 @@ for LepCut in LepCats:
 
 print "Ncuts=",len(cuts)
 
+for c in sorted(cuts):
+    print c

@@ -37,6 +37,66 @@ if not Year=='2016':
         },
         
     }
+
+    kfactor['QCD_Pt-20to30_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-20to30_MuEnrichedPt5',
+        'target_xsec':'2.232e+06',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-30to50_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-30to50_MuEnrichedPt5',
+        'target_xsec':'1.389e+06',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-50to80_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-50to80_MuEnrichedPt5',
+        'target_xsec':'3.961e+05',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-80to120_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-80to120_MuEnrichedPt5',
+        'target_xsec':'8.779e+04',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-120to170_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-120to170_MuEnrichedPt5',
+        'target_xsec':'2.090e+04',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-170to300_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-170to300_MuEnrichedPt5',
+        'target_xsec':'7.075e+03',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-300to470_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-300to470_MuEnrichedPt5',
+        'target_xsec':'6.075e+02',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-470to600_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-470to600_MuEnrichedPt5',
+        'target_xsec':'5.865e+01',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-600to800_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-600to800_MuEnrichedPt5',
+        'target_xsec':'1.807e+01',
+        'kfactor':'1'
+    }
+    kfactor['QCD_Pt-800to1000_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-800to1000_MuEnrichedPt5',
+        'target_xsec':'3.301e+00',
+        'kfactor':'1'
+    }
+    
+    kfactor['QCD_Pt-1000toInf_MuEnrichedPt5']={
+        'samplename':'QCD_Pt-1000toInf_MuEnrichedPt5',
+        'target_xsec':'1.090e+00',
+        'kfactor':'1'
+    }
+
+
+
 else:
     kfactor={
         'Wjets0j':{
@@ -56,6 +116,72 @@ else:
         },
 
     }
+
+    kfactor['QCD_Pt-20toInf_MuEnrichedPt15']={
+        'samplename':'QCD_Pt-20toInf_MuEnrichedPt15',
+        'target_xsec':'272600',
+        'kfactor':'1'
+    }
+
+##--QCD Mu
+kfactor['QCD_Pt-15to20_MuEnrichedPt5']={
+    'samplename':'QCD_Pt-15to20_MuEnrichedPt5',
+    'target_xsec':'2.819e+06',
+    'kfactor':'1'
+}
+
+##--QCD EM
+kfactor['QCD_Pt-20to30_EMEnriched']={
+    'samplename':'QCD_Pt-20to30_EMEnriched',
+    'target_xsec':'4.886e+06',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-30to50_EMEnriched']={
+    'samplename':'QCD_Pt-30to50_EMEnriched',
+    'target_xsec':'6.298e+06',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-50to80_EMEnriched']={
+    'samplename':'QCD_Pt-50to80_EMEnriched',
+    'target_xsec':'1.961e+06',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-80to120_EMEnriched']={
+    'samplename':'QCD_Pt-80to120_EMEnriched',
+    'target_xsec':'3.656e+05',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-120to170_EMEnriched']={
+    'samplename':'QCD_Pt-120to170_EMEnriched',
+    'target_xsec':'3.656e+05',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-170to300_EMEnriched']={
+    'samplename':'QCD_Pt-170to300_EMEnriched',
+    'target_xsec':'20860.0',
+    'kfactor':'1'
+}
+kfactor['QCD_Pt-300toInf_EMEnriched']={
+    'samplename':'QCD_Pt-300toInf_EMEnriched',
+    'target_xsec':'1350.',
+    'kfactor':'1'
+}
+
+
+for s in kfactor:
+    if not 'QCD' in s: continue
+
+    r_mu="0.341"
+    r_em="0.425"
+    r_bctoe="1.741" 
+    if 'EM' in s:
+        kfactor[s]['target_xsec']=r_em+'*'+kfactor[s]['target_xsec']
+    elif 'Mu' in s:
+        kfactor[s]['target_xsec']=r_mu+'*'+kfactor[s]['target_xsec']
+    elif 'bcToE' in s:
+        kfactor[s]['target_xsec']=r_bctoe+'*'+kfactor[s]['target_xsec']
+
+
 
 NormToPowheg={
 

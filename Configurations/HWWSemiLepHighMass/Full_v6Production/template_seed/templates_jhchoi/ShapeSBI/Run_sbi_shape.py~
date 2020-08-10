@@ -27,8 +27,7 @@ os.system('python TurnOffCombinedSamples.py WPandCut2016.py CombineSBI')
 
 print "[Check MELA BKG Shape jobs]"
 #WORKDIR_ShapeFromMELA/WORKDIR__Make_ggWW_Boosted_SR
-#WORKDIR_ShapeFromMELA/WORKDIR__Make_ggWW_Boosted_SB/run.jid
-melabkgjobs=glob.glob('WORKDIR_ShapeFromMELA/*/*.jid') ## remaining job list
+melabkgjobs=glob.glob('WORKDIR_ShapeFromMELA/*/*/*.jid') ## remaining job list
 nmela=len(melabkgjobs)
 if nmela!=0:
     print "[!!!!!] MELA BKG Shape jobs not finished, stop running sbi shape"

@@ -29,7 +29,7 @@ dict_TColor={
 
 scriptname=opt.plotFile
 
-###--DY
+
 groupPlot['DY']  = {
     'nameHR' : 'DY',
     'isSignal' : 0,
@@ -37,15 +37,7 @@ groupPlot['DY']  = {
     'isData'   : 0,
     'samples' : ['DY']
 }
-plot['DY']  = {
-                  'nameHR' : 'DY',
-                  'isSignal' : 0,
-                  'color': dict_TColor['yellow'], 
-                  'isData'   : 0,
-              }
 
-
-###--QCD
 groupPlot['QCD']  = {
     'nameHR' : 'QCD',
     'isSignal' : 0,
@@ -55,59 +47,64 @@ groupPlot['QCD']  = {
 }
 
 
+QCD_MU=['QCD_Pt-15to20_MuEnrichedPt5',
+        'QCD_Pt-20to30_MuEnrichedPt5',
+        'QCD_Pt-30to50_MuEnrichedPt5',
+        'QCD_Pt-50to80_MuEnrichedPt5',
+        'QCD_Pt-80to120_MuEnrichedPt5',
+        'QCD_Pt-120to170_MuEnrichedPt5',
+        'QCD_Pt-170to300_MuEnrichedPt5',
+        'QCD_Pt-300to470_MuEnrichedPt5',
+        'QCD_Pt-470to600_MuEnrichedPt5',
+        'QCD_Pt-600to800_MuEnrichedPt5',
+        'QCD_Pt-800to1000_MuEnrichedPt5',
+        'QCD_Pt-1000toInf_MuEnrichedPt5',
+]
+QCD_EM=[
+  'QCD_Pt-20to30_EMEnriched',
+  'QCD_Pt-30to50_EMEnriched',
+  'QCD_Pt-50to80_EMEnriched',
+  'QCD_Pt-80to120_EMEnriched',
+  'QCD_Pt-120to170_EMEnriched',
+  'QCD_Pt-170to300_EMEnriched',
+  'QCD_Pt-300toInf_EMEnriched'
+]
+QCD_bcToE=[
+  'QCD_Pt_20to30_bcToE',
+  'QCD_Pt_30to80_bcToE',
+  'QCD_Pt_80to170_bcToE',
+  'QCD_Pt_170to250_bcToE',
+  'QCD_Pt_250toInf_bcToE',
+]
 
-if DIVIDEQCD:
-    groupPlot['QCD']['samples']=QCD_EM+QCD_MU+QCD_bcToE
-    for s in QCD_EM+QCD_MU+QCD_bcToE:
-        plot[s]  = {
-            'nameHR' : s,
-            'isSignal' : 0,
-            'color': dict_TColor['gray'],
-            'isData'   : 0,
-        }
-else:
-    groupPlot['QCD']['samples']=['QCD']
-    plot['QCD']  = {
-        'nameHR' : 'QCD',
+
+
+
+
+groupPlot['QCD']['samples']+=['QCD_MU']
+groupPlot['QCD']['samples']+=['QCD_EM','QCD_bcToE']
+
+
+
+for s in ['QCD_EM','QCD_MU','QCD_bcToE']:
+    plot[s]  = {
+        'nameHR' : s,
         'isSignal' : 0,
         'color': dict_TColor['gray'],
         'isData'   : 0,
     }
 
-
-##--MultiV
 groupPlot['MultiV']={
     'nameHR' : 'Multi V',
     'isSignal' : 0,
     'color': dict_TColor['azure'],
     'isData'   : 0,
-    'samples'  : MultiV+ggWW+qqWWqq
+    'samples'  : MultiV
     
 }
 if CombineMultiV:
     groupPlot['MultiV']['samples']=['MultiV']
-    plot['MultiV']={
-        'nameHR' : s,
-        'isSignal' : 0,
-        'color': dict_TColor['cyan']+idx,
-        'isData'   : 0,
-        
-    }
-else:
-    total=len(MultiV)
-    idx=-1*int(total/2)
-    for s in MultiV+ggWW+qqWWqq:
-        plot[s]={
-            'nameHR' : s,
-            'isSignal' : 0,
-            'color': dict_TColor['cyan']+idx,
-            'isData'   : 0,
 
-        }
-        idx+=1
-
-
-##---H125
 groupPlot['h125']={
     'nameHR' : 'h125',
     'isSignal' : 0,
@@ -118,26 +115,9 @@ groupPlot['h125']={
 }
 if CombineH125:
     groupPlot['h125']['samples']=['h125']
-    plot['h125']  = {
-        'nameHR' : 'h125',
-        'isSignal' : 0,
-        'color': dict_TColor['pink'],
-        'isData'   : 0,
-    }
 
-else:
-    total=len(H125)
-    idx=-1*int(total/2)
-    for s in H125:
-        plot[s]={
-            'nameHR' : s,
-            'isSignal' : 0,
-            'color': dict_TColor['pink']+idx,
-            'isData'   : 0,
-        }
-        idx+=1
 
-##--Wjets
+
 groupPlot['Wjets']={
                   'nameHR' : 'W+jets',
                   'isSignal' : 0,
@@ -147,20 +127,10 @@ groupPlot['Wjets']={
 }
 if CombineWjets :
     groupPlot['Wjets']['samples']=['Wjets']
-    plot['Wjets']  = {
-        'nameHR' : 'Wjets',
-        'isSignal' : 0,
-        'color': dict_TColor['green'],
-        'isData'   : 0,
-    }
-
-
-
 else:
     #groupPlot['Wjets']['samples'] = Wjets                                                                                                                                        
     del groupPlot['Wjets']
-    total=len(Wjets)
-    idx=-1*int(total/2)
+    idx=-1
     for wjet in Wjets:
         groupPlot[wjet]={
             'nameHR' : wjet,
@@ -169,17 +139,8 @@ else:
             'isData'   : 0,
             'samples':wjet
         }
-        plot[wjet]={
-            'nameHR' : wjet,
-            'isSignal' : 0,
-            'color': dict_TColor['green']+idx,
-            'isData'   : 0,
-
-        }
         idx+=1
 
-
-##--Tops
 total=len(TOPS)
 idx=-1*int(total/2)
 
@@ -200,11 +161,140 @@ for top in TOPS:
     idx+=1
 
 
+plot['DY']  = {
+                  'nameHR' : 'DY',
+                  'isSignal' : 0,
+                  'color': dict_TColor['yellow'], 
+                  'isData'   : 0,
+              }
+if CombineMultiV:
+    plot['MultiV']  = {
+        'nameHR' : 'MultiV',
+        'isSignal' : 0,
+        'color': dict_TColor['cyan'], 
+        'isData'   : 0,
+    }
+else:
 
+    total=len(MultiV)
+    idx=-1*int(total/2)
+    for s in MultiV:
+        plot[s]={
+            'nameHR' : s,
+            'isSignal' : 0,
+            'color': dict_TColor['cyan']+idx,
+            'isData'   : 0,
 
-
+        }
+        idx+=1
+        '''
+    plot['WZZ']  = {
+        'nameHR' : 'WZZ',
+        'isSignal' : 0,
+        'color': dict_TColor['azure'], 
+        'isData'   : 0,
+    }
     
-if UsePseudoData:
+    plot['WWZ']  = {
+        'nameHR' : 'WWZ',
+        'isSignal' : 0,
+        'color': dict_TColor['azure']+1, 
+        'isData'   : 0,
+    }
+    plot['WWW']  = {
+        'nameHR' : 'WWW',
+        'isSignal' : 0,
+        'color': dict_TColor['azure']+1, 
+        'isData'   : 0,
+    }
+    plot['ZZZ']  = {
+        'nameHR' : 'ZZZ',
+        'isSignal' : 0,
+        'color': dict_TColor['azure']+1, 
+        'isData'   : 0,
+    }
+    
+    plot['ZZ']  = {
+        'nameHR' : 'ZZ',
+        'isSignal' : 0,
+        'color': dict_TColor['azure']+2,
+        'isData'   : 0,
+    }
+    
+    plot['WZ']  = {
+        'nameHR' : 'WZ',
+        'isSignal' : 0,
+        'color': dict_TColor['azure']+3, 
+        'isData'   : 0,
+    }
+    plot['WW']  = {
+        'nameHR' : 'WW',
+        'isSignal' : 0,
+        'color': dict_TColor['cyan'], 
+        'isData'   : 0,
+    }
+        '''
+
+#plot['WpWmJJ_EWK_QCD_noHiggs']  = {
+#                  'nameHR' : 'WpWmJJ_EWK_QCD_noHiggs',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['cyan']+2, 
+#                  'isData'   : 0,
+#              }
+
+
+#plot['top']  = {
+#                  'nameHR' : 'Top',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['orange'],
+#                  'isData'   : 0,                 
+#              }
+
+
+
+
+if CombineWjets:
+    plot['Wjets']  = {
+        'nameHR' : 'Wjets',
+        'isSignal' : 0,
+        'color': dict_TColor['green'],
+        'isData'   : 0,
+    }
+else:
+    total=len(Wjets)
+    idx=-1*int(total/2)
+    for s in Wjets:
+        plot[s]={
+            'nameHR' : s,
+            'isSignal' : 0,
+            'color': dict_TColor['green']+idx,
+            'isData'   : 0,
+
+        }
+        idx+=1
+
+
+if CombineH125:
+    plot['h125']  = {
+        'nameHR' : 'h125',
+        'isSignal' : 0,
+        'color': dict_TColor['pink'],
+        'isData'   : 0,
+    }
+else:
+    total=len(H125)
+    idx=-1*int(total/2)
+    for s in H125:
+        plot[s]={
+            'nameHR' : s,
+            'isSignal' : 0,
+            'color': dict_TColor['pink']+idx,
+            'isData'   : 0,
+
+        }
+        idx+=1
+    
+if UsePseudoData==True:
     plot['PseudoData']  = {
         'nameHR' : 'PseudoData',
         'isSignal' : 0,
@@ -244,8 +334,7 @@ for MX in MList:
     
     plot['ggHWWlnuqq_M'+str(MX)+'_S']={
         #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
-        #'nameHR':'ggHWWlnuqq_M'+str(MX),
-        'nameHR':'GGF->X->lnuqq M'+str(MX)+' x'+str(scale),
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
         'scale' : scale,
         'isData'   : 0,
         'isSignal' : 2,
@@ -254,8 +343,7 @@ for MX in MList:
     }
     groupPlot['ggHWWlnuqq_M'+str(MX)+'_S']={
         #'nameHR':'ggHWWlnuqq_M'+str(MX)+'x'+str(scale),
-        'nameHR':'ggF->lnuqq M'+str(MX)+' x'+str(scale),
-        #'nameHR':'ggHWWlnuqq_M'+str(MX),
+        'nameHR':'ggHWWlnuqq_M'+str(MX),
         'scale' : scale,
         'isData'   : 0,
         'isSignal' : 2,
@@ -267,8 +355,8 @@ for MX in MList:
 for MX in MList:
     #continue
     groupPlot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'VBF->X->lnuqq'+str(MX)+' x'+str(scale),
-        #'nameHR':'vbfHWWlnuqq_M'+str(MX),
+        #'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 2,
         'scale' : scale,
@@ -277,9 +365,8 @@ for MX in MList:
     }
     
     plot['vbfHWWlnuqq_M'+str(MX)+'_S']={
-        'nameHR':'VBF->X->lnuqq'+str(MX)+' x'+str(scale),
         #'nameHR':'vbfHWWlnuqq_M'+str(MX)+'x'+str(scale),
-        #'nameHR':'vbfHWWlnuqq_M'+str(MX),
+        'nameHR':'vbfHWWlnuqq_M'+str(MX),
         'isData'   : 0,
         'isSignal' : 2,
         'scale' : scale,

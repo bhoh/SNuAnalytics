@@ -19,7 +19,6 @@ nqcd=len(list_qcdscalejob)
 npdf=len(list_pdfjob)
 
 if nqcd+npdf!=0:
-    print "[!!!]PDF,QCDscale job not finished, stop run MELA bkg shape"
     exit()
 else:
     print "[PDF,QCDscale] no remaining jobs"

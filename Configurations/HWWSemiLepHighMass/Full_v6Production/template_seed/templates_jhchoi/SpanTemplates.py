@@ -10,6 +10,7 @@ VariableBlocks=[]
 Year=str(sys.argv[1])
 
 
+
     
 
 import os
@@ -20,8 +21,10 @@ from shutil import copyfile
 cwd=os.getcwd()
 AreaName="_".join(cwd.split('/')[-5:-1])
 WORKNAME=AreaName
-if sys.argv[2]:
-    WORKNAME=str(sys.argv[2])
+if len(sys.argv)>2:
+    LIST_REGION=sys.argv[2].split(',')
+
+
 
 ##---change 
 #WPandCut2016 -> WPandCut<Year>
@@ -32,6 +35,7 @@ from ApplyYearTag import ApplyYearTag,ChangeString
 workspace=os.getcwd()+'/../'+Year
 scriptdir=workspace+'/script'
 os.system('mkdir -p '+workspace)
+os.system('mkdir -p '+workspace+'/logs')
 
 
 
@@ -76,7 +80,7 @@ for reg in LIST_REGION:
 
 ##---cp directories
 
-LIST_CPDIR=['JetPUID','MjjShapeWeight','PsScript','PdfQCDscaleScripts','SetupScripts','ShapeFromMela','SignalXsec','SysBranch','W_EWKNLO','script']
+LIST_CPDIR=['JetPUID','MjjShapeWeight','PsScript','PdfQCDscaleScripts','SetupScripts','ShapeFromMela','ShapeSBI','SignalXsec','SysBranch','W_EWKNLO','script']
 for cpdir in LIST_CPDIR:
     newdir=workspace+'/'+cpdir
     os.system('mkdir -p '+newdir)
@@ -135,6 +139,11 @@ LIST_BOOST=['Boosted','Resolved']
 
 
 os.system('mkdir -p logs/')
+##--HistoFactory 
+fhisto=open(scriptdir+'/Histo_factory_run.sh','w')
+fhistotest=open(scriptdir+'/Histo_factory_run_test.sh','w')
+fhistostdalone=open(scriptdir+'/Histo_factory_run_test_standalone.sh','w')
+
 for reg in LIST_REGION:#configuration_Boosted_template.py
     for bst in LIST_BOOST:
         frun=open(scriptdir+'/RunPlotMakerRun_'+bst+'_'+reg+'.sh','w')    
@@ -158,7 +167,16 @@ for reg in LIST_REGION:#configuration_Boosted_template.py
         #fsub.write('MYDIR=${PWD};command="input=`ls rootFile*'+bst+'*'+reg+'*/hadd.root;python python_tool/ExportShellCondorSetup.py -c "${command}" -d workdir/workdir_PlotMakerRun_'+bst+'_'+reg+' -n "PlotMakerRun_'+bst+'_'+reg+" -m 1')
         fsub.close()
 
+        ##-HistoFactory
 
+        fhisto.write('mkShapesMulti.py --pycfg=configuration_'+bst+'_'+reg+'.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events\n')
+        fhistotest.write('mkShapesMulti.py --pycfg=configuration_'+bst+'_'+reg+'.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --samplesFile=samples_test.py\n')
+        
+        
+fhistostdalone.write('mkShapesMulti.py --pycfg=configuration_'+LIST_BOOST[0]+'_'+LIST_REGION[0]+'.py --treeName Events --samplesFile=samples_test.py\n')
+fhistostdalone.write('mkShapesMulti.py --pycfg=configuration_'+LIST_BOOST[1]+'_'+LIST_REGION[0]+'.py --treeName Events --samplesFile=samples_test.py\n')
+
+fhisto.close()
 
 
 ##--aliasdir

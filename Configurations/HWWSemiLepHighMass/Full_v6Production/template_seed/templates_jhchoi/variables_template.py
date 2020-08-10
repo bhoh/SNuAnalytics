@@ -47,7 +47,7 @@ variables['Event'] = {
 variables['HadronicW_pt']={
     'name':'HadronicW_pt',
     #'range':(100,0,1000),
-    'range':([200,230,260,290,320,350,380,410,500,700,1000],),
+    'range':([0,200,230,260,290,320,350,380,410,500,700,1000],),
     'xaxis':'P_{T}(Hadronic W boson) [GeV]',
     'divideByBinWidth':1,
     'fold': 3,
@@ -79,7 +79,7 @@ if Boosted:
     if 'HP' in WTAG:
         variables['HadronicW_Score']['xaxis']='#tau_{21}'
     if 'DDT' in WTAG:
-        variables['WtaggerFatjet_'+WTAG+'_nom_tau21ddt']['xaxis']+='(DDT)'
+        variables['HadronicW_Score']['xaxis']+='(DDT)'
     if 'DeepAK8' in WTAG:
         variables['HadronicW_Score']['xaxis']='deepTagAK8'
             
@@ -285,11 +285,14 @@ variables['WW_pt_over_mass']={
 }
 variables['WW_mass']={
     'name': 'WW_mass',
-    'range':([0,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],),
+    'range':([0,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000,6000],),
+    #'range':([0,250,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],),
     'divideByBinWidth':1,
     'xaxis': 'M(WW) [GeV]',
     'fold':3
 }
+if Resolved:
+    variables['WW_mass']['range']=([0,140,160,180,200,220,240,260,280,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],)
 if (not 'SR' in configration_py):
     variables['WW_mass']['range']=(40,200,1000)
 
@@ -310,27 +313,27 @@ if Resolved:
 variables['dEta_jj_VBF']={
     'name':'dEta_jj_VBF',
     'range':(20,0,8),
-    'xaxis':'#delta(#eta)(jj) VBF',
-    'fold':3
+    'xaxis':'#Delta(#eta)(jj) VBF',
+    'fold':0
 }
 variables['mass_jj_VBF']={
     'name':'mass_jj_VBF',
     'range':(40,0,1400),
     'xaxis':'M(jj) VBF [GeV])',
-    'fold':3
+    'fold':0
 }
 
 variables['maxmjj_dEta_jj_VBF']={
     'name':'maxmjj_dEta_jj_VBF',
     'range':(20,0,8),
-    'xaxis':'#delta(#eta)(jj) VBF',
-    'fold':3
+    'xaxis':'#Delta(#eta)(jj) VBF',
+    'fold':0
 }
 variables['maxmjj_mass_jj_VBF']={
     'name':'maxmjj_mass_jj_VBF',
     'range':(40,0,1400),
     'xaxis':'M(jj) VBF [GeV])',
-    'fold':3
+    'fold':0
 }
 
 
@@ -347,6 +350,9 @@ if Boosted:
                 'xaxis':'MELA KD',
                 'fold':0
             }
+
+    
+
 if Resolved:
     for M_MELA in MELA_MASS_RESOL:
         for C in MELA_C_RESOL:
@@ -362,6 +368,13 @@ if Resolved:
             }
 
 
+if Boosted: #dPhi_WW_boosted
+    variables['dPhi_WW_boosted']={
+        'name':'dPhi_WW_boosted',
+        'range':(35,0,3.5),
+        'xaxis':'#Delta#phi(W, W)',
+        'fold':0
+    }
 if OnlyFinalVariable: 
     VtoDraw=['WW_mass','Event']
     for v in sorted(variables):

@@ -202,7 +202,7 @@ if __name__ == '__main__':
        print '[',nuisance,']'
        for _var in ['Up','Down']:
            print _var
-           MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod,nuisance,_var)
+           MakeSUM(cuts,variables,samples,nuisances,rootfiledir,inputlist,outputname,nuisance,_var)
 
     
 

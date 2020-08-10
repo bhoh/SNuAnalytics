@@ -195,39 +195,14 @@ addSampleWeight(samples,'top','ST_t-channel_antitop','WtaggerSFnom')
 addSampleWeight(samples,'top','ST_s-channel','WtaggerSFnom')
 ##--QCD
 
-QCD_MU=['QCD_Pt-15to20_MuEnrichedPt5',
-        'QCD_Pt-20to30_MuEnrichedPt5',
-        'QCD_Pt-30to50_MuEnrichedPt5',
-        'QCD_Pt-50to80_MuEnrichedPt5',
-        'QCD_Pt-80to120_MuEnrichedPt5',
-        'QCD_Pt-120to170_MuEnrichedPt5',
-        'QCD_Pt-170to300_MuEnrichedPt5',
-        'QCD_Pt-300to470_MuEnrichedPt5',
-        'QCD_Pt-470to600_MuEnrichedPt5',
-        'QCD_Pt-600to800_MuEnrichedPt5',
-        'QCD_Pt-800to1000_MuEnrichedPt5',
-        'QCD_Pt-1000toInf_MuEnrichedPt5',
-]
-QCD_EM=[
-  'QCD_Pt-20to30_EMEnriched',
-  'QCD_Pt-30to50_EMEnriched',
-  'QCD_Pt-50to80_EMEnriched',
-  'QCD_Pt-80to120_EMEnriched',
-  'QCD_Pt-120to170_EMEnriched',
-  'QCD_Pt-170to300_EMEnriched',
-  'QCD_Pt-300toInf_EMEnriched'
-]
-QCD_bcToE=[
-  'QCD_Pt_20to30_bcToE',
-  'QCD_Pt_30to80_bcToE',
-  'QCD_Pt_80to170_bcToE',
-  'QCD_Pt_170to250_bcToE',
-  'QCD_Pt_250toInf_bcToE',
-]
-
 
 if not DIVIDEQCD:
-  for QCDin QCD_MU+QCD_EM+QCD_bcToE:
+  samples['QCD'] = { 'name':[],
+                   'weight' : mcCommonWeight+'*('+mcCommonWeight+'<150)',
+                   'FilesPerJob' : FilesPerJob,
+  }
+
+  for QCD in QCD_MU+QCD_EM+QCD_bcToE:
     samples['QCD']['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
     
   for QCD in QCD_MU:
@@ -246,7 +221,7 @@ else:
                      'FilesPerJob' : FilesPerJob,
                    }
 
-  for QCDin QCD_MU+QCD_EM+QCD_bcToE:
+  for QCD in QCD_MU+QCD_EM+QCD_bcToE:
     samples[QCD]['name'] += getSampleFiles(directory,QCD,False,'nanoLatino_')
     
   for QCD in QCD_MU:
@@ -263,7 +238,7 @@ else:
 ##--MultiBoson
 
 samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'nanoLatino_') ,
-                     'weight' : mcCommonWeight+'*WtaggerSFnom*(Sum$(GenJet_pt > 30) <= 4 )',
+                     'weight' : mcCommonWeight+'*WtaggerSFnom*(Sum$(GenJet_pt > 30) <= 3 )',
                      'FilesPerJob' : FilesPerJobMainBKG,                 
 }##
 ##--diagram--##
@@ -275,7 +250,7 @@ samples['WW'] = {    'name'   :   getSampleFiles(directory,'WWToLNuQQ',False,'na
 samples['qqWWqq'] = {    'name'   :   getSampleFiles(directory,'WpToLNu_WmTo2J_QCD',False,'nanoLatino_')
                        +getSampleFiles(directory,'WpTo2J_WmToLNu_QCD',False,'nanoLatino_'), 
                        
-                         'weight' : mcCommonWeight+'*WtaggerSFnom* (Sum$(GenJet_pt > 30) >4 )*(Sum$(abs(GenPart_pdgId)==6 || GenPart_pdgId==25)==0)',
+                         'weight' : mcCommonWeight+'*WtaggerSFnom* (Sum$(GenJet_pt > 30) >3 )*(Sum$(abs(GenPart_pdgId)==6 || GenPart_pdgId==25)==0)',
                        'FilesPerJob' : FilesPerJobMainBKG,
                      }
 

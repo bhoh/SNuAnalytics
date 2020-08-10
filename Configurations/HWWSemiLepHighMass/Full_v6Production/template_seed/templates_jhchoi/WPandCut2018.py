@@ -3,25 +3,45 @@ import sys
 sys.path.append(os.getcwd())
 
 ##---Setting Flags
+###--nuisance
 StatOnly=True
+UseRegroupJES=False
+
+
+###--CUT
+ONLY_PRESELCUT=False
 ONLY_FINALCUT=True
+
+###--Variable setting
 OnlyFinalVariable=False
 
 MjjShapeCorr=True
-UseRegroupJES=False
+##--For QCD norm fitting
+DIVIDEQCD=False
+
+
+##---shape submission
+FilesPerJob=30
+FilesPerJobMainBKG=2
+FilesPerJobDATA=100
+if StatOnly:
+    FilesPerJobDATA=30
+
 CombineMultiV=False ##Turn off when making shapes and combing multiv/ Turn on when mkRuncards, plotting
 MultiV=['WW','WZ','ZZ','WWW','WWZ','WZZ','ZZZ',]
 CombineH125=False
-H125=['ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125',
-       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','WmHtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125']
-
+H125=['ZHWWlnuqq_M125','WpHWWlnuqq_M125','WmHWWlnuqq_M125', ##HWW
+       'ggHtautaulnuqq_M125','vbfHtautaulnuqq_M125','WmHtautaulnuqq_M125','WpHtautaulnuqq_M125','ZHtautaulnuqq_M125', #Htautau
+      'vbfHWWlnuqq_M125','ggHWWlnuqq_M125'] ##HWW
 CombineWjets=False
 Wjets=['Wjets0j','Wjets1j','Wjets2j']
 Combine_qqWWqq=False
-qqWWqq=['WWJJ','vbfHWWlnuqq_M125']
+qqWWqq=['qqWWqq']
 Combine_ggWW=False
-ggWW=['ggHWWlnuqq_M125']
+ggWW=['ggWW']
 CombineSBI=False
+
+
 
 ##---
 #/cms/ldap_home/jhchoi/HWW_Analysis/slc7/ForShape/CMSSW_10_2_19/src/SNuAnalytics/Configurations/HWWSemiLepHighMass
@@ -102,4 +122,35 @@ METcutRes='30'
 model='cprime1.0BRnew0.0'
 #model='RelW0.02'
 
+
+##--QCD
+QCD_MU=['QCD_Pt-15to20_MuEnrichedPt5',
+        'QCD_Pt-20to30_MuEnrichedPt5',
+        'QCD_Pt-30to50_MuEnrichedPt5',
+        'QCD_Pt-50to80_MuEnrichedPt5',
+        'QCD_Pt-80to120_MuEnrichedPt5',
+        'QCD_Pt-120to170_MuEnrichedPt5',
+        'QCD_Pt-170to300_MuEnrichedPt5',
+        'QCD_Pt-300to470_MuEnrichedPt5',
+        'QCD_Pt-470to600_MuEnrichedPt5',
+        'QCD_Pt-600to800_MuEnrichedPt5',
+        'QCD_Pt-800to1000_MuEnrichedPt5',
+        'QCD_Pt-1000toInf_MuEnrichedPt5',
+]
+QCD_EM=[
+  'QCD_Pt-20to30_EMEnriched',
+  'QCD_Pt-30to50_EMEnriched',
+  'QCD_Pt-50to80_EMEnriched',
+  'QCD_Pt-80to120_EMEnriched',
+  'QCD_Pt-120to170_EMEnriched',
+  'QCD_Pt-170to300_EMEnriched',
+  'QCD_Pt-300toInf_EMEnriched'
+]
+QCD_bcToE=[
+  'QCD_Pt_20to30_bcToE',
+  'QCD_Pt_30to80_bcToE',
+  'QCD_Pt_80to170_bcToE',
+  'QCD_Pt_170to250_bcToE',
+  'QCD_Pt_250toInf_bcToE',
+]
 
