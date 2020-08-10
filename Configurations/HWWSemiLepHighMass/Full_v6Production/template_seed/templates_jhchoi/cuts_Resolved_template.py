@@ -115,7 +115,8 @@ if ONLY_FINALCUT :
     ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
 if ONLY_PRESELCUT:
     ResolvedMETCat={}
-    ResolvedMETCat['NoMET']='1'
+    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
+
 
 
 
@@ -204,7 +205,7 @@ if 'QCDCR' in configration_py:
     ResolvedRegionCats['ALL'] = '( isResol'+_ALGO_+'nom)'
 
     ResolvedMETCat={}
-    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt <= '+METcutRes+')' ##PuppiMET_nom_pt
+    #ResolvedMETCat['METOver30']='('+METtype+'_nom_pt <= '+METcutRes+')' ##PuppiMET_nom_pt
     ResolvedMETCat['METOver30']='('+METtype+'_nom_pt > '+METcutRes+')' ##PuppiMET_nom_pt
 
     ResolvedPtOverMCats = {}

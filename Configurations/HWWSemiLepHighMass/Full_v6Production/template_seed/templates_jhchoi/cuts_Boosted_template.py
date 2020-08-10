@@ -106,11 +106,11 @@ if 'ALL' in configration_py:
 
 if ONLY_PRESELCUT:
     BoostedMETCat={}
-    BoostedMETCat['NoMET']='1'
+    #BoostedMETCat['NoMET']='1'
 
     BoostedPtOverMlnJCat= {}
-    BoostedPtOverMlnJCat['NoPtOverMcut']='1'
-
+    #BoostedPtOverMlnJCat['NoPtOverMcut']='1'
+    BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'
     BoostedDphiCat={}
     BoostedDphiCat['_']='(1)'
     #BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
