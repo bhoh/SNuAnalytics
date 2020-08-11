@@ -121,6 +121,8 @@ def MakeAVG(cuts,variables,samples,nuisances,rootfiledir,prod,nuisance='',var=''
             print "Store Shape on",cut+'/'+var+"/"+HaddedHistoName
             histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'].SetTitle(HaddedHistoName)
             histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'].SetName(HaddedHistoName)
+            if histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'].Integral()<=0:
+                histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'].SetEntries(0)
             ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['WeightedAvg'],HaddedHistoName)
             #print "Store Shape on",cut+'/'+var+"/histo_"+samplename+'_'+nuisanceName+'Down'
             #ROOT.gDirectory.WriteObject(histoana.mydict[samplename]['histo'][cut][var]['envelopDown'],"histo_"+samplename+'_'+nuisanceName+'Down')
