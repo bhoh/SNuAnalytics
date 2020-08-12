@@ -175,6 +175,38 @@ addSampleWeight(samples, 'Wjets0j', 'WJetsToLNu_0J', 'MjjShape')
 addSampleWeight(samples, 'Wjets1j', 'WJetsToLNu_1J', 'MjjShape')
 addSampleWeight(samples, 'Wjets2j', 'WJetsToLNu_2J', 'MjjShape')
 
+if MjjShapeStudy: ##Add Wjets slope shape
+  samples['Wjets0j_slope'] = {    'name'   :
+                            getSampleFiles(directory,'WJetsToLNu_0J',False,'nanoLatino_')
+                            ,
+                            'weight' : mcCommonWeight,
+                            #'FilesPerJob' : 4,
+                            'FilesPerJob' : FilesPerJobMainBKG,
+                          }
+  samples['Wjets1j_slope'] = {    'name'   :
+                            getSampleFiles(directory,'WJetsToLNu_1J',False,'nanoLatino_')
+                            ,
+                            'weight' : mcCommonWeight,
+                            #'FilesPerJob' : 4,
+                            'FilesPerJob' : FilesPerJobMainBKG,
+                          }
+  samples['Wjets2j_slope'] = {    'name'   :
+                            getSampleFiles(directory,'WJetsToLNu_2J',False,'nanoLatino_')
+                            ,
+                            'weight' : mcCommonWeight,
+                            #'FilesPerJob' : 4,
+                            'FilesPerJob' : FilesPerJobMainBKG,
+                          }
+  
+  addSampleWeight(samples, 'Wjets0j_slope', 'WJetsToLNu_0J', kfactor['Wjets0j'])
+  addSampleWeight(samples, 'Wjets1j_slope', 'WJetsToLNu_1J', kfactor['Wjets1j'])
+  addSampleWeight(samples, 'Wjets2j_slope', 'WJetsToLNu_2J', kfactor['Wjets2j'])
+
+  addSampleWeight(samples, 'Wjets0j_slope', 'WJetsToLNu_0J', 'SlopeWeight')
+  addSampleWeight(samples, 'Wjets1j_slope', 'WJetsToLNu_1J', 'SlopeWeight')
+  addSampleWeight(samples, 'Wjets2j_slope', 'WJetsToLNu_2J', 'SlopeWeight')
+
+
 
 
 ############ DY ############                                                                                                   

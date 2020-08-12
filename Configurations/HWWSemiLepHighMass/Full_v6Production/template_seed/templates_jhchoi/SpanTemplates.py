@@ -80,7 +80,7 @@ for reg in LIST_REGION:
 
 ##---cp directories
 
-LIST_CPDIR=['JetPUID','MjjShapeWeight','PsScript','PdfQCDscaleScripts','SetupScripts','ShapeFromMela','ShapeSBI','SignalXsec','SysBranch','W_EWKNLO','script']
+LIST_CPDIR=['JetPUID','MjjShapeWeight','PsScript','PdfQCDscaleScripts','SetupScripts','ShapeFromMela','ShapeSBI','SignalXsec','SysBranch','W_EWKNLO','script','ScriptDataCard']
 for cpdir in LIST_CPDIR:
     newdir=workspace+'/'+cpdir
     os.system('mkdir -p '+newdir)
@@ -125,8 +125,13 @@ os.system('cp '+workspace+'/aliases.py '+workspace+'/aliases_Boosted.py')
 os.system('cp '+workspace+'/aliases.py '+workspace+'/aliases_Resolved.py')
 
 ##--cp MassPoints
-os.system('rm -rf '+workspace+'/MassPoints')
-os.system('cp -r MassPoints'+Year+' '+workspace+'/MassPoints')
+#os.system('rm -rf '+workspace+'/MassPoints')
+os.system('mkdir -p '+workspace+'/MassPoints')
+os.system('cp MassPoints'+Year+'/* '+workspace+'/MassPoints/')
+pylist=glob.glob(workspace+'/MassPoints/*.py')
+for f in pylist:
+    ApplyYearTag(f,Year) ## 2016 -> <Year>
+
 
 ##------RunningScript
 #os.system('cp Histo_factory_run_test.sh '+scriptdir+'/')
@@ -192,3 +197,4 @@ ChangeString(aliasdir+'/set_alias.sh','__YEAR__',Year)
 
 ##---SetupAndTest
 os.system('cp SetupAndTestRun.sh ../')
+os.system('cp update_pythontool.sh ../')

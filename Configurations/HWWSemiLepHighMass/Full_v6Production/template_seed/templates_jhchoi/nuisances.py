@@ -6,9 +6,39 @@ NotUseTreeBase=False
 import os
 import sys
 sys.path.insert(0, "SysBranch")
+if 'opt' in globals():
+    configration_py=opt.nuisancesFile
+else:
+    configration_py=sys.argv[0]
+
+
+print "configration_py=",configration_py
 from FatJet_Jet_SysBranches import * 
 from WPandCut2016 import *
 
+bst=''
+if 'Boosted' in configration_py:
+  bst='Boosted'
+elif 'Resolved' in configration_py:
+  bst='Resolved'
+
+
+#cuts
+cut_GGF0=[]
+cut_GGF1=[]
+cut_VBF=[]
+
+
+
+for c in cuts:
+  if 'GGF' in c:
+    if 'MEKDTAG':
+      cut_GGF0.append(c)
+    elif 'UNTAGGED':
+      cut_GGF1.append(c)
+    
+  elif 'VBF':
+    cut_VBF.append(c)
 
 
 SITE=os.uname()[1]
@@ -26,11 +56,7 @@ elif  'sdfarm' in SITE:
   treeBaseDir = "/xrd/store/user/jhchoi/Latino/HWWNano/"
 
 
-if 'opt' in globals():
-    configration_py=opt.nuisancesFile
-else:
-    configration_py=sys.argv[0]
-print "configration_py=",configration_py
+
 
 
 mc = [skey for skey in samples if (skey != 'DATA' and skey !='PseudoData')]
@@ -348,20 +374,6 @@ nuisances['PU'] = {
 }
 for skey in mc:
   nuisances['PU']['samples'][skey]=pu_syst
-
-
-MjjShape_syst=['1/MjjShape','1']
-
-
-nuisances['MjjShape'] = {
-    'name': 'MjjShape',
-    'kind': 'weight',
-    'type': 'shape',
-    #'samples': dict((skey, pu_syst) for skey in mc),
-  'samples':{},
-}
-for skey in ['Wjets0','Wjets1j','Wjets2j']:
-  nuisances['MjjShape']['samples'][skey]=MjjShape_syst
 
 #nuisances['UE']  = {
 #                'name'  : 'UE_CP5',
@@ -802,74 +814,44 @@ nuisances['QCDnorm']={
 
 
 
-if Year=='2016':
-  nuisances['Wnorm']={
-    'name': 'Wjetsnorm'+Year,
-    #'type': 'lnN',
-    'type'  : 'rateParam',
-    'samples': {
-      #'Wjets':'1.1',
-      'Wjets':'1.0',
-    }
-  }
-elif CombineWjets:
-  nuisances['Wnorm']={
-    'name': 'Wjetsnorm'+Year,
-    #'type': 'lnN',
-    'type'  : 'rateParam',
-    'samples': {
-      #'Wjets':'1.1',
-      'Wjets':'1.0',
-    }
-  }
-else:
-  nuisances['W0jnorm']={
-    'name': 'Wjets0jnorm'+Year,
-    #'type': 'lnN',
-    'type'  : 'rateParam',
-    'samples': {
-      #'Wjets0j':'1.1',
-      'Wjets0j':'1.0',
-      
-    }
-  }
 
-  
-  nuisances['W1jnorm']={
-  'name': 'Wjets1jnorm'+Year,
-    #'type': 'lnN',
-    'samples': {
-      #'Wjets1j':'1.1',
-      'Wjets1j':'1.0',
-    },
-    'type'  : 'rateParam',
-    #'cuts'  : '''''
+
+
+
+CATS=['GGF0','GGF1','VBF']
+##--wjets rateparam
+for cat in CATS: 
     
-  }
+    for wjet in Wjets:
+        nuisances[wjet+'norm_'+cat+'_'+bst]={
+            'name': 'Wjetsnorm_'+bst+'_'+cat+'_'+Year,
+            #'type': 'lnN',
+            'type'  : 'rateParam',
+            'samples': {
+                #'Wjets0j':'1.0',
+                #'Wjets1j':'1.0',
+                wjet:'1.0',
+            }      
+            ,
+            #'cuts':cut_GGF0
+        }
   
+        
+        exec("nuisances['"+wjet+"'+'norm_'+"+"'"+cat+"'"+"+'_'+bst]['cuts']=cut_"+cat+"")
+  #for wjet in Wjets:
+  #  nuisances['Wnorm_'+cat+'_'+bst]['samples'][wjet]='1,0'
   
-  nuisances['W2jnorm']={
-    'name': 'Wjets2jnorm'+Year,
-    #'type': 'lnN',
+##--top rateparam
+for cat in CATS: 
+  nuisances['topnorm_'+cat+'_'+bst]={
+    'name': 'topnorm_'+bst+'_'+cat+'_'+Year,
     'samples': {
-      #'Wjets2j':'1.1',
-      'Wjets2j':'1.0',
-    },
-    'type'  : 'rateParam',
-  }
-  
-
-  
-  
-nuisances['topnorm']={
-    'name': 'topnorm'+Year,
-    #'type': 'lnN',
-    'samples': {
-      #'top':'1.1',
       'top':'1.0',
     },
-  'type'  : 'rateParam',
-}
+    'type'  : 'rateParam',
+  }
+  exec("nuisances['topnorm_'+"+"'"+cat+"'"+"+'_'+bst]['cuts']=cut_"+cat+"")
+
 nuisances['dynorm']={
     'name': 'dynorm'+Year,
     'type': 'lnN',
@@ -883,9 +865,11 @@ nuisances['MultiVnorm']={
     'name': 'MultiVnorm'+Year,
     'type': 'lnN',
     'samples': {
-      'MultiV':'1.1',
+      #'MultiV':'1.1',
     }
 }
+for multiv in MultiV:
+  nuisances['MultiVnorm']['samples'][multiv]='1.2'
 
 nuisances['stat'] = {
     'type': 'auto',

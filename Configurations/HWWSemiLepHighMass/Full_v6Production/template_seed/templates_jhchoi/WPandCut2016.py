@@ -7,21 +7,24 @@ sys.path.append(os.getcwd())
 StatOnly=True
 UseRegroupJES=False
 
+###--MjjShape Study ->add slope shape
+MjjShapeStudy=True
 
-###--CUT
-ONLY_PRESELCUT=False
-ONLY_FINALCUT=True
-
-###--Variable setting
-OnlyFinalVariable=False
+###--CUT && Variable ->
+FORFINAL=False  ####--For final result -> final category and final variable only
+N1CUT=False  ####--For AN plots
+QCDCR=True
 
 
 ##--Corrections
-MjjShapeCorr=True
+MjjShapeCorr=False
 PowhegNorm=False
 ##--For QCD norm fitting
 DIVIDEQCD=False
-
+if QCDCR:
+    DIVIDEQCD=True
+if MjjShapeStudy:
+    MjjShapeCorr=False
 
 ##---shape submission
 FilesPerJob=30

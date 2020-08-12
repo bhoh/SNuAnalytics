@@ -17,7 +17,7 @@ sys.path.append(os.getcwd())
 #-----Variable Deinition-----#
 from WPandCut2016 import *
 
-print "OnlyFinalVariable=",OnlyFinalVariable
+
 
 if 'opt' in globals():
     configration_py=opt.variablesFile
@@ -377,7 +377,7 @@ if Boosted: #dPhi_WW_boosted
         'xaxis':'#Delta#phi(W, W)',
         'fold':0
     }
-if OnlyFinalVariable: 
+if FORFINAL:
     VtoDraw=['WW_mass','Event']
     for v in sorted(variables):
         if v in VtoDraw: continue
