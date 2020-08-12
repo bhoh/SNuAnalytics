@@ -6,7 +6,7 @@ sys.path.append(os.getcwd()+'/../')
 
 #-----Variable Deinition-----#
 from WPandCut2016 import *
-print "ONLY_FINALCUT=",ONLY_FINALCUT
+
 _ALGO="_"+ALGO
 _ALGO_="_"+ALGO+"_"
 
@@ -39,7 +39,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
 METtype="PuppiMET"
 #met>30
-supercut +='&&(!isFinalBoostSR) &&(isResol'+_ALGO_+'nom)'
+supercut +='&&(!isFinalBoostSR) &&(isResol'+_ALGO_+'nom)'+'&&'+'('+METtype+'_nom_pt >'+METcutRes+')'
 
 ##---Lepton Categorization---##
 
@@ -108,152 +108,98 @@ if 'ALL' in configration_py:
 
 
 
-ResolvedWlepMtCats = {}
-
-if ONLY_FINALCUT :
-    ResolvedMETCat={}
-    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
-if ONLY_PRESELCUT:
-    ResolvedMETCat={}
-    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt >'+METcutRes+')' ##PuppiMET_nom_pt
 
 
 
 
+PtOverMCut = {}
+PtOverMCut['PtOverM035'] = '(lnjj'+_ALGO_+'nom_minPtWOverM>0.35)'
+PtOverMCut['PtOverM035low'] = '(lnjj'+_ALGO_+'nom_minPtWOverM <= 0.35)'
+PtOverMCut['NoPtOverMCut'] = '1'
 
+WlepMtCut = {}
+WlepMtCut['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
+WlepMtCut['WlepMtUnder50'] = '(Wlep_nom_Mt <= 50)'
+WlepMtCut['NoWlepMtCut'] = '1'
 
+WWMtCut = {}
+WWMtCut['NoWWMtCut'] = '(1)'
+WWMtCut['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
+WWMtCut['WWMtUnder60']='(lnjj'+_ALGO_+'nom_Mt <= 60)'
 
-if ONLY_FINALCUT:
-    ResolvedPtOverMCats = {}
-    ResolvedPtOverMCats['PtOverM035'] = '(lnjj'+_ALGO_+'nom_minPtWOverM>0.35)'
+MEKDCut={}
+MEKDCut['NoMEKDCut']='1'
+MEKDCut['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
+MEKDCut['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
 
-if ONLY_PRESELCUT:
-    ResolvedPtOverMCats = {}
-    ResolvedPtOverMCats['NoPtOverMcut'] = '1'
-
-
-if 'ALL' in configration_py:
-    ResolvedPtOverMCats = {}
-    ResolvedPtOverMCats['ALL']='(1)'
-
-
-
-
-ResolvedWlepMtCats = {}
-ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
-if ONLY_PRESELCUT:
-    ResolvedWlepMtCats = {}
-    ResolvedWlepMtCats['NoWlepMtcut'] = '1'
-if ONLY_FINALCUT:
-    ResolvedWlepMtCats = {}
-    ResolvedWlepMtCats['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
-
-
-if 'ALL' in configration_py:
-    ResolvedWlepMtCats = {}
-    ResolvedWlepMtCats['ALL'] = '(1)'
-
-
-ResolvedWWMtCats={}
-ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
-
-if ONLY_PRESELCUT:
-    ResolvedWWMtCats={}
-    ResolvedWWMtCats['NoWWMtOvercut']='1'
-if ONLY_FINALCUT:
-    ResolvedWWMtCats={}
-    ResolvedWWMtCats['WWMtOver60']='(lnjj'+_ALGO_+'nom_Mt > 60)'
-    
-
-if 'ALL' in configration_py:
-    ResolvedWWMtCats={}
-    ResolvedWWMtCats['ALL']='(1)'
-
-
-ScoreCats={}
-#if not ONLY_FINALCUT : 
-ScoreCats['ScoreALL']='(1)'
-#ScoreCats['Score0To30']='(Whad'+_ALGO_+'nom_ScoreToLeast<30)'
-#if not ONLY_FINALCUT : ScoreCats['Score30ToInf']='(Whad'+_ALGO_+'nom_ScoreToLeast>30)'
-
-ResolvedMEKDCat={}
-ResolvedMEKDCat['_']='1'
-ResolvedMEKDCat['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
-ResolvedMEKDCat['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
-
-if ONLY_FINALCUT:
-    ResolvedMEKDCat={}
-    ResolvedMEKDCat['MEKDTAG']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"> 0.5)"
-    ResolvedMEKDCat['UNTAGGED']='(MEKD_Res_C_'+MELA_C_RESOL_WP+'_M'+str(MELA_MASS_RESOL_WP)+"< 0.5)"
-if ONLY_PRESELCUT:
-    ResolvedMEKDCat={}
-    ResolvedMEKDCat['_']='1'
-    
-if 'ALL' in configration_py:
-    ResolvedMEKDCat={}
-    ResolvedMEKDCat['ALL']='(1)'
-
-
-
-##---QCD CR
-if 'QCDCR' in configration_py:
-    
-    ResolvedProdCats={}
-    ResolvedProdCats['ResolvedALL']='(isResol'+_ALGO_+'nom)'
-    
-    ResolvedRegionCats={}
-    ResolvedRegionCats['ALL'] = '( isResol'+_ALGO_+'nom)'
-
-    ResolvedMETCat={}
-    #ResolvedMETCat['METOver30']='('+METtype+'_nom_pt <= '+METcutRes+')' ##PuppiMET_nom_pt
-    ResolvedMETCat['METOver30']='('+METtype+'_nom_pt > '+METcutRes+')' ##PuppiMET_nom_pt
-
-    ResolvedPtOverMCats = {}
-    ResolvedPtOverMCats['PtOverM035low'] = '(lnjj'+_ALGO_+'nom_minPtWOverM <= 0.35)'
-
-    ResolvedWlepMtCats = {}
-    ResolvedWlepMtCats['WlepMtUnder50'] = '(Wlep_nom_Mt <= 50)'
-
-    ResolvedWWMtCats={}
-    ResolvedWWMtCats['WWMtUnder60']='(lnjj'+_ALGO_+'nom_Mt <= 60)'
-
-    ScoreCats={}
-    ScoreCats['ScoreALL']='(1)'
-
-    ResolvedMEKDCat={}
-    ResolvedMEKDCat['_']='1'
 
 
 for LepCut in LepCats:
     for ProdCut in ResolvedProdCats:
         for RegionCut in ResolvedRegionCats:
-            for METCut in ResolvedMETCat:
-                for PtOvMCut in ResolvedPtOverMCats:
-                    for WlepMtCut in ResolvedWlepMtCats:
-                        for WWMtCut in ResolvedWWMtCats:
-                            for ScoreCut in ScoreCats:
-                                #if 'VBF' in ProdCut:
-                                #    cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut] = LepCats[LepCut]\
-                                #                         +'&&'+ResolvedProdCats[ProdCut]\
-                                #                         +'&&'+ResolvedRegionCats[RegionCut]\
-                                #                         +'&&'+ResolvedMETCat[METCut]\
-                                #                         +'&&'+ResolvedPtOverMCats[PtOvMCut]\
-                                #                         +'&&'+ResolvedWlepMtCats[WlepMtCut]\
-                                #                         +'&&'+ResolvedWWMtCats[WWMtCut]\
-                                #                         +'&&'+ScoreCats[ScoreCut]
+            ##---basic
+            cutname_base=LepCut+'__'+ProdCut+'__'+RegionCut
+            formula_base=LepCats[LepCut]+'&&'+ResolvedProdCats[ProdCut]+'&&'+ResolvedRegionCats[RegionCut]
 
-                                #else:
-                                for MEKDCut in ResolvedMEKDCat:
-                                    cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+WlepMtCut+'__'+WWMtCut+'__'+ScoreCut+'__'+MEKDCut] = LepCats[LepCut]\
-                                                         +'&&'+ResolvedProdCats[ProdCut]\
-                                                         +'&&'+ResolvedRegionCats[RegionCut]\
-                                                         +'&&'+ResolvedMETCat[METCut]\
-                                                         +'&&'+ResolvedPtOverMCats[PtOvMCut]\
-                                                         +'&&'+ResolvedWlepMtCats[WlepMtCut]\
-                                                         +'&&'+ResolvedWWMtCats[WWMtCut]\
-                                                         +'&&'+ScoreCats[ScoreCut]\
-                                                         +'&&'+ResolvedMEKDCat[MEKDCut]
-                                        
+            ##---Final add
+            if FORFINAL: ##For final result
+                if (not 'GGF' in ProdCut) and (not 'VBF' in ProdCut): continue ##VBF/GGF category only
+                for MEKD in ['MEKDTAG','UNTAGGED']: ##MEKD Category
+                    cutname=cutname_base+'_'+MEKD
+                    ##Add final cuts
+                    formula=formula_base+'&&'+MEKDCut[MEKD]+'&&'+WWMtCut['WWMtOver60']+'&&'+WlepMtCut['WlepMtOver50']+PtOverMCut['PtOverM035']
+                    cuts[cutname]=formula
+            if N1CUT: ##For AN
+                ##--- each flv/ each sb sr top /ALL Production / apply WWMt /apply WlepMt/apply ptoverm
+                if 'GGF' in ProdCut or 'VBF' in ProdCut: continue ##inclusive for production channel
+                ##----Remove PtOverMcut (NoPtOverMCut)
+                cutname=cutname_base+'_NoPtOverMCut'
+                formula=formula_base+'&&'+WWMtCut['WWMtOver60']+'&&'+WlepMtCut['WlepMtOver50']
+                cuts[cutname]=formula
+                
+                ##----Remove WWMtCut (NoWWMtCut)
+                cutname=cutname_base+'_NoWWMtCut'
+                formula=formula_base+'&&'+WlepMtCut['WlepMtOver50']+'&&'+PtOverMCut['PtOverM035']
+                cuts[cutname]=formula
+
+                ##----Remove WlepMtCut (NoWlepMtCut)
+                cutname=cutname_base+'_NoWlepMtCut'
+                formula=formula_base+'&&'+WWMtCut['WWMtOver60']+'&&'+PtOverMCut['PtOverM035']
+                cuts[cutname]=formula
+
+                ##---Only without MEKD Category
+                cutname=cutname_base+'_NoMEKDCut'
+                formula=formula_base+'&&'+WWMtCut['WWMtOver60']+'&&'+WlepMtCut['WlepMtOver50']+'&&'+PtOverMCut['PtOverM035']
+                cuts[cutname]=formula
+
+
+
+##---For QCDCR Study
+if QCDCR:
+    for LepCut in LepCats:
+        ##--reverse PtOverM
+        cutname_base=LepCut+'_PtOverM04low'
+        formula_base=LepCats[LepCut]+'&&'+PtOverMCut['PtOverM035low']
+        ##--WlepMt >50
+        cutname=cutname_base+'_WlepMtOver50'
+        formula=formula_base+'&&'+WlepMtCut['WlepMtOver50']
+        cuts[cutname]=formula
+
+        ##--WlepMt < 50
+        cutname=cutname_base+'_WlepMtUnder50'
+        formula=formula_base+'&&'+WlepMtCut['WlepMtUnder50']
+        cuts[cutname]=formula
+
+        ##--WWMtOver60
+        cutname=cutname_base+'_WWMtOver60'
+        formula=formula_base+'&&'+WWMtCut['WWMtOver60']
+        cuts[cutname]=formula
+
+        ##--WWMtUnder60
+        cutname=cutname_base+'_WWMtUnder60'
+        formula=formula_base+'&&'+WWMtCut['WWMtUnder60']
+        cuts[cutname]=formula
+
 
 #cuts['isVBF']='isVBF'
 print "Ncuts=",len(cuts)

@@ -8,7 +8,7 @@ sys.path.append(os.getcwd()+'/../')
 
 #-----Variable Deinition-----#
 from WPandCut2016 import *
-print "ONLY_FINALCUT=",ONLY_FINALCUT
+
 cuts={}
 
 
@@ -34,7 +34,7 @@ LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'
 
 #------End of Variable Definition-----#
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
-supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+' && ((isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0)))'
+supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+' && ((isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0)))'+'&&'+'('+METtype+'_nom_pt >'+METcutBst+')'
 
 
 ##---Lepton Categorization---##
@@ -104,65 +104,22 @@ if 'ALL' in configration_py:
 
 
 
-if ONLY_PRESELCUT:
-    BoostedMETCat={}
-    #BoostedMETCat['NoMET']='1'
+PtOverMlnJCut= {}
+PtOverMlnJCut['NoPtOverMcut']='1'
+PtOverMlnJCut['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
+PtOverMlnJCut['PtOverM04low']='(lnJ_'+WTAG+'_nom_minPtWOverM <= 0.4)'
 
-    BoostedPtOverMlnJCat= {}
-    #BoostedPtOverMlnJCat['NoPtOverMcut']='1'
-    BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'
-    BoostedDphiCat={}
-    BoostedDphiCat['_']='(1)'
-    #BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
-
-    BoostedMEKDCat={}
-    BoostedMEKDCat['_']='1'
-
-
-if ONLY_FINALCUT : 
-    BoostedMETCat={}
-    BoostedMETCat['METOver40']='('+METtype+'_nom_pt >'+METcutBst+')'##PuppiMET_nom_pt
-
-    BoostedPtOverMlnJCat= {}
-    BoostedPtOverMlnJCat['PtOverM04']='(lnJ_'+WTAG+'_nom_minPtWOverM > 0.4)'
-
-    BoostedDphiCat={}
-    BoostedDphiCat['_']='(1)'
     
-    #BoostedDphiCat['dphiww2']='(dPhi_WW_boosted[0] > 2.0)'
-    
+MEKDCut={}
+MEKDCut['NoMEKDCut']='1'
+MEKDCut['MEKDTAG']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"> 0.5)"
+MEKDCut['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"< 0.5)"
 
-
-    BoostedMEKDCat={}
-    #BoostedMEKDCat['_']='1'
-    BoostedMEKDCat['MEKDTAG']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"> 0.5)"
-    BoostedMEKDCat['UNTAGGED']='(MEKD_Bst_C_'+MELA_C_BOOST_WP+'_M'+str(MELA_MASS_BOOST_WP)+"< 0.5)"
-#if 'ALL' in configration_py:
-#    BoostedMEKDCat={}
-#    BoostedMEKDCat['ALL']='(1)'
-
-
-
-### --- QCD CR
-if 'QCDCR' in configration_py:
-    BoostedProdCats={}
-    BoostedProdCats['BoostedALL']='(isBoost)'
-
-    BoostedRegionCats={}
-    BoostedRegionCats['ALL']='(isBoost_'+WTAG+'_nom)'
-    
-    BoostedMETCat={}
-    BoostedMETCat['METUnder40']='('+METtype+'_nom_pt <= '+METcutBst+')'##PuppiMET_nom_pt
-    BoostedMETCat['METOver40']='('+METtype+'_nom_pt > '+METcutBst+')'##PuppiMET_nom_pt
-    
-    BoostedPtOverMlnJCat= {}
-    BoostedPtOverMlnJCat['PtOverM04low']='(lnJ_'+WTAG+'_nom_minPtWOverM <= 0.4)'
-
-    BoostedMEKDCat={}
-    BoostedMEKDCat['_']='1'
-
-    BoostedDphiCat={}
-    BoostedDphiCat['_']='(1)'
+##--For QCD Study
+WlepMtCut = {}
+WlepMtCut['WlepMtOver50'] = '(Wlep_nom_Mt > 50)'
+WlepMtCut['WlepMtUnder50'] = '(Wlep_nom_Mt <= 50)'
+WlepMtCut['NoWlepMtCut'] = '1'
 
 
 
@@ -171,26 +128,47 @@ if 'QCDCR' in configration_py:
 for LepCut in LepCats:
     for ProdCut in BoostedProdCats:
         for RegionCut in BoostedRegionCats:
-            for METCut in BoostedMETCat:
-                for PtOvMCut in BoostedPtOverMlnJCat:
-                    for dphiCut in BoostedDphiCat:
-                        #if 'VBF' in ProdCut : 
-                        #cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+'__'+dphiCut] = LepCats[LepCut]\
-                        #                                                +'&&'+BoostedProdCats[ProdCut]\
-                        #                                                +'&&'+BoostedRegionCats[RegionCut]\
-                        #                                                +'&&'+BoostedMETCat[METCut]\
-                        #                                                +'&&'+BoostedPtOverMlnJCat[PtOvMCut]\
-                        #                                                +'&&'+BoostedDphiCat[dphiCut]
-                            
-                        #else:
-                        for MEKDCut in BoostedMEKDCat:
-                                cuts[LepCut+'__'+ProdCut+'__'+RegionCut+'__'+METCut+'__'+PtOvMCut+"__"+MEKDCut+'__'+dphiCut] = LepCats[LepCut]\
-                                                                        +'&&'+BoostedProdCats[ProdCut]\
-                                                                        +'&&'+BoostedRegionCats[RegionCut]\
-                                                                        +'&&'+BoostedMETCat[METCut]\
-                                                                        +'&&'+BoostedPtOverMlnJCat[PtOvMCut]\
-                                                                        +'&&'+BoostedMEKDCat[MEKDCut]\
-                                                                        +'&&'+BoostedDphiCat[dphiCut]
+            cutname_base=LepCut+'_'+ProdCut+'_'+RegionCut
+            formula_base=LepCats[LepCut]+'&&'+BoostedProdCats[ProdCut]+'&&'+BoostedRegionCats[RegionCut]
+
+            if FORFINAL: ##For final result
+                if (not 'GGF' in ProdCut) and (not 'VBF' in ProdCut): continue ##VBF/GGF category only
+                for MEKD in ['MEKDTAG','UNTAGGED']: ##MEKD Category
+                    cutname=cutname_base+'_'+MEKD
+                    ##Add final cuts
+                    formula=formula_base+'&&'+MEKDCut[MEKD]+'&&'+PtOverMlnJCut['PtOverM04']
+                    cuts[cutname]=formula
+            
+            if N1CUT: ##For AN plots
+                ##--- each flv/ each sb sr top /ALL Production / apply ptOverM
+                if 'GGF' in ProdCut or 'VBF' in ProdCut: continue ##inclusive for production channel
+                ##---Remove PtOverMcut(NoPtOverMcut)
+                cutname=cutname_base+'_NoPtOverMcut'
+                formula=formula_base
+                cuts[cutname]=formula
+
+                ##---Only without MEKD Category
+                cutname=cutname_base+'_NoMEKDCut'
+                formula=formula_base+'&&'+PtOverMlnJCut['PtOverM04']
+                cuts[cutname]=formula
+
+
+##---For QCDCR Study
+if QCDCR:
+    for LepCut in LepCats:
+        ##--reverse PtOverM
+        cutname_base=LepCut+'_PtOverM04low'
+        formula_base=LepCats[LepCut]+'&&'+PtOverMlnJCut['PtOverM04low']
+        ##--WlepMt >50
+        cutname=cutname_base+'_WlepMtOver50'
+        formula=formula_base+'&&'+WlepMtCut['WlepMtOver50']
+        cuts[cutname]=formula
+        
+        ##--WlepMt < 50
+        cutname=cutname_base+'_WlepMtUnder50'
+        formula=formula_base+'&&'+WlepMtCut['WlepMtUnder50']
+        cuts[cutname]=formula
+    
 ##---End of Boosted
 
 
