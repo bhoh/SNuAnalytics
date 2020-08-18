@@ -30,13 +30,15 @@ dict_TColor={
 scriptname=opt.plotFile
 
 ###--DY
-groupPlot['DY']  = {
-    'nameHR' : 'DY',
+groupPlot['Others']  = {
+    'nameHR' : 'Others',
     'isSignal' : 0,
     'color': dict_TColor['yellow'], 
     'isData'   : 0,
-    'samples' : ['DY']
+    #'samples' : ['DY']
 }
+
+
 plot['DY']  = {
                   'nameHR' : 'DY',
                   'isSignal' : 0,
@@ -44,6 +46,17 @@ plot['DY']  = {
                   'isData'   : 0,
               }
 
+if CombineHTT:
+    groupPlot['Others']['samples']=['DY','HTT']
+else:
+    groupPlot['Others']['samples']=['DY']+HTT
+    for htt in HTT:
+        plot[htt]  = {
+                  'nameHR' : htt,
+                  'isSignal' : 0,
+                  'color': dict_TColor['yellow'],
+                  'isData'   : 0,
+              }
 
 ###--QCD
 groupPlot['QCD']  = {
