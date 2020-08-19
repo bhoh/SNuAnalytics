@@ -293,6 +293,13 @@ variables['WW_mass']={
     'xaxis': 'M(WW) [GeV]',
     'fold':3
 }
+variables['WW_MET_over_mass']={
+    'name':'WW_MET_over_mass',
+    'range':(20,0,1),
+    'xaxis':'MET/M(WW))',
+    'fold':0
+}
+
 if Resolved:
     variables['WW_mass']['range']=([0,140,160,180,200,220,240,260,280,300,350,400,450,500,550,600,650,700,750,800,900,1000,1500,2000,4000],)
 if (not 'SR' in configration_py):

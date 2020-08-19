@@ -503,7 +503,9 @@ if Boosted:
     aliases['WW_pt_over_mass']={
         'expr':'lnJ_'+WTAG+'_nom_minPtWOverM'
     }
-    
+    aliases['WW_MET_over_mass']={
+        'expr':METtype+'_nom_pt/lnJ_'+WTAG+'_nom_mass'
+    }
 
 if Resolved:
     aliases['WW_mass']={
@@ -514,6 +516,9 @@ if Resolved:
     }
     aliases['WW_Mt']={
         'expr':'lnjj'+_ALGO_+'nom_Mt'
+    }
+    aliases['WW_MET_over_mass']={
+        'expr':METtype+'_nom_pt/lnjj_'+ALGO+'_nom_mass'
     }
 
 
