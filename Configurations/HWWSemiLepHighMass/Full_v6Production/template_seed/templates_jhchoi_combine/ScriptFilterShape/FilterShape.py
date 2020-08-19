@@ -125,6 +125,20 @@ for proc in SAMPLELIST:
                   ##end of ibin
                hnew.SetEntries(0)
                ROOT.gDirectory.WriteObject(hnew,histopath)
+            if norm < 0 and entries > 0:
+               print histopath,'negative norm, but has entries '
+               print fullpath
+               hnew=thish.Clone()
+               Nbins= thish.GetNbinsX()
+               for ibin in range(0,Nbins+1):
+                  y=thish.GetBinContent(ibin)
+                  yerr=thish.GetBinError(ibin)
+                  if y <0:
+                     hnew.SetBinContent(ibin,0.0)
+                     
+                  ##end of ibin
+               
+               ROOT.gDirectory.WriteObject(hnew,histopath)
          for shape in shapelist: ##to find nuisance shape 
             shapename=shape.GetName() ## histo_Wjets01_fatsys_up e.g.
             #print shapename,"shapename"
