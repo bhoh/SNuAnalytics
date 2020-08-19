@@ -17,8 +17,6 @@ FORFINAL=True  ####--For final result -> final category and final variable only
 N1CUT=False    ####--For AN plots
 
 
-###--Variable setting
-OnlyFinalVariable=False
 
 ##--Corrections
 MjjShapeCorr=False
