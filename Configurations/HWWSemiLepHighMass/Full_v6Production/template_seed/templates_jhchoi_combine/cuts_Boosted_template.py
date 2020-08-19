@@ -133,6 +133,7 @@ for LepCut in LepCats:
 
             if FORFINAL: ##For final result
                 if (not 'GGF' in ProdCut) and (not 'VBF' in ProdCut): continue ##VBF/GGF category only
+                if ('eleCH' in LepCut) or ('eleCH' in LepCut): continue ##Combine ele/mu ch
                 for MEKD in ['MEKDTAG','UNTAGGED']: ##MEKD Category
                     cutname=cutname_base+'_'+MEKD
                     ##Add final cuts
