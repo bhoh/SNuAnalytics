@@ -2,7 +2,8 @@
 import os
 import sys
 
-ONLYSR=True
+ONLY_SR=True
+ONLY_TAGGED=True
 ##----Configurations
 AnaDir='/cms/ldap_home/jhchoi/HWW_Analysis/slc7/ForShape/CMSSW_10_2_19/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/Full_v6Production/ForAN/FinalCombine'
 def LoadCardPath(): 
@@ -179,13 +180,17 @@ def LoadConfiguration():
     }
     
 
-    if ONLYSR:
+    if ONLY_SR:
         del config['Boosted']['TOP']
         del config['Boosted']['SB']
         del config['Resolved']['TOP']
         del config['Resolved']['SB']
-
-
+    if ONLY_TAGGED:
+        for bst in sorted(config):
+            for rg in sorted(config[bst]):
+                for c in sorted(config[bst][rg]['cuts']):
+                    if 'UNTAGGED' in c:
+                        config[bst][rg]['cuts'].remove(c)
     return config
 ###-----------------Function
 

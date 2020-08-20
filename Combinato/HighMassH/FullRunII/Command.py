@@ -15,7 +15,7 @@ workspace=os.getcwd()+'/workspace/'
 print "workspace=",workspace
 os.system('mkdir -p '+workspace)
 
-UseCardDirect=False
+
 
 def PrintCommand():
     print "---Command---"
@@ -42,32 +42,42 @@ def CpCards(Year):
 
     print "----[END]CpCard",Year
 def CombineCardCommand(Year,MX,BoostList=['Boosted','Resolved'],FlvList=['mu','ele']):
+    FullRunII=False ##combine all 3yrs
     Year=str(Year)
+    if Year=='3yr': FullRunII=True
+    
     #config[Boosted][TOP][cuts/variable]
     config=LoadConfiguration()
+    Years=[]
+    if not FullRunII:
+        Years=[Year]
+    else:
+        Years=['2016','2017','2018']
     ##--MassPoint
-    List_MX_GGF=GetGGFMXList(Year)
-    List_MX_VBF=GetVBFMXList(Year)
+    List_MX_GGF=GetGGFMXList(Years[0])
+    List_MX_VBF=GetVBFMXList(Years[0])
 
+    
+    List_MX_common=list(set(List_MX_GGF).intersection(List_MX_VBF))
+    for yr in Years:
+        List_MX_common=list(set(List_MX_common).intersection(GetGGFMXList(yr)))
+        List_MX_common=list(set(List_MX_common).intersection(GetVBFMXList(yr)))
+        #List_MX_GGF+=GetGGFMXList(yr)
+        #List_MX_VBF+=GetVBFMXList(yr)
+    
     validMX=True
 
-    if not MX in List_MX_GGF:
-        print MX,'is not in GGF signal mass'
-        validMX=False
-    if not MX in List_MX_VBF:
-        print MX,'is not in VBF signal mass'
+    if not MX in List_MX_common:
+        print MX,'is not in signal mass'
         validMX=False
     #List_MX=list(set(List_MX_GGF+List_MX_VBF))
     if not validMX:
-        exit()
+        return
         
 
     MX=str(MX)
     
-    ##--Use card direct
-    if UseCardDirect:
-        cardpath=LoadCardPath()
-        cardpath_this_yr=cardpath[Year]
+
 
     ARGUMENTS=[]
     
@@ -86,12 +96,14 @@ def CombineCardCommand(Year,MX,BoostList=['Boosted','Resolved'],FlvList=['mu','e
                     if not flv+'CH' in cut: doCombine=True 
                 if not doCombine: continue
 
-
-                cardpath='Datacards_'+Year+'/Datacard_M'+MX+'/'+cut+'/'+variable+'/datacard.txt'
-                if UseCardDirect:
-                    cardpath=cardpath_this_yr+'/Datacard_M'+MX+'/'+cut+'/'+variable+'/datacard.txt'
-                myarg=cut+'_'+Year+"="+cardpath
-                ARGUMENTS.append(myarg)
+                for yr in Years:
+                    if FullRunII:
+                        cardpath='../'+yr+'/Datacards_'+yr+'/Datacard_M'+MX+'/'+cut+'/'+variable+'/datacard.txt'
+                    else:
+                        cardpath='Datacards_'+yr+'/Datacard_M'+MX+'/'+cut+'/'+variable+'/datacard.txt'
+                
+                    myarg=cut+'_'+yr+"="+cardpath
+                    ARGUMENTS.append(myarg)
 
     ARGUMENT=" ".join(ARGUMENTS)
     workspace_year=workspace+'/'+Year
@@ -114,13 +126,29 @@ def CombineCardCommand(Year,MX,BoostList=['Boosted','Resolved'],FlvList=['mu','e
     #print command
 
 
+
+
 #if __name__ == '__main__':
 def CombineCardYear(Year,doCopy=False):
+    FullRunII=False ##combine all 3yrs
+    Year=str(Year)
+    if Year=='3yr': FullRunII=True
+    Years=[]
+    if not FullRunII:
+        Years=[Year]
+    else:
+        Years=['2016','2017','2018']
+    ##--MassPoint
+    List_MX_GGF=GetGGFMXList(Years[0])
+    List_MX_VBF=GetVBFMXList(Years[0])
 
-    List_MX_GGF=GetGGFMXList(Year)
-    List_MX_VBF=GetVBFMXList(Year)
-    #List_MX=list(set(List_MX_GGF+List_MX_VBF))
+
     List_MX_common=list(set(List_MX_GGF).intersection(List_MX_VBF))
+    for yr in Years:
+        List_MX_common=list(set(List_MX_common).intersection(GetGGFMXList(yr)))
+        List_MX_common=list(set(List_MX_common).intersection(GetVBFMXList(yr)))
+        #List_MX_GGF+=GetGGFMXList(yr)
+
     #print 
     #Year=2016
 
@@ -177,11 +205,27 @@ def MakeWorkSpace(Year):
     ncpu=1
     submit=True
 
-    List_MX_GGF=GetGGFMXList(Year)
-    List_MX_VBF=GetVBFMXList(Year)
-    #List_MX=list(set(List_MX_GGF+List_MX_VBF))
+
+    FullRunII=False ##combine all 3yrs
+    Year=str(Year)
+    if Year=='3yr': FullRunII=True
+
+    Years=[]
+    if not FullRunII:
+        Years=[Year]
+    else:
+        Years=['2016','2017','2018']
+    ##--MassPoint
+    List_MX_GGF=GetGGFMXList(Years[0])
+    List_MX_VBF=GetVBFMXList(Years[0])
+
+
     List_MX_common=list(set(List_MX_GGF).intersection(List_MX_VBF))
-    
+    for yr in Years:
+        List_MX_common=list(set(List_MX_common).intersection(GetGGFMXList(yr)))
+        List_MX_common=list(set(List_MX_common).intersection(GetVBFMXList(yr)))
+        #List_MX_GGF+=GetGGFMXList(yr)                                                                                                                                                                      
+        #List_MX_VBF+=GetVBFMXList(yr)                                                                                                                                                                      
 
 
     ##---combine all channels---##
@@ -262,10 +306,26 @@ def GetAsymptoticLimit(Year):
     Year=str(Year)
     ncpu=1
     submit=True
-    
-    List_MX_GGF=GetGGFMXList(Year)
-    List_MX_VBF=GetVBFMXList(Year)
+    FullRunII=False ##combine all 3yrs
+
+    Year=str(Year)
+    if Year=='3yr': FullRunII=True
+
+    Years=[]
+    if not FullRunII:
+        Years=[Year]
+    else:
+        Years=['2016','2017','2018']
+    ##--MassPoint
+    List_MX_GGF=GetGGFMXList(Years[0])
+    List_MX_VBF=GetVBFMXList(Years[0])
+
+
     List_MX_common=list(set(List_MX_GGF).intersection(List_MX_VBF))
+    for yr in Years:
+        List_MX_common=list(set(List_MX_common).intersection(GetGGFMXList(yr)))
+        List_MX_common=list(set(List_MX_common).intersection(GetVBFMXList(yr)))
+
 
     fvbf_list=['floating','vbfonly','ggfonly','0.5']
     interference_list=[True,False]
@@ -326,6 +386,8 @@ def GetAsymptoticLimit(Year):
                 command='&&'.join(commands)
                 print command
                 Export(WORKDIR,command,jobname,submit,ncpu)
+
+
 
     
 if __name__ == '__main__':
