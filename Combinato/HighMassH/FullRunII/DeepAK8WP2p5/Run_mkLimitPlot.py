@@ -183,4 +183,4 @@ if __name__ == '__main__':
 
     mkLimitPlot(['./floating.pdf'],'floating f_{vbf}',conflist_floating,13,137)
     mkLimitPlot(['./ggfonly.pdf'],'ggflony',conflist_ggfonly,13,137)
-    mkLimitPlot(['./vbfonly.pdf'],'vbflony',conflist_vbfonly,13,137)
+    mkLimitPlot(['./vbfonly.pdf'],'vbfonly',conflist_vbfonly,13,137)
