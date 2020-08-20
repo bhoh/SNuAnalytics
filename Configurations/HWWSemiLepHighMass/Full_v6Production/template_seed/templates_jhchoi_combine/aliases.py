@@ -101,22 +101,28 @@ aliases['isFinalBoostSR']={
 
 
 ###--Wtagger ID eff. SF
+
 aliases['WtaggerSFnom']={
     #'expr' : '('+WtaggerSF+')'+'*(isBoost_'+WTAG+'_nom) + 1*(!isBoost_'+WTAG+'_nom)',
     #'expr' : 'isBoost_'+WTAG+'_nom ? ('+WtaggerSF+')'+' : 1',
-    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) ) ? ('+WtaggerSF+')'+' : 1',
+    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) && (Sum$(  (pow(WtaggerFatjet_'+WTAG+'_nom_eta[lnJ_'+WTAG+'_nom_widx]-GenPart_eta, 2 ) + pow(WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-GenPart_phi, 2 ) < 0.36) && (abs(GenPart_pdgId)==24)  && (  (GenPart_statusFlags/(1<<13))%2 ==1 ) && (   (GenPart_statusFlags/(1<<8))%2 ==1   ) )>0)) ? ('+WtaggerSF+')'+' : 1',
     'samples' : mc
-}
+} ##1<<13 : lastcopy , 1<<8 : from hardprocess
 aliases['WtaggerSFup']={
     #'expr' : 'isBoost_'+WTAG+'_nom ? ('+WtaggerSFup+')'+' : 1',
     #'expr' : '('+WtaggerSFup+')'+'*(isBoost_'+WTAG+'_nom) + 1*(!isBoost_'+WTAG+'_nom)',
-    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) &&(WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) &&(WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105)) ? ('+WtaggerSFup+')'+' : 1',
+    #'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) &&(WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) &&(WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105)) ? ('+WtaggerSFup+')'+' : 1',
+    #'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) && (Sum$(  (pow(WtaggerFatjet_'+WTAG+'_nom_eta[lnJ_'+WTAG+'_nom_widx]-GenPart_eta, 2 ) + pow(WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-GenPart_phi, 2 ) < 0.36) && (abs(GenPart_pdgId)==24)  && (GenPart_statusFlags & 9)  )>0)) ? ('+WtaggerSFup+')'+' : 1',
+    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) && (Sum$(  (pow(WtaggerFatjet_'+WTAG+'_nom_eta[lnJ_'+WTAG+'_nom_widx]-GenPart_eta, 2 ) + pow(WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-GenPart_phi, 2 ) < 0.36) && (abs(GenPart_pdgId)==24)  && (  (GenPart_statusFlags/(1<<13))%2 ==1 ) && (   (GenPart_statusFlags/(1<<8))%2 ==1   ) )>0)) ? ('+WtaggerSFup+')'+' : 1',
     'samples' : mc
 }
 aliases['WtaggerSFdown']={
     #'expr' : 'isBoost_'+WTAG+'_nom ? ('+WtaggerSFdown+')'+' : 1',
     #'expr' : '('+WtaggerSFdown+')'+'*(isBoost_'+WTAG+'_nom) + 1*(!isBoost_'+WTAG+'_nom)',
-    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) ) ? ('+WtaggerSFdown+')'+' : 1',
+    #'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) ) ? ('+WtaggerSFdown+')'+' : 1',
+    'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) && (Sum$(  (pow(WtaggerFatjet_'+WTAG+'_nom_eta[lnJ_'+WTAG+'_nom_widx]-GenPart_eta, 2 ) + pow(WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-GenPart_phi, 2 ) < 0.36) && (abs(GenPart_pdgId)==24)  && (  (GenPart_statusFlags/(1<<13))%2 ==1 ) && (   (GenPart_statusFlags/(1<<8))%2 ==1   ) )>0)) ? ('+WtaggerSFdown+')'+' : 1',
+    #'expr' : '(isBoost_'+WTAG+'_nom && (lnJ_'+WTAG+'_nom_widx >=0) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] > 65) && (WtaggerFatjet_'+WTAG+'_nom_mass[lnJ_'+WTAG+'_nom_widx] < 105) && (Sum$(  (pow(WtaggerFatjet_'+WTAG+'_nom_eta[lnJ_'+WTAG+'_nom_widx]-GenPart_eta, 2 ) + pow(WtaggerFatjet_'+WTAG+'_nom_phi[lnJ_'+WTAG+'_nom_widx]-GenPart_phi, 2 ) < 0.36) && (abs(GenPart_pdgId)==24)  && (GenPart_statusFlags & 9)  )>0)) ? ('+WtaggerSFdown+')'+' : 1',
+
     'samples' : mc
 }
 
@@ -507,6 +513,13 @@ if Boosted:
         'expr':METtype+'_nom_pt/lnJ_'+WTAG+'_nom_mass'
     }
 
+    aliases['WW_Whadpt_over_mass']={
+        'expr':'WtaggerFatjet_'+WTAG+'_nom_pt[lnJ_'+WTAG+'_nom_widx]/lnJ_'+WTAG+'_nom_mass'
+    }
+    aliases['WW_Wleppt_over_mass']={
+        'expr':'Wlep_nom_pt/lnJ_'+WTAG+'_nom_mass'
+    }
+
 if Resolved:
     aliases['WW_mass']={
         'expr':'lnjj_'+ALGO+'_nom_mass'
@@ -521,6 +534,12 @@ if Resolved:
         'expr':METtype+'_nom_pt/lnjj_'+ALGO+'_nom_mass'
     }
 
+    aliases['WW_Whadpt_over_mass']={
+        'expr':'Whad'+_ALGO_+'nom_pt/lnjj_'+ALGO+'_nom_mass'
+    }
+    aliases['WW_Wleppt_over_mass']={
+        'expr':'Wlep_nom_pt/lnjj_'+ALGO+'_nom_mass'
+    }
 
 ##--VBF--
 if Boosted:
