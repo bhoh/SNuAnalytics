@@ -79,13 +79,13 @@ def Print1yr(YEAR,WP,VERSION):
     up200300=float(nom200300+SFdict['W'][YEAR][VERSION][WP]['200']['300'][2])
     up300400=float(nom300400+SFdict['W'][YEAR][VERSION][WP]['300']['400'][2])
     up400800=float(nom400800+SFdict['W'][YEAR][VERSION][WP]['400']['800'][2])
-    up800=float(nom400800+2*SFdict['W'][YEAR][VERSION][WP]['400']['800'][2])
+    up800=float(nom400800+SFdict['W'][YEAR][VERSION][WP]['400']['800'][2])
     
     
     down200300=float(nom200300-SFdict['W'][YEAR][VERSION][WP]['200']['300'][1])
     down300400=float(nom300400-SFdict['W'][YEAR][VERSION][WP]['300']['400'][1])
     down400800=float(nom400800-SFdict['W'][YEAR][VERSION][WP]['400']['800'][1])
-    down800=float(nom400800-2*SFdict['W'][YEAR][VERSION][WP]['400']['800'][1])
+    down800=float(nom400800-SFdict['W'][YEAR][VERSION][WP]['400']['800'][1])
     
     #print
     print "WJID['"+YEAR+"']['"+BranchName+"']['effSF']={"
