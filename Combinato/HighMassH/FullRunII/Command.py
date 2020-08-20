@@ -188,7 +188,7 @@ def MakeWorkSpace(Year):
     for MX in List_MX_common:
         #MX=str(MX)
         #print "Year=",Year,"MX=",MX
-        jobname='workspace__ALLchannel__commbine__'+str(MX)+"__"+Year
+        jobname='workspace__ALLchannel__combine__'+str(MX)+"__"+Year
         WORKDIR='WORKDIR__MakeWorSpace/'+jobname
         commands=GetMakeWorkSpaceCommand(Year,MX,['Boosted','Resolved'],['mu','ele'])
         if not commands:continue
@@ -199,7 +199,7 @@ def MakeWorkSpace(Year):
     ##---only Boosted
     for MX in List_MX_common:
 
-        jobname='workspace__Boosted__commbine__'+str(MX)+'__'+Year
+        jobname='workspace__Boosted__combine__'+str(MX)+'__'+Year
         WORKDIR='WORKDIR__MakeWorSpace/'+jobname
         commands=GetMakeWorkSpaceCommand(Year,MX,['Boosted'],['mu','ele'])
         if not commands:continue
@@ -209,7 +209,7 @@ def MakeWorkSpace(Year):
     ##---only Resolved
     for MX in List_MX_common:
 
-        jobname='workspace__Resolved__commbine__'+str(MX)+'__'+Year
+        jobname='workspace__Resolved__combine__'+str(MX)+'__'+Year
         WORKDIR='WORKDIR__MakeWorSpace/'+jobname
         commands=GetMakeWorkSpaceCommand(Year,MX,['Resolved'],['mu','ele'])
         if not commands:continue
@@ -279,8 +279,8 @@ def GetAsymptoticLimit(Year):
         for fvbf in fvbf_list:
             for interference in interference_list:
                 commands=[]
-                jobname='AsymptoticLimit__'+fvbf+'__ALLchannel__commbine__'+str(MX)+"__"+Year
-                if not interference: jobname='AsymptoticLimit__'+fvbf+'__ALLchannel__commbine__'+str(MX)+"_NoI__"+Year
+                jobname='AsymptoticLimit__'+fvbf+'__ALLchannel__combine__'+str(MX)+"__"+Year
+                if not interference: jobname='AsymptoticLimit__'+fvbf+'__ALLchannel__combine__'+str(MX)+"_NoI__"+Year
                 WORKDIR='WORKDIR__AsymptoticLimit__'+fvbf+'/'+jobname
                 _command=GetAsymptoticLimitCommand(Year,MX,['Boosted','Resolved'],['mu','ele'],fvbf,interference)
                 if not _command:continue
@@ -297,8 +297,8 @@ def GetAsymptoticLimit(Year):
         for fvbf in fvbf_list:
             for interference in interference_list:
                 commands=[]
-                jobname='AsymptoticLimit__'+fvbf+'__Boosted__commbine__'+str(MX)+"__"+Year
-                if not interference: jobname='AsymptoticLimit__'+fvbf+'__Boosted__commbine__'+str(MX)+"_NoI__"+Year
+                jobname='AsymptoticLimit__'+fvbf+'__Boosted__combine__'+str(MX)+"__"+Year
+                if not interference: jobname='AsymptoticLimit__'+fvbf+'__Boosted__combine__'+str(MX)+"_NoI__"+Year
                 WORKDIR='WORKDIR__AsymptoticLimit__'+fvbf+'/'+jobname
                 _command=GetAsymptoticLimitCommand(Year,MX,['Boosted'],['mu','ele'],fvbf,interference)
                 if not _command:continue
@@ -316,8 +316,8 @@ def GetAsymptoticLimit(Year):
         for fvbf in fvbf_list:
             for interference in interference_list:
                 commands=[]
-                jobname='AsymptoticLimit__'+fvbf+'__Resolved__commbine__'+str(MX)+"__"+Year
-                if not interference: jobname='AsymptoticLimit__'+fvbf+'__Resolved__commbine__'+str(MX)+"_NoI__"+Year
+                jobname='AsymptoticLimit__'+fvbf+'__Resolved__combine__'+str(MX)+"__"+Year
+                if not interference: jobname='AsymptoticLimit__'+fvbf+'__Resolved__combine__'+str(MX)+"_NoI__"+Year
                 WORKDIR='WORKDIR__AsymptoticLimit__'+fvbf+'/'+jobname
                 _command=GetAsymptoticLimitCommand(Year,MX,['Resolved'],['mu','ele'],fvbf,interference)
                 if not _command:continue
