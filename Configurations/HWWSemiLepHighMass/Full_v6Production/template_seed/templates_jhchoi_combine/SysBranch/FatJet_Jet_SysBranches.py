@@ -76,6 +76,7 @@ HMBoostBranches=[
     'dEta_of_max_mjj_Boost'+_suffix,
     'VBFjjBoost_cjidx1'+_suffix,
     'VBFjjBoost_cjidx2'+_suffix,
+    'Boost_CandSumPt'+_suffix
 ]
 
 
@@ -115,6 +116,7 @@ HMResolBranches=[
     'dEta_of_max_mjj_Resol'+_suffix,
     'VBFjjResol_cjidx1'+_suffix,
     'VBFjjResol_cjidx2'+_suffix,
+    'Resol_CandSumPt'+_suffix,
 ]
 
 for M in MELA_MASS_RESOL:

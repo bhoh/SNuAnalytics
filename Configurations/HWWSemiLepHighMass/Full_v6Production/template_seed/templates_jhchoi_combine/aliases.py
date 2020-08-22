@@ -499,8 +499,15 @@ if Resolved:
     aliases['HadronicW_Score']={}
     aliases['HadronicW_Score']['expr']='Whad'+_ALGO_+'nom_ScoreToLeast'
 
-
-
+##---PTSUM
+if Boosted:
+    aliases['CandSumPt']={
+        'expr':'Boost_CandSumPt_'+WTAG+'_nom'
+    }
+if Resolved:
+    aliases['CandSumPt']={
+        'expr':'Resol_CandSumPt_'+ALGO+'_nom'
+    }
 ##--WW--##
 if Boosted:
     aliases['WW_mass']={
