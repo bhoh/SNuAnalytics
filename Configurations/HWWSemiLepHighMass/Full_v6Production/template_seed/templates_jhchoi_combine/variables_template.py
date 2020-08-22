@@ -281,8 +281,15 @@ variables ['PV_npvs']={
 ##--WW
 variables['WW_pt_over_mass']={
     'name':'WW_pt_over_mass',
-    'range':(20,0,1),
-    'xaxis':'min(P_T{W}/M(WW))',
+    'range':(40,0,1),
+    'xaxis':'min(P_{T}(W)/M(WW))',
+    'fold':0
+}
+
+variables['WW_maxpt_over_mass']={
+    'name':'WW_maxpt_over_mass',
+    'range':(80,0,2),
+    'xaxis':'max(P_{T}(W)/M(WW))',
     'fold':0
 }
 variables['WW_mass']={
@@ -297,6 +304,21 @@ variables['WW_MET_over_mass']={
     'name':'WW_MET_over_mass',
     'range':(20,0,1),
     'xaxis':'MET/M(WW))',
+    'fold':0
+}
+
+variables['WW_Whadpt_over_mass']={
+    'name':'WW_Whadpt_over_mass',
+    'range':(20,0,1),
+    'xaxis':'P_{T}(HadronicW)/M(WW))',
+    'fold':0
+}
+
+
+variables['WW_Wleppt_over_mass']={
+    'name':'WW_Wleppt_over_mass',
+    'range':(20,0,1),
+    'xaxis':'P_{T}(LeptonicW)/M(WW))',
     'fold':0
 }
 
