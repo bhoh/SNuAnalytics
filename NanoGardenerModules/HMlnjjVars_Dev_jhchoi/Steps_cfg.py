@@ -838,3 +838,16 @@ Steps['BWReweight'] ={
                   'module'     : 'BWEwkSingRew()',
     'onlySample':signals,
 }
+
+
+Steps['HMLHEAna']={
+    'isChain'    : False ,
+    'do4MC'      : True ,
+    'do4Data'    : False  ,
+    'import'     : 'LatinoAnalysis.NanoGardener.modules.HighMassSemilepLHEAnalyzer',
+    'declare'    : 'HMLHE = lambda : HighMassSemilepLHEAnalyzer()',
+    'module'     : 'HMLHE()',
+    #'onlySample':signals,
+
+#HighMassSemilepLHEAnalyzer.py
+}

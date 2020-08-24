@@ -1,0 +1,38 @@
+ <<< Combine >>> 
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 123456
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+WARNING: underflow to -3.04434e-05 in pdf_binmu_Resolved_GGF1_SR_2017_obsOnly for bin 18, weight 1.73448e-05
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_GGF1_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_GGF1_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.00063232 +/- 0,fvbf = 1,sigma = 0.0012207 +/- 8.41909e-07)
+FASTEXIT from pdf_binmu_Resolved_GGF1_SR_2017_obsOnly
+WARNING: underflow to -5.63193e-05 in pdf_binmu_Resolved_GGF1_SR_2017_obsOnly for bin 18, weight 1.73448e-05
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_GGF1_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_GGF1_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.00063232 +/- 0,fvbf = 1,sigma = 0.000610352 +/- 8.41909e-07)
+FASTEXIT from pdf_binmu_Resolved_GGF1_SR_2017_obsOnly
+WARNING: underflow to -2.09554e-05 in pdf_binmu_Resolved_GGF1_SR_2017_obsOnly for bin 18, weight 1.73448e-05
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_GGF1_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_GGF1_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.00063232 +/- 0,fvbf = 1,sigma = 0.00137329 +/- 8.41909e-07)
+FASTEXIT from pdf_binmu_Resolved_GGF1_SR_2017_obsOnly
+WARNING: underflow to -4.9551e-05 in pdf_binmu_Resolved_GGF1_SR_2017_obsOnly for bin 18, weight 1.73448e-05
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Resolved_GGF1_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Resolved_GGF1_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.00063232 +/- 0,fvbf = 1,sigma = 0.000839233 +/- 8.41909e-07)
+FASTEXIT from pdf_binmu_Resolved_GGF1_SR_2017_obsOnly
+
+ -- AsymptoticLimits ( CLs ) --
+Observed Limit: sigma < 0.0026
+Expected  2.5%: sigma < 0.0003
+Expected 16.0%: sigma < 0.0006
+Expected 50.0%: sigma < 0.0024
+Expected 84.0%: sigma < 0.0028
+Expected 97.5%: sigma < 0.0036
+
+Done in 0.00 min (cpu), 0.00 min (real)

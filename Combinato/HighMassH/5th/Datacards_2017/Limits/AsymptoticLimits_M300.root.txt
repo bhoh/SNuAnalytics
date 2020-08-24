@@ -1,0 +1,494 @@
+ <<< Combine >>> 
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 1
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+WARNING: underflow to -0.00196086 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.1 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00414972 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.1 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00828729 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 5 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00886041 in pdf_binmu_Boosted_GGF0_SR_2017_obsOnly for bin 15, weight 0.0349552
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_GGF0_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_GGF0_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 5 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_GGF0_SR_2017_obsOnly
+WARNING: underflow to -0.00313118 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 5 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00402607 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.5 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00887729 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.5 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0047521 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.75 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0106719 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.75 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00531315 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0121277 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00576876 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.25 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0133668 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.25 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00596715 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.375 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0139259 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.375 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0058701 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.3125 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0136508 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.3125 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00581999 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.28125 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0135099 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.28125 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0058701 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.3125 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0136508 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.3125 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00584518 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.29688 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0135806 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.29688 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00448223 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.648438 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00999437 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.648438 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00525765 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.972656 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0119805 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.972656 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00490009 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.810547 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0110494 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.810547 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00469991 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.729492 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0105398 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.729492 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00459345 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.688965 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.010272 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.688965 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00464725 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.709229 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0104071 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.709229 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00462049 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.699097 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0103398 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.699097 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0053091 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.997986 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0121169 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.997986 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00498865 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.848541 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0112774 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.848541 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00515409 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.923264 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0117079 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.923264 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00523282 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.960625 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0119149 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.960625 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00519377 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.941944 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.011812 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.941944 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00517401 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.932604 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0117601 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.932604 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00516407 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.927934 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.011734 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 1.08938e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 0.927934 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00670895 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.95856 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000829947 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.95856 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00632122 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.62772 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000377757 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.62772 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00652453 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.79314 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00061268 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.79314 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00661894 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.87585 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000723372 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.87585 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0065723 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.83449 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000668557 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.83449 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00654856 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.81381 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000640754 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.81381 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00653658 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.80348 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000626751 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 1.80348 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00747642 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.87613 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000811469 in pdf_binmu_Boosted_GGF0_SR_2017_obsOnly for bin 15, weight 0.0349552
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_GGF0_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_GGF0_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.87613 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_GGF0_SR_2017_obsOnly
+WARNING: underflow to -0.00179639 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.87613 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0070763 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.34239 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00127749 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.34239 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00729038 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.60926 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00155004 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.60926 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00718712 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.47582 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.0014173 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.47582 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00713269 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.4091 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00134831 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.4091 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00716015 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.44246 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00138303 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.44246 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00714648 in pdf_binele_Boosted_VBF_SR_2017_obsOnly for bin 15, weight 7.03261e-07
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.42578 +/- 0)
+FASTEXIT from pdf_binele_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00136573 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 0 +/- 0,fvbf = 0.01 +/- 0,sigma = 2.42578 +/- 0)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: sigma < 0.6991
+Expected 16.0%: sigma < 0.9279
+Expected 50.0%: sigma < 1.2969
+Expected 84.0%: sigma < 1.8086
+Expected 97.5%: sigma < 2.4174
+
+Done in 0.00 min (cpu), 0.00 min (real)

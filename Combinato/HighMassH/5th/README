@@ -1,0 +1,23 @@
+#GetLimitOneYear.sh  RunAsymptoticLimits.sh  RunFilterShape.sh  combine_cards_one_yr.sh  make_workspace.sh
+
+
+##for a Mass Point ==200, for year2016
+
+0) move to Datacards_2016
+
+1) combine_cards_one_yr.sh
+
+2) make_workspace.sh combine_M200_2017
+
+3) RunAsymptoticLimits.sh NoI_M200.root
+
+
+## All mass points for year ==2016
+
+->GetLimitOneYear.sh
+
+
+##For all 3yr combined
+
+0) combine_cards_3yr.sh
+1) GetLimitOneYear.sh

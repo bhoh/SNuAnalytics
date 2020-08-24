@@ -1,0 +1,10 @@
+ <<< Combine >>> 
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 4
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+Set Default Value of Parameter fvbf To : 0.5
+
+ -- AsymptoticLimits ( CLs ) --
+Observed Limit: sigma < 0.0009
+
+Done in 0.00 min (cpu), 0.00 min (real)

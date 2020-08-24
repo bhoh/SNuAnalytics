@@ -1,0 +1,15 @@
+ <<< Combine >>> 
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 7
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+Set Default Value of Parameter fvbf To : 1
+
+ -- AsymptoticLimits ( CLs ) --
+Expected  2.5%: sigma < 1.2524
+Expected 16.0%: sigma < 1.6822
+Expected 50.0%: sigma < 2.3750
+Expected 84.0%: sigma < 3.3690
+Expected 97.5%: sigma < 4.5881
+
+Done in 0.00 min (cpu), 0.00 min (real)

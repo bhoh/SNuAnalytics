@@ -1,0 +1,17 @@
+## Shape input card
+imax 1 number of channels
+jmax * number of background
+kmax * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+bin         eleCH__BoostedVBF__SR__METOver40__PtOverM04
+observation 721
+shapes  *           * shapes/histos_eleCH__BoostedVBF__SR__METOver40__PtOverM04.root     histo_$PROCESS histo_$PROCESS_$SYSTEMATIC
+shapes  data_obs           * shapes/histos_eleCH__BoostedVBF__SR__METOver40__PtOverM04.root     histo_Data
+bin                                                                             eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       eleCH__BoostedVBF__SR__METOver40__PtOverM04       
+process                                                                         vbfHWWlnuqq_M126_S                                ggHWWlnuqq_M126_S                                 QCD_bcToE                                         top                                               QCD_EM                                            Wjets                                             DY                                                
+process                                                                         0                                                 -1                                                1                                                 2                                                 3                                                 4                                                 5                                                 
+rate                                                                            0.0000                                            0.0000                                            1.4803                                            234.4887                                          29.5459                                           721.5544                                          32.8206                                           
+----------------------------------------------------------------------------------------------------
+dummy                                                       lnN                 1.3                                               1.3                                               1.3                                               1.3                                               1.3                                               1.3                                               1.3                                               
+----------------------------------------------------------------------------------------------------
+

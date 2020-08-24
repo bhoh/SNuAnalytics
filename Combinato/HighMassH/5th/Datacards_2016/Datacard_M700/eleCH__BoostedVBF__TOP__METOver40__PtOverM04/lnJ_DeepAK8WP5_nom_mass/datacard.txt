@@ -1,0 +1,17 @@
+## Shape input card
+imax 1 number of channels
+jmax * number of background
+kmax * number of nuisance parameters
+----------------------------------------------------------------------------------------------------
+bin         eleCH__BoostedVBF__TOP__METOver40__PtOverM04
+observation 2245
+shapes  *           * shapes/histos_eleCH__BoostedVBF__TOP__METOver40__PtOverM04.root     histo_$PROCESS histo_$PROCESS_$SYSTEMATIC
+shapes  data_obs           * shapes/histos_eleCH__BoostedVBF__TOP__METOver40__PtOverM04.root     histo_Data
+bin                                                                             eleCH__BoostedVBF__TOP__METOver40__PtOverM04       eleCH__BoostedVBF__TOP__METOver40__PtOverM04       eleCH__BoostedVBF__TOP__METOver40__PtOverM04       eleCH__BoostedVBF__TOP__METOver40__PtOverM04       eleCH__BoostedVBF__TOP__METOver40__PtOverM04       
+process                                                                         QCD_bcToE                                          top                                                QCD_EM                                             Wjets                                              DY                                                 
+process                                                                         1                                                  2                                                  3                                                  4                                                  5                                                  
+rate                                                                            3.6859                                             1975.5160                                          60.8886                                            172.6642                                           39.8142                                            
+----------------------------------------------------------------------------------------------------
+dummy                                                       lnN                 1.3                                                1.3                                                1.3                                                1.3                                                1.3                                                
+----------------------------------------------------------------------------------------------------
+

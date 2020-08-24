@@ -1,0 +1,15 @@
+ <<< Combine >>> 
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 4
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+WARNING: underflow to -1.37137e-05 in pdf_binele_Resolved_VBF_SR_2017_obsOnly for bin 19, weight 3.06738e-06
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(ele_Resolved_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::ele_Resolved_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000509829 +/- 0,fvbf = 0.5,sigma = 0.000976562 +/- 8.85186e-07)
+FASTEXIT from pdf_binele_Resolved_VBF_SR_2017_obsOnly
+
+ -- AsymptoticLimits ( CLs ) --
+Observed Limit: sigma < 0.0016
+
+Done in 0.00 min (cpu), 0.00 min (real)

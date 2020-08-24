@@ -1,6 +1,8 @@
 import ROOT
 import math
-
+import sys
+maxfloat=sys.float_info.max
+minfloat=sys.float_info.min
 from PhysicsTools.NanoAODTools.postprocessing.modules.jme.jetSmearer import jetSmearer
 from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection, matchObjectCollectionMultiple
 from LatinoAnalysis.NanoGardener.data.Wtagger_cfg import WJID,FATJETCUTS
@@ -79,10 +81,16 @@ class WtaggerProducer(Module):
                 objname="isBoost_"+tagname+"_"+var
                 self.out.branch(objname,"O")
                 #for x in ['pt','eta','phi','mass','tau21ddt','effSF','effSFup','effSFdown']:
-                for x in ['pt','eta','phi','mass','tau21ddt']:
+                #for x in ['pt','eta','phi','mass','tau21ddt','deepTag','deepTagMD','jet_msdcorr_jmrNomVal','jmsNomVal','jmsDownVal','jmsUpVal','jet_msdcorr_jmrUpVal','jet_msdcorr_jmrDownVal']:
+                for x in ['pt','eta','phi','mass','tau21ddt','deepTag','deepTagMD']:
                     collname='WtaggerFatjet_'+tagname+'_'+var
                     self.out.branch(collname+'_'+x, "F", lenVar="n"+collname )
+
+                    #failcollname='WtaggerFatjetFail_'+tagname+'_'+var
+                    #self.out.branch(failcollname+'_'+x, "F", lenVar="n"+failcollname )
+
                 self.out.branch(collname+"_fjetIdx","I",lenVar="n"+collname)
+                #self.out.branch(failcollname+"_fjetIdx","I",lenVar="n"+failcollname)
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         print "--endFile--"
@@ -97,7 +105,7 @@ class WtaggerProducer(Module):
         self.subJets = Collection(event, self.subJetBranchName )
         self.lepton = Object(event,"Lepton",index=0) ##Take primary lepton
         lepton_eta=self.lepton.eta
-        lepton_phi=self.lepton.eta
+        lepton_phi=self.lepton.phi
 
         ptmin=FATJETCUTS[str(self.year)]['ptmin']
         etamax=FATJETCUTS[str(self.year)]['etamax']
@@ -114,8 +122,10 @@ class WtaggerProducer(Module):
 
         ##initialize  Wtagger Collections (nSystematic)*(ntag)
         WtaggerColl={} ##WtaggerColl[tagname][systematicvar][pt,eta,phi,mass,tau21ddt,effSF]
+        #WtaggerFailColl={}
         for tagname in self.WtaggerConfig:
             WtaggerColl[tagname]={}
+            #WtaggerFailColl[tagname]={}
             for var in self.sysvars:
                 WtaggerColl[tagname][var]={
                     'pt':[],
@@ -123,17 +133,59 @@ class WtaggerProducer(Module):
                     'phi':[],
                     'mass':[],
                     'tau21ddt':[],
+                    'deepTag':[],
+                    'deepTagMD':[],
                     'fjetIdx':[],
+
+                    #'jet_msdcorr_jmrNomVal':[],
+                    #'jmsNomVal':[],
+                    #'jmsDownVal':[],
+                    #'jmsUpVal':[],
+                    #'jet_msdcorr_jmrUpVal':[],
+                    #'jet_msdcorr_jmrDownVal':[],
                     #'effSF':[],
                     #'effSFup':[],
                     #'effSFdown':[],
                 }
+                
+                #WtaggerFailColl[tagname][var]={
+                #    'pt':[],
+                #    'eta':[],
+                #    'phi':[],
+                #    'mass':[],
+                #    'tau21ddt':[],
+                #    'deepTag':[],
+                #    'deepTagMD':[],
+                #    'fjetIdx':[],
+
+                #    'jet_msdcorr_jmrNomVal':[],
+                #    'jmsNomVal':[],
+                #    'jmsDownVal':[],
+                #    'jmsUpVal':[],
+                #    'jet_msdcorr_jmrUpVal':[],
+                #    'jet_msdcorr_jmrDownVal':[],
+                    #'effSF':[],
+                    #'effSFup':[],
+                    #'effSFdown':[],
+                #}
             
         for tagname, wtag in self.WtaggerConfig.items(): ## from WJID
             #if tagname!='HP45':continue
-            C_DDT=wtag['C_DDT']
-            tau21min=wtag['tau21min']
-            tau21max=wtag['tau21max']
+            #print '--',tagname,'--'
+            C_DDT=0
+            tau21min=minfloat
+            tau21max=maxfloat
+            deepTag_min=minfloat
+            deepTagMD_min=minfloat
+            if 'tau21min' in wtag:
+                C_DDT=wtag['C_DDT']
+                tau21min=wtag['tau21min']
+                tau21max=wtag['tau21max']
+            if 'deepTag_min' in wtag:
+                deepTag_min=wtag['deepTag_min']
+            if 'deepTagMD_min' in wtag:
+                deepTagMD_min=wtag['deepTagMD_min']
+
             #effSF=[1,1,1]
             jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal = 1, 1, 1
             jmsNomVal,jmsDownVal,jmsUpVal = 1, 1, 1
@@ -143,7 +195,7 @@ class WtaggerProducer(Module):
             
 
             
-            if not self.isData : ##for MC, get JMR/JMS values
+            if (not self.isData) and ('JMR' in wtag) and ('JMS' in wtag): ##for MC, get JMR/JMS values
                 self.jetSmearer.jmr_vals=[ wtag['JMR']['nom'], wtag['JMR']['up'], wtag['JMR']['down'] ]
                 jmsNomVal, jmsDownVal, jmsUpVal = [ wtag['JMS']['nom'], wtag['JMS']['up'], wtag['JMS']['down'] ] ##jms for each id
 
@@ -196,14 +248,21 @@ class WtaggerProducer(Module):
                     exec("pt,eta,phi,mass=self.SetJetP4_"+var+"(jet,jet_msdcorr_jmrNomVal,jmsNomVal, jmsDownVal, jmsUpVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal)")
                     #print "pt,eta,phi,mass",pt,eta,phi,mass
                     #tau21=999999.
-                    tau21ddt=999999.
+                    tau21ddt=maxfloat
                     tau1=jet.tau1
                     tau2=jet.tau2
+                    deepTag=jet.deepTag_WvsQCD
+                    deepTagMD=jet.deepTagMD_WvsQCD
                     if tau1!=0 and mass !=0:
                         tau21 = tau2/tau1
                         tau21ddt=tau21+C_DDT*math.log(mass**2/pt)##use tau21ddt generally(if not ddt id, tau21ddt=tau21
-                    if tau21ddt > tau21max: isWtagged=False
-                    if tau21ddt < tau21min: isWtagged=False
+                    if 'tau21min' in wtag:
+                        if tau21ddt > tau21max: isWtagged=False
+                        if tau21ddt < tau21min: isWtagged=False
+                    if 'deepTag_min' in wtag:
+                        if deepTag < deepTag_min : isWtagged=False
+                    if 'deepTagMD_min' in wtag:
+                        if deepTagMD < deepTagMD_min : isWtagged=False
                     if pt < ptmin : isWtagged=False
                     if abs(eta) > etamax : isWtagged=False
                     if mass < msdmin : isWtagged=False
@@ -216,11 +275,36 @@ class WtaggerProducer(Module):
                         WtaggerColl[tagname][var]['phi'].append(phi)
                         WtaggerColl[tagname][var]['mass'].append(mass)
                         WtaggerColl[tagname][var]['tau21ddt'].append(tau21ddt)
+                        WtaggerColl[tagname][var]['deepTag'].append(deepTag)
+                        WtaggerColl[tagname][var]['deepTagMD'].append(deepTagMD)
                         WtaggerColl[tagname][var]['fjetIdx'].append(ij)
+                        
+                        #WtaggerColl[tagname][var]['jet_msdcorr_jmrNomVal'].append(jet_msdcorr_jmrNomVal)
+                        #WtaggerColl[tagname][var]['jmsNomVal'].append(jmsNomVal)
+                        #WtaggerColl[tagname][var]['jmsDownVal'].append(jmsDownVal)
+                        #WtaggerColl[tagname][var]['jmsUpVal'].append(jmsUpVal)
+                        #WtaggerColl[tagname][var]['jet_msdcorr_jmrUpVal'].append(jet_msdcorr_jmrUpVal)
+                        #WtaggerColl[tagname][var]['jet_msdcorr_jmrDownVal'].append(jet_msdcorr_jmrDownVal)
                         #WtaggerColl[tagname][var]['effSF'].append(effSF['nom'])
                         #WtaggerColl[tagname][var]['effSFup'].append(effSF['up'])
                         #WtaggerColl[tagname][var]['effSFdown'].append(effSF['down'])
+                        #else:
+                        #    WtaggerFailColl[tagname][var]['pt'].append(pt)
+                        #    WtaggerFailColl[tagname][var]['eta'].append(eta)
+                        #    WtaggerFailColl[tagname][var]['phi'].append(phi)
+                        ##    WtaggerFailColl[tagname][var]['mass'].append(mass)
+                        #    WtaggerFailColl[tagname][var]['tau21ddt'].append(tau21ddt)
+                        #    WtaggerFailColl[tagname][var]['deepTag'].append(deepTag)
+                        #    WtaggerFailColl[tagname][var]['deepTagMD'].append(deepTagMD)
+                        #    WtaggerFailColl[tagname][var]['fjetIdx'].append(ij)
                         
+                        #    WtaggerFailColl[tagname][var]['jet_msdcorr_jmrNomVal'].append(jet_msdcorr_jmrNomVal)
+                        #    WtaggerFailColl[tagname][var]['jmsNomVal'].append(jmsNomVal)
+                        #    WtaggerFailColl[tagname][var]['jmsDownVal'].append(jmsDownVal)
+                        #    WtaggerFailColl[tagname][var]['jmsUpVal'].append(jmsUpVal)
+                        #    WtaggerFailColl[tagname][var]['jet_msdcorr_jmrUpVal'].append(jet_msdcorr_jmrUpVal)
+                        #    WtaggerFailColl[tagname][var]['jet_msdcorr_jmrDownVal'].append(jet_msdcorr_jmrDownVal)
+
 
 
                         #print "pt=",pt, "eta=",eta, "phi=",phi,"mass=",mass,"tau21ddt=",tau21ddt
@@ -241,6 +325,9 @@ class WtaggerProducer(Module):
                 collname='WtaggerFatjet_'+tagname+'_'+var
                 for x in WtaggerColl[tagname][var]:
                     self.out.fillBranch(collname+'_'+x,WtaggerColl[tagname][var][x])
+                #failcollname='WtaggerFatjetFail_'+tagname+'_'+var
+                #for x in WtaggerFailColl[tagname][var]:
+                #    self.out.fillBranch(failcollname+'_'+x,WtaggerFailColl[tagname][var][x])
         return True
     ##--Nominal--##
     def SetJetP4_nom(self,jet,jet_msdcorr_jmrNomVal,jmsNomVal, jmsDownVal, jmsUpVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal):

@@ -1,0 +1,57 @@
+ <<< Combine >>> 
+Will use a-priori expected background instead of a-posteriori one.
+>>> method used is AsymptoticLimits
+>>> random number generator seed is 4
+ModelConfig 'ModelConfig' defines more than one parameter of interest. This is not supported in some statistical methods.
+WARNING: underflow to -0.00142784 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 1.73202e-05 +/- 0,fvbf = 0.5,sigma = 0.5 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00104562 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = 1.73202e-05 +/- 0,fvbf = 0.5,sigma = 0.25 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.000605461 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000178073 +/- 0,fvbf = 0.5,sigma = 0.1875 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -0.00028949 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000178073 +/- 0,fvbf = 0.5,sigma = 0.15625 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -9.93223e-05 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000178073 +/- 0,fvbf = 0.5,sigma = 0.140625 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -4.78424e-05 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000189229 +/- 0,fvbf = 0.5,sigma = 0.136719 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -2.1466e-05 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000189229 +/- 0,fvbf = 0.5,sigma = 0.134766 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+WARNING: underflow to -8.11463e-06 in pdf_binmu_Boosted_VBF_SR_2017_obsOnly for bin 14, weight 0.00597164
+[#0] ERROR:Eval -- RooAbsReal::logEvalError(mu_Boosted_VBF_SR_2017) evaluation error, 
+ origin       : RooAbsReal::mu_Boosted_VBF_SR_2017[ params=(dummy,fvbf,sigma) ]
+ message      : Number of events is negative or error
+ server values: params=(dummy = -0.000189229 +/- 0,fvbf = 0.5,sigma = 0.133789 +/- 8.00717)
+FASTEXIT from pdf_binmu_Boosted_VBF_SR_2017_obsOnly
+
+ -- AsymptoticLimits ( CLs ) --
+
+Done in 0.00 min (cpu), 0.00 min (real)

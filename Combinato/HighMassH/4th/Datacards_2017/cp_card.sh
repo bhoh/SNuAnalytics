@@ -1,0 +1,2 @@
+#cp -r /cms/ldap_home/jhchoi/HWW_Analysis/slc7/ForShape/CMSSW_10_2_19/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/nanoAODv5/v6_production/2017/NJET_biined_WJets/SKIM10/HMVar10_Full_ALL_var/Datacards_2017/Datacard_M1000 .
+cp -r /cms/ldap_home/jhchoi/HWW_Analysis/slc7/ForShape/CMSSW_10_2_19/src/SNuAnalytics/Configurations/HWWSemiLepHighMass/nanoAODv5/v6_production/2017/NJET_biined_WJets/SKIM10/HMVar10_Full_ALL_var_backup/Datacards_2017/Datacard_M1000 .
