@@ -16,6 +16,7 @@ Samples["CHToCB_M120"] = {'nanoAOD':'/TTbarToChargedHToCB_M120_CUETP8M1_PSw_13Te
 Samples["CHToCB_M130"] = {'nanoAOD':'/TTbarToChargedHToCB_M130_CUETP8M1_PSw_13TeV-madgraph-pythia8/RunIISummer16NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'}
 Samples["CHToCB_M140"] = {'nanoAOD':'/TTbarToChargedHToCB_M140_CUETP8M1_PSw_13TeV-madgraph-pythia8/RunIISummer16NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'}
 Samples["CHToCB_M150"] = {'nanoAOD':'/TTbarToChargedHToCB_M150_CUETP8M1_PSw_13TeV-madgraph-pythia8/RunIISummer16NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'}
+Samples["CHToCB_M160"] = {'nanoAOD':'/TTbarToChargedHToCB_M160_CUETP8M1_PSw_13TeV-madgraph-pythia8/RunIISummer16NanoAODv5-PUMoriond17_Nano1June2019_102X_mcRun2_asymptotic_v7-v1/NANOAODSIM'}
 
 #TTSyst
 #TuneCUETP8M2T4
