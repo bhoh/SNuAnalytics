@@ -10,12 +10,13 @@
 
 #include <iostream>
 
-class SelectedJet : public multidraw::TTreeFunction {
+class SelectedBJet : public multidraw::TTreeFunction {
 public:
-  SelectedJet(float ptCut, float absEtaCut);
+  SelectedBJet();
+  SelectedBJet(float ptCut, float absEtaCut, float csvCut);
 
-  char const* getName() const override { return "SelectedJet"; }
-  TTreeFunction* clone() const override { return new SelectedJet(ptCut_, absEtaCut_); }
+  char const* getName() const override { return "SelectedBJet"; }
+  TTreeFunction* clone() const override { return new SelectedBJet(ptCut_, absEtaCut_, csvCut_); }
   
   void beginEvent(long long) override;
   unsigned getNdata() override { return selected_jet.size(); }
@@ -39,35 +40,36 @@ protected:
 
   float ptCut_{};
   float absEtaCut_{};
-
+  float csvCut_{};
 
 };
 
 
 void
-SelectedJet::beginEvent(long long _iEntry)
+SelectedBJet::beginEvent(long long _iEntry)
 {
   setValues();
 }
 
 
-SelectedJet::SelectedJet(float ptCut, float absEtaCut) :
+SelectedBJet::SelectedBJet(float ptCut, float absEtaCut, float csvCut) :
   TTreeFunction(),
   ptCut_{ptCut},
-  absEtaCut_{absEtaCut}
+  absEtaCut_{absEtaCut},
+  csvCut_{csvCut}
 {
 }
 
 
 double
-SelectedJet::evaluate(unsigned iJ)
+SelectedBJet::evaluate(unsigned iJ)
 {
   return selected_jet[iJ];
 }
 
 
 void
-SelectedJet::bindTree_(multidraw::FunctionLibrary& _library)
+SelectedBJet::bindTree_(multidraw::FunctionLibrary& _library)
 {
   _library.bindBranch(nCleanJet, "nCleanJet");
   _library.bindBranch(CleanJet_pt, "CleanJet_pt");
@@ -79,7 +81,7 @@ SelectedJet::bindTree_(multidraw::FunctionLibrary& _library)
 
 
 void
-SelectedJet::setValues()
+SelectedBJet::setValues()
 {
 
   unsigned nCJ{*nCleanJet->Get()};
@@ -89,8 +91,11 @@ SelectedJet::setValues()
   for(unsigned iCJ{0}; iCJ != nCJ; ++iCJ){
 
     unsigned OrigIdx = CleanJet_jetIdx->At(iCJ);
-    // pT, eta cut
-	if(Jet_pt_nom->At(OrigIdx) <= ptCut_ || fabs(CleanJet_eta->At(iCJ)) >= absEtaCut_ ){
+    // pT, eta, csv cut
+	if(Jet_pt_nom->At(OrigIdx) <= ptCut_ ||
+       fabs(CleanJet_eta->At(iCJ)) >= absEtaCut_ ||
+       Jet_btagDeepB->At(OrigIdx) <= csvCut_
+      ){
 	  continue;
 	}
 	selected_jet.push_back(OrigIdx);
