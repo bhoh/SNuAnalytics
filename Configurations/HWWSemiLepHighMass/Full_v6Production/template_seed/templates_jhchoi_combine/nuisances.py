@@ -205,7 +205,7 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
       nuisances['btag_shape_%s' % shift]['samples'][skey]=btag_syst
 
 
-trig_syst = ['TriggerEffWeight_1l_u/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_u/TriggerEffWeight_1l : 1.0','TriggerEffWeight_1l_d/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_d/TriggerEffWeight_1l : 1.0']
+trig_syst = ['TriggerEffWeight_1l_u/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_u/TriggerEffWeight_1l*(TriggerEffWeight_1l>0.02)+(TriggerEffWeight_1l<=0.02) : 1.0','TriggerEffWeight_1l_d/TriggerEffWeight_1l < 10 ? TriggerEffWeight_1l_d/TriggerEffWeight_1l*(TriggerEffWeight_1l>0.02)+(TriggerEffWeight_1l<=0.02) : 1.0']
 
 nuisances['trigg'] = {
     'name': 'CMS_eff_hwwtrigger_'+Year,
