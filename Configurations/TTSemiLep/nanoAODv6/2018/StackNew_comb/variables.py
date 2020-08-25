@@ -119,6 +119,51 @@ for key in ['hadronic_top_pt_nom']:
 #    'xaxis':'nBJetResolved',
 #    'fold':0,
 #}
+variables['1st_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[0]]',
+    'range':(50,30,600),
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'fold':0
+
+}
+
+variables['2nd_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[1]]',
+    'range':(50,30,600),
+    'xaxis':'2^{nd} leading jet P_{T} [GeV]',
+    'fold':0
+
+}
+variables['3rd_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[2]]',
+    'range':(50,30,600),
+    'xaxis':'3^{rd} leading jet P_{T} [GeV]',
+    'fold':0
+
+}
+variables['4th_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[3]]',
+    'range':(50,30,600),
+    'xaxis':'4^{th} leading jet P_{T} [GeV]',
+    'fold':0
+
+}
+variables['1st_leading_b_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedBJetIdx[0]]',
+    'range':(50,30,600),
+    'xaxis':'1^{st} leading b jet P_{T} [GeV]',
+    'fold':0
+
+}
+
+variables['2nd_leading_b_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedBJetIdx[1]]',
+    'range':(50,30,600),
+    'xaxis':'2^{nd} leading b jet P_{T} [GeV]',
+    'fold':0
+
+}
+
 
 variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',
