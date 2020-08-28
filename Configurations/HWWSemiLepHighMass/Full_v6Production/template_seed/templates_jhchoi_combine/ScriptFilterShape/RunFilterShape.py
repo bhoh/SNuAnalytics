@@ -16,7 +16,9 @@ from WPandCut2016 import *
 
 
 REGION_LIST=['SR','SB','TOP']
+#REGION_LIST=['TOP']
 BOOST_LIST=['Boosted','Resolved']
+#BOOST_LIST=['Boosted']
 
 
 for reg in REGION_LIST:
