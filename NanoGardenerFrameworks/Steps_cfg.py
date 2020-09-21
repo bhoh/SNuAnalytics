@@ -217,28 +217,48 @@ def prepare_CHToCB_syst(base_name):
                }
 
     #make chain
-    dictionary[base_name+"_"+"jetMETSyst_Total"] = {
+    dictionary[base_name+"_"+"jetMETSyst_TotalUp"] = {
                   'isChain'    : True,
                   'do4MC'      : True ,
                   'do4Data'    : False ,
-                  'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Up','Down']],
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Up']],
                   #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
-    dictionary[base_name+"_"+"jetMETSyst_uncorr"] = {
+    dictionary[base_name+"_"+"jetMETSyst_TotalDown"] = {
                   'isChain'    : True,
                   'do4MC'      : True ,
                   'do4Data'    : False ,
-                  'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Up','Down']],
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_tot for j in ['Down']],
                   #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
-    dictionary[base_name+"_"+"jetMETSyst_corr"] = {
+    dictionary[base_name+"_"+"jetMETSyst_uncorrUp"] = {
                   'isChain'    : True,
                   'do4MC'      : True ,
                   'do4Data'    : False ,
-                  'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Up','Down']],
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Up']],
                   #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
                }
-
+    dictionary[base_name+"_"+"jetMETSyst_uncorrDown"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_uncorr for j in ['Down']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
+               }
+    dictionary[base_name+"_"+"jetMETSyst_corrUp"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Up']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
+               }
+    dictionary[base_name+"_"+"jetMETSyst_corrDown"] = {
+                  'isChain'    : True,
+                  'do4MC'      : True ,
+                  'do4Data'    : False ,
+                  'subTargets': [base_name+"_" + syst + j for syst in syst_corr for j in ['Down']],
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeNomBranch_CHToCB.txt',
+               }
     return dictionary
 
 
@@ -1702,15 +1722,12 @@ Steps = {
                   #2016 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.4\
-                                       ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.4 &&\
-                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.6321\
-                                       )>=2))\
-                                  "',
-                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
+                  #'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                  #                      abs(CleanJet_eta) < 2.4\
+                  #                     ) >= 4)\
+                  #                  )\
+                  #                "',
+                  'subTargets' : ['Dummy','genCHToCB','TopGenVars_CHToCB'],
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
 
@@ -1722,15 +1739,12 @@ Steps = {
                   #2017 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.5\
-                                       ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.5 &&\
-                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4941\
-                                       )>=2))\
-                                  "',
-                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
+                  #'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                  #                      abs(CleanJet_eta) < 2.5\
+                  #                     ) >= 4)\
+                  #                 )\
+                  #                "',
+                  'subTargets' : ['Dummy','genCHToCB','TopGenVars_CHToCB'],
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
 
@@ -1742,15 +1756,11 @@ Steps = {
                   #2018 cuts
                   #XXX
                   #XXX
-                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.5\
-                                       ) >= 4) &&\
-                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
-                                        abs(CleanJet_eta) < 2.5 &&\
-                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
-                                       )>=2))\
-                                  "',
-                  'subTargets' : ['genCHToCB','TopGenVars_CHToCB']
+                  #'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                  #                      abs(CleanJet_eta) < 2.5\
+                  #                     ) >= 4))\
+                  #                "',
+                  'subTargets' : ['Dummy','genCHToCB','TopGenVars_CHToCB'],
                   'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
               },
 
@@ -1811,6 +1821,24 @@ Steps = {
                                  ]
               },
 
+    'mvaTreeCHToCB_2018': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : False,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5\
+                                       ) >= 4) &&\
+                                   (Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepB[CleanJet_jetIdx] > 0.4184\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.mvaTreeCHToCB' ,
+                  'declare'    : 'mvaTreeCHToCB_ = lambda : mvaTreeCHToCB(RPLME_YEAR)',
+                  'module'     : 'mvaTreeCHToCB_()',
+               },
 
    'TopGenVars_CHToCB' : {
                   'isChain'    : False ,
@@ -1869,6 +1897,15 @@ Steps = {
                                   'CHToCB_M160',
                                  ]
                   } ,
+## ------- TEST MODULES
+  'LeptonSF_BHO' : {
+                  'isChain'    : False ,
+                  'do4MC'      : True  ,
+                  'do4Data'    : False  ,
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.LeptonSFMaker_BHO' ,
+                  'declare'    : 'LeptonSF_BHO = lambda : LeptonSFMaker_BHO("RPLME_CMSSW")',
+                  'module'     : 'LeptonSF_BHO()',
+                },
 ## ------- MODULES: Object Handling
 
   'Dummy' : {
@@ -4482,39 +4519,39 @@ Steps = {
                   'isChain'    : False ,
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
-                  'onlySample' : [
-                                    'GluGluHToWWTo2L2NuPowheg_M125_CP5Up', 'VBFHToWWTo2L2NuPowheg_M125_CP5Up', 'VBFHToWWTo2L2Nu_M125_CP5Up', 'WWTo2L2Nu_CP5Up',
-                                    'GluGluHToWWTo2L2NuPowheg_M125_CP5Down', 'VBFHToWWTo2L2NuPowheg_M125_CP5Down', 'VBFHToWWTo2L2Nu_M125_CP5Down', 'WWTo2L2Nu_CP5Down',
-                                    'GluGluHToWWTo2L2Nu_M125_CUETDown' , 'VBFHToWWTo2L2Nu_M125_CUETDown' , 'WWTo2L2Nu_CUETDown' ,
-                                    'GluGluHToWWTo2L2Nu_M125_CUETUp'   , 'VBFHToWWTo2L2Nu_M125_CUETUp'   , 'WWTo2L2Nu_CUETUp'   ,
-                                    'GluGluHToWWTo2L2NuHerwigPS_M125'  , 'VBFHToWWTo2L2NuHerwigPS_M125'  , 'WWTo2L2NuHerwigPS'  ,
-                                    'GluGluHToWWTo2L2Nu_M125_herwigpp' , 'VBFHToWWTo2L2Nu_M125_herwigpp',
+                  'onlySample' : [ 'TTToSemiLeptonic','TTTo2L2Nu','TTToSemiLeptonic_ext3','TTTo2L2Nu_ext3',
+                                   'TT_TuneCUETP8M2T4_PSweights',
                                  ] ,
                   'cpMap' : {
                               'UEdo' : {
-                                          'GluGluHToWWTo2L2NuPowheg_M125_CP5Down' : ['GluGluHToWWTo2L2NuPowheg_M125_PrivateNano' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'VBFHToWWTo2L2NuPowheg_M125_CP5Down'    : ['VBFHToWWTo2L2NuPowheg_M125_PrivateNano','VBFHToWWTo2L2NuPowheg_M125']    ,
-                                          'VBFHToWWTo2L2Nu_M125_CP5Down'    : ['VBFHToWWTo2L2Nu_M125']    ,
-                                          'WWTo2L2Nu_CP5Down'               : ['WWTo2L2Nu_PrivateNano', 'WWTo2L2Nu'] ,
-                                          'GluGluHToWWTo2L2Nu_M125_CUETDown' : ['GluGluHToWWTo2L2Nu_M125' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'VBFHToWWTo2L2Nu_M125_CUETDown'    : ['VBFHToWWTo2L2Nu_M125', 'VBFHToWWTo2L2NuPowheg_M125', 'VBFHToWWTo2L2Nu_alternative_M125']    ,
-                                          'WWTo2L2Nu_CUETDown'               : ['WWTo2L2Nu'] ,
+                                          'TTToSemiLeptonic_TuneCP5Down' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_TuneCP5Down' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_TuneCUETP8M2T4Down' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'UEup' : {
-                                          'GluGluHToWWTo2L2NuPowheg_M125_CP5Up' : ['GluGluHToWWTo2L2NuPowheg_M125_PrivateNano' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'VBFHToWWTo2L2NuPowheg_M125_CP5Up'    : ['VBFHToWWTo2L2NuPowheg_M125_PrivateNano','VBFHToWWTo2L2NuPowheg_M125']    ,
-                                          'VBFHToWWTo2L2Nu_M125_CP5Up'    : ['VBFHToWWTo2L2Nu_M125']    ,
-                                          'WWTo2L2Nu_CP5Up'               : ['WWTo2L2Nu_PrivateNano', 'WWTo2L2Nu'] ,
-                                          'GluGluHToWWTo2L2Nu_M125_CUETUp'   : ['GluGluHToWWTo2L2Nu_M125' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'VBFHToWWTo2L2Nu_M125_CUETUp'      : ['VBFHToWWTo2L2Nu_M125', 'VBFHToWWTo2L2NuPowheg_M125', 'VBFHToWWTo2L2Nu_alternative_M125']    ,
-                                          'WWTo2L2Nu_CUETUp'                 : ['WWTo2L2Nu'] ,
+                                          'TTToSemiLeptonic_TuneCP5Up' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_TuneCP5Up' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_TuneCUETP8M2T4Up' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
-                              'PS'   : {
-                                          'GluGluHToWWTo2L2NuHerwigPS_M125'  : ['GluGluHToWWTo2L2Nu_M125' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'GluGluHToWWTo2L2Nu_M125_herwigpp' : ['GluGluHToWWTo2L2Nu_M125' ,'GluGluHToWWTo2L2NuPowheg_M125'],
-                                          'VBFHToWWTo2L2NuHerwigPS_M125'     : ['VBFHToWWTo2L2Nu_M125', 'VBFHToWWTo2L2NuPowheg_M125', 'VBFHToWWTo2L2Nu_alternative_M125'] ,
-                                          'VBFHToWWTo2L2Nu_M125_herwigpp'    : ['VBFHToWWTo2L2Nu_M125', 'VBFHToWWTo2L2NuPowheg_M125', 'VBFHToWWTo2L2Nu_alternative_M125'] ,
-                                          'WWTo2L2NuHerwigPS'                : ['WWTo2L2Nu'] ,
+                              'HDAMPdo' : {
+                                          'TTToSemiLeptonic_hdampDown' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_hdampDown' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_hdampDown' : ['TT_TuneCUETP8M2T4_PSweights'],
+                                       },
+                              'HDAMPup' : {
+                                          'TTToSemiLeptonic_hdampUp' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_hdampUp' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_hdampUp' : ['TT_TuneCUETP8M2T4_PSweights'],
+                                       },
+                              'MTOPdo'  : {
+                                          'TTToSemiLeptonic_mtopDown' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_mtopDown' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_mtopDown' : ['TT_TuneCUETP8M2T4_PSweights'],
+                                       },
+                              'MTOPup'  : {
+                                          'TTToSemiLeptonic_mtopUp' : ['TTToSemiLeptonic','TTToSemiLeptonic_ext3'],
+                                          'TTTo2L2Nu_mtopUp' : ['TTTo2L2Nu','TTTo2L2Nu_ext3'],
+                                          'TT_mtopUp' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                             },
                },
