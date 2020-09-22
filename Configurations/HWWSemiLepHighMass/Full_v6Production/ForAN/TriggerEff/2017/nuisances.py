@@ -418,6 +418,27 @@ nuisances['pdfAccept'] = {
 }
 
 
+PSWeightISR=["Alt$(PSWeight[0],1)","Alt$(PSWeight[1],1)"]
+PSWeightFSR=["Alt$(PSWeight[2],1)","Alt$(PSWeight[3],1)"]
+
+nuisances['PS_ISR']={
+  'name': 'PS_ISR',
+  'kind': 'weight',
+  'type': 'shape',
+  'samples':{},
+}
+
+nuisances['PS_FSR']={
+  'name': 'PS_FSR',
+  'kind': 'weight',
+  'type': 'shape',
+  'samples':{},
+}
+for skey in mc:
+  nuisances['PS_ISR']['samples'][skey]=PSWeightISR
+  nuisances['PS_FSR']['samples'][skey]=PSWeightFSR
+
+
 
 
 if not NotUseTreeBase:
