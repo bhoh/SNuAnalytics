@@ -58,9 +58,10 @@ def makeMCDirectory(var=''):
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
 #eleWPweight='((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
-eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
-#eleWPweight+='*(TriggerEffWeight_1l)'
-eleWPweight+='*(HLT_Ele32_WPTight_Gsf==1)'
+#eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
+eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_RecoSF'+'[0]'+'))'
+eleWPweight+='*(TriggerEffWeight_1l)'
+#eleWPweight+='*(HLT_Ele32_WPTight_Gsf==1)'
 
 #muWPweight='((Lepton_isTightMuon_'+muWP+'[0]>0.5)*(Lepton_tightMuon_'+muWP+'_TotSF'+'[0]'+'))'
 muWPweight='((abs(Lepton_pdgId[0])==13)*(Lepton_tightMuon_'+muWP+'_TotSF'+'[0]'+'))'
@@ -174,7 +175,7 @@ DataTrig = {
 #
 #                    }
 
-samples['TTLJ+jj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_'),
+samples['TTLJ+jj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTjj,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 2,
@@ -184,14 +185,14 @@ samples['TTLJ+jj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptoni
                     }
 
 
-samples['TTLJ+cc'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_'),
+samples['TTLJ+cc'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTcc,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 2,
                     }
 
 
-samples['TTLJ+bj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_'),
+samples['TTLJ+bj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbj,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 2,
@@ -201,7 +202,7 @@ samples['TTLJ+bj'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptoni
                     }
 
 
-samples['TTLJ+bb'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic_ext3',False,'nanoLatino_'),
+samples['TTLJ+bb'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbb,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 2,

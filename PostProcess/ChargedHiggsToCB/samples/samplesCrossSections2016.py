@@ -973,6 +973,7 @@ samples['CHToCB_M120']              .extend( ['xsec=364.35',	'kfact=1.000',	    
 samples['CHToCB_M130']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M140']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 samples['CHToCB_M150']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
+samples['CHToCB_M160']              .extend( ['xsec=364.35',	'kfact=1.000',	        'ref=E'] )  # 831.76 * 0.6760 * 0.1080 * 3 * 2
 
 #TTSyst
 #TuneCUETP8M2T4

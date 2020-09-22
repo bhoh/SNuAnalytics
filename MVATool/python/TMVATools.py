@@ -113,7 +113,7 @@ class TMVATools(MLTools):
       elif "_Test" in sigTreeName:
         self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"test")
       else:
-        self._data_loader.AddSignalTree(self._trees[sigTreeName])
+        self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"train_test")
         #raise Exception("[TMVATools.py] raise exception at _dataLoase")
 
     for bkgTreeName in bkgTreeNames:
@@ -122,7 +122,7 @@ class TMVATools(MLTools):
       elif "_Test" in bkgTreeName:
         self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"test")
       else:
-        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName])
+        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"train_test")
         #raise Exception("[TMVATools.py] raise exception at _dataLoase")
 
     self._data_loader.SetSignalWeightExpression(self._cfgs['factory']['weight'])

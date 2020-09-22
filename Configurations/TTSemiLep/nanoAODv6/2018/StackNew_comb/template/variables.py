@@ -119,6 +119,13 @@ for key in ['hadronic_top_pt_nom']:
 #    'xaxis':'nBJetResolved',
 #    'fold':0,
 #}
+variables['1st_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[0]]',
+    'range':(50,30,600),
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'fold':0
+
+}
 
 variables['Lepton_pt[0]']={
     'name' : 'Lepton_pt[0]',

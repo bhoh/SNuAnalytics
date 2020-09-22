@@ -23,6 +23,11 @@ print configurations
 
 mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 
+# trig matching
+
+#aliases['trigMatching_sng_ele'] = {
+#            'expr': '(abs(Lepton_pdgId[0])==11) && Sum$( ((Lepton_eta[0]-TrigObj_eta)*(Lepton_eta[0]-TrigObj_eta)+(Lepton_phi[0]-TrigObj_phi)*(Lepton_phi[0]-TrigObj_phi))<0.1*0.1 && TrigObj_filterBits & 2 )>0.5'
+#            }
 # Jet cut
 
 aliases['nCleanJet20_2p5'] = {
@@ -50,6 +55,24 @@ aliases['METAlias'] = {
             #'expr': 'PuppiMET_pt',
             'expr': 'MET_CHToCB_pt_nom'
             }
+
+# top pt reweight
+
+#aliases['topGenPt_max'] = {
+#    'expr': '(topGenPt>472)*472 + (topGenPt<=472)*topGenPt',
+#    'samples': ['TTLJ+jj','TTLJ+bj','TTLJ+bb','TTLJ+cc','TTLL+jj','TTLL+bj','TTLL+bb','TTLL+cc'],
+#}
+#
+#aliases['antitopGenPt_max'] = {
+#    'expr': '(antitopGenPt>472)*472 + (antitopGenPt<=472)*antitopGenPt',
+#    'samples': ['TTLJ+jj','TTLJ+bj','TTLJ+bb','TTLJ+cc','TTLL+jj','TTLL+bj','TTLL+bb','TTLL+cc'],
+#}
+
+# if (anti)topGenPt variables not exists in systematic trees(ex. hdampUp/Down), it cause error.
+#aliases['Top_pTrw'] = {
+#    'expr': '( TMath::Sqrt(TMath::Exp(-1.43717e-02 - 1.18358e-04*topGenPt - 1.70651e-07*topGenPt*topGenPt + 4.47969/(topGenPt+28.7)) * TMath::Exp(-1.43717e-02 - 1.18358e-04*antitopGenPt - 1.70651e-07*antitopGenPt*antitopGenPt + 4.47969/(antitopGenPt+28.7))))',
+#    'samples': ['TTLJ+jj','TTLJ+bj','TTLJ+bb','TTLJ+cc','TTLL+jj','TTLL+bj','TTLL+bb','TTLL+cc'],
+#}
 
 # B tagging
 
@@ -146,7 +169,22 @@ aliases['Jet_PUID_SF_L'] = {
     'args': (PUIDSFSource,"2018","loose"),
     'samples': mc
 }
-
+aliases['SelectedJetIdx'] = {
+    'linesToAdd' : [
+        '.L %s/patches/selectedjet.cc+' % configurations,
+    ],
+    'class': 'SelectedJet',
+    'args': (30.,2.5), # pT, |eta| cut
+    'samples': samples.keys(),
+}
+aliases['SelectedBJetIdx'] = {
+    'linesToAdd' : [
+        '.L %s/patches/selectedbjet.cc+' % configurations,
+    ],
+    'class': 'SelectedBJet',
+    'args': (30.,2.5,0.4184), # pT, |eta|, csv cut
+    'samples': samples.keys(),
+}
 #KF_path =   '%s/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src' % os.getenv('CMSSW_BASE')
 #aliases['TTKinematicFitter'] = {
 #    'linesToAdd': [
