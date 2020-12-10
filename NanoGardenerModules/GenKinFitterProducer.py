@@ -22,21 +22,21 @@ class GenKinFitterProducer(KinFitterProducer):
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = mappedOutputTree(wrappedOutputTree, mapname=self._branch_map)
         self.newbranches_F = [
-            'gen_initial_dijet_M',
-            'gen_initial_dijet_M_high',
-            'gen_corrected_dijet_M',
-            'gen_corrected_dijet_M_high',
-            'gen_fitted_dijet_M',
-            'gen_fitted_dijet_M_high',
-            'gen_hadronic_top_M',
-            'gen_hadronic_top_pt',
-            'gen_leptonic_top_M',
-            'gen_leptonic_W_M',
-            'gen_best_chi2',
-            'gen_fitter_status',
-            'gen_hadronic_top_b_jet_pull',
-            'gen_w_ch_up_type_jet_pull',
-            'gen_w_ch_down_type_jet_pull',
+            'matched_initial_dijet_M',
+            'matched_initial_dijet_M_high',
+            'matched_corrected_dijet_M',
+            'matched_corrected_dijet_M_high',
+            'matched_fitted_dijet_M',
+            'matched_fitted_dijet_M_high',
+            'matched_hadronic_top_M',
+            'matched_hadronic_top_pt',
+            'matched_leptonic_top_M',
+            'matched_leptonic_W_M',
+            'matched_best_chi2',
+            'matched_fitter_status',
+            'matched_hadronic_top_b_jet_pull',
+            'matched_w_ch_up_type_jet_pull',
+            'matched_w_ch_down_type_jet_pull',
           ]
         self.newbranches_I = [
           ]
@@ -114,23 +114,23 @@ class GenKinFitterProducer(KinFitterProducer):
           fitter.FitCurrentPermutation()
 
         variables = {}
-        variables['gen_initial_dijet_M']         = fitter.GetBestInitialDijetMass()
-        variables['gen_initial_dijet_M_high']    = fitter.GetBestInitialDijetMass_high()
-        variables['gen_corrected_dijet_M']       = fitter.GetBestCorrectedDijetMass()
-        variables['gen_corrected_dijet_M_high']  = fitter.GetBestCorrectedDijetMass_high()
-        variables['gen_fitted_dijet_M']          = fitter.GetBestFittedDijetMass()
-        variables['gen_fitted_dijet_M_high']     = fitter.GetBestFittedDijetMass_high()
-        variables['gen_best_chi2']               = fitter.GetBestChi2()
-        variables['gen_fitter_status']           = fitter.GetBestStatus()
+        variables['matched_initial_dijet_M']         = fitter.GetBestInitialDijetMass()
+        variables['matched_initial_dijet_M_high']    = fitter.GetBestInitialDijetMass_high()
+        variables['matched_corrected_dijet_M']       = fitter.GetBestCorrectedDijetMass()
+        variables['matched_corrected_dijet_M_high']  = fitter.GetBestCorrectedDijetMass_high()
+        variables['matched_fitted_dijet_M']          = fitter.GetBestFittedDijetMass()
+        variables['matched_fitted_dijet_M_high']     = fitter.GetBestFittedDijetMass_high()
+        variables['matched_best_chi2']               = fitter.GetBestChi2()
+        variables['matched_fitter_status']           = fitter.GetBestStatus()
          
-        variables['gen_hadronic_top_b_jet_pull'] = fitter.GetBestHadronicTopBJetPull()
-        variables['gen_w_ch_up_type_jet_pull']   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
-        variables['gen_w_ch_down_type_jet_pull'] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
+        variables['matched_hadronic_top_b_jet_pull'] = fitter.GetBestHadronicTopBJetPull()
+        variables['matched_w_ch_up_type_jet_pull']   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
+        variables['matched_w_ch_down_type_jet_pull'] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
 
-        variables['gen_hadronic_top_M']          = fitter.GetBestHadronicTopMass()
-        variables['gen_hadronic_top_pt']          = fitter.GetBestHadronicTopPt()
-        variables['gen_leptonic_top_M']          = fitter.GetBestLeptonicTopMass()
-        variables['gen_leptonic_W_M']            = fitter.GetBestLeptonicWMass()
+        variables['matched_hadronic_top_M']          = fitter.GetBestHadronicTopMass()
+        variables['matched_hadronic_top_pt']          = fitter.GetBestHadronicTopPt()
+        variables['matched_leptonic_top_M']          = fitter.GetBestLeptonicTopMass()
+        variables['matched_leptonic_W_M']            = fitter.GetBestLeptonicWMass()
 
         for nameBranches in self.newbranches_F:
           self.out.fillBranch(nameBranches  ,  variables[nameBranches]);

@@ -22,6 +22,7 @@ from PhysicsTools.NanoAODTools.postprocessing.tools import matchObjectCollection
 from LatinoAnalysis.NanoGardener.framework.BranchMapping import mappedOutputTree, mappedEvent
 
 import os.path
+import sys
 
 
 
@@ -135,25 +136,29 @@ class KinFitterProducer(Module):
         self.newbranches_F = [
             'initial_dijet_M_{}'.format(self._syst_suffix),
             'initial_dijet_M_high_{}'.format(self._syst_suffix),
-            'corrected_dijet_M_{}'.format(self._syst_suffix),
-            'corrected_dijet_M_high_{}'.format(self._syst_suffix),
             'fitted_dijet_M_{}'.format(self._syst_suffix),
             'fitted_dijet_M_high_{}'.format(self._syst_suffix),
+            'fitted_dijet_M_new1_{}'.format(self._syst_suffix),
+            'fitted_dijet_M_new2_{}'.format(self._syst_suffix),
             'hadronic_top_M_{}'.format(self._syst_suffix),
             'hadronic_top_pt_{}'.format(self._syst_suffix),
             'leptonic_top_M_{}'.format(self._syst_suffix),
             'leptonic_W_M_{}'.format(self._syst_suffix),
-            'best_chi2_{}'.format(self._syst_suffix),
+            'chi2_{}'.format(self._syst_suffix),
             'lambda_{}'.format(self._syst_suffix),
-            'fitter_status_{}'.format(self._syst_suffix),
             'hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
+            'leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
             'w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
             'w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
+            'hadronic_top_mass_F_{}'.format(self._syst_suffix),
+            'leptonic_top_mass_F_{}'.format(self._syst_suffix),
+            'leptonic_w_mass_F_{}'.format(self._syst_suffix),
             'MET_CHToCB_pt_{}'.format(self._syst_suffix),
             'MET_CHToCB_phi_{}'.format(self._syst_suffix),
           ]
         self.newbranches_I = [
             'nbtagsCleanJet_{}'.format(self._syst_suffix),
+            'status_{}'.format(self._syst_suffix),
             'down_type_jet_b_tagged_{}'.format(self._syst_suffix),
             'hadronic_top_b_jet_idx_{}'.format(self._syst_suffix),
             'leptonic_top_b_jet_idx_{}'.format(self._syst_suffix),
@@ -202,7 +207,7 @@ class KinFitterProducer(Module):
         for jet in Jet :
           # jet_pt syst branch should exist in skim
           jet_pt = self.findJetPtSystAttr(OrigJet[jet.jetIdx])
-          if jet_pt <= 30 or abs(jet.eta)>=self._jet_abseta_cut:
+          if jet_pt <= 20. or abs(jet.eta)>=self._jet_abseta_cut:
             continue
           njets += 1
           tmp_jet = ROOT.TLorentzVector()
@@ -238,43 +243,79 @@ class KinFitterProducer(Module):
         fitter.SetAllObjects(jets, btag_csv_vector, self._DeepB_WP_M, lepton, MET_CHToCB)
         fitter.SetJetPtResolution(jetPtResolution)
         fitter.SetMETShift(METShiftX, METShiftY)
-        #fitter.FindBestChi2Fit()
-        fitter.FindMaxPtHadTopFit(False,True,True)
+        fitter.FindBestChi2Fit()
+        #fitter.FindBestSelTopFit(False,True,True) #old. closest leptonic top, closet had. top, max. had. top
+        #void TKinFitterDriver::FindBestSelTopFit(bool IsMaxHadTopPt, bool IsClosestHadTopM, bool IsMaxLepTopPt, bool IsClosestLepTopM){
+        #fitter.FindBestSelTopFit(True,True,False,True,False)
 
         variables = {}
-        variables['initial_dijet_M_{}'.format(self._syst_suffix)]         = fitter.GetBestInitialDijetMass()
-        variables['initial_dijet_M_high_{}'.format(self._syst_suffix)]    = fitter.GetBestInitialDijetMass_high()
-        variables['corrected_dijet_M_{}'.format(self._syst_suffix)]       = fitter.GetBestCorrectedDijetMass()
-        variables['corrected_dijet_M_high_{}'.format(self._syst_suffix)]  = fitter.GetBestCorrectedDijetMass_high()
-        variables['fitted_dijet_M_{}'.format(self._syst_suffix)]          = fitter.GetBestFittedDijetMass()
-        variables['fitted_dijet_M_high_{}'.format(self._syst_suffix)]     = fitter.GetBestFittedDijetMass_high()
-        variables['best_chi2_{}'.format(self._syst_suffix)]               = fitter.GetBestChi2()
-        variables['lambda_{}'.format(self._syst_suffix)]                  = fitter.GetBestLambda()
-        variables['fitter_status_{}'.format(self._syst_suffix)]           = fitter.GetBestStatus()
-        variables['down_type_jet_b_tagged_{}'.format(self._syst_suffix)]  = fitter.GetBestDownTypeJetBTagged()
-        # these idx variables should be calculated again and this will become a OrigJet idx
-        variables['hadronic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicTopBJetIdx(), orig_jets_idx)
-        variables['leptonic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestLeptonicTopBJetIdx(), orig_jets_idx)
-        variables['w_ch_up_type_jet_idx_{}'.format(self._syst_suffix)]    = self.findOrigJetIdx(fitter.GetBestHadronicWCHUpTypeJetIdx(), orig_jets_idx)
-        variables['w_ch_down_type_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicWCHDownTypeJetIdx(), orig_jets_idx)
-         
-        variables['hadronic_top_b_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicTopBJetPull()
-        variables['w_ch_up_type_jet_pull_{}'.format(self._syst_suffix)]   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
-        variables['w_ch_down_type_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
 
-        variables['hadronic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestHadronicTopMass()
-        variables['hadronic_top_pt_{}'.format(self._syst_suffix)]          = fitter.GetBestHadronicTopPt()
-        variables['leptonic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestLeptonicTopMass()
-        variables['leptonic_W_M_{}'.format(self._syst_suffix)]            = fitter.GetBestLeptonicWMass()
+        # retrive ResultContainer vector from fitter
+        fit_results = fitter.GetResults()
+        # if there's a no eligible result, put -1
+        if fit_results.size() > 0:
+          for nameBranches in self.newbranches_F + self.newbranches_I:
+            if 'nbtagsCleanJet' in nameBranches: # skip variable not retrived from fitter
+              continue
+            elif 'MET_CHToCB' in nameBranches: # skip variable not retrived from fitter
+              continue
+            else:
+              nameBranches_no_suffix = nameBranches[:-len(self._syst_suffix)][:-1]
+              if 'jet_idx' not in nameBranches:
+                variables[nameBranches] = getattr(fit_results.at(0),nameBranches_no_suffix)
+              else:
+                # convert jet index inside the fitter to index in Jet collection
+                variables[nameBranches] = self.findOrigJetIdx(getattr(fit_results.at(0),nameBranches_no_suffix), orig_jets_idx)
+        else:
+          for nameBranches in self.newbranches_F + self.newbranches_I:
+            if 'nbtagsCleanJet' in nameBranches: # skip variable not retrived from fitter
+              continue
+            elif 'MET_CHToCB' in nameBranches: # skip variable not retrived from fitter
+              continue
+            variables[nameBranches] = -1
+
+        #variables['initial_dijet_M_{}'.format(self._syst_suffix)]         = fitter.GetBestInitialDijetMass()
+        #variables['initial_dijet_M_high_{}'.format(self._syst_suffix)]    = fitter.GetBestInitialDijetMass_high()
+        #variables['corrected_dijet_M_{}'.format(self._syst_suffix)]       = fitter.GetBestCorrectedDijetMass()
+        #variables['corrected_dijet_M_high_{}'.format(self._syst_suffix)]  = fitter.GetBestCorrectedDijetMass_high()
+        #variables['fitted_dijet_M_{}'.format(self._syst_suffix)]          = fitter.GetBestFittedDijetMass()
+        #variables['fitted_dijet_M_high_{}'.format(self._syst_suffix)]     = fitter.GetBestFittedDijetMass_high()
+        #variables['best_chi2_{}'.format(self._syst_suffix)]               = fitter.GetBestChi2()
+        #variables['lambda_{}'.format(self._syst_suffix)]                  = fitter.GetBestLambda()
+        #variables['fitter_status_{}'.format(self._syst_suffix)]           = fitter.GetBestStatus()
+        #variables['down_type_jet_b_tagged_{}'.format(self._syst_suffix)]  = fitter.GetBestDownTypeJetBTagged()
+        ## these idx variables should be calculated again and this will become a OrigJet idx
+        #variables['hadronic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicTopBJetIdx(), orig_jets_idx)
+        #variables['leptonic_top_b_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestLeptonicTopBJetIdx(), orig_jets_idx)
+        #variables['w_ch_up_type_jet_idx_{}'.format(self._syst_suffix)]    = self.findOrigJetIdx(fitter.GetBestHadronicWCHUpTypeJetIdx(), orig_jets_idx)
+        #variables['w_ch_down_type_jet_idx_{}'.format(self._syst_suffix)]  = self.findOrigJetIdx(fitter.GetBestHadronicWCHDownTypeJetIdx(), orig_jets_idx)
+        # 
+        #variables['hadronic_top_b_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicTopBJetPull()
+        #variables['leptonic_top_b_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestLeptonicTopBJetPull()
+        #variables['w_ch_up_type_jet_pull_{}'.format(self._syst_suffix)]   = fitter.GetBestHadronicWCHUptypeJetIdxPull()
+        #variables['w_ch_down_type_jet_pull_{}'.format(self._syst_suffix)] = fitter.GetBestHadronicWCHDowntypeJetIdxPull()
+
+        #fit_results = fitter.GetResults()
+        #if fit_results.size() > 0:
+        #  variables['hadronic_top_mass_F_{}'.format(self._syst_suffix)]     = fit_results.at(0).hadronic_top_mass_F
+        #  variables['leptonic_top_mass_F_{}'.format(self._syst_suffix)]     = fit_results.at(0).leptonic_top_mass_F
+        #  variables['leptonic_w_mass_F_{}'.format(self._syst_suffix)]       = fit_results.at(0).leptonic_w_mass_F
+        #else:
+        #  variables['hadronic_top_mass_F_{}'.format(self._syst_suffix)]     = -1.
+        #  variables['leptonic_top_mass_F_{}'.format(self._syst_suffix)]     = -1.
+        #  variables['leptonic_w_mass_F_{}'.format(self._syst_suffix)]       = -1.
+
+        #variables['hadronic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestHadronicTopMass()
+        #variables['hadronic_top_pt_{}'.format(self._syst_suffix)]         = fitter.GetBestHadronicTopPt()
+        #variables['leptonic_top_M_{}'.format(self._syst_suffix)]          = fitter.GetBestLeptonicTopMass()
+        #variables['leptonic_W_M_{}'.format(self._syst_suffix)]            = fitter.GetBestLeptonicWMass()
 
         variables['nbtagsCleanJet_{}'.format(self._syst_suffix)] = nbtags
 
         variables['MET_CHToCB_pt_{}'.format(self._syst_suffix)]  = MET_CHToCB_pt
         variables['MET_CHToCB_phi_{}'.format(self._syst_suffix)] = MET_CHToCB_phi
 
-        for nameBranches in self.newbranches_F:
-          self.out.fillBranch(nameBranches  ,  variables[nameBranches]);
-        for nameBranches in self.newbranches_I:
+        for nameBranches in self.newbranches_F + self.newbranches_I:
           self.out.fillBranch(nameBranches  ,  variables[nameBranches]);
 
         return True
@@ -326,6 +367,10 @@ class KinFitterProducer(Module):
         ###     => MET_px_new = MET_px - sum( dpx )
         JetPxSum_old, JetPySum_old = self.GetJetPxPySum(Jet,CleanJet,False)
         JetPxSum_new, JetPySum_new = self.GetJetPxPySum(Jet,CleanJet,True)
+
+        if self._syst_suffix == 'nom':
+          if JetPxSum_old != JetPxSum_new or JetPySum_old != JetPySum_new:
+            raise Exception('something wrong in propagateToMET')
         
         dpx = JetPxSum_new - JetPxSum_old
         dpy = JetPySum_new - JetPySum_old
@@ -349,7 +394,7 @@ class KinFitterProducer(Module):
         JetPySum = 0.
         for jet in CleanJet: #propagate CleanJet to MET
           if syst==False:
-            pt = Jet[jet.jetIdx].pt #jet pt no JER smearing
+            pt = Jet[jet.jetIdx].pt_nom #jet pt with JER smearing
           else:
             pt = self.findJetPtSystAttr(Jet[jet.jetIdx]) # for nominal syst, propagate Jet_pt_nom
           phi=jet.phi

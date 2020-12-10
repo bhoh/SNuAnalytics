@@ -10,8 +10,8 @@
 #include "TFitConstraintMGaus.h"
 #include "TAbsFitParticle.h"
 #include "TFitParticlePt.h"
-#include "TFitParticlePz.h"
-#include "TFitParticlePxPy.h"
+//#include "TFitParticlePz.h"
+#include "TFitParticleMCCart.h"
 #include "TFitParticleEtPhi.h"
 #include "TKinFitter.h"
 #include "TSCorrection.h"
@@ -22,6 +22,8 @@ using namespace std;
 class TKinFitterDriver{
 
 public:
+
+  struct ResultContainer;
 
   TKinFitterDriver();
   TKinFitterDriver(int DataYear_);
@@ -58,7 +60,7 @@ public:
   void Fit();
   void FitCurrentPermutation();
   void FindBestChi2Fit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
-  void FindMaxPtHadTopFit(bool IsMaxLepTopPt, bool IsClosestHadTopM, bool IsClosestLepTopM);
+  void FindBestSelTopFit(bool IsMaxHadTopPt, bool IsClosestHadTopM, bool IsMaxLepTopPt, bool IsClosestLepTopM, bool noAmbiguity);
 
   int GetStatus();
   double GetChi2();
@@ -89,6 +91,7 @@ public:
   int GetBestHadronicWCHDownTypeJetIdx();
 
   double GetBestHadronicTopBJetPull();
+  double GetBestLeptonicTopBJetPull();
   double GetBestHadronicWCHUptypeJetIdxPull();
   double GetBestHadronicWCHDowntypeJetIdxPull();
 
@@ -102,6 +105,8 @@ public:
   std::vector<double> GetLeptonicTopBPtVector(bool IsConverge=true);
   std::vector<double> GetWCHDownTypePtVector(bool IsConverge=true);
   std::vector<double> GetWCHUpTypePtVector(bool IsConverge=true);
+
+  const std::vector<TKinFitterDriver::ResultContainer>* GetResults();
 
   enum JET_ASSIGNMENT{
     HADRONIC_TOP_B,
@@ -123,6 +128,9 @@ public:
     double initial_dijet_M_high;
     double corrected_dijet_M_high;
 
+    double fitted_dijet_M_new1;
+    double fitted_dijet_M_new2;
+
     double hadronic_top_M;
     double hadronic_top_pt;
     double leptonic_top_M;
@@ -138,16 +146,17 @@ public:
     //idx
     int hadronic_top_b_jet_idx;
     int leptonic_top_b_jet_idx;
-    int hadronic_w_ch_jet1_idx;
-    int hadronic_w_ch_jet2_idx;
+    int w_ch_up_type_jet_idx;
+    int w_ch_down_type_jet_idx;
 
     //pull
     double hadronic_top_b_jet_pull;
-    double hadronic_w_ch_jet1_pull;
-    double hadronic_w_ch_jet2_pull;
+    double leptonic_top_b_jet_pull;
+    double w_ch_up_type_jet_pull;
+    double w_ch_down_type_jet_pull;
 
     //tagging
-    int is_w_ch_down_type_jet_b_tagged;
+    int down_type_jet_b_tagged;
 
     // F from constraints
     double hadronic_top_mass_F;
@@ -156,6 +165,8 @@ public:
     double currS;
     double deltaS;
     double chi2;
+    double chi2_lep;
+    double chi2_had;
     double lambda;
   };
 
@@ -171,14 +182,18 @@ private:
   void SetFitter();
   void SaveResults();
 
-  double CalcChi2();
+  double ComparingInHadTopRestFrame(const TLorentzVector *jet1,const TLorentzVector *jet2, const TLorentzVector *had_top_b_jet);
+
+  double CalcChi2(TString option);
   double CalcEachChi2(TAbsFitParticle* ptr);
+  double CalcPull(TAbsFitParticle* ptr);
   double CalcEachChi2(TFitConstraintM* ptr, double width);
   double CalcEachChi2(TFitConstraintMGaus* ptr);
 
   void SetCurrentPermutationJets();
   bool Check_BJet_Assignment();
   bool Kinematic_Cut();
+  bool Quality_Cut();
   bool NextPermutation(bool UseLeading4Jets=false);
 
   void Sol_Neutrino_Pz();
@@ -212,7 +227,8 @@ private:
   TLorentzVector corr_hadronic_w_ch_jet2;
   TLorentzVector corr_extra_jet;
   TLorentzVector lepton; // lepton comes from leptonic W
-  TLorentzVector neutrino_pxpy; // neutrino_pxpy comes from leptonic W
+  TLorentzVector neutrino_pxpypz; // neutrino_pxpypz comes from leptonic W
+  TVector3       neutrino_vec3; 
   TLorentzVector neutrino_pz; // neutrino_pz
 
   TFitParticlePt *fit_hadronic_top_b_jet;
@@ -223,20 +239,20 @@ private:
   //std::vector<TFitParticlePt*> fit_extra_jets;
   TFitParticlePt *fit_lepton;
   //TFitParticleEtPhi *fit_neutrino_etphi;
-  TFitParticlePxPy *fit_neutrino_pxpy;
-  TFitParticlePz *fit_neutrino_pz;
+  TFitParticleMCCart *fit_neutrino_pxpypz;
+  //TFitParticlePz *fit_neutrino_pz;
 
   int hadronic_top_b_jet_idx;
   int leptonic_top_b_jet_idx;
-  int hadronic_w_ch_jet1_idx;
-  int hadronic_w_ch_jet2_idx;
+  int w_ch_up_type_jet_idx;
+  int w_ch_down_type_jet_idx;
 
   TMatrixD error_hadronic_top_b_jet; 
   TMatrixD error_leptonic_top_b_jet;
   TMatrixD error_hadronic_w_ch_jet1;
   TMatrixD error_hadronic_w_ch_jet2;
   TMatrixD error_lepton;
-  TMatrixD error_neutrino_pxpy;
+  TMatrixD error_neutrino_pxpypz;
 
   TFitConstraintM *constrain_hadronic_top_M;
   //TFitConstraintMGaus *constrain_hadronic_top_MGaus;
@@ -248,8 +264,8 @@ private:
   TKinFitterDriver::ResultContainer fit_result;
 
   std::vector<TKinFitterDriver::ResultContainer> fit_result_vector;
-  std::vector<TKinFitterDriver::ResultContainer> GetResults();
   static bool Chi2Comparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
+  static bool HadTopMComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
   static bool HighMassFitter(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
   static bool HadTopPtComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);
   static bool LepTopPtComparing(const TKinFitterDriver::ResultContainer& rc1, const TKinFitterDriver::ResultContainer& rc2);

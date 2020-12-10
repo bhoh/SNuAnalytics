@@ -487,6 +487,9 @@ class LeptonSFMaker_BHO(Module):
         for key in mu_wp_var:
             self.out.fillBranch('Lepton_tightMuon_' + key, mu_wp_var[key])
 
+        if event.event % 10000 ==1 :##To flush memory of ttree
+            self.out._tree.AutoSave("FlushBaskets")
+
         return True
 
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed

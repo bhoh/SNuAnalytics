@@ -102,9 +102,13 @@ class genCHToCB(Module):
         ###
         for idx, particle in enumerate(genParticles):
           if abs(particle.pdgId)==5 and particle.statusFlags>>13 & 1 and particle.statusFlags>>8 & 1:
+            #XXX check if
+            #if self.findAncester(idx,genParticles,top_idx,[6],[-24,-37]):
             if self.findAncester(idx,genParticles,top_idx,[6],[24,37]):
               top_b_idx = idx
               #print("found top b : %s"%top_b_idx)
+            #XXX check if
+            #elif self.findAncester(idx,genParticles,anti_top_idx,[-6],[24,37]):
             elif self.findAncester(idx,genParticles,anti_top_idx,[-6],[-24,-37]):
               anti_top_b_idx = idx
               #print("found anti-top b : %s"%anti_top_b_idx)
