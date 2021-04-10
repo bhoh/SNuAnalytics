@@ -1,9 +1,12 @@
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Dropout
+from keras.layers import Add, Lambda
 #from keras.layers.noise import GaussianNoise
 from keras.layers.normalization import BatchNormalization
 from keras import initializers
-from keras.optimizers import SGD, Adam
+from keras import regularizers
+from keras.optimizers import SGD, Adam, Nadam
+
 
 # Define initialization
 def normal(shape, name=None):
@@ -21,45 +24,42 @@ class KerasModel():
     
     #
     # we can think of this chunk as the input layer
-    self.model.add(Dense(200, input_dim=input_dim_, kernel_initializer=initializers.he_normal(seed=1231)))
+    self.model.add(Lambda(lambda X : X, input_shape=(input_dim_,))) #dummy Lamda layer for test
+    #self.model.add(Dense(400, input_dim=input_dim_, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
+    self.model.add(Dense(400, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
     self.model.add(BatchNormalization())
-    ## noise
-    #self.model.add(GaussianNoise(1.))
     self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.4))
+    self.model.add(Dropout(0.20))
 
     # we can think of this chunk as the input layer
-    self.model.add(Dense(100, kernel_initializer=initializers.he_normal(seed=1232)))
+    self.model.add(Dense(200, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
     self.model.add(BatchNormalization())
-    ## noise
-    #self.model.add(GaussianNoise(1.))
     self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.4))
+    self.model.add(Dropout(0.20))
 
-    # we can think of this chunk as the hidden layer    
-    self.model.add(Dense(75, kernel_initializer=initializers.he_normal(seed=1233)))
+    # we can think of this chunk as the input layer
+    self.model.add(Dense(100, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
     self.model.add(BatchNormalization())
-    ## noise
-    #self.model.add(GaussianNoise(1.))
     self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.4))
+    self.model.add(Dropout(0.20))
 
     # we can think of this chunk as the output layer
     self.model.add(Dense(2, kernel_initializer=initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=1234)))
-    self.model.add(BatchNormalization())
     self.model.add(Activation('softmax'))
 
     #self.model.add(Dense(64, kernel_initializer=initializers.he_normal(seed=None), activation='relu', input_dim=input_dim_))
     #self.model.add(Dense(32, kernel_initializer=initializers.he_normal(seed=None), activation='relu'))
     #self.model.add(Dense(2, kernel_initializer=initializers.he_normal(seed=None), activation='softmax'))
 
-  def compile(self,loss_='categorical_crossentropy',
+  def compile(self,lossftn='categorical_crossentropy',
 		   #optimizer_=SGD(lr=0.1,decay=1e-5),
-		   optimizer_=Adam(lr=0.001, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.0, amsgrad=False),
+           # default lr=0.001
+		   #optimizer_=Adam(lr=0.1, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.1),
+		   optimizer_=Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004),
 		   metrics_=['accuracy',]
 	     ):
     # Set loss and optimizer
-    self.model.compile(loss=lossftn, optimizer=SGD(SGD_lr, SGD_decay), metrics=metrix)
+    self.model.compile(loss=lossftn, optimizer=optimizer_, metrics=metrics_)
 
   def save(self, modelName="model.h5"):
     self.model.save(modelName)
