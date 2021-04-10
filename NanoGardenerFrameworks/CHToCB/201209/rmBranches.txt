@@ -1,0 +1,14 @@
+keep *
+drop L1*
+drop *FatJet*
+drop *CleanFatJet*
+drop *SoftActivityJet*
+drop *SubGenJetAK8*
+drop *SubJet*
+drop *Tau*
+drop *DressedLepton*
+drop *GenDressedLepton*
+drop *GenJetAK8*
+drop *GenVisTau*
+drop *IsoTrack*
+drop *SV*
