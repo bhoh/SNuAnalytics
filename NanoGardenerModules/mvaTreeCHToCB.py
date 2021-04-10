@@ -77,22 +77,22 @@ class mvaTreeCHToCB(Module):
         self.rawJet_coll    = Collection(event, 'Jet')
 
         #XXX set pt eta cut by years
-        ptcut = 30.
+        ptcut = 20.
         if int(self.Year) == 2016:
           absetacut = 2.4
-          self.csvcut_L    = 0.2217
-          self.csvcut_M    = 0.6321
-          self.csvcut_T    = 0.8953
+          self.csvcut_L    = 0.0614
+          self.csvcut_M    = 0.3093
+          self.csvcut_T    = 0.7221
         elif int(self.Year) == 2017:
           absetacut = 2.5
-          self.csvcut_L    = 0.1522
-          self.csvcut_M    = 0.4941
-          self.csvcut_T    = 0.8001
+          self.csvcut_L    = 0.0521
+          self.csvcut_M    = 0.3033
+          self.csvcut_T    = 0.7489
         else:
           absetacut = 2.5
-          self.csvcut_L    = 0.1241
-          self.csvcut_M    = 0.4184
-          self.csvcut_T    = 0.7527
+          self.csvcut_L    = 0.0494
+          self.csvcut_M    = 0.2770
+          self.csvcut_T    = 0.7264
 
         good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut)
 
@@ -100,7 +100,7 @@ class mvaTreeCHToCB(Module):
         if len(good_jets) < 4:
           return True
 
-        self.nbtags_event = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepB for idx in good_jets_idx ]])
+        self.nbtags_event = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in good_jets_idx ]])
 
         if self.nbtags_event < 2:
           return True
@@ -176,7 +176,7 @@ class mvaTreeCHToCB(Module):
           
           
           nearest_top_mass_pair_jetIdx = [0,1,2] # good_jets contain only 3 had top candidate
-          self.nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepB for idx in good_jets_idx]])
+          self.nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in good_jets_idx]])
 
 
 
@@ -199,7 +199,7 @@ class mvaTreeCHToCB(Module):
             return True
 
         # sort this jet pair in leading csv ordering
-        nearest_top_mass_pair_jetIdx.sort(key=lambda idx: self.rawJet_coll[good_jets_idx[idx]].btagDeepB, reverse=True)
+        nearest_top_mass_pair_jetIdx.sort(key=lambda idx: self.rawJet_coll[good_jets_idx[idx]].btagDeepFlavB, reverse=True)
 
         #
         #
@@ -216,9 +216,9 @@ class mvaTreeCHToCB(Module):
         # good_jets_idx[<index of good_jets>] is index of self.Jet_coll corresponding to index of good_jets
         idx0, idx1, idx2 = [ good_jets_idx[idx] for idx in nearest_top_mass_pair_jetIdx ]
 
-        csv_jet0 = self.rawJet_coll[idx0].btagDeepB #leading csv
-        csv_jet1 = self.rawJet_coll[idx1].btagDeepB #2nd leading csv
-        csv_jet2 = self.rawJet_coll[idx2].btagDeepB #smallest csv
+        csv_jet0 = self.rawJet_coll[idx0].btagDeepFlavB #leading csv
+        csv_jet1 = self.rawJet_coll[idx1].btagDeepFlavB #2nd leading csv
+        csv_jet2 = self.rawJet_coll[idx2].btagDeepFlavB #smallest csv
 
         avg_csv_had_top     = (csv_jet0+csv_jet1+csv_jet2)/3
         second_moment_csv_jet0 = (csv_jet0-avg_csv_had_top)*(csv_jet0-avg_csv_had_top)
@@ -322,7 +322,7 @@ class mvaTreeCHToCB(Module):
         tagging. 
         '''
         jets = []
-        coll_ids = []
+        coll_idx = []
         for ijnf in range(len(self.Jet_coll)):
           jetindex = self.Jet_coll[ijnf].jetIdx
           # index in the original Jet collection
@@ -331,12 +331,19 @@ class mvaTreeCHToCB(Module):
                       self.Jet_coll[ijnf].eta,\
                       self.Jet_coll[ijnf].phi,\
                       self.rawJet_coll[jetindex].mass
+
+          csv, puId_M = self.rawJet_coll[jetindex].btagDeepFlavB , self.rawJet_coll[jetindex].puId
                                                                                                                   
           passabsetacut = True
           if abs(eta) >= absetacut or pt <= ptcut: 
             passabsetacut = False
-            #if self.debug: 
-            #  print "Jet index: ", jetindex, " CUT > pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
+          if pt > 20 and pt<=30:
+            if not (puId_M & (1<<1)):
+              passabsetacut = False
+            if csv <= self.csvcut_M:
+              passabsetacut = False
+          #if self.debug: 
+          #  print "Jet index: ", jetindex, " CUT > pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
           if not passabsetacut : continue
           
           p = pt * cosh(eta)
@@ -347,8 +354,8 @@ class mvaTreeCHToCB(Module):
           #if self.debug:
           #    print "Jet index: ", jetindex, "> pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
           jets.append(vec)
-          coll_ids.append(jetindex)
-        return jets, coll_ids
+          coll_idx.append(jetindex)
+        return jets, coll_idx
 
 
     def exist_variables_in_skimTree(self, event):
@@ -380,7 +387,7 @@ class mvaTreeCHToCB(Module):
         l = []
         for i ,j, k  in combinations(range(len(vectors)),3):
           #XXX need improvement : seperated module for calculating nbtags
-          nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepB, self.rawJet_coll[idxs[j]].btagDeepB, self.rawJet_coll[idxs[k]].btagDeepB ]])
+          nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB, self.rawJet_coll[idxs[k]].btagDeepFlavB ]])
           # if there's no btagged jets in hadronic top, assign large number
           # in the 2 btagged event, 1 b tagged jet is allowed in had top
           # in the >=3 btagged event, more than 2 b tagged jet are allowed in had top
@@ -394,7 +401,7 @@ class mvaTreeCHToCB(Module):
         l = []
         for i ,j, k  in combinations(range(len(vectors)),3):
           #XXX need improvement : seperated module for calculating nbtags
-          nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepB, self.rawJet_coll[idxs[j]].btagDeepB, self.rawJet_coll[idxs[k]].btagDeepB ]])
+          nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB, self.rawJet_coll[idxs[k]].btagDeepFlavB ]])
           # if there's no btagged jets in hadronic top, assign large number
           # in the 2 btagged event, 1 b tagged jet is allowed in had top
           # in the >=3 btagged event, more than 2 b tagged jet are allowed in had top
@@ -407,7 +414,7 @@ class mvaTreeCHToCB(Module):
     def min_deltaR_bb(self, vectors, idxs):
         l = []
         for i ,j in combinations(range(len(vectors)),2):
-          is_bb = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepB, self.rawJet_coll[idxs[j]].btagDeepB]]) == 2
+          is_bb = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
           l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_bb else 9999999999 ))
         l = sorted(l, key=itemgetter(1))
         return l[0][1]
@@ -415,13 +422,13 @@ class mvaTreeCHToCB(Module):
     def min_deltaR_jj(self, vectors, idxs):
         l = []
         for i ,j in combinations(range(len(vectors)),2):
-          is_jj = sum([ csv <= self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepB, self.rawJet_coll[idxs[j]].btagDeepB]]) == 2
+          is_jj = sum([ csv <= self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
           l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_jj else 9999999999 ))
         l = sorted(l, key=itemgetter(1))
         return l[0][1]
 
     def get_HT_btagged(self, idxs, csvcut):
-        is_btagged       = [ csv > csvcut for csv in [ self.rawJet_coll[idx].btagDeepB for idx in idxs ]]
+        is_btagged       = [ csv > csvcut for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in idxs ]]
         idxs_btagged     = [ idxs[i] for i, is_tagged in enumerate(is_btagged) if is_tagged is True  ]
         idxs_not_btagged = [ idxs[i] for i, is_tagged in enumerate(is_btagged) if is_tagged is False ]
 
