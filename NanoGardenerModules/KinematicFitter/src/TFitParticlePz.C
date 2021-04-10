@@ -112,7 +112,8 @@ TLorentzVector* TFitParticlePz::calc4Vec( const TMatrixD* params ) {
   Double_t X = _iniPx;
   Double_t Y = _iniPy;
   Double_t Z = (*params)(0,0);
-  Double_t E = TMath::Sqrt(X*X + Y*Y + Z*Z + _pini.M2() );
+  Double_t E = TMath::Sqrt(X*X + Y*Y + Z*Z  ); // mass is not considered
+                                               // this is a module to fit neutrino Pz
 		
   TLorentzVector* vec = new TLorentzVector( X, Y, Z, E );
   return vec;

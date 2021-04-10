@@ -487,16 +487,22 @@ bool TKinFitterDriver::Quality_Cut(){
 void TKinFitterDriver::SetConstraint(){
   //TODO: will update to be able to set top-mass
   // reset constrain
+  //constrain_hadronic_top_MGaus = new TFitConstraintMGaus("hadronic_top_mass_constraint", "hadronic_top_mass_constraint", 0, 0, 172.5, 1.5);
+  //constrain_leptonic_top_MGaus = new TFitConstraintMGaus("leptonic_top_mass_constraint", "leptonic_top_mass_constraint", 0, 0, 172.5, 1.5);
+
   constrain_hadronic_top_M->Clear();
+  new(constrain_hadronic_top_M) TFitConstraintM("hadronic_top_mass_constraint", "hadronic_top_mass_constraint", 0, 0, 172.5);
   constrain_hadronic_top_M->addParticles1(fit_hadronic_top_b_jet, fit_hadronic_w_ch_jet1, fit_hadronic_w_ch_jet2);
   //constrain_hadronic_top_MGaus->Clear();
   //constrain_hadronic_top_MGaus->addParticles1(fit_hadronic_top_b_jet, fit_hadronic_w_ch_jet1, fit_hadronic_w_ch_jet2);
   constrain_leptonic_top_M->Clear();
+  new(constrain_leptonic_top_M) TFitConstraintM("leptonic_top_mass_constraint", "leptonic_top_mass_constraint", 0, 0, 172.5);
   //constrain_leptonic_top_M->addParticles1(fit_leptonic_top_b_jet, fit_neutrino_pxpy);
   constrain_leptonic_top_M->addParticles1(fit_leptonic_top_b_jet, fit_lepton, fit_neutrino_pxpypz);
   //constrain_leptonic_top_MGaus->Clear();
   //constrain_leptonic_top_MGaus->addParticles1(fit_leptonic_top_b_jet, fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);
   constrain_leptonic_W_M->Clear();
+  new(constrain_leptonic_W_M) TFitConstraintM("leptonic_w_mass_constraint", "leptonic_w_mass_constraint", 0, 0, 80.4);
   constrain_leptonic_W_M->addParticles1(fit_neutrino_pxpypz, fit_lepton); // lepton is included in fit_neutrino_pz
   //constrain_leptonic_W_MGaus->Clear();
   //constrain_leptonic_W_MGaus->addParticles1(fit_lepton, fit_neutrino_pxpy, fit_neutrino_pz);

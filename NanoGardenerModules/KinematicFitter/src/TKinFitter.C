@@ -339,6 +339,7 @@ Int_t TKinFitter::fit() {
 
     // Reset status to "RUNNING"
     // (if it was not aborted already due to singular covariance matrix)
+    //std::cout << "if it was not aborted already due to singular covariance matrix" << std::endl;
     if ( _status != -10 ) {
       _status = 10;
     }
@@ -347,6 +348,7 @@ Int_t TKinFitter::fit() {
     //fitMeasuredOnly(); //BHO
 
     // Calculate matrices
+    //std::cout << "Calculate matrices" << std::endl;
     calcB();
     calcVB();
     if ( _nParA > 0 ) {
@@ -359,6 +361,7 @@ Int_t TKinFitter::fit() {
     calcC();
 
     // Calculate corretion for a, y, and lambda
+    //std::cout << "Calculate corretion for a, y, and lambda" << std::endl;
     if ( _nParA > 0 ){
       calcDeltaA();
     }
@@ -381,6 +384,7 @@ Int_t TKinFitter::fit() {
       print();   
     }
 
+    //std::cout << "Apply calculated corrections to measured and unmeasured particles" << std::endl;
     // Apply calculated corrections to measured and unmeasured particles
     if ( _nParA > 0 ) {
       applyDeltaA();
@@ -398,33 +402,29 @@ Int_t TKinFitter::fit() {
     //std::cout << "calculate F ans S" << std::endl;
 
     if( TMath::IsNaN(currF) ) {
-      //edm::LogInfo ("KinFitter") << "The current value of F is NaN. Fit will be aborted.";
-      /*
-      printMatrix( _A      , "A"      );
-      printMatrix( _B      , "B"      );
-      printMatrix( _VBinv  , "VBinv"  );
-      printMatrix( _VB     , "VB"     );
-      printMatrix( _V      , "V"      );
-      printMatrix( _deltaY , "deltaY" );
-      printMatrix( _deltaA , "deltaA" );
-      printMatrix( _C32T   , "C32T"   );
-      printMatrix( _c      , "C"      );
-      */
+      //std::cout << "The current value of F is NaN. Fit will be aborted." << std::endl;
+      //printMatrix( _A      , "A"      );
+      //printMatrix( _B      , "B"      );
+      //printMatrix( _VBinv  , "VBinv"  );
+      //printMatrix( _VB     , "VB"     );
+      //printMatrix( _V      , "V"      );
+      //printMatrix( _deltaY , "deltaY" );
+      //printMatrix( _deltaA , "deltaA" );
+      //printMatrix( _C32T   , "C32T"   );
+      //printMatrix( _c      , "C"      );
       _status = -10;
     }
     if( TMath::IsNaN(currS) ) {
-      //edm::LogInfo ("KinFitter") << "The current value of S is NaN. Fit will be aborted.";
-      /*
-      printMatrix( _A      , "A"      );
-      printMatrix( _B      , "B"      );
-      printMatrix( _VBinv  , "VBinv"  );
-      printMatrix( _VB     , "VB"     );
-      printMatrix( _V      , "V"      );
-      printMatrix( _deltaY , "deltaY" );
-      printMatrix( _deltaA , "deltaA" );
-      printMatrix( _C32T   , "C32T"   );
-      printMatrix( _c      , "C"      );
-      */
+      //std::cout << "The current value of S is NaN. Fit will be aborted." << std::endl;
+      //printMatrix( _A      , "A"      );
+      //printMatrix( _B      , "B"      );
+      //printMatrix( _VBinv  , "VBinv"  );
+      //printMatrix( _VB     , "VB"     );
+      //printMatrix( _V      , "V"      );
+      //printMatrix( _deltaY , "deltaY" );
+      //printMatrix( _deltaA , "deltaA" );
+      //printMatrix( _C32T   , "C32T"   );
+      //printMatrix( _c      , "C"      );
       _status = -10;
     }
 
@@ -664,7 +664,7 @@ Bool_t TKinFitter::calcV() {
   try {
     _Vinv.Invert();
   } catch (std::exception& e) {
-     std::cout << e.what() << std::endl;
+     //std::cout << e.what() << std::endl;
     _status = -10;
   }
 
@@ -792,7 +792,7 @@ Bool_t TKinFitter::calcVB() {
   try {
     _VB.Invert();
   } catch (std::exception& e) {
-     std::cout << e.what() << std::endl;
+     //std::cout << e.what() << std::endl;
     _status = -10;
   }
 
@@ -813,7 +813,7 @@ Bool_t TKinFitter::calcVA() {
   try {
     _VAinv.Invert();
   } catch (std::exception& e) {
-     std::cout << e.what() << std::endl;
+     //std::cout << e.what() << std::endl;
     _status = -10;
   }
 
