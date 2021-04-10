@@ -8,36 +8,78 @@ from collections import OrderedDict
 import ROOT
 from ROOT import TFile, TTree
 try:
-  from MLTools import MLTools
-  from TMVATools import TMVATools
+  from MLTools_ttToHplus import MLTools
+  from TMVATools_ttToHplus import TMVATools
 except ImportError:
   import os
   CMSSW     = os.environ["CMSSW_BASE"]
   BASE_PATH = CMSSW + "/src/SNuAnalytics/MVATool/python/"
   sys.path.append(BASE_PATH)
-  from MLTools import MLTools
-  from TMVATools import TMVATools
+  from MLTools_ttToHplus import MLTools
+  from TMVATools_ttToHplus import TMVATools
 
 
 file_names = {
+  ('2016','TTLJ_powheg') :
+  [
+    'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_TT_TuneCUETP8M2T4_PSweights__part%s.root'%idx for idx in range(42)
+
+  ],
+  ('2017','TTLJ_powheg') :
+  [
+    'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_TTToSemiLeptonic__part%s.root'%idx for idx in range(14)
+  ],
   ('2018','TTLJ_powheg') :
   [
-    '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_TTToSemiLeptonic__part%s.root'%idx for idx in range(16)
+    'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_TTToSemiLeptonic__part%s.root'%idx for idx in range(12)
+  ],
+  ('2016','CHToCB_High') :
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M130__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M140__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M150__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M160__part*.root',
+  ],
+  ('2017','CHToCB_High') :
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M130__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M140__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M150__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M160__part*.root',
   ],
   ('2018','CHToCB_High') :
-  ['/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M130__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M140__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M150__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M150__part1.root',
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M130__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M140__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M150__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M160__part*.root',
+  ],
+  ('2016','CHToCB_Low') :
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M080__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M090__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M100__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M110__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Summer16_102X_nAODv7_Full2016v7/CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
+  ],
+  ('2017','CHToCB_Low') :
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M080__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M090__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M100__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M110__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Fall2017_102X_nAODv7_Full2017v7/CHToCBLepton2017v7__CHToCBJetMETCorr2017v7__kinFitTTSemiLepV4_2017__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
   ],
   ('2018','CHToCB_Low') :
-  ['/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M075__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M080__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M085__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M090__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M100__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M110__part0.root',
-  '/xrootd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv6_Full2018v6/MCl1loose2018v6__MCCorr2018v6__HMSemilepSKIMv6_10__genCHToCB_2018__kinFitTTSemiLep_2018__mvaTreeCHToCB_2018/nanoLatino_CHToCB_M120__part0.root',
+  [
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M080__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M090__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M100__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M110__part*.root',
+   'root://cms-xrdr.private.lo:2094//xrd/store/user/jhchoi/Latino/HWWNano/Autumn18_102X_nAODv7_Full2018v7/CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaTreeCHToCB/nanoLatino_CHToCB_M120__part*.root',
   ],
 }
 
@@ -45,129 +87,135 @@ file_names = {
 variables = OrderedDict()
 spectators = OrderedDict()
 
-spectators['gen_dijet_mass'] = {
-    'definition' : 'gen_dijet_mass',
-  }
+
+# do not add spectator, it should be add when using it after training. but TMVAfiller module don't support spectators
+#spectators['fitted_dijet_M_nom'] = {
+#    'definition' : 'fitted_dijet_M_nom',
+#  }
+#spectators['fitted_dijet_M_high_nom'] = {
+#    'definition' : 'fitted_dijet_M_high_nom',
+#  }
 
 #variables[''] = {
 #    'definition' : '',
 #    'type' : 'D'
 #  }
-variables['csv_jet0_mvaCHToCB'] = {
-    'definition' : 'csv_jet0_mvaCHToCB',
-    'type' : 'D'
+variables['csv_jet0_mvaCHToCB_nom'] = {
+    'definition' : 'csv_jet0_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['csv_jet1_mvaCHToCB'] = {
-    'definition' : 'csv_jet1_mvaCHToCB',
-    'type' : 'D'
+variables['csv_jet1_mvaCHToCB_nom'] = {
+    'definition' : 'csv_jet1_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['csv_jet2_mvaCHToCB'] = {
-    'definition' : 'csv_jet2_mvaCHToCB',
-    'type' : 'D'
+variables['csv_jet2_mvaCHToCB_nom'] = {
+    'definition' : 'csv_jet2_mvaCHToCB_nom',
+    'type' : 'F'
   }
 variables['avg_csv_had_top'] = {
-    'definition' : 'avg_csv_had_top := (csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3',
-    'type' : 'D'
+    'definition' : 'avg_csv_had_top := (csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3',
+    'type' : 'F'
   }
-variables['2nd_moment_csv_jet0_mvaCHToCB'] = {
-        'definition' : '2nd_moment_csv_jet0_mvaCHToCB := (csv_jet0_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)*(csv_jet0_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)',
-    'type' : 'D'
+variables['2nd_moment_csv_jet0_mvaCHToCB_nom'] = {
+        'definition' : '2nd_moment_csv_jet0_mvaCHToCB_nom := (csv_jet0_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)*(csv_jet0_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)',
+    'type' : 'F'
   }
-variables['2nd_moment_csv_jet1_mvaCHToCB'] = {
-        'definition' : '2nd_moment_csv_jet1_mvaCHToCB := (csv_jet1_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)*(csv_jet1_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)',
-    'type' : 'D'
+variables['2nd_moment_csv_jet1_mvaCHToCB_nom'] = {
+        'definition' : '2nd_moment_csv_jet1_mvaCHToCB_nom := (csv_jet1_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)*(csv_jet1_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)',
+    'type' : 'F'
   }
-variables['2nd_moment_csv_jet2_mvaCHToCB'] = {
-        'definition' : '2nd_moment_csv_jet2_mvaCHToCB := (csv_jet2_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)*(csv_jet2_mvaCHToCB-(csv_jet0_mvaCHToCB+csv_jet1_mvaCHToCB+csv_jet2_mvaCHToCB)/3)',
-    'type' : 'D'
+variables['2nd_moment_csv_jet2_mvaCHToCB_nom'] = {
+        'definition' : '2nd_moment_csv_jet2_mvaCHToCB_nom := (csv_jet2_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)*(csv_jet2_mvaCHToCB_nom-(csv_jet0_mvaCHToCB_nom+csv_jet1_mvaCHToCB_nom+csv_jet2_mvaCHToCB_nom)/3)',
+    'type' : 'F'
   }
-variables['dijet_deltaR0_mvaCHToCB'] = {
-    'definition' : 'dijet_deltaR0_mvaCHToCB',
-    'type' : 'D'
+variables['dijet_deltaR0_mvaCHToCB_nom'] = {
+    'definition' : 'dijet_deltaR0_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['dijet_deltaR1_mvaCHToCB'] = {
-    'definition' : 'dijet_deltaR1_mvaCHToCB',
-    'type' : 'D'
+variables['dijet_deltaR1_mvaCHToCB_nom'] = {
+    'definition' : 'dijet_deltaR1_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['Hplus_b_deltaR0_mvaCHToCB'] = {
-    'definition' : 'Hplus_b_deltaR0_mvaCHToCB',
-    'type' : 'D'
+variables['Hplus_b_deltaR0_mvaCHToCB_nom'] = {
+    'definition' : 'Hplus_b_deltaR0_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['Hplus_b_deltaR_mvaCHToCB'] = {
-    'definition' : 'Hplus_b_deltaR1_mvaCHToCB',
-    'type' : 'D'
+variables['Hplus_b_deltaR1_mvaCHToCB_nom'] = {
+    'definition' : 'Hplus_b_deltaR1_mvaCHToCB_nom',
+    'type' : 'F'
   }
 #variables['dijet_ptD0_mvaCHToCB'] = {
 #    'definition' : 'dijet_ptD0_mvaCHToCB',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
 #variables['dijet_ptD1_mvaCHToCB'] = {
 #    'definition' : 'dijet_ptD1_mvaCHToCB',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
-variables['bb_deltaR_mvaCHToCB'] = {
-    'definition' : 'bb_deltaR_mvaCHToCB',
-    'type' : 'D'
+variables['bb_deltaR_mvaCHToCB_nom'] = {
+    'definition' : 'bb_deltaR_mvaCHToCB_nom',
+    'type' : 'F'
   }
-variables['min_deltaR_bb_event_mvaCHToCB'] = {
-    'definition' : 'min_deltaR_bb_event_mvaCHToCB',
-    'type' : 'D'
+variables['min_deltaR_bb_event_mvaCHToCB_nom'] = {
+    'definition' : 'min_deltaR_bb_event_mvaCHToCB_nom',
+    'type' : 'F'
   }
 #variables['min_deltaR_jj_event_mvaCHToCB'] = { #minor
 #    'definition' : 'min_deltaR_jj_event_mvaCHToCB',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
 #variables['had_top_pt_scalar_sum_mvaCHToCB'] = { #minor
 #    'definition' : 'had_top_pt_scalar_sum_mvaCHToCB',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
 
 #variables['HT_btagged_L'] = {
 #    'definition' : 'HT_btagged_L',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
 #variables['HT_not_btagged_L'] = {
 #    'definition' : 'HT_not_btagged_L',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
-variables['HT_btagged_M'] = {
-    'definition' : 'HT_btagged_M',
-    'type' : 'D'
+variables['HT_btagged_M_nom'] = {
+    'definition' : 'HT_btagged_M_nom',
+    'type' : 'F'
   }
-variables['HT_not_btagged_M'] = {
-    'definition' : 'HT_not_btagged_M',
-    'type' : 'D'
+variables['HT_not_btagged_M_nom'] = {
+    'definition' : 'HT_not_btagged_M_nom',
+    'type' : 'F'
   }
 #variables['HT_btagged_T'] = {
 #    'definition' : 'HT_btagged_T',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
 #variables['HT_not_btagged_T'] = {
 #    'definition' : 'HT_not_btagged_T',
-#    'type' : 'D'
+#    'type' : 'F'
 #  }
-variables['mbb_mvaCHToCB'] = {
-    'definition' : 'mbb_mvaCHToCB',
-    'type' : 'D'
-  }
-variables['mcb0_mvaCHToCB'] = {
-    'definition' : 'mcb0_mvaCHToCB',
-    'type' : 'D'
-  }
-variables['mcb1_mvaCHToCB'] = {
-    'definition' : 'mcb1_mvaCHToCB',
-    'type' : 'D'
-  }
-variables['hadronic_top_mass_mvaCHToCB'] = {
-    'definition' : 'hadronic_top_mass_mvaCHToCB',
-    'type' : 'D'
-  }
+#variables['mbb_mvaCHToCB'] = {
+#    'definition' : 'mbb_mvaCHToCB',
+#    'type' : 'F'
+#  }
+#variables['mcb0_mvaCHToCB'] = {
+#    'definition' : 'mcb0_mvaCHToCB',
+#    'type' : 'F'
+#  }
+#variables['mcb1_mvaCHToCB'] = {
+#    'definition' : 'mcb1_mvaCHToCB',
+#    'type' : 'F'
+#  }
+#variables['hadronic_top_mass_mvaCHToCB'] = {
+#    'definition' : 'hadronic_top_mass_mvaCHToCB',
+#    'type' : 'F'
+#  }
 cuts = {
-  'sig' : '(nbtags_event_mvaCHToCB>=3 && nbtags_had_top_mvaCHToCB>=2)',
-  'bkg' : '(nbtags_event_mvaCHToCB>=3 && nbtags_had_top_mvaCHToCB>=2)',
+  'sig' : '(nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2)', # (event%3)>0 too pass 1/3
+  # && Sum$(abs(LHEPart_pdgId)==11 || abs(LHEPart_pdgId)==13 || abs(LHEPart_pdgId)==15)==1 
+  'bkg' : '(nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2)',
 }
 
-options = {
+options_High = {
   'factory' : {
     'name' : "TMVAClassification",
     'options' : ":".join(["!V",
@@ -178,15 +226,15 @@ options = {
 			  "AnalysisType=Classification"
 		         ]),
     #'weight' : "",
-    'weight' : "1.",
-    #'weight' : "baseW*Xsec",
+    #'weight' : "1.",
+    'weight' : "1*(XSWeight>=0)-1*(XSWeight<0)",
   },
   'prepareTrees' : ":".join(["SplitMode=Alternate",
 			     "!V",
-			     #"nTrain_Signal=20000",
-			     #"nTrain_Background=20000",
-			     #"nTest_Signal=20000",
-			     #"nTest_Background=20000",
+			     #"nTrain_Signal=50000",
+			     #"nTrain_Background=100000",
+			     #"nTest_Signal=50000",
+			     #"nTest_Background=100000",
              	            ]),
   'bookMethod' : [
     {
@@ -197,178 +245,152 @@ options = {
         		    #"VarTransform=N,D",
         		    "VarTransform=G",
         		    "FilenameModel=model.h5",
-        		    "NumEpochs=1000",
+        		    "NumEpochs=200",
         		    "BatchSize=1000",
-                    "TriesEarlyStopping=30",
+                    "verbose=2",
+                    "TriesEarlyStopping=10",
         	           ]),
     },
     {
       'type' : ROOT.TMVA.Types.kBDT,
-      'name' : "BDT_800_MinNodeSize2of10",
+      'name' : "BDT",
       'options' : ":".join(["!H",
                             "!V",
-        		    "VarTransform=N,D",
-                   	    "NTrees=800",
-        		    "MaxDepth=3",
-        		    "MinNodeSize=20%",
+			    #"VarTransform=N,D",
+			    "VarTransform=N",
+                   	    "NTrees=400",
+        		    "MaxDepth=2",
+                    "UseBaggedGrad=True",
+                    "BaggedSampleFraction=0.5",
+			        "MinNodeSize=2%",
         		    "BoostType=Grad",
         		    "SeparationType=GiniIndex",
+                    "IgnoreNegWeightsInTraining=True",
         		    "nCuts=100",
         		    "PruneMethod=NoPruning",
         	           ])
     },
-    #{
-    #  'type' : ROOT.TMVA.Types.kBDT,
-    #  'name' : "BDT",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-	#		    "VarTransform=N",
-    #               	    "NTrees=400",
-    #    		    "MaxDepth=2",
-	#		    "MinNodeSize=10%",
-    #    		    "BoostType=Grad",
-    #    		    "SeparationType=GiniIndex",
-    #    		    "nCuts=100",
-    #    		    "PruneMethod=NoPruning",
-    #    	           ])
-    #},
-    #{
-    #  'type' : ROOT.TMVA.Types.kBDT,
-    #  'name' : "BDT_400_NEvent400",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-    #    		    "VarTransform=N,D(dijet_deltaR,had_w_ch_deltaR)",
-    #               	    "NTrees=400",
-    #    		    "MaxDepth=2",
-    #    		    "NEventsMin=400",
-    #    		    "BoostType=Grad",
-    #    		    "SeparationType=GiniIndex",
-    #    		    "nCuts=100",
-    #    		    "PruneMethod=NoPruning",
-    #    	           ])
-    #},
-    #{
-    #  'type' : ROOT.TMVA.Types.kBDT,
-    #  'name' : "BDT_800_NEvent400_pruning",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-    #    		    "VarTransform=N,D(dijet_deltaR,had_w_ch_deltaR,dijet_pt_avg)",
-    #               	    "NTrees=800",
-    #    		    "MaxDepth=2",
-    #    		    "NEventsMin=400",
-    #    		    "BoostType=Grad",
-    #    		    "SeparationType=GiniIndex",
-    #    		    "nCuts=100",
-    #    		    "PruneMethod=ExpectedError",
-    #    	           ])
-    #},
-    #{
-    #  'type' : ROOT.TMVA.Types.kBDT,
-    #  'name' : "BDT_400_rand",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-    #               	    "NTrees=400",
-    #    		    "MaxDepth=2",
-    #    		    "UseRandomisedTrees=True",
-    #    		    "UseNvars=2",
-    #    		    "BoostType=Grad",
-    #    		    "SeparationType=GiniIndex",
-    #    		    "nCuts=100",
-    #    		    "PruneMethod=NoPruning",
-    #    	           ])
-    #},
-    #{
-    #  'type' : ROOT.TMVA.Types.kBDT,
-    #  'name' : "BDT_400_rand_pruning",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-    #               	    "NTrees=400",
-    #    		    "MaxDepth=2",
-    #    		    "UseRandomisedTrees=True",
-    #    		    "UseNvars=2",
-    #    		    "BoostType=Grad",
-    #    		    "SeparationType=GiniIndex",
-    #    		    "nCuts=100",
-    #    		    "PruneMethod=ExpectedError",
-    #    	           ])
-    #},
-        #{ 
-    #  'type' : ROOT.TMVA.Types.kDNN,
-    #  'name' : "DNN",
-    #  'options' : ":".join(["!H",
-    #                        "!V",
-    #                        "VarTransform=N",
-    #    		    "ErrorStrategy=CROSSENTROPY",
-    #    		    "WeightInitialization=XAVIERUNIFORM",
-    #    		    "Layout=TANH|100,TANH|50,TANH|10,LINEAR",
-    #    		    "TrainingStrategy="
-    #    		    "LearningRate=1e-1,"
-    #    		    "Momentum=0.5,"
-    #    		    "Repetitions=1,"
-    #    		    "ConvergenceSteps=20,"
-    #    		    "BatchSize=100,"
-    #    		    "DropConfig=0.0+0.5+0.5+0.0,"
-    #    		    "WeightDecay=0.001,"
-    #    		    "Regularization=L2,"
-    #    		    "TestRepetitions=2,"
-    #    		    "Multithreading=F"
-    #    	           ])
-    #}
-
   ],
 }
+options_Low = {
+  'factory' : {
+    'name' : "TMVAClassification",
+    'options' : ":".join(["!V",
+	                  "!Silent",
+			  "Color",
+			  "DrawProgressBar",
+			  "Transformations=I",
+			  "AnalysisType=Classification"
+		         ]),
+    #'weight' : "",
+    #'weight' : "1.",
+    'weight' : "1*(XSWeight>=0)-1*(XSWeight<0)",
+  },
+  'prepareTrees' : ":".join(["SplitMode=Alternate",
+			     "!V",
+			     #"nTrain_Signal=50000",
+			     #"nTrain_Background=100000",
+			     #"nTest_Signal=50000",
+			     #"nTest_Background=100000",
+             	            ]),
+  'bookMethod' : [
+    {
+      'type' : ROOT.TMVA.Types.kPyKeras,
+      'name' : "DNN",
+      'options' : ":".join(["H",
+                            "!V",
+        		    #"VarTransform=N,D",
+        		    "VarTransform=G",
+        		    "FilenameModel=model.h5",
+        		    "NumEpochs=200",
+        		    "BatchSize=1000",
+                    "verbose=2",
+                    "TriesEarlyStopping=10",
+        	           ]),
+    },
+    {
+      'type' : ROOT.TMVA.Types.kBDT,
+      'name' : "BDT",
+      'options' : ":".join(["!H",
+                            "!V",
+			    #"VarTransform=N,D",
+			    "VarTransform=N",
+                   	    "NTrees=400",
+        		    "MaxDepth=2",
+                    "UseBaggedGrad=True",
+                    "BaggedSampleFraction=0.5",
+			        "MinNodeSize=2%",
+        		    "BoostType=Grad",
+        		    "SeparationType=GiniIndex",
+                    "IgnoreNegWeightsInTraining=True",
+        		    "nCuts=100",
+        		    "PruneMethod=NoPruning",
+        	           ])
+    },
+  ],
+}
+if __name__ == '__main__':
+  #IsKeras = False
+  IsKeras = True #XXX
+  for option in options_High['bookMethod'] or option in options_Low['bookMethod']:
+    if option['type'] == ROOT.TMVA.Types.kPyKeras:
+      IsKeras = True
+  if IsKeras:
+    #from KerasModel_ttToHplus import KerasModel
+    from KerasModel_ttToHplus_conv import KerasModel
+    m = KerasModel()
+    m.defineModel_3layer(len(variables.keys()))
+    m.compile()
+    m.save("model.h5")
+    m.summary()
+  
+  ml_tools =MLTools()
+  ml_tools.SetMLTools(TMVATools)
 
-IsKeras = False
-for option in options['bookMethod']:
-  if option['type'] == ROOT.TMVA.Types.kPyKeras:
-    IsKeras = True
-if IsKeras:
-  from KerasModel import KerasModel
-  m = KerasModel()
-  m.defineModel_3layer(len(variables.keys()))
-  m.compile()
-  m.save("model.h5")
-  m.summary()
+  # 100 bins for KS test
+  #ROOT.TMVA.gConfig().GetVariablePlotting().fNbinsMVAoutput = 100
+  #
 
-ml_tools =MLTools()
-ml_tools.SetMLTools(TMVATools)
-
-train_years = [
-  #'2016',
-  #'2017',
-  '2018'
-]
-train_samples = [
-	'TTLJ_powheg',
+  train_years = [
+    #'2016',
+    #'2017',
+    '2018'
+  ]
+  train_samples = [
+  	'TTLJ_powheg',
     'CHToCB_High',
-    #'CHToCB_Low',
+    'CHToCB_Low',
     #'CHToCB_M090',
     #'CHToCB_M100',
-	#'CHToCB_M110',
-	#'CHToCB_M120',
-	#'CHToCB_M130',
-	#'CHToCB_M140',
-	#'CHToCB_M150',
-	#'CHToCB_M090to110',
-	#'CHToCB_M120to150',
-	#'CHToCB_M090to150'
-]
-
-for train_year in train_years:
-  for train_sample in train_samples:
-    ml_tools.SetTrees(train_sample,'Events',file_names[train_year, train_sample])
-    ml_tools.SetTrees(train_sample,'Events',file_names[train_year, train_sample])
-
+  	#'CHToCB_M110',
+  	#'CHToCB_M120',
+  	#'CHToCB_M130',
+  	#'CHToCB_M140',
+  	#'CHToCB_M150',
+  	#'CHToCB_M090to110',
+  	#'CHToCB_M120to150',
+  	#'CHToCB_M090to150'
+  ]
+  
+  
   ml_tools.SetVariables(variables)
   ml_tools.SetSpectators(spectators)
   ml_tools.SetCuts(cuts)
-  ml_tools.SetOptions(options)
-
-  ml_tools.doTrain(['%s_Events'%sig for sig in ['CHToCB_High']],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s'%train_year,'out_train_%s.root'%train_year)
-  #ml_tools.doTrain(['%s_Events'%sig for sig in ['CHToCB_Low']],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s'%train_year,'out_train_%s.root'%train_year)
-  #
-  #---------------------------------------------------
-  #
-  os.system('mv TMVAClassification TMVAClassification_%s'%(train_year))
-  os.system('mkdir out_root_%s'%(train_year))
-  os.system('mv out_*.root out_root_%s'%(train_year))
+  
+  for train_year in train_years:
+    for train_sample in train_samples:
+      ml_tools.SetTrees(train_sample,'Events',file_names[train_year, train_sample])
+    for sig in ['CHToCB_High','CHToCB_Low']:
+    #for sig in ['CHToCB_Low']:
+      #set options by mass range
+      if sig == 'CHToCB_High':
+        ml_tools.SetOptions(options_High)
+      else:
+        ml_tools.SetOptions(options_Low)
+      ml_tools.doTrain(['%s_Events'%sig],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s_%s'%(sig,train_year),'out_train_%s_%s.root'%(sig, train_year))
+      #
+      #---------------------------------------------------
+      #
+      os.system('mv TMVAClassification TMVAClassification_%s_%s'%(sig, train_year))
+      os.system('mkdir out_root_%s_%s'%(sig,train_year))
+      os.system('mv out_*.root out_root_%s_%s'%(sig,train_year))
