@@ -99,6 +99,7 @@ protected:
   std::string central_;
   std::string algo_;
   TString samplename_;
+  float maxAbsEta_;
   int flav_;
   std::vector<std::string> shifts_;
   TFile *tfile;
@@ -152,6 +153,7 @@ BtagReshapeNorm::BtagReshapeNorm(char const* filename, char const* samplename, c
 {
   if (shift_ == nShiftTypes)
     throw std::invalid_argument("Unknown shift name " + shiftStr_);
+
 }
 
 void
@@ -307,7 +309,7 @@ double BTagReshapeNormReader::eval_auto_bounds(std::string syst, int flav, float
     exit(EXIT_FAILURE);
   }
   int binx=-1, biny=-1;
-  if(pt>=20. && pt<1000. && absEta<2.5){
+  if(pt>=20. && pt<1000. && absEta < maxAbsEta_){
     binx = hist2D->GetXaxis()->FindBin(pt);
     biny = hist2D->GetYaxis()->FindBin(absEta);
     out = hist2D->GetBinContent(binx,biny);
@@ -338,6 +340,11 @@ void BTagReshapeNormReader::load(std::string fileName, std::string algo, int fla
   else if(flav == BTagEntry::FLAV_UDSG){
     mapNorm["udsg"] = (TH2D*)(tfile->Get(samplename_+"/udsg"));
   }
+  maxAbsEta_ = 2.5;
+  if(TString(fileName.c_str()).Contains("2016")){
+    maxAbsEta_ = 2.4;
+  }
+
   return;
 }
 

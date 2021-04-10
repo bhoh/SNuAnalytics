@@ -17,10 +17,10 @@
 
 class LeptonSF : public multidraw::TTreeFunction {
 public:
-  LeptonSF(char const* fileName, char const* histName);
+  LeptonSF(char const* fileName, char const* histName, char const* binning);
 
   char const* getName() const override { return "LeptonSF"; }
-  TTreeFunction* clone() const override { return new LeptonSF(fileName_.Data(), histName_.Data()); }
+  TTreeFunction* clone() const override { return new LeptonSF(fileName_.Data(), histName_.Data(), binning_.Data()); }
   
   void beginEvent(long long) override;
   unsigned getNdata() override { return leptonSF.size(); }
@@ -44,6 +44,7 @@ protected:
 
   TString fileName_{};
   TString histName_{};
+  TString binning_{};
 
   TFile* rootFile{};
   TH2F* histLeptonSF{};
@@ -59,10 +60,11 @@ LeptonSF::beginEvent(long long _iEntry)
 }
 
 
-LeptonSF::LeptonSF(char const* fileName, char const* histName) :
+LeptonSF::LeptonSF(char const* fileName, char const* histName, char const* binning) :
   TTreeFunction(),
   fileName_{fileName},
-  histName_{histName}
+  histName_{histName},
+  binning_{binning}
 {
   // read SF, from txt file.
   // list up lepton SFs (RECO, ID, Trigger) on the txt file.
@@ -98,9 +100,29 @@ LeptonSF::setValues()
 
   leptonSF.clear();
   double lepEta{Lepton_eta->At(0)}; //TODO will use scEta for electron
+  double lepDeltaEtaSC{0.};
+  if(abs(Lepton_pdgId->At(0))==11){
+    lepDeltaEtaSC = Electron_deltaEtaSC->At(Lepton_electronIdx->At(0));
+  }
+
   double lepPt{Lepton_pt->At(0)};
-  leptonSF.push_back(this->GetBinContent4SF(histLeptonSF, lepEta, lepPt, 0));
-  //TODO push back up/down systematic
+  double xvar, yvar;
+
+  if(binning_=="pteta"){
+    xvar = lepPt;
+    yvar = lepEta+lepDeltaEtaSC;
+  }
+  else if(binning_=="etapt"){
+    xvar = lepEta+lepDeltaEtaSC;
+    yvar = lepPt;
+  }
+  else{
+    std::cout << "binning should be pteta or etapt" << std::endl;
+    exit(1);
+  }
+  leptonSF.push_back(this->GetBinContent4SF(histLeptonSF, xvar, yvar, 0));
+  leptonSF.push_back(this->GetBinContent4SF(histLeptonSF, xvar, yvar, 1));
+  leptonSF.push_back(this->GetBinContent4SF(histLeptonSF, xvar, yvar, -1));
 
 }
 

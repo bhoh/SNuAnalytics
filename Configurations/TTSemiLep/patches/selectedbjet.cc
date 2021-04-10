@@ -32,7 +32,7 @@ protected:
   IntArrayReader* CleanJet_jetIdx{};
 
   FloatArrayReader* Jet_pt_nom{};
-  FloatArrayReader* Jet_btagDeepB{};
+  static FloatArrayReader* Jet_btagDeepFlavB;
 
 
   std::vector<unsigned> selected_jet{};
@@ -42,8 +42,10 @@ protected:
   float absEtaCut_{};
   float csvCut_{};
 
+  static bool bdisc_comparing(unsigned i, unsigned j);
 };
 
+FloatArrayReader* SelectedBJet::Jet_btagDeepFlavB{};
 
 void
 SelectedBJet::beginEvent(long long _iEntry)
@@ -76,7 +78,7 @@ SelectedBJet::bindTree_(multidraw::FunctionLibrary& _library)
   _library.bindBranch(CleanJet_eta, "CleanJet_eta");
   _library.bindBranch(CleanJet_jetIdx, "CleanJet_jetIdx");
   _library.bindBranch(Jet_pt_nom, "Jet_pt_nom");
-  _library.bindBranch(Jet_btagDeepB, "Jet_btagDeepB");
+  _library.bindBranch(Jet_btagDeepFlavB, "Jet_btagDeepFlavB");
 }
 
 
@@ -91,10 +93,9 @@ SelectedBJet::setValues()
   for(unsigned iCJ{0}; iCJ != nCJ; ++iCJ){
 
     unsigned OrigIdx = CleanJet_jetIdx->At(iCJ);
-    // pT, eta, csv cut
+    // pT, eta, cut
 	if(Jet_pt_nom->At(OrigIdx) <= ptCut_ ||
-       fabs(CleanJet_eta->At(iCJ)) >= absEtaCut_ ||
-       Jet_btagDeepB->At(OrigIdx) <= csvCut_
+       fabs(CleanJet_eta->At(iCJ)) >= absEtaCut_
       ){
 	  continue;
 	}
@@ -102,5 +103,10 @@ SelectedBJet::setValues()
 
   }
 
+  std::sort(selected_jet.begin(),selected_jet.end(),bdisc_comparing);
+
 }
 
+bool SelectedBJet::bdisc_comparing(unsigned i, unsigned j){
+ return Jet_btagDeepFlavB->At(i) > Jet_btagDeepFlavB->At(j);
+}

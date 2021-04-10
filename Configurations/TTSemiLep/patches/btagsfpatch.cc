@@ -18,10 +18,11 @@
 
 class BtagSF : public multidraw::TTreeFunction {
 public:
-  BtagSF(char const* filename, char const* shift = "central", char const* algo = "deepcsv");
+  //BtagSF(char const* filename, char const* shift = "central", char const* algo = "deepcsv");
+  BtagSF(char const* filename, char const* shift = "central", char const* year = "-1", char const* algo = "deepjet");
 
   char const* getName() const override { return "BtagSF"; }
-  TTreeFunction* clone() const override { return new BtagSF(filename_.c_str(), shiftStr_.c_str(), algo_.c_str()); }
+  TTreeFunction* clone() const override { return new BtagSF(filename_.c_str(), shiftStr_.c_str(), year_.c_str(), algo_.c_str()); }
 
   void beginEvent(long long) override;
   int getMultiplicity() override { return 1; }
@@ -35,6 +36,49 @@ protected:
     kCentral,
     kJESUp,
     kJESDown,
+    kJESAbsolute_2018Up,
+    kJESAbsolute_2018Down,
+    kJESBBEC1_2018Up,
+    kJESBBEC1_2018Down,
+    kJESEC2_2018Up,
+    kJESEC2_2018Down,
+    kJESHF_2018Up,
+    kJESHF_2018Down,
+    kJESRelativeSample_2018Up,
+    kJESRelativeSample_2018Down,
+    kJESAbsolute_2017Up,
+    kJESAbsolute_2017Down,
+    kJESBBEC1_2017Up,
+    kJESBBEC1_2017Down,
+    kJESEC2_2017Up,
+    kJESEC2_2017Down,
+    kJESHF_2017Up,
+    kJESHF_2017Down,
+    kJESRelativeSample_2017Up,
+    kJESRelativeSample_2017Down,
+    kJESAbsolute_2016Up,
+    kJESAbsolute_2016Down,
+    kJESBBEC1_2016Up,
+    kJESBBEC1_2016Down,
+    kJESEC2_2016Up,
+    kJESEC2_2016Down,
+    kJESHF_2016Up,
+    kJESHF_2016Down,
+    kJESRelativeSample_2016Up,
+    kJESRelativeSample_2016Down,
+    kJESAbsoluteUp,
+    kJESAbsoluteDown,
+    kJESBBEC1Up,
+    kJESBBEC1Down,
+    kJESEC2Up,
+    kJESEC2Down,
+    kJESFlavorQCDUp,
+    kJESFlavorQCDDown,
+    kJESHFUp,
+    kJESHFDown,
+    kJESRelativeBalUp,
+    kJESRelativeBalDown,
+
     kHFUp,
     kHFDown,
     kLFUp,
@@ -60,6 +104,7 @@ protected:
   unsigned shift_{nShiftTypes};
 
   std::string algo_{};
+  std::string year_{};
 
   static long long currentEntry;
   static UIntValueReader* nJet;
@@ -79,6 +124,7 @@ protected:
 
   static std::array<std::string, nShiftTypes> shiftNames;
   static std::array<std::vector<unsigned>, 3> relevantShifts;
+
 };
 
 /*static*/
@@ -97,6 +143,49 @@ std::array<std::string, BtagSF::nShiftTypes> BtagSF::shiftNames{{
   "central",
   "up_jes",
   "down_jes",
+  "up_jesAbsolute_2018",
+  "down_jesAbsolute_2018",
+  "up_jesBBEC1_2018",
+  "down_jesBBEC1_2018",
+  "up_jesEC2_2018",
+  "down_jesEC2_2018",
+  "up_jesHF_2018",
+  "down_jesHF_2018",
+  "up_jesRelativeSample_2018",
+  "down_jesRelativeSample_2018",
+  "up_jesAbsolute_2017",
+  "down_jesAbsolute_2017",
+  "up_jesBBEC1_2017",
+  "down_jesBBEC1_2017",
+  "up_jesEC2_2017",
+  "down_jesEC2_2017",
+  "up_jesHF_2017",
+  "down_jesHF_2017",
+  "up_jesRelativeSample_2017",
+  "down_jesRelativeSample_2017",
+  "up_jesAbsolute_2016",
+  "down_jesAbsolute_2016",
+  "up_jesBBEC1_2016",
+  "down_jesBBEC1_2016",
+  "up_jesEC2_2016",
+  "down_jesEC2_2016",
+  "up_jesHF_2016",
+  "down_jesHF_2016",
+  "up_jesRelativeSample_2016",
+  "down_jesRelativeSample_2016",
+  "up_jesAbsolute",
+  "down_jesAbsolute",
+  "up_jesBBEC1",
+  "down_jesBBEC1",
+  "up_jesEC2",
+  "down_jesEC2",
+  "up_jesFlavorQCD",
+  "down_jesFlavorQCD",
+  "up_jesHF",
+  "down_jesHF",
+  "up_jesRelativeBal",
+  "down_jesRelativeBal",
+
   "up_hf",
   "down_hf",
   "up_lf",
@@ -117,10 +206,11 @@ std::array<std::string, BtagSF::nShiftTypes> BtagSF::shiftNames{{
 
 std::array<std::vector<unsigned>, 3> BtagSF::relevantShifts{};
 
-BtagSF::BtagSF(char const* filename, char const* shift/* = "central"*/, char const* algo/* = "deepcsv"*/) :
+BtagSF::BtagSF(char const* filename, char const* shift/* = "central"*/, char const* year, char const* algo/* = "deepcsv"*/) :
   TTreeFunction(),
   filename_{filename},
   shiftStr_{shift},
+  year_{year},
   shift_{static_cast<unsigned>(std::find(shiftNames.begin(), shiftNames.end(), shiftStr_) - shiftNames.begin())},
   algo_{algo}
 {
@@ -180,8 +270,10 @@ BtagSF::setValues(long long _iEntry)
     std::fill_n(scalefactors[iJ].begin(), nShiftTypes, central);
 
     // then fill the actual shift values for relevant types
-    for (auto s : relevantShifts[jf])
+    for (auto s : relevantShifts[jf]){
       scalefactors[iJ][s] = readers[jf]->eval_auto_bounds(shiftNames[s], jf, std::abs(Jet_eta->At(iJ)), Jet_pt->At(iJ), Jet_btag->At(iJ));
+
+    }
   }
 }
 
@@ -191,9 +283,41 @@ BtagSF::bindTree_(multidraw::FunctionLibrary& _library)
   if (currentEntry == -2) {
     std::cout << "Loading data for " << algo_ << " from " << filename_ << std::endl;
 
-    relevantShifts[BTagEntry::FLAV_B] = {kJESUp, kJESDown, kLFUp, kLFDown, kHFStats1Up, kHFStats1Down, kHFStats2Up, kHFStats2Down};
+    //relevantShifts[BTagEntry::FLAV_B] = {kJESUp, kJESDown, kLFUp, kLFDown, kHFStats1Up, kHFStats1Down, kHFStats2Up, kHFStats2Down};
+    // to avoid : Every otherSysType should only be given once. Duplicate: for kJESUp, kJESDown
+    relevantShifts[BTagEntry::FLAV_B] = {kLFUp, kLFDown, kHFStats1Up, kHFStats1Down, kHFStats2Up, kHFStats2Down};
     relevantShifts[BTagEntry::FLAV_C] = {kCFErr1Up, kCFErr1Down, kCFErr2Up, kCFErr2Down};
-    relevantShifts[BTagEntry::FLAV_UDSG] = {kJESUp, kJESDown, kHFUp, kHFDown, kLFStats1Up, kLFStats1Down, kLFStats2Up, kLFStats2Down};
+    //relevantShifts[BTagEntry::FLAV_UDSG] = {kJESUp, kJESDown, kHFUp, kHFDown, kLFStats1Up, kLFStats1Down, kLFStats2Up, kLFStats2Down};
+    relevantShifts[BTagEntry::FLAV_UDSG] = {kHFUp, kHFDown, kLFStats1Up, kLFStats1Down, kLFStats2Up, kLFStats2Down};
+
+    std::string year_not_include1;
+    std::string year_not_include2;
+
+    if(year_ == "2018"){
+      year_not_include1 = "_2017";
+      year_not_include2 = "_2016";
+    }
+    else if(year_ == "2017"){
+      year_not_include1 = "_2018";
+      year_not_include2 = "_2016";
+    }
+    else if(year_ == "2016"){
+      year_not_include1 = "_2018";
+      year_not_include2 = "_2017";
+    }
+
+
+    // add regrouped jec sources
+    for(unsigned i(0); i < nShiftTypes; i++){
+      // not include not relevant years
+      if(shiftNames[i].find("_jes") == std::string::npos || (shiftNames[i].find(year_not_include1) != std::string::npos || shiftNames[i].find(year_not_include2) != std::string::npos)){
+        continue;
+      }
+      relevantShifts[BTagEntry::FLAV_B].push_back(static_cast<ShiftType>(i));
+      relevantShifts[BTagEntry::FLAV_UDSG].push_back(static_cast<ShiftType>(i));
+      std::cout << "regrouped JEC sources for " << year_ << " : " << shiftNames[i] << std::endl;
+    }
+
 
     readerFilename = filename_;
     readerAlgo = algo_;
