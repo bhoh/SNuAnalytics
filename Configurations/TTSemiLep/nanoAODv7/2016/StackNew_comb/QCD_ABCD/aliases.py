@@ -44,6 +44,7 @@ aliases['Lepton_electron_dz'] = {
 aliases['Lepton_electron_gap_veto'] = {
         'expr' : 'abs(Lepton_EtaSC) >1.56 || abs(Lepton_EtaSC) < 1.4442'
         }
+
 aliases['Lepton_electron_d0dz_cut'] = {
         'expr' : '(({barrelCut}) || ({endcapCut}))'.format(
                       barrelCut='abs(Lepton_EtaSC) <  1.479 && abs(Lepton_electron_dxy)<0.05 && abs(Lepton_electron_dz)<0.1',
@@ -72,6 +73,54 @@ aliases['muCH'] = {
                   )',
         }
 #######
+#Electron_vidNestedWPBitmap 
+#0 - MinPtCut
+#1 - GsfEleSCEtaMultiRangeCut
+#2 - GsfEleDEtaInSeedCut
+#3 - GsfEleDPhiInCut
+#4 - GsfEleFull5x5SigmaIEtaIEtaCut
+#5 - GsfEleHadronicOverEMEnergyScaledCut
+#6 - GsfEleEInverseMinusPInverseCut
+#7 - GsfEleRelPFIsoScaledCut
+#8 - GsfEleConversionVetoCut
+#9 - GsfEleMissingHitsCut
+aliases['eleCH_noTight'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==11)\
+                   && (Lepton_isTightElectron_d0dz_'+eleWP+'[0]<0.5)\
+                   && (Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 2<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
+                   || Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0))\
+                   && Lepton_electron_d0dz_cut[0]\
+                   && (Lepton_pt[0] > '+elePtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.5)\
+                  )',
+        }
+aliases['eleCH_noTight_isoDown'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==11)\
+                   && (Lepton_isTightElectron_d0dz_'+eleWP+'[0]<0.5)\
+                   && Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
+                   && Lepton_electron_d0dz_cut[0]\
+                   && (Lepton_pt[0] > '+elePtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.5)\
+                  )',
+        }
+aliases['muCH_noTight'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==13)\
+                   && (Lepton_isTightMuon_'+muWP+'[0]<0.5)\
+                   && (Alt$(Muon_tightId[Lepton_muonIdx[0]],-1)==1)\
+                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.25)\
+                   && (Lepton_pt[0] > '+muPtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.4)\
+                  )',
+        }
+aliases['muCH_noTight_isoDown'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==13)\
+                   && (Lepton_isTightMuon_'+muWP+'[0]<0.5)\
+                   && (Alt$(Muon_tightId[Lepton_muonIdx[0]],-1)==1)\
+                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.20)\
+                   && (Lepton_pt[0] > '+muPtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.4)\
+                  )',
+        }
 aliases['isOSpair'] = {
         'expr' : 'Lepton_pdgId[0]*Alt$(Lepton_pdgId[1],-999)<0',
         }
@@ -141,6 +190,7 @@ aliases['dblCH'] = {
         'expr' : '(nLooseLep==2) && (eeCH || mmCH || meCH || emCH)'
         }
 
+
 #  number of truth leptons in TT
 
 aliases['nLHELep_TT'] = {
@@ -169,14 +219,7 @@ aliases['SelectedJetIdx'] = {
     'args': (30.,2.5), # pT, |eta| cut
     'samples': samples.keys(),
 }
-aliases['SelectedBJetIdx'] = {
-    'linesToAdd' : [
-        '.L %s/patches/selectedbjet.cc+' % configurations,
-    ],
-    'class': 'SelectedBJet',
-    'args': (20.,2.4, 0.), # pT, |eta| cut, csv cut(not used variable)
-    'samples': samples.keys(),
-}
+
 
 # B tagging
 
@@ -193,7 +236,7 @@ aliases['nBJets_WP_M_20to30'] = {
 
 ###---Btag SF---###
 
-btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepJet_2016LegacySF_V1_JESreduced.csv' % os.getenv('CMSSW_BASE')
+btagSFSource = '%s/src/PhysicsTools/NanoAODTools/data/btagSF/DeepJet_2016LegacySF_V1.csv' % os.getenv('CMSSW_BASE')
 btagNormSource = '%s/src/SNuAnalytics/Configurations/TTSemiLep/patches/BTagReshapeNorm_2016.root' % os.getenv('CMSSW_BASE')
 
 aliases['Jet_btagSF_shapeFix'] = {
@@ -204,7 +247,7 @@ aliases['Jet_btagSF_shapeFix'] = {
         '.L %s/patches/btagsfpatch.cc+' % configurations
     ],
     'class': 'BtagSF',
-    'args': (btagSFSource, "central", "2016", "deepjet"),
+    'args': (btagSFSource,),
     'samples': mc
 }
 
@@ -232,19 +275,16 @@ aliases['btagSFNorm_top'] = {
 }
 
 
-jes_syst_uncorr = ['jesAbsolute_2016','jesBBEC1_2016','jesEC2_2016','jesHF_2016','jesRelativeSample_2016']
-jes_syst_corr = ['jesAbsolute','jesBBEC1','jesEC2','jesFlavorQCD','jesHF','jesRelativeBal']
-jes_syst = jes_syst_uncorr + jes_syst_corr
-for shift in jes_syst + ['lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
+for shift in ['jes', 'lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
     #aliases['Jet_btagSF_shapeFix_up_%s' % shift] = {                                                                                                         
     aliases['Jet_btagSF%sup_shapeFix' % shift] = {
         'class': 'BtagSF',
-        'args': (btagSFSource, 'up_' + shift, "2016", "deepjet"),
+        'args': (btagSFSource, 'up_' + shift),
         'samples': mc
     }
     aliases['Jet_btagSF%sdown_shapeFix' % shift] = {
         'class': 'BtagSF',
-        'args': (btagSFSource, 'down_' + shift, "2016", "deepjet"),
+        'args': (btagSFSource, 'down_' + shift),
         'samples': mc
     }
  
