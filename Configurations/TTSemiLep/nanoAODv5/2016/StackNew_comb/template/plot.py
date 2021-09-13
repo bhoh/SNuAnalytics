@@ -19,14 +19,24 @@ dict_TColor={
 
 scriptname=opt.plotFile
 
+if not 'ele' in scriptname:
+    groupPlot['QCD'] = {
+            'nameHR' : 'QCD',
+            'isSignal' : 0,
+            'color' :  dict_TColor['gray'],
+            'isData'   : 0,
+            'samples' : ['QCD_MU'],
+        }
 
-groupPlot['QCD'] = {
-        'nameHR' : 'QCD',
-        'isSignal' : 0,
-        'color' :  dict_TColor['gray'],
-        'isData'   : 0,
-        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
-    }
+if not 'mu' in scriptname:
+    groupPlot['QCD'] = {
+            'nameHR' : 'QCD',
+            'isSignal' : 0,
+            'color' :  dict_TColor['gray'],
+            'isData'   : 0,
+            'samples' : ['QCD_EM','QCD_bcToE'],
+        }
+
 groupPlot['TTV'] = {
         'nameHR' : 'TTV',
         'isSignal' : 0,
@@ -59,45 +69,30 @@ groupPlot['ST'] = {
         'isData'   : 0,
         'samples' : ['ST'],
     }
-groupPlot['TTLL'] = {
-        'nameHR' : 'TTLL',
-        'isSignal': 0,
-        'color'   :  dict_TColor['magenta'],
-        'isData'  : 0,
-        'samples' : ['TTLL'],
-    }
-
-groupPlot['TTLJ+jj']  = {
-                  'nameHR' : 'TTLJ+jj',
+groupPlot['TT+jj']  = {
+                  'nameHR' : 'TT+jj',
                   'isSignal' : 0,
                   'color': dict_TColor['orange'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+jj']
+                  'samples'  : ['TTLJ+jj','TTLL+jj']
               }
 
-groupPlot['TTLJ+cc']  = {
-                  'nameHR' : 'TTLJ+cc',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+4,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+cc']
-              }
-
-groupPlot['TTLJ+bj']  = {
-                  'nameHR' : 'TTLJ+bj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+1,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bj']
-              }
-
-groupPlot['TTLJ+bb']  = {
-                  'nameHR' : 'TTLJ+bb',
+groupPlot['TT+bb']  = {
+                  'nameHR' : 'TT+bb',
                   'isSignal' : 0,
                   'color': dict_TColor['blue'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bb']
+                  'samples'  : ['TTLJ+bb','TTLJ+bj','TTLL+bb','TTLL+bj']
               }
+
+groupPlot['TT+cc']  = {
+                  'nameHR' : 'TT+cc',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+4,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+cc','TTLL+cc']
+              }
+
 #for mass in ['075','080','085','090','100','110','120','130','140','150']:
 for mass, color in [('090','green'),('120','red'),('150','blue')]:
     sample_name = 'CHToCB_M{0}'.format(mass) 
@@ -189,13 +184,13 @@ plot['ST']  = {
                   'samples'  : ['ST']
               }
 
-plot['TTLL']  = {
-                  'nameHR' : 'TTLL',
-                  'isSignal' : 0,
-                  'color': dict_TColor['magenta'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLL']
-              }
+#plot['TTLL']  = {
+#                  'nameHR' : 'TTLL',
+#                  'isSignal' : 0,
+#                  'color': dict_TColor['magenta'],
+#                  'isData'   : 0,                 
+#                  'samples'  : ['TTLL']
+#              }
 
 plot['TTLJ+jj']  = {
                   'nameHR' : 'TTLJ+jj',

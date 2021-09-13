@@ -17,7 +17,7 @@ mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
 # veto loose lepton
 
 aliases['nLooseLep'] = {
-        'expr': 'Sum$( abs(Lepton_pdgId) == 11 && Lepton_pt > 10. && abs(Lepton_eta) < 2.5) + Sum$( abs(Lepton_pdgId) == 13 && Lepton_pt > 10. && abs(Lepton_eta) < 2.4)'
+        'expr': 'Sum$( abs(Lepton_pdgId) == 11 && Lepton_pt > 15. && abs(Lepton_eta) < 2.5) + Sum$( abs(Lepton_pdgId) == 13 && Lepton_pt > 15. && abs(Lepton_eta) < 2.4)'
         #'expr': 'Sum$(Electron_cutBased_Fall17_V1 >= 2 && Electron_pt > 15. && abs(Electron_eta) < 2.5) + Sum$(Muon_looseId > 0.5 && Muon_pt > 8. && abs(Muon_eta) < 2.4)'
         }
 
@@ -73,11 +73,26 @@ aliases['muCH'] = {
 #7 - GsfEleRelPFIsoScaledCut
 #8 - GsfEleConversionVetoCut
 #9 - GsfEleMissingHitsCut
+#(abs(Lepton_EtaSC[0])< 1.479)
+# medium 0.0478+0.506/pT
+# tight  0.0287+0.506/pT
+# (medium - tight) = 0.0191       ->                 #up
+# (medium - tight)*(3/4) = 0.0143 -> 0.043 +0.506/pT #nominal
+# (medium - tight)*(1/2) = 0.0096 -> 0.0383+0.506/pT #down
+#(abs(Lepton_EtaSC[0])>= 1.479)
+# medium 0.0658+0.963/pT
+# tight  0.0445+0.963/pT
+# (medium - tight) = 0.0213       ->                 #up
+# (medium - tight)*(3/4) = 0.0160 -> 0.0605+0.963/pT #nominal
+# (medium - tight)*(1/2) = 0.0107 -> 0.0552+0.963/pT #down
+
 aliases['eleCH_noTight'] = {
         'expr' : '(   (abs(Lepton_pdgId[0])==11)\
                    && (Lepton_isTightElectron_d0dz_'+eleWP+'[0]<0.5)\
-                   && (Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 2<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
-                   || Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0))\
+                   && Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
+                   && (   (abs(Lepton_EtaSC[0])< 1.479)*(Electron_pfRelIso03_all[Lepton_electronIdx[0]] <0.043 +0.506/Lepton_pt[0])\
+                       || (abs(Lepton_EtaSC[0])>=1.479)*(Electron_pfRelIso03_all[Lepton_electronIdx[0]] <0.0605+0.963/Lepton_pt[0])\
+                   )\
                    && Lepton_electron_d0dz_cut[0]\
                    && (Lepton_pt[0] > '+elePtCut+')\
                    && (fabs(Lepton_eta[0]) < 2.5)\
@@ -88,16 +103,28 @@ aliases['eleCH_noTight_isoDown'] = {
         'expr' : '(   (abs(Lepton_pdgId[0])==11)\
                    && (Lepton_isTightElectron_d0dz_'+eleWP+'[0]<0.5)\
                    && Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
+                   && (   (abs(Lepton_EtaSC[0])< 1.479)*(Electron_pfRelIso03_all[Lepton_electronIdx[0]] <0.0383+0.506/Lepton_pt[0])\
+                       || (abs(Lepton_EtaSC[0])>=1.479)*(Electron_pfRelIso03_all[Lepton_electronIdx[0]] <0.0552+0.963/Lepton_pt[0])\
+                   )\
                    && Lepton_electron_d0dz_cut[0]\
                    && (Lepton_pt[0] > '+elePtCut+')\
                    && (fabs(Lepton_eta[0]) < 2.5)\
                   )',
         }
-
+aliases['eleCH_noTight_isoUp'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==11)\
+                   && (Lepton_isTightElectron_d0dz_'+eleWP+'[0]<0.5)\
+                   && Alt$(Electron_vidNestedWPBitmap[Lepton_electronIdx[0]] == (4 + 4<<(3*1) + 4<<(3*2) + 4<<(3*3) + 4<<(3*4) + 4<<(3*5) + 4<<(3*6) + 3<<(3*7) + 4<<(3*8) + 4<<(3*9)),0)\
+                   && Lepton_electron_d0dz_cut[0]\
+                   && (Lepton_pt[0] > '+elePtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.5)\
+                  )',
+        }
 aliases['muCH_noTight'] = {
         'expr' : '(   (abs(Lepton_pdgId[0])==13)\
                    && (Lepton_isTightMuon_'+muWP+'[0]<0.5)\
                    && (Alt$(Muon_tightId[Lepton_muonIdx[0]],-1)==1)\
+                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.20)\
                    && (Lepton_pt[0] > '+muPtCut+')\
                    && (fabs(Lepton_eta[0]) < 2.4)\
                   )',
@@ -106,12 +133,20 @@ aliases['muCH_noTight_isoDown'] = {
         'expr' : '(   (abs(Lepton_pdgId[0])==13)\
                    && (Lepton_isTightMuon_'+muWP+'[0]<0.5)\
                    && (Alt$(Muon_tightId[Lepton_muonIdx[0]],-1)==1)\
-                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.25)\
+                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.175)\
                    && (Lepton_pt[0] > '+muPtCut+')\
                    && (fabs(Lepton_eta[0]) < 2.4)\
                   )',
         }
-
+aliases['muCH_noTight_isoUp'] = {
+        'expr' : '(   (abs(Lepton_pdgId[0])==13)\
+                   && (Lepton_isTightMuon_'+muWP+'[0]<0.5)\
+                   && (Alt$(Muon_tightId[Lepton_muonIdx[0]],-1)==1)\
+                   && (Alt$(Muon_pfRelIso04_all[Lepton_muonIdx[0]],999)<0.225)\
+                   && (Lepton_pt[0] > '+muPtCut+')\
+                   && (fabs(Lepton_eta[0]) < 2.4)\
+                  )',
+        }
 #######
 aliases['isOSpair'] = {
         'expr' : 'Lepton_pdgId[0]*Alt$(Lepton_pdgId[1],-999)<0',
@@ -188,7 +223,7 @@ ABCDSFHistName_ele_3b = 'sng_4j_eleCH_2b/EleSCEta/histo_TF_data_driven'
 #ABCDSFHistName_me_3b  = 'dbl_2j_me_3b/histo_TF_data_driven'
 #ABCDSFHistName_mm_3b  = 'dbl_2j_mm_3b/histo_TF_data_driven'
 
-for abcd_sf_syst in [""] + ['btag_lf', 'btag_hf', 'btag_hfstats1', 'btag_hfstats2', 'btag_lfstats1', 'btag_lfstats2', 'btag_cferr1', 'btag_cferr2'] + ['ttbb','ttcc','ttXsec','isoVar','binningVar']:
+for abcd_sf_syst in [""] + ['btag_lf', 'btag_hf', 'btag_hfstats1', 'btag_hfstats2', 'btag_lfstats1', 'btag_lfstats2', 'btag_cferr1', 'btag_cferr2'] + ['ttbb','ttcc','ttXsec','iso','binningVar']:
   abcd_sf_syst_ = abcd_sf_syst
   if 'stats' in abcd_sf_syst:
     abcd_sf_syst_ += '_2017'

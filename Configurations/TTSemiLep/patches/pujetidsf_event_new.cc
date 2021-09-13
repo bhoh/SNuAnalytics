@@ -144,8 +144,12 @@ PUJetIdEventSF::setValues(long long _iEntry)
     double pt{Jet_pt->At(iJ)};
     double eta{Jet_eta->At(iJ)};
 
-    if (pt < 20. || pt > 50.|| std::abs(eta) > 4.7 || Jet_jetId->At(iJ)<2)
-    // excluding also the jets with jetId < 2 since we are considering only these jets in the selection before PUid selection.
+    if (pt < 20. || pt > 50.|| std::abs(eta) > 4.7 || Jet_jetId->At(iJ)<6)
+    // excluding also the jets with jetId < 6 since we are considering only these jets in the selection before PUid selection.
+    // 
+    //  <2 -> ask tightId
+    //  <4 -> ask tightIdLepVeto
+    //  <6 -> ask tightId+tightIdLepVeto
       continue;
 
     bool isLeptonMatched = false;
@@ -173,9 +177,9 @@ PUJetIdEventSF::setValues(long long _iEntry)
     for (unsigned iWP{0}; iWP != nWPs; ++iWP) {
       // if mapTap = 0 efficiency h2 are used, if mapType = 1 mistag h2 are used
       auto iWP_ = iWP;
-      if(pt < 30. && iWP_ == kLoose){
-        iWP_ = kMedium;
-      }
+      //if(pt < 30. && iWP_ == kLoose){
+      //  iWP_ = kMedium;
+      //}
       auto& sf_map{sfMapSets[mapType][iWP_]};
       auto& sf_map_Systuncty{sfMapSets_Systuncty[mapType][iWP_]};
       auto& eff_map{effMapSets[mapType][iWP_]};

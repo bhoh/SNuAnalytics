@@ -18,78 +18,64 @@ elif  'sdfarm' in SITE:
 
 
 mc = [skey for skey in samples if skey != 'DATA' and 'QCD' not in skey]
-mc += ['TT','TT+bb','TT+bj','TT+cc','TT+jj','Others']
+mc += ['TT','TT+bb','TT+bj','TT+cc','TT+jj','TTLJ+bb','TTLJ+bj','TTLJ+cc','TTLJ+jj','TTLL+bb','TTLL+bj','TTLL+cc','TTLL+jj','Others']
 mc += ['TTLJ_jj','TTLJ_cc','TTLJ_bb','TTLJ_bj','TTLL_jj','TTLL_cc','TTLL_bb','TTLL_bj']
+mc += ['CHToCB_M080_yield']
 #ttmc_syst = ['TTLJ+bb','TTLJ+bj','TTLJ+cc','TTLJ+jj','TTLL+bb','TTLL+bj','TTLL+cc','TTLL+jj']
 ttmc_syst = ['TTLJ','TTLJ_jj','TTLJ_cc','TTLJ_bb','TTLJ_bj','TTLL','TTLL_jj','TTLL_cc','TTLL_bb','TTLL_bj']
-ttmc_syst += ['TT','TT+bb','TT+bj','TT+cc','TT+jj']
+ttmc_syst += ['TT','TT+bb','TT+bj','TT+cc','TT+jj','TTLJ+bb','TTLJ+bj','TTLJ+cc','TTLJ+jj','TTLL+bb','TTLL+bj','TTLL+cc','TTLL+jj',]
+ttmc_syst += ['CHToCB_M080_yield']
 ttmc = [ skey for skey in ttmc_syst ]
 ttmc += ['CHToCB_M%s'%mass for mass in ['075','080','085','090','100','110','120','130','140','150','160']]
+ttbbmc = [ ttmc_ for ttmc_ in ttmc if 'bb' in ttmc_ or 'bj' in ttmc_ ]
+ttbbmc += ['CHToCB_M080_yield']
+ttccmc = [ ttmc_ for ttmc_ in ttmc if 'cc' in ttmc_ ]
+ttccmc += ['CHToCB_M080_yield']
 qcdmc = ['QCD_EM','QCD_bcToE','QCD_MU']
 qcdmc += ['QCD']
 
-include_mva = True
-regrouped_jec = True if '_final' in opt.pycfg else False  #will include regrouped jec in final
+include_mva = False
+regrouped_jec = True if '_final' in opt.pycfg or '_comb' in opt.pycfg else False  #will include regrouped jec in final
+QCD_data_driven = True
+include_bincl = True if not '_final' in opt.pycfg else False
+lnN_eff_ele = False
+
+splitTTLL = False
+merge_trig_syst = True
+lnN_UE_Tune = True
+splitQCDscale_tt = False
 
 ## Use the following if you want to apply the automatic combine MC stat nuisances.
 nuisances['stat'] = {
     'type': 'auto',
-    'maxPoiss': '10',
+    'maxPoiss': '5',
     'includeSignal': '0',
     #  nuisance ['maxPoiss'] =  Number of threshold events for Poisson modelling
     #  nuisance ['includeSignal'] =  Include MC stat nuisances on signal processes (1=True, 0=False)
     'samples': {}
 }
 
-
-nuisances['lumi_Uncorrelated'] = {
-        'name': 'lumi_13TeV_2017',
-        'type': 'lnN',
-        'samples': dict((skey, '1.02') for skey in mc ),
+nuisances['lumi_uncorr'] = {
+    'name': 'lumi_uncorr_2017',
+    'type': 'lnN',
+    'samples': dict((skey, '1.02') for skey in mc ),
     'group': 'experimental',
 }
 
-nuisances['lumi_XYFact'] = {
-        'name': 'lumi_13TeV_XYFact',
-        'type': 'lnN',
-        'samples': dict((skey, '1.008') for skey in mc),
+nuisances['lumi_corr'] = {
+    'name': 'lumi_corr',
+    'type': 'lnN',
+    'samples': dict((skey, '1.009') for skey in mc ),
     'group': 'experimental',
 }
 
-nuisances['lumi_LScale'] = {
-        'name': 'lumi_13TeV_LSCale',
-        'type': 'lnN',
-        'samples': dict((skey, '1.003') for skey in mc ),
+nuisances['lumi_corr_17_18'] = {
+    'name': 'lumi_corr_17_18',
+    'type': 'lnN',
+    'samples': dict((skey, '1.006') for skey in mc ),
     'group': 'experimental',
 }
 
-nuisances['lumi_BBDefl'] = {
-        'name': 'lumi_13TeV_BBDefl',
-        'type': 'lnN',
-        'samples': dict((skey, '1.004') for skey in mc ),
-    'group': 'experimental',
-}
-
-nuisances['lumi_DynBeta'] = {
-        'name': 'lumi_13TeV_DynBeta',
-        'type': 'lnN',
-        'samples': dict((skey, '1.005') for skey in mc ),
-    'group': 'experimental',
-}
-
-nuisances['lumi_CurrCalib'] = {
-        'name': 'lumi_13TeV_CurrCalib',
-        'type': 'lnN',
-        'samples': dict((skey, '1.003') for skey in mc ),
-    'group': 'experimental',
-}
-
-nuisances['lumi_Ghosts'] = {
-        'name': 'lumi_13TeV_Ghosts',
-        'type': 'lnN',
-        'samples': dict((skey, '1.001') for skey in mc ),
-    'group': 'experimental',
-}
 
 nuisances['ttXsec'] = {
     'name': 'ttXsec',
@@ -115,7 +101,14 @@ nuisances['ttXsec'] = {
 nuisances['ttbbXsec'] = {
     'name': 'ttbbXsec',
     'type': 'rateParam',
-    'samples': {'TT+bb':'1.2 [0.8,1.8] '},
+    'samples': {'TT+bb':'1.0 [0.8,1.8] '},
+    'group': 'theory',
+}
+nuisances['ttbbXsec_param'] = {
+    'name': 'ttbbXsec',
+    'type': 'param',
+    'constraint': '1.0  0.3',
+    'samples': {},
     'group': 'theory',
 }
 #nuisances['ttbjXsec'] = {
@@ -124,20 +117,34 @@ nuisances['ttbbXsec'] = {
 #    'samples': {'TT+bj':'1.2 [0.8,1.8] '},
 #    'group': 'theory',
 #}
-#nuisances['ttccXsec'] = {
-#    'name': 'ttccXsec',
-#    'type': 'rateParam',
-#    'samples': {'TT+cc':'1 [0.8,1.5] '},
-#    'group': 'theory',
-#}
+nuisances['ttccXsec'] = {
+    'name': 'ttccXsec',
+    'type': 'rateParam',
+    'samples': {'TT+cc':'1 [0.8,1.5] '},
+    'group': 'theory',
+}
+nuisances['ttccXsec_param'] = {
+    'name': 'ttccXsec',
+    'type': 'param',
+    'constraint': '1.0  0.3',
+    'samples': {},
+    'group': 'theory',
+}
+
 nuisances['ttjjXsec'] = {
     'name': 'ttjjXsec',
     'type': 'rateParam',
     #'samples': {'TT+jj':'(364.35-@0*1.433-@1*6.782-@2*28.21)/(327.93)    ttbbXsec,ttbjXsec,ttccXsec'},
-    #'samples': {'TT+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec'},
-    'samples': {'TT+jj':'(364.35-@0*(1.433+6.782)-1.*28.21)/(327.93)    ttbbXsec'},
+    'samples': {'TT+jj':'(451.66-@0*(1.7466+8.2659)-@1*33.970)/(407.68)    ttbbXsec,ttccXsec'},  #XXX 364.35 : Xsec of TTLJ, but TT+jj is TTLJ+TTLL. it's wrong.
+    #'samples': {'TT+jj':'(364.35-@0*(1.433+6.782)-1.*28.21)/(327.93)    ttbbXsec'},
     'group': 'theory',
 }
+if splitTTLL:
+  nuisances['ttbbXsec']['samples'] = {'TTLJ+bb':'1 [0.8,1.5] ','TTLL+bb':'1 [0.8,1.5] '}
+  nuisances['ttccXsec']['samples'] = {'TTLJ+cc':'1 [0.8,1.5] ','TTLL+cc':'1 [0.8,1.5] '}
+  nuisances['ttjjXsec']['samples'] = {'TTLJ+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec','TTLL+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec'}
+
+
 #nuisances['DYNorm_2017'] = {
 #    'name': 'DYNorm_2017',
 #    'type': 'rateParam',
@@ -217,52 +224,89 @@ nuisances['ttjjXsec'] = {
 #        'group': 'experiment',
 #    }
 
-QCD_data_driven = False
-
 if QCD_data_driven:
-  nuisances['qcd_iso_e'] = {
-      'name': 'iso_e',
+  #eleORmuCH case only consider "ele" nuisance to avoid double counting
+  nuisances['qcd_iso_e_2b'] = {
+      'name': 'antiiso_ele',
+      #'rename': 'antiiso_ele_2b_2017',
       'type': 'shape',
-      'cuts': ['sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b'],
+      'AsLnN': '1',
+      #'symmetrize_ttsyst': True,
+      'cuts': ['sng_4j_eleORmuCH_2b','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b'],
       #'AsShape' : 1,
       'samples': dict((skey, ['1.','1.']) for skey in qcdmc),
       'group': 'experimental',
   }
-  nuisances['qcd_iso_m'] = {
-      'name': 'iso_m',
+  nuisances['qcd_iso_e_3b'] = {
+      'name': 'antiiso_ele',
+      #'rename': 'antiiso_ele_3b_2017',
       'type': 'shape',
-      'cuts': ['sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b'],
-      #'AsShape' : 1,
-      'samples': dict((skey, ['1.','1.']) for skey in qcdmc),
-      'group': 'experimental',
-  }
-  nuisances['qcd_norm_e_2b_2017'] = {
-      'name': 'qcd_norm_e_2b_2017',
-      'type': 'lnN',
-      'cuts': ['sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b'],
-      'samples': dict((skey, '1.5') for skey in qcdmc),
-      'group': 'experimental',
-  }
-  nuisances['qcd_norm_e_3b_2017'] = {
-      'name': 'qcd_norm_e_3b_2017',
-      'type': 'lnN',
+      'AsLnN': '1',
+      #'symmetrize_ttsyst': True,
       'cuts': ['sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b'],
       #'AsShape' : 1,
-      'samples': dict((skey, '1.5') for skey in qcdmc),
+      'samples': dict((skey, ['1.','1.']) for skey in qcdmc),
       'group': 'experimental',
   }
-  nuisances['qcd_norm_m_2b_2017'] = {
-      'name': 'qcd_norm_m_2b_2017',
-      'type': 'lnN',
-      'cuts': ['sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b'],
+  nuisances['qcd_iso_m_2b'] = {
+      'name': 'antiiso_mu',
+      #'rename': 'antiiso_mu_2b_2017',
+      'type': 'shape',
+      'AsLnN': '1',
+      #'symmetrize_ttsyst': True,
+      'cuts': ['sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b'], #not include 'sng_4j_eleORmuCH_2b','sng_4j_eleORmuCH_3b', to avoid double counting
       #'AsShape' : 1,
-      'samples': dict((skey, '1.5') for skey in qcdmc),
+      'samples': dict((skey, ['1.','1.']) for skey in qcdmc),
       'group': 'experimental',
   }
-  nuisances['qcd_norm_m_3b_2017'] = {
-      'name': 'qcd_norm_m_3b_2017',
+  nuisances['qcd_iso_m_3b'] = {
+      'name': 'antiiso_mu',
+      #'rename': 'antiiso_mu_3b_2017',
+      'type': 'shape',
+      'AsLnN': '1',
+      #'symmetrize_ttsyst': True,
+      'cuts': ['sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b'], #not include 'sng_4j_eleORmuCH_2b','sng_4j_eleORmuCH_3b', to avoid double counting
+      #'AsShape' : 1,
+      'samples': dict((skey, ['1.','1.']) for skey in qcdmc),
+      'group': 'experimental',
+  }
+  #qcd_norm_year_uncorr = False
+  #nuisances['qcd_norm_e_2b_2017'] = {
+  #    'name': 'qcd_norm_e_2b'+'_2017' if qcd_norm_year_uncorr else '',
+  #    'type': 'lnN',
+  #    'cuts': ['sng_4j_eleORmuCH_2b','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b'],
+  #    #'AsShape' : 1,
+  #    'samples': dict((skey, '1.5') for skey in qcdmc),
+  #    'group': 'experimental',
+  #}
+  #nuisances['qcd_norm_e_3b_2017'] = {
+  #    'name': 'qcd_norm_e_3b'+'_2017' if qcd_norm_year_uncorr else '',
+  #    'type': 'lnN',
+  #    'cuts': ['sng_4j_eleORmuCH_3b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b'],
+  #    #'AsShape' : 1,
+  #    'samples': dict((skey, '1.5') for skey in qcdmc),
+  #    'group': 'experimental',
+  #}
+  #nuisances['qcd_norm_m_2b_2017'] = {
+  #    'name': 'qcd_norm_m_2b'+'_2017' if qcd_norm_year_uncorr else '',
+  #    'type': 'lnN',
+  #    'cuts': ['sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b'],
+  #    #'AsShape' : 1,
+  #    'samples': dict((skey, '1.5') for skey in qcdmc),
+  #    'group': 'experimental',
+  #}
+  #nuisances['qcd_norm_m_3b_2017'] = {
+  #    'name': 'qcd_norm_m_3b'+'_2017' if qcd_norm_year_uncorr else '',
+  #    'type': 'lnN',
+  #    'cuts': ['sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b'],
+  #    #'AsShape' : 1,
+  #    'samples': dict((skey, '1.5') for skey in qcdmc),
+  #    'group': 'experimental',
+  #}
+  nuisances['qcd_norm'] = {
+      'name': 'qcd_norm_2017',
       'type': 'lnN',
-      'cuts': ['sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b'],
+      'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b'],
       #'AsShape' : 1,
       'samples': dict((skey, '1.5') for skey in qcdmc),
       'group': 'experimental',
@@ -276,6 +320,7 @@ else:
       'samples': dict((skey, '2.0') for skey in qcdmc),
       'group': 'experimental',
   }
+
 
 nuisances['STNorm'] = {
     'name': 'STNorm',
@@ -346,35 +391,6 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
     }
 
 
-#trig_syst = ['TriggerEffWeight_1l_u/TriggerEffWeight_1l','TriggerEffWeight_1l_d/TriggerEffWeight_1l']
-trig_ele_syst    = '((nLooseLep==1)*(eleCH*OTF_SingleEleTrig_SF[0]+muCH) + (nLooseLep==2)*((!mmCH)*Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)+mmCH))'
-trig_ele_syst_u  = trig_ele_syst.replace('OTF_SingleEleTrig_SF[0]','OTF_SingleEleTrig_SF[1]').replace('Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)','Alt$(OTF_SingleTrig_DATA_Eff[1]/OTF_SingleTrig_MC_Eff[2],1)')
-trig_ele_syst_d  = trig_ele_syst.replace('OTF_SingleEleTrig_SF[0]','OTF_SingleEleTrig_SF[2]').replace('Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)','Alt$(OTF_SingleTrig_DATA_Eff[2]/OTF_SingleTrig_MC_Eff[1],1)')
-trig_mu_syst    = '((nLooseLep==1)*(muCH*OTF_SingleMuTrig_SF[0]+eleCH) + (nLooseLep==2)*((!eeCH)*Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)+eeCH))'
-trig_mu_syst_u  = trig_mu_syst.replace('OTF_SingleMuTrig_SF[0]','OTF_SingleMuTrig_SF[1]').replace('Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)','Alt$(OTF_SingleTrig_DATA_Eff[3]/OTF_SingleTrig_MC_Eff[4],1)')
-trig_mu_syst_d  = trig_mu_syst.replace('OTF_SingleMuTrig_SF[0]','OTF_SingleMuTrig_SF[2]').replace('Alt$(OTF_SingleTrig_DATA_Eff[0]/OTF_SingleTrig_MC_Eff[0],1)','Alt$(OTF_SingleTrig_DATA_Eff[4]/OTF_SingleTrig_MC_Eff[3],1)')
-
-trig_ele_syst_list = ['Alt$({UP}/{NOM},1.)'.format(UP=trig_ele_syst_u,NOM=trig_ele_syst),'Alt$({DOWN}/{NOM},1.)'.format(DOWN=trig_ele_syst_d,NOM=trig_ele_syst)]
-trig_mu_syst_list  = ['Alt$({UP}/{NOM},1.)'.format(UP=trig_mu_syst_u,NOM=trig_mu_syst),'Alt$({DOWN}/{NOM},1.)'.format(DOWN=trig_mu_syst_d,NOM=trig_mu_syst)]
-
-
-nuisances['trig_ele'] = {
-    'name': 'eff_trigger_ele_2017',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, trig_ele_syst_list) for skey in mc),
-    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
-    'group': 'experimental',
-}
-nuisances['trig_mu'] = {
-    'name': 'eff_trigger_mu_2017',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, trig_mu_syst_list) for skey in mc),
-    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_mm','dbl_4j_em','dbl_4j_me','dbl_4j_mm_onZ',],
-    'group': 'experimental',
-}
-
 nuisances['prefire'] = {
     'name': 'eff_prefiring_2017',
     'kind': 'weight',
@@ -383,57 +399,98 @@ nuisances['prefire'] = {
     'group': 'experimental',
 }
 
-#ver1
-eff_ele_syst   = '((nLooseLep==1)*(eleCH*Lepton_tightElectron_{eleWP}_TotSF[0]+muCH) + (nLooseLep==2)*(1))'.format(eleWP=eleWP,muWP=muWP)
-#ver2
-#eff_ele_syst   = '((nLooseLep==1)*((eleCH)*Lepton_tightElectron_{eleWP}_IdIsoSF[0]+muCH) + (nLooseLep==2)*((!mmCH)*Lepton_tightElectron_{eleWP}_IdIsoSF[0]*Lepton_tightElectron_{eleWP}_IdIsoSF[1]+mmCH))'.format(eleWP=eleWP,muWP=muWP)
-eff_ele_syst_u = eff_ele_syst.replace('_TotSF','_TotSF_Up').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__ele_{eleWP}__Up)'.format(eleWP=eleWP))
-eff_ele_syst_d = eff_ele_syst.replace('_TotSF','_TotSF_Down').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__ele_{eleWP}__Do)'.format(eleWP=eleWP))
-#eff_ele_syst_u = eff_ele_syst.replace('_IdIsoSF','_IdIsoSF_Up').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__ele_{eleWP}__Up*(Lepton_RecoSF[0]*Lepton_RecoSF[1])/(Lepton_RecoSF_Up[0]*Lepton_RecoSF_Up[1]))'.format(eleWP=eleWP))
-#eff_ele_syst_d = eff_ele_syst.replace('_IdIsoSF','_IdIsoSF_Down').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__ele_{eleWP}__Do*(Lepton_RecoSF[0]*Lepton_RecoSF[1])/(Lepton_RecoSF_Down[0]*Lepton_RecoSF_Down[1]))'.format(eleWP=eleWP))
-#ver2
-#eff_ele_syst_u = eff_ele_syst.replace('_IdIsoSF','_IdIsoSF_Up')
-#eff_ele_syst_d = eff_ele_syst.replace('_IdIsoSF','_IdIsoSF_Down')
+if merge_trig_syst:
+  if not lnN_eff_ele:
+    nuisances['eff_ele'] = {
+        'name': 'eff_ele',
+        #'rename': 'eff_lepton',
+        'kind': 'weight',
+        'type': 'shape',
+        # extrapolation to DY -> ttbar topologies: less than 1%
+        'samples': dict((skey, ['1.+TMath::Sqrt((id_ele_up-1)*(id_ele_up-1) + (trig_ele_up-1)*(trig_ele_up-1) + 0.01*0.01)','1.-TMath::Sqrt((1-id_ele_down)*(1-id_ele_down) + (1-trig_ele_down)*(1-trig_ele_down) + 0.01*0.01)']) for skey in mc),
+        'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+        'group': 'experimental',
+    }
+  else:
+    nuisances['eff_ele'] = {
+        'name': 'eff_ele',
+        #'name': 'eff_lepton',
+        'type': 'lnN',
+        'samples': dict((skey, '1.02') for skey in mc),
+        'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+        'group': 'experimental',
+    }
+  nuisances['eff_muon'] = {
+      'name': 'eff_muon',
+      #'rename': 'eff_lepton',
+      'kind': 'weight',
+      'type': 'shape',
+      # extrapolation to DY -> ttbar topologies: less than 0.5%
+      'samples': dict((skey, ['1.+TMath::Sqrt((id_mu_up-1)*(id_mu_up-1) + (trig_mu_up-1)*(trig_mu_up-1) + 0.005*0.005)','1.-TMath::Sqrt((1-id_mu_down)*(1-id_mu_down) + (1-trig_mu_down)*(1-trig_mu_down) + 0.005*0.005)']) for skey in mc),
+      'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_mm','dbl_4j_em','dbl_4j_me','dbl_4j_mm_onZ',],
+      'group': 'experimental',
+  }
+else:
+  nuisances['trig_ele'] = {
+      'name': 'eff_trigger_ele_2017',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, ['trig_ele_up','trig_ele_down']) for skey in mc),
+      'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+      'group': 'experimental',
+  }
+  
+  nuisances['trig_mu'] = {
+      'name': 'eff_trigger_mu_2017',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, ['trig_mu_up','trig_mu_down']) for skey in mc),
+      'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_mm','dbl_4j_em','dbl_4j_me','dbl_4j_mm_onZ',],
+      'group': 'experimental',
+  }
+  
+  if not lnN_eff_ele:
+    nuisances['eff_ele'] = {
+        'name': 'eff_ele',
+        #'rename': 'eff_lepton',
+        'kind': 'weight',
+        'type': 'shape',
+        'samples': dict((skey, ['id_ele_up','id_ele_down']) for skey in mc),
+        'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+        'group': 'experimental',
+    }
+  else:
+    nuisances['eff_ele'] = {
+        'name': 'eff_ele',
+        #'name': 'eff_lepton',
+        'type': 'lnN',
+        'samples': dict((skey, '1.02') for skey in mc),
+        'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+        'group': 'experimental',
+    }
+  #eff_ele_reco_syst  = "((nLooseLep==1)*(Lepton_RecoSF[0]) + (nLooseLep==2)*(Lepton_RecoSF[0]*Alt$(Lepton_RecoSF[1],1)))" #filled 1 for muon
+  #eff_ele_reco_syst_u = eff_ele_reco_syst.replace('_RecoSF','_RecoSF_Up')
+  #eff_ele_reco_syst_d = eff_ele_reco_syst.replace('_RecoSF','_RecoSF_Down')
+  #eff_ele_reco_syst_list = ['{UP}/{NOM}'.format(UP=eff_ele_reco_syst_u,NOM=eff_ele_reco_syst),'{DOWN}/{NOM}'.format(DOWN=eff_ele_reco_syst_d,NOM=eff_ele_reco_syst)]
+  #nuisances['eff_ele_reco'] = {
+  #    'name': 'eff_ele_reco',
+  #    'kind': 'weight',
+  #    'type': 'shape',
+  #    'samples': dict((skey, eff_ele_reco_syst_list) for skey in mc),
+  #    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
+  #    'group': 'experimental',
+  #}
 
-eff_ele_syst_list = ['Alt$({UP}/{NOM},1)'.format(UP=eff_ele_syst_u,NOM=eff_ele_syst),'Alt$({DOWN}/{NOM},1)'.format(DOWN=eff_ele_syst_d,NOM=eff_ele_syst)]
+  nuisances['eff_muon'] = {
+      'name': 'eff_muon',
+      #'rename': 'eff_lepton',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, ['id_mu_up','id_mu_down']) for skey in mc),
+      'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_mm','dbl_4j_em','dbl_4j_me','dbl_4j_mm_onZ',],
+      'group': 'experimental',
+  }
 
-nuisances['eff_ele'] = {
-    'name': 'eff_ele',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, eff_ele_syst_list) for skey in mc),
-    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
-    'group': 'experimental',
-}
-#eff_ele_reco_syst  = "((nLooseLep==1)*(Lepton_RecoSF[0]) + (nLooseLep==2)*(Lepton_RecoSF[0]*Alt$(Lepton_RecoSF[1],1)))"
-#eff_ele_reco_syst_u = eff_ele_reco_syst.replace('_RecoSF','_RecoSF_Up')
-#eff_ele_reco_syst_d = eff_ele_reco_syst.replace('_RecoSF','_RecoSF_Down')
-#eff_ele_reco_syst_list = ['{UP}/{NOM}'.format(UP=eff_ele_reco_syst_u,NOM=eff_ele_reco_syst),'{DOWN}/{NOM}'.format(DOWN=eff_ele_reco_syst_d,NOM=eff_ele_reco_syst)]
-#nuisances['eff_ele_reco'] = {
-#    'name': 'eff_ele_reco',
-#    'kind': 'weight',
-#    'type': 'shape',
-#    'samples': dict((skey, eff_ele_reco_syst_list) for skey in mc),
-#    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleCH_2b','sng_jbin_eleCH_4j_2b','sng_jbin_eleCH_5j_2b','sng_jbin_eleCH_6j_2b','sng_4j_eleCH_3b','sng_jbin_eleCH_4j_3b','sng_jbin_eleCH_5j_3b','sng_jbin_eleCH_6j_3b','sng_jbin_eleCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_ee_onZ',],
-#    'group': 'experimental',
-#}
-#eff_muon_syst = ['Lepton_tightMuon_'+muWP+'_TotSF_Up'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]','Lepton_tightMuon_'+muWP+'_TotSF_Down'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]']
-#TODO : decorrelate muon ID, iso
-#eff_muon_syst = ['Lepton_tightMuon_'+muWP+'_TotSF_Up'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]','Lepton_tightMuon_'+muWP+'_TotSF_Down'+'[0]/Lepton_tightMuon_'+muWP+'_TotSF'+'[0]']
-eff_muon_syst   = '((nLooseLep==1)*(muCH*Lepton_tightMuon_{muWP}_TotSF[0]+eleCH) + (nLooseLep==2)*(1))'.format(eleWP=eleWP,muWP=muWP)
-eff_muon_syst_u = eff_muon_syst.replace('_TotSF','_TotSF_Up').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__mu_{muWP}__Up)'.format(muWP=muWP))
-eff_muon_syst_d = eff_muon_syst.replace('_TotSF','_TotSF_Down').replace('(nLooseLep==2)*(1)','(nLooseLep==2)*(LepSF2l__mu_{muWP}__Do)'.format(muWP=muWP))
-#TODO : decorrelate muon ID, iso
-eff_muon_syst_list = ['Alt$({UP}/{NOM},1.)'.format(UP=eff_muon_syst_u,NOM=eff_muon_syst),'Alt$({DOWN}/{NOM},1.)'.format(DOWN=eff_muon_syst_d,NOM=eff_muon_syst)]
-
-nuisances['eff_muon'] = {
-    'name': 'eff_muon',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, eff_muon_syst_list) for skey in mc),
-    'cuts': ['sng_4j','sng_jbin','sng_4j_eleORmuCH','sng_4j_muCH_2b','sng_jbin_muCH_4j_2b','sng_jbin_muCH_5j_2b','sng_jbin_muCH_6j_2b','sng_4j_muCH_3b','sng_jbin_muCH_4j_3b','sng_jbin_muCH_5j_3b','sng_jbin_muCH_6j_3b','sng_jbin_muCH_4b','dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_mm','dbl_4j_em','dbl_4j_me','dbl_4j_mm_onZ',],
-    'group': 'experimental',
-}
 
 pu_syst=['puWeightUp/puWeight','puWeightDown/puWeight']
 
@@ -446,7 +503,6 @@ nuisances['PU'] = {
     #'AsLnN': '1',
     'group': 'theory',
 }
-
 
 JECUnc_nom_branches = [
     'Jet_pt_nom',
@@ -461,7 +517,8 @@ JECUnc_nom_branches = [
     'hadronic_top_b_jet_idx_nom',  
     'leptonic_top_b_jet_idx_nom',  
     'w_ch_up_type_jet_idx_nom',    
-    'w_ch_down_type_jet_idx_nom',  
+    'w_ch_down_type_jet_idx_nom',    
+    'leptonic_top_b_jet_pull_nom', 
     'hadronic_top_b_jet_pull_nom', 
     'w_ch_up_type_jet_pull_nom',   
     'w_ch_down_type_jet_pull_nom', 
@@ -555,6 +612,7 @@ else:
 
 nuisances['jer'] = {
     'name': 'jer_2017',
+    #'rename': 'jer',
     'kind': 'branch_custom',
     'type': 'shape',
     'BrFromToUp'  : GetJECVariationDict(JECUnc_nom_branches,"jerUp"),
@@ -579,30 +637,67 @@ nuisances['unclustEn'] = {
     'group': 'experimental',
 }
 
-nuisances['TuneCP5'] = {
-    'name': 'TuneCP5',
-    'kind': 'tree',
-    'type': 'shape',
-    #'symmetrize_ttsyst': True,
-    'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst),
-    # name_TT*_*[Up|Down] are defined in samples_2017_ttbarCat.py
-    'folderUp'   : makeMCDirectory('__UEup'),
-    'folderDown' : makeMCDirectory('__UEdo'),
-    'group': 'theory',
+if not 'comb' in opt.pycfg or not lnN_UE_Tune:
+  nuisances['TuneCP5'] = {
+      'name': 'TuneCP5',
+      'kind': 'tree',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst),
+      # name_TT*_*[Up|Down] are defined in samples_2017_ttbarCat.py
+      'folderUp'   : makeMCDirectory('__UEup'),
+      'folderDown' : makeMCDirectory('__UEdo'),
+      'group': 'theory',
+  
+  }
+else:
+  nuisances['TuneCP5'] = {
+      'name': 'CMS_TuneCP5',
+      'type': 'lnN',
+      'samples': dict((skey, '1.015') for skey in ttmc_syst + ['ST','Others']),
+      'group': 'theory',
+  
+  }
 
-}
+if not 'comb' in opt.pycfg:
 
-nuisances['hdamp'] = {
-    'name': 'hdamp',
-    'kind': 'tree',
-    'type': 'shape',
-    #'symmetrize_ttsyst': True,
-    'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
-    'folderUp'   : makeMCDirectory('__HDAMPup'),
-    'folderDown' : makeMCDirectory('__HDAMPdo'),
-    'group': 'theory',
+  nuisances['hdamp'] = {
+      'name': 'hdamp',
+      'kind': 'tree',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'folderUp'   : makeMCDirectory('__HDAMPup'),
+      'folderDown' : makeMCDirectory('__HDAMPdo'),
+      'group': 'theory',
+  
+  }
 
-}
+  hdamp_syst_up   = '(nLepton==1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(1.0189)+(nCleanJet20_2p5==5)*(1.0061)+(nCleanJet20_2p5>=6)*(1.0291)) + (nLepton!=1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(1.0515)+(nCleanJet20_2p5==5)*(1.0583)+(nCleanJet20_2p5>=6)*(1.0498))'
+  hdamp_syst_down = '(nLepton==1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(0.9820)+(nCleanJet20_2p5==5)*(0.9924)+(nCleanJet20_2p5>=6)*(0.9559)) + (nLepton!=1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(0.9853)+(nCleanJet20_2p5==5)*(0.9425)+(nCleanJet20_2p5>=6)*(0.9178))'
+  nuisances['hdamp_weight'] = {
+      'name': 'hdamp_weight',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, [hdamp_syst_up, hdamp_syst_down]) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
+
+else:
+  nuisances['hdamp_weight'] = {
+      'name': 'hdamp_weight',
+      'rename': 'hdamp',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
 
 
 nuisances['mtop'] = {
@@ -630,14 +725,43 @@ nuisances['PU_ID_L'] = {
 isr_syst=['PSWeight[2]','PSWeight[0]']
 fsr_syst=['PSWeight[3]','PSWeight[1]']
 
-nuisances['ISR_TT'] = {
-    'name': 'ttbar_isr',
-    'kind': 'weight',
-    'type': 'shape',
-    'samples': dict((skey, isr_syst) for skey in ttmc  ),
-    'group': 'theory',
-
-}
+if not 'comb' in opt.pycfg:
+  nuisances['ISR_TT'] = {
+      'name': 'ttbar_isr',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, isr_syst) for skey in ttmc ),
+      'group': 'theory',
+  
+  }
+else:
+  nuisances['ISR_TTjj'] = {
+      'name': 'ttbar_isr',
+      'rename': 'ttjj_isr',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, isr_syst) for skey in ttmc if skey not in ttbbmc+ttccmc),
+      'group': 'theory',
+  
+  }
+  nuisances['ISR_TTcc'] = {
+      'name': 'ttbar_isr',
+      'rename': 'ttcc_isr',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, isr_syst) for skey in ttccmc ),
+      'group': 'theory',
+  
+  }
+  nuisances['ISR_TTbb'] = {
+      'name': 'ttbar_isr',
+      'rename': 'ttbb_isr',
+      'kind': 'weight',
+      'type': 'shape',
+      'samples': dict((skey, isr_syst) for skey in ttbbmc ),
+      'group': 'theory',
+  
+  }
 
 
 #empty PSWeights for tW
@@ -653,6 +777,7 @@ nuisances['FSR_TT'] = {
     'name': 'ttbar_fsr',
     'kind': 'weight',
     'type': 'shape',
+    'shape': 0.5,
     'samples': dict((skey, fsr_syst) for skey in ttmc ),
     'group': 'theory',
 
@@ -675,26 +800,82 @@ lhe_scale_syst = ['LHEScaleWeight[0]', 'LHEScaleWeight[1]', 'LHEScaleWeight[3]',
 lhe_scale_syst_tt_4j5j = lambda skey : [ '((nCleanJet20_2p5==4 || nCleanJet20_2p5==5)*%s+(nCleanJet20_2p5!=4 && nCleanJet20_2p5!=5)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p5<4)*%s+(nCleanJet20_2p5>=4)*1.)'%weight for weight in lhe_scale_syst ]
 lhe_scale_syst_tt_6j = lambda skey : [ '((nCleanJet20_2p5>=6)*%s+(nCleanJet20_2p5<6)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p5>=4)*%s+(nCleanJet20_2p5<4)*1.)'%weight for weight in lhe_scale_syst ]
 
-nuisances['QCDscale_tt'] = {
-    'name': 'QCDscale_tt',
-    'type': 'shape',
-    'kind': 'weight_envelope',
-    'samples':dict((skey, lhe_scale_syst) for skey in ttmc ),
-    'group': 'theory',
-}
+lhe_scale_syst_ttlj_4j = ['(nCleanJet20_2p5>=4)*(1.1079)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.8886)+(nCleanJet20_2p5<4)']
+lhe_scale_syst_ttlj_5j = ['(nCleanJet20_2p5>=5)*(1.0126)+(nCleanJet20_2p5<5)','(nCleanJet20_2p5>=5)*(0.9913)+(nCleanJet20_2p5<5)']
+lhe_scale_syst_ttlj_6j = ['(nCleanJet20_2p5>=6)*(1.0234)+(nCleanJet20_2p5<6)','(nCleanJet20_2p5>=6)*(0.9841)+(nCleanJet20_2p5<6)']
 
-#nuisances['QCDscale_tt_4j5j'] = {
-#    'name': 'QCDscale_tt_4j5j',
+lhe_scale_syst_ttll_4j = ['(nCleanJet20_2p5>=2)*(1.1079)+(nCleanJet20_2p5<2)','(nCleanJet20_2p5>=2)*(0.8886)+(nCleanJet20_2p5<2)']
+lhe_scale_syst_ttll_5j = ['(nCleanJet20_2p5>=3)*(1.0126)+(nCleanJet20_2p5<3)','(nCleanJet20_2p5>=3)*(0.9913)+(nCleanJet20_2p5<3)']
+lhe_scale_syst_ttll_6j = ['(nCleanJet20_2p5>=4)*(1.1519/1.1079/1.0126)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.8647/0.8886/0.9913)+(nCleanJet20_2p5<4)']
+
+lhe_scale_syst_chtocb_4j  = ['(nCleanJet20_2p5>=4)*(1.2843)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.7925)+(nCleanJet20_2p5<4)']
+lhe_scale_syst_chtocb_5j  = ['(nCleanJet20_2p5>=5)*(1.0041)+(nCleanJet20_2p5<5)','(nCleanJet20_2p5>=5)*(0.9960)+(nCleanJet20_2p5<5)']
+lhe_scale_syst_chtocb_6j  = ['(nCleanJet20_2p5>=6)*(1.0055)+(nCleanJet20_2p5<6)','(nCleanJet20_2p5>=6)*(0.9950)+(nCleanJet20_2p5<6)']
+
+lhe_scale_syst_tt_4j = lambda skey: lhe_scale_syst_ttlj_4j*('TTLJ' in skey) + lhe_scale_syst_ttll_4j*('TTLL' in skey) + lhe_scale_syst_chtocb_4j*('CHToCB' in skey)
+lhe_scale_syst_tt_5j = lambda skey: lhe_scale_syst_ttlj_5j*('TTLJ' in skey) + lhe_scale_syst_ttll_5j*('TTLL' in skey) + lhe_scale_syst_chtocb_5j*('CHToCB' in skey) 
+lhe_scale_syst_tt_6j = lambda skey: lhe_scale_syst_ttlj_6j*('TTLJ' in skey) + lhe_scale_syst_ttll_6j*('TTLL' in skey) + lhe_scale_syst_chtocb_6j*('CHToCB' in skey) 
+
+if not 'comb' in opt.pycfg:
+  nuisances['QCDscale_tt'] = {
+      'name': 'QCDscale_tt',
+      'type': 'shape', # not treat this in plot maker and datacard maker
+      'kind': 'weight_envelope',
+      'samples':dict((skey, lhe_scale_syst) for skey in ttmc ),
+      'group': 'theory',
+  }
+if not splitQCDscale_tt:
+  nuisances['QCDscale_tt'] = {
+      'name': 'QCDscale_tt',
+      'type': 'shape', 
+      'kind': 'weight_envelope',
+      'samples':dict((skey, lhe_scale_syst) for skey in ttmc ),
+      'group': 'theory',
+  }
+else:
+  nuisances['QCDscale_tt_'] = {
+      'name': 'QCDscale_tt',
+      'type': 'shape',
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, lhe_scale_syst) for skey in ttmc if skey not in ttbbmc+ttccmc ),
+      'group': 'theory',
+  }
+  nuisances['QCDscale_ttbb'] = {
+      'name': 'QCDscale_tt',
+      'rename': 'QCDscale_ttbb',
+      'type': 'shape',
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, lhe_scale_syst) for skey in ttbbmc ),
+      'group': 'theory',
+  }
+  nuisances['QCDscale_ttcc'] = {
+      'name': 'QCDscale_tt',
+      'rename': 'QCDscale_ttcc',
+      'type': 'shape',
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, lhe_scale_syst) for skey in ttccmc ),
+      'group': 'theory',
+  }
+#nuisances['QCDscale_tt_4j'] = {
+#    'name': 'QCDscale_tt_4j',
 #    'type': 'shape',
-#    'kind': 'weight_envelope',
-#    'samples':dict((skey, lhe_scale_syst_tt_4j5j(skey)) for skey in ttmc ),
+#    'kind': 'weight',
+#    'samples':dict((skey, lhe_scale_syst_tt_4j(skey)) for skey in ttmc ),
+#    'group': 'theory',
+#        
+#}
+#nuisances['QCDscale_tt_5j'] = {
+#    'name': 'QCDscale_tt_5j',
+#    'type': 'shape',
+#    'kind': 'weight',
+#    'samples':dict((skey, lhe_scale_syst_tt_5j(skey)) for skey in ttmc ),
 #    'group': 'theory',
 #        
 #}
 #nuisances['QCDscale_tt_6j'] = {
 #    'name': 'QCDscale_tt_6j',
 #    'type': 'shape',
-#    'kind': 'weight_envelope',
+#    'kind': 'weight',
 #    'samples':dict((skey, lhe_scale_syst_tt_6j(skey)) for skey in ttmc ),
 #    'group': 'theory',
 #        

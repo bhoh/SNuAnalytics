@@ -12,7 +12,7 @@ except ImportError:
 #------End of Variable Definition-----#
 #variables={}
 
-include_mva = True
+include_mva = False
 
 
 common_KF_cuts = '(status_nom==0)'
@@ -32,14 +32,14 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
 
   variables[key.replace("_nom","")] = {
       'name' : name_template.format(key,common_KF_cuts),
-      'range':(36,0,180),
+      'range':(30,0,180),
       'xaxis':'#it{M_{jj}} [GeV]',
       'fold':0
   
   }
   variables[key.replace("_nom","")+"_down_type_jet_b_tagged"] = {
       'name' : name_template.format(key,common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
-      'range':(36,0,180),
+      'range':(30,0,180),
       'xaxis':'#it{M_{jj}} [GeV]',
       'fold':0
   }

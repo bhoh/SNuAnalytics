@@ -1,12 +1,12 @@
 import ROOT
 import os
 import copy
+from ABCD_data_driven_shape import input_dict, opt
 
-inFileName  = '../rootFile_2018_SKIM7_final/PDF/results_unc.root'
-outFileName = 'hadd_data_driven.root'
-abcdFileName = 'ABCD_data_driven_shape.root'
+inFileName  = opt.shapeFile #'../rootFile_2018_SKIM7_final/PDF/results_unc.root'
+outFileName = 'rootFile_%s/hadd_data_driven.root'%opt.tag
+abcdFileName = 'rootFile_%s/ABCD_data_driven_shape.root'%opt.tag
 
-from ABCD_data_driven_shape import input_dict
 
 # copy original root file
 os.system('cp %s %s'%(inFileName, outFileName))
@@ -25,8 +25,11 @@ for tag_key, tag in input_dict.iteritems():
       if tag_key == '':
         abcd_hist_path      = '%s/%s/%s'%(ch,var,'histo_QCD_data_driven')
       elif 'iso' in tag_key:
-        ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m').replace('_2b','').replace('_3b','')
-        new_histo_suffix = 'iso_%s%s'%(ch_,tag_key.replace('isoVar',''))
+        if 'eleCH' in ch or 'eleORmuCH' in ch:
+          new_histo_suffix = 'antiiso_ele'
+        elif 'muCH' in ch:
+          new_histo_suffix = 'antiiso_mu'
+        new_histo_suffix += tag_key.replace('iso','') # for Up/Down suffix
         abcd_hist_path      = '%s/%s/%s'%(ch,var,'histo_QCD_data_driven_' + new_histo_suffix)
       elif 'binning' in tag_key:
         ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m')
@@ -36,7 +39,8 @@ for tag_key, tag in input_dict.iteritems():
       else:
         abcd_hist_path      = '%s/%s/%s'%(ch,var,'histo_QCD_data_driven_' + new_histo_suffix)
       abcd_hist      = abcdFile.Get(abcd_hist_path)
-      target_hist_path = '%s/%s'%(ch.replace('_D_','_'),var)
+      target_hist_path = '%s/%s'%(ch.replace('_D_','_').replace('_isoUp_','_').replace('_isoDown_','_'),var)
+      target_hist_path = target_hist_path.replace('_/','/')
       outFile.cd(target_hist_path)
       if tag_key == '':
         cloned_hist = abcd_hist.Clone('histo_QCD_data_driven')

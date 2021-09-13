@@ -81,7 +81,7 @@ samples = {
                 "SingleMuon_Run2016H-02Apr2020-v1",
             ],
         ('Summer16_102X_nAODv7_Full2016v7','MC') :[
-                #'TT_TuneCUETP8M2T4',
+                'TT_TuneCUETP8M2T4',
                 'ST_s-channel',
                 'ST_t-channel_top',
                 'ST_t-channel_antitop',
@@ -136,6 +136,10 @@ samples = {
                 'TT_hdampDown',
                 'TT_mtopUp',
                 'TT_mtopDown',
+                'TT_isrUp',
+                'TT_isrDown',
+                'TT_fsrUp',
+                'TT_fsrDown',
             ],
 
       },

@@ -9,7 +9,7 @@ plotFile='plot_noSig_ele.py' ##color code and some format-related things
 
 samplesFile = 'samples_2016_ele.py'
 
-lumi=35.9
+lumi=35.92
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

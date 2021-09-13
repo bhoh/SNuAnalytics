@@ -280,7 +280,7 @@ plot['DATA']  = {
 #        'samples' : ['ggHWWlnuqq_M'+str(MX)]
 #    }
 
-legend['lumi'] = 'L = 58.8/fb'
+legend['lumi'] = 'L = 59.74/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 legend['extraText'] = 'work in progress'

@@ -83,9 +83,9 @@ SFweight=SFweight+'*'+LepWPCut+'*'+LepWPweight
 
 
 
-GenLepMatch = 'Lepton_genmatched[0]'
-#GenLepMatch = '1'
-#GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
+#GenLepMatch = 'Lepton_genmatched[0]'
+GenLepMatch = '1'
+##GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
 
 #SFweight=SFweight+'*HEMweight'
 
@@ -147,8 +147,8 @@ DataSets = ['SingleMuon',\
 #DataSets = ['MuonEG','SingleMuon','DoubleMuon', 'EGamma']
 
 DataTrig = {
-            'SingleMuon'     : '(muCH || muCH_noTight)  && Trigger_sngMu',
-            'EGamma'         : '(eleCH || eleCH_noTight) && Trigger_sngEl',
+            'SingleMuon'     : 'Trigger_sngMu',
+            'EGamma'         : '!Trigger_sngMu && Trigger_sngEl',
            }
 
 

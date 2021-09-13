@@ -924,12 +924,14 @@ nuisances = [
         'ttccDown',
         'ttXsecUp',
         'ttXsecDown',
-        'isoVar',
+        'isoUp',
+        'isoDown',
         'binningVar',
         ]
 
 exclude_envelop = [
-        'isoVar',
+        'isoUp',
+        'isoDown',
         'binningVar',
         'ttXsecUp',
         'ttXsecDown',
@@ -943,15 +945,19 @@ for nuisance in nuisances:
         for i, histo_name in enumerate(input_dict[nuisance][ch][region][var]):
           if 'histo_DATA' in histo_name:
               histo_name_nuis = histo_name[:] #[:] to deepcopy
-          elif 'isoVar' in nuisance or 'binningVar' in nuisance:
+          elif 'isoUp' in nuisance or 'isoDown' in nuisance or 'binningVar' in nuisance:
             histo_name_nuis = histo_name[:] #[:] to deepcopy
           else:
             histo_name_nuis = histo_name + '_' + nuisance
-          # special treatment for isoVar syst.
-          if 'isoVar' in nuisance:
+          # special treatment for iso Up/Down syst.
+          if 'isoUp' in nuisance:
+            if 'sng_' in histo_name_nuis and '_C_' in histo_name_nuis:
+              histo_name_nuis = histo_name_nuis.replace('_C_','_isoUp_C_')
+            print(nuisance, ch, region, var, i, histo_name_nuis)
+          if 'isoDown' in nuisance:
             if 'sng_' in histo_name_nuis and '_C_' in histo_name_nuis:
               histo_name_nuis = histo_name_nuis.replace('_C_','_isoDown_C_')
-            #print(nuisance, ch, region, var, i, histo_name_nuis)
+            print(nuisance, ch, region, var, i, histo_name_nuis)
           input_dict[nuisance][ch][region][var][i] = histo_name_nuis
 
 
@@ -1172,7 +1178,7 @@ for tag_key in input_dict:
         rebin      = bins[ch]
       else:
         rebin      = bins_syst[ch]
-      if tag_key == "" or tag_key == "isoVar":
+      if tag_key == "" or tag_key == "iso":
         print(tag_key)
         print(histoNameB)
         print(histoNameC)
@@ -1186,6 +1192,7 @@ for tag_key in input_dict:
         print('###############################################################')
       else:
         rescale = 1.
+      rescale = 1.
 
       histoB, _ = GetHisto(histoNameB, rebin, tag_key, rescale)
       histoC, _ = GetHisto(histoNameC, rebin, tag_key, rescale)

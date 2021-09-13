@@ -58,7 +58,8 @@ def makeMCDirectory(var=''):
 LepWPCut='(Lepton_isTightElectron_'+eleWP+'[0]>0.5 || Lepton_isTightMuon_'+muWP+'[0]>0.5)'
 
 #eleWPweight='((Lepton_isTightElectron_'+eleWP+'[0]>0.5)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
-eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
+#eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_tightElectron_'+eleWP+'_TotSF'+'[0]'+'))'
+eleWPweight='((abs(Lepton_pdgId[0])==11)*(Lepton_RecoSF'+'[0]'+'))'
 eleWPweight+='*(TriggerEffWeight_1l)'
 #eleWPweight+='*(HLT_Ele32_WPTight_Gsf==1)'
 
@@ -99,9 +100,7 @@ SFweight+="*Jet_PUID_SF_L"
 ################################################
 ############### TT specific SF  ################
 ################################################
-#XXX
-#TTSFweight = 'btagSFNorm_top'
-TTSFweight = '1'
+TTSFweight = 'btagSFNorm_top'
 TTbj        = '(genTtbarId%100==51 && genTtbarId%100==52)'
 TTbb       = '(genTtbarId%100>=53 && genTtbarId%100<=55)*(2.9/2.3)'
 TTcc       = '(genTtbarId%100>=41 && genTtbarId%100<=45)'
@@ -220,19 +219,19 @@ name_TTLJ_mtopDown = getSampleFiles(directory+'__splitTTSysts','TT_mtopDown',Fal
 
 
 samples['TTLL+jj'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
-                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTjj,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTjj,
                       'FilesPerJob' : 4,
                     }
 samples['TTLL+bj'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
-                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbj,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbj,
                       'FilesPerJob' : 4,
                     }
 samples['TTLL+bb'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
-                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbb,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTbb,
                       'FilesPerJob' : 4,
                     }
 samples['TTLL+cc'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
-                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTcc,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+TTcc,
                       'FilesPerJob' : 4,
                     }
 name_TTLL_TuneCUETP8M2T4Up = getSampleFiles(directory+'__splitTTSysts','TT_TuneCUETP8M2T4Up',False,'nanoLatino_')

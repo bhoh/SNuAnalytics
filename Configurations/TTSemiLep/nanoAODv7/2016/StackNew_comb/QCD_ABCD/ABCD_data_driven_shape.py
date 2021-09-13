@@ -9,14 +9,68 @@
 #hadd.root:/sng_4j_A_muCH_2b/fitted_dijet_M_high_had_top_pt_gt_80_down_type_jet_b_tagged
 #QCD_MU, QCD_EM, QCD_bcToE
 import ROOT
-import os
+import optparse
+import LatinoAnalysis.Gardener.hwwtools as hwwtools
+import os,sys
 import numpy as np
 import copy
 
-fileName='rootFile_2016_SKIM7_QCD_ABCD_SF/hadd.root'
 
-outFileName = 'ABCD_data_driven_shape.root'
+usage = 'usage: %prog [options]'
+parser = optparse.OptionParser(usage)
+
+parser.add_option('--tag'                , dest='tag'               , help='Tag used for the shape file name'           , default=None)
+parser.add_option('--shapeFile'                , dest='shapeFile'               , help='original shape file path'           , default=None)
+      
+# read default parsing options as well
+hwwtools.addOptions(parser)
+hwwtools.loadOptDefaults(parser)
+(opt, args) = parser.parse_args()
+
+sys.argv.append( '-b' )
+#ROOT.gROOT.SetBatch()
+
+
+print " configuration file = ", opt.pycfg
+
+if not opt.debug:
+  pass
+elif opt.debug == 2:
+  print 'Logging level set to DEBUG (%d)' % opt.debug
+  logging.basicConfig( level=logging.DEBUG )
+elif opt.debug == 1:
+  print 'Logging level set to INFO (%d)' % opt.debug
+  logging.basicConfig( level=logging.INFO )
+
+ROOT.TH1.SetDefaultSumw2(True)
+  
+## load the samples
+#samples = {}
+#if os.path.exists(opt.samplesFile) :
+#  handle = open(opt.samplesFile,'r')
+#  exec(handle)
+#  handle.close()
+
+## load the cuts
+cuts = {}
+if os.path.exists(opt.cutsFile) :
+  handle = open(opt.cutsFile,'r')
+  exec(handle)
+  handle.close()
+
+## load the variables
+variables = {}
+if os.path.exists(opt.variablesFile) :
+  handle = open(opt.variablesFile,'r')
+  exec(handle)
+  handle.close()
+
+###
+fileName='rootFile_%s/hadd.root'%opt.tag
+
+outFileName = 'rootFile_%s/ABCD_data_driven_shape.root'%opt.tag
 outFile =  ROOT.TFile(outFileName,'RECREATE')
+
 
 #histo_DATA
 #histo_DY
@@ -58,675 +112,42 @@ samples = [
 
 input_dict = {
   '' : {
-    'input'    : 'rootFile_2016_SKIM7_QCD_ABCD_SF/hadd.root',
-    'chennels' : {
-      'sng_4j_D_eleCH_2b' : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
+    'input'    : fileName,
+    'chennels' : {}
+    }
+  }
 
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
-      'sng_4j_D_eleCH_3b' : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
+for cut in cuts:
+  if 'iso' in cut:
+    continue
+  cutName = cut
+  fullCutNames = []
+  if 'categories' in cuts[cut]:
+    for scut in cuts[cut]['categories']:
+      fullCutNames.append((cutName,scut))
+  else:
+    fullCutNames.append((cutName,))
 
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
-      'sng_4j_D_muCH_2b'  : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
+  for fullCutName_tuple in fullCutNames:
+    ## fill cut and sample name string
+    if len(fullCutName_tuple)==1:
+      fullCutName = fullCutName_tuple[0]
+    elif len(fullCutName_tuple)==2:
+      fullCutName = fullCutName_tuple[0] + "_" + fullCutName_tuple[1]
+    ##
+    input_dict['']['chennels'][fullCutName] = {}
+    for variable in variables:
+      if 'cuts' in variables[variable]:
+        if fullCutName_tuple[0] in variables[variable]['cuts']:
+          input_dict['']['chennels'][fullCutName][variable] = copy.deepcopy(samples)
+        else:
+          pass
+      else:
+        input_dict['']['chennels'][fullCutName][variable] = copy.deepcopy(samples)
 
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
-      'sng_4j_D_muCH_3b'  : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
 
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
-      'sng_4j_eleORmuCH_D_2b'  : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
 
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
 
-      'sng_4j_eleORmuCH_D_3b'  : {
-            #'Event' : copy.deepcopy(samples),
-            #'hadronic_top_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_pt' : copy.deepcopy(samples),
-            #'1st_leading_jet_eta' : copy.deepcopy(samples),
-            #'Lepton_pt[0]' : copy.deepcopy(samples),
-            #'Lepton_pt[1]' : copy.deepcopy(samples),
-            #'Lepton_eta[1]' : copy.deepcopy(samples),
-            #'PuppiMet' : copy.deepcopy(samples),
-            #'PV_npvs' : copy.deepcopy(samples),
-            #'nCleanJet20_2p4' : copy.deepcopy(samples),
-            #'nCleanJet30_2p4' : copy.deepcopy(samples),
-            #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M' : copy.deepcopy(samples),
-            #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-            #'Lepton_eta[0]' : copy.deepcopy(samples),
-            'fitted_dijet_M' : copy.deepcopy(samples),
-            'fitted_dijet_M_high' : copy.deepcopy(samples),
-            'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-            #'mll' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_failMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_failMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_failMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_DNN_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_High_passMVA'  : copy.deepcopy(samples),
-            #'fitted_dijet_M_down_type_jet_b_tagged_BDT_Low_passMVA'   : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_DNN_Low_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_High_passMVA' : copy.deepcopy(samples),
-            #'fitted_dijet_M_high_down_type_jet_b_tagged_BDT_Low_passMVA' : copy.deepcopy(samples),
-
-            #'DNN_High'                  : copy.deepcopy(samples),
-            #'DNN_Low'                   : copy.deepcopy(samples),
-            #'BDT_High'                  : copy.deepcopy(samples),
-            #'BDT_Low'                   : copy.deepcopy(samples),
-            #'csv_jet0_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet1_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'csv_jet2_mvaCHToCB_nom'    : copy.deepcopy(samples),
-            #'avg_csv_had_top_nom'       : copy.deepcopy(samples),
-            #'second_moment_csv_jet0_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet1_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'second_moment_csv_jet2_mvaCHToCB_nom'  : copy.deepcopy(samples),
-            #'dijet_deltaR0_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'dijet_deltaR1_mvaCHToCB_nom'           : copy.deepcopy(samples),
-            #'Hplus_b_deltaR0_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'Hplus_b_deltaR1_mvaCHToCB_nom'         : copy.deepcopy(samples),
-            #'bb_deltaR_mvaCHToCB_nom'               : copy.deepcopy(samples),
-            #'min_deltaR_bb_event_mvaCHToCB_nom'     : copy.deepcopy(samples),
-            #'HT_btagged_M_nom'                      : copy.deepcopy(samples),
-            #'HT_not_btagged_M_nom'                  : copy.deepcopy(samples),
-          },
-
-      #'dbl_2j_D_ee_2b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #                },
-      #'dbl_2j_D_em_2b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #    },
-      #'dbl_2j_D_me_2b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      
-      #    },
-      #'dbl_2j_D_mm_2b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      
-      #    },
-      #'dbl_2j_D_ee_3b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #       #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),           
-      #    },
-      #'dbl_2j_D_em_3b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #       #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),           
-      #    },
-      #'dbl_2j_D_me_3b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),            
-      #    },
-      #'dbl_2j_D_mm_3b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),            
-      #    },
-      #'sng_4j_eleORmuCH_D_2b' : {
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #    },
-      #'sng_4j_eleORmuCH_D_3b' : {
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #    },
-
-      #'dbl_2j_eeORmmORemORme_D_2b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),            
-      #    },
-      #'dbl_2j_eeORmmORemORme_D_3b' : {
-      #      #'Bins' : copy.deepcopy(samples),
-      #      #'Event' : copy.deepcopy(samples),
-      #      #'hadronic_top_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_pt' : copy.deepcopy(samples),
-      #      #'1st_leading_jet_eta' : copy.deepcopy(samples),
-      #      #'Lepton_pt[0]' : copy.deepcopy(samples),
-      #      #'Lepton_pt[1]' : copy.deepcopy(samples),
-      #      #'Lepton_eta[1]' : copy.deepcopy(samples),
-      #      #'PuppiMet' : copy.deepcopy(samples),
-      #      #'PV_npvs' : copy.deepcopy(samples),
-      #      #'nCleanJet20_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet30_2p4' : copy.deepcopy(samples),
-      #      #'nCleanJet20to30_2p4_PU_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M' : copy.deepcopy(samples),
-      #      #'nBJets_WP_M_20to30' : copy.deepcopy(samples),
-      #      #'Lepton_eta[0]' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_down_type_jet_b_tagged' : copy.deepcopy(samples),
-      #      #'fitted_dijet_M_high_down_type_jet_b_tagged' : copy.deepcopy(samples),            
-      #    },
-
-    },
-  },
-}
 nuisances_btag = [
         'btag_lfUp',
         'btag_lfDown',
@@ -756,8 +177,8 @@ nuisances_tt_hf = [
 nuisances_others = [
         'ttXsecUp',
         'ttXsecDown',
-        'isoVarUp',
-        'isoVarDown', #dumy
+        'isoUp',
+        'isoDown', #dumy
         'binningVarUp',
         'binningVarDown', #dumy
         ]
@@ -777,11 +198,23 @@ for syst in ['mu_2b', 'mu_3b','ele_2b','ele_3b']:
     nuisances_others.append(name+"Up")
     nuisances_others.append(name+"Down")
 
-nuisances = nuisances_btag + nuisances_tt_hf + nuisances_others
-
+#nuisances = nuisances_btag + nuisances_tt_hf + nuisances_others
+nuisances = [
+            'isoUp',
+            'isoDown', #dumy
+        ]
 
 for nuisance in nuisances:
   input_dict[nuisance] = copy.deepcopy(input_dict[''])
+
+  if 'iso' in nuisance:
+    #rename ch
+    for ch in input_dict[nuisance]['chennels']:
+      if 'iso' in ch:
+        continue
+      ch_new = ch.replace("_D_","_%s_D_"%nuisance)
+      input_dict[nuisance]['chennels'][ch_new] = input_dict[nuisance]['chennels'].pop(ch)
+
   for ch in input_dict[nuisance]['chennels']:
     for var in input_dict[nuisance]['chennels'][ch]:
       for i, histo_name in enumerate(input_dict[nuisance]['chennels'][ch][var]):
@@ -953,8 +386,11 @@ for tag_key, tag in input_dict.iteritems():
       if tag_key == '':
         pass
       elif 'iso' in tag_key:
-        ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m').replace('_2b','').replace('_3b','')
-        new_histo_suffix = 'iso_%s%s'%(ch_,tag_key.replace('isoVar',''))
+        if 'eleCH' in ch or 'eleORmuCH' in ch:
+          new_histo_suffix = 'antiiso_ele'
+        elif 'muCH' in ch:
+          new_histo_suffix = 'antiiso_mu'
+        new_histo_suffix += tag_key.replace('iso','') # for Up/Down suffix
         outHistName += '_' + new_histo_suffix
       elif 'binning' in tag_key:
         ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m')

@@ -9,7 +9,7 @@ plotFile='plot_norm_Low.py' ##color code and some format-related things
 
 samplesFile = 'samples_2017_keyonly.py'
 
-lumi=41.5
+lumi=41.53
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

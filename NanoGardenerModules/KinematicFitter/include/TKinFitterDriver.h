@@ -56,6 +56,7 @@ public:
   void SetMETShift(double met_shiftX, double met_shiftY);
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
   void SetNeutrinoSmallerPz(TLorentzVector met_);
+  void SetGenJets(std::vector<float> genjet_vector_);
 
   void Fit();
   void FitCurrentPermutation();
@@ -205,6 +206,7 @@ private:
   TSCorrection *ts_correction;
 
   std::vector<TLorentzVector> jet_vector;
+  std::vector<double> genjet_pt_vector;
   std::vector<double> jet_pt_resolution_vector;
   std::vector<bool> btag_vector;
   std::vector<double> btag_csv_vector;

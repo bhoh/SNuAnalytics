@@ -20,6 +20,7 @@ usage = 'usage: %prog [options]'
 parser = optparse.OptionParser(usage)
 
 parser.add_option('--tag'                , dest='tag'               , help='Tag used for the shape file name'           , default=None)
+parser.add_option('--shapeFile'                , dest='shapeFile'               , help='original shape file path'           , default=None)
       
 # read default parsing options as well
 hwwtools.addOptions(parser)
@@ -65,9 +66,9 @@ if os.path.exists(opt.variablesFile) :
   handle.close()
 
 ###
-fileName='rootFile_2018_SKIM7_QCD_ABCD_SF/hadd.root'
+fileName='rootFile_%s/hadd.root'%opt.tag
 
-outFileName = 'ABCD_data_driven_shape.root'
+outFileName = 'rootFile_%s/ABCD_data_driven_shape.root'%opt.tag
 outFile =  ROOT.TFile(outFileName,'RECREATE')
 
 #histo_DATA
@@ -110,13 +111,13 @@ samples = [
 
 input_dict = {
   '' : {
-    'input'    : 'rootFile_2018_SKIM7_QCD_ABCD_SF/hadd.root',
+    'input'    : fileName,
     'chennels' : {}
     }
   }
 
 for cut in cuts:
-  if 'isoDown' in cut:
+  if 'iso' in cut:
     continue
   cutName = cut
   fullCutNames = []
@@ -174,8 +175,8 @@ nuisances_tt_hf = [
 nuisances_others = [
         'ttXsecUp',
         'ttXsecDown',
-        'isoVarUp',
-        'isoVarDown', #dumy
+        'isoUp',
+        'isoDown', #dumy
         'binningVarUp',
         'binningVarDown', #dumy
         ]
@@ -198,11 +199,24 @@ for syst in ['mu_2b', 'mu_3b','ele_2b','ele_3b']:
     nuisances_others.append(name+"Up")
     nuisances_others.append(name+"Down")
 
-nuisances = nuisances_btag + nuisances_tt_hf + nuisances_others
+#nuisances = nuisances_btag + nuisances_tt_hf + nuisances_others
+nuisances = [
+            'isoUp',
+            'isoDown', #dumy
+        ]
 
 
 for nuisance in nuisances:
   input_dict[nuisance] = copy.deepcopy(input_dict[''])
+
+  if 'iso' in nuisance:
+    #rename ch
+    for ch in input_dict[nuisance]['chennels']:
+      if 'iso' in ch:
+        continue
+      ch_new = ch.replace("_D_","_%s_D_"%nuisance)
+      input_dict[nuisance]['chennels'][ch_new] = input_dict[nuisance]['chennels'].pop(ch)
+
   for ch in input_dict[nuisance]['chennels']:
     for var in input_dict[nuisance]['chennels'][ch]:
       for i, histo_name in enumerate(input_dict[nuisance]['chennels'][ch][var]):
@@ -372,8 +386,11 @@ for tag_key, tag in input_dict.iteritems():
       if tag_key == '':
         pass
       elif 'iso' in tag_key:
-        ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m').replace('_2b','').replace('_3b','')
-        new_histo_suffix = 'iso_%s%s'%(ch_,tag_key.replace('isoVar',''))
+        if 'eleCH' in ch or 'eleORmuCH' in ch:
+          new_histo_suffix = 'antiiso_ele'
+        elif 'muCH' in ch:
+          new_histo_suffix = 'antiiso_mu'
+        new_histo_suffix += tag_key.replace('iso','') # for Up/Down suffix
         outHistName += '_' + new_histo_suffix
       elif 'binning' in tag_key:
         ch_ = ch.replace('sng_4j_D_','').replace('eleCH','e').replace('muCH','m')

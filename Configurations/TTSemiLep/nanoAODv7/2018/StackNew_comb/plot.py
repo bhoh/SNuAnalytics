@@ -316,7 +316,7 @@ for mass, color in [('090','green'),('120','red'),('150','blue')]:
 #        'samples' : ['ggHWWlnuqq_M'+str(MX)]
 #    }
 
-legend['lumi'] = 'L = 58.8/fb'
+legend['lumi'] = 'L = 59.74/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 legend['extraText'] = 'work in progress'

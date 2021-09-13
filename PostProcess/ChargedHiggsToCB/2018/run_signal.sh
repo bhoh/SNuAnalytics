@@ -34,13 +34,16 @@ for e in ${EXCLUDE[@]};do EXCLUDE_LIST=${e}','${EXCLUDE_LIST};done
 ######################
 
 sitescfg='--sitescfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Sites_cfg.py'
-modcfg='--modcfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Steps_cfg.py'
+modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/Steps_cfg.py'
+#modcfg='--modcfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Steps_cfg.py'
+#modcfg='--modcfg SNuAnalytics/NanoGardenerFrameworks/HWWSemilepHM/20200406_HMSemilepSKIMv6_10/Steps_cfg.py'
 datacfg='--datacfg SNuAnalytics/PostProcess/ChargedHiggsToCB/Productions_cfg.py'
 
 #--l1Prod--#
 #mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i Prod -s MCl1loose2018v6 -b -T ${SAMPLE_LIST}
+mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i Prod -s MCl1loose2018v6 -b -T CHToCB_M160
 #--Corr--#
-mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6 -s MCCorr2018v6 -b -T ${SAMPLE_LIST} -R
+#mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv6_Full2018v6 -i MCl1loose2018v6 -s MCCorr2018v6 -b -T ${SAMPLE_LIST} -R
 
 
 #mkPostProc.py ${sitescfg} ${modcfg} ${datacfg} -p Autumn18_102X_nAODv5_Full2018v5 -i MCl1loose2018v5__MCCorr2018v5 -s Semilep2018 -b -T ${SAMPLE_LIST}

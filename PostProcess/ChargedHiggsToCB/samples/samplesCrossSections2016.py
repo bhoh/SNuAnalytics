@@ -985,3 +985,11 @@ samples['TT_hdampDown']              .extend( ['xsec=831.76',	'kfact=1.000',		'r
 #mass
 samples['TT_mtopUp']                 .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
 samples['TT_mtopDown']               .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+#
+samples['TT_isrUp']                  .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_isrDown']                .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_fsrUp']                  .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+samples['TT_fsrDown']                .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+
+samples['TT_TuneCUETP8M2T4_PSweights']       .extend( ['xsec=831.76',	'kfact=1.000',		'ref=E'] )
+

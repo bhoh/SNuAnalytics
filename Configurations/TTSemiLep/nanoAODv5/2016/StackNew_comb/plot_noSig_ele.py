@@ -20,13 +20,24 @@ dict_TColor={
 scriptname=opt.plotFile
 
 
-groupPlot['QCD'] = {
-        'nameHR' : 'QCD',
-        'isSignal' : 0,
-        'color' :  dict_TColor['gray'],
-        'isData'   : 0,
-        'samples' : ['QCD_MU','QCD_EM','QCD_bcToE'],
-    }
+if not 'ele' in scriptname:
+    groupPlot['QCD'] = {
+            'nameHR' : 'QCD',
+            'isSignal' : 0,
+            'color' :  dict_TColor['gray'],
+            'isData'   : 0,
+            'samples' : ['QCD_MU'],
+        }
+
+if not 'mu' in scriptname:
+    groupPlot['QCD'] = {
+            'nameHR' : 'QCD',
+            'isSignal' : 0,
+            'color' :  dict_TColor['gray'],
+            'isData'   : 0,
+            'samples' : ['QCD_EM','QCD_bcToE'],
+        }
+
 groupPlot['TTV'] = {
         'nameHR' : 'TTV',
         'isSignal' : 0,
@@ -59,49 +70,30 @@ groupPlot['ST'] = {
         'isData'   : 0,
         'samples' : ['ST'],
     }
-groupPlot['TTLL'] = {
-        'nameHR' : 'TTLL',
-        'isSignal': 0,
-        'color'   :  dict_TColor['magenta'],
-        'isData'  : 0,
-        'samples' : ['TTLL'],
-    }
 
-groupPlot['TTLJ+jj']  = {
-                  'nameHR' : 'TTLJ+jj',
+groupPlot['TT+jj']  = {
+                  'nameHR' : 'TT+jj',
                   'isSignal' : 0,
                   'color': dict_TColor['orange'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+jj']
+                  'samples'  : ['TTLJ+jj','TTLL+jj']
               }
 
-groupPlot['TTLJ+cc']  = {
-                  'nameHR' : 'TTLJ+cc',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+4,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+cc']
-              }
-
-groupPlot['TTLJ+bj']  = {
-                  'nameHR' : 'TTLJ+bj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+1,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bj']
-              }
-
-groupPlot['TTLJ+bb']  = {
-                  'nameHR' : 'TTLJ+bb',
+groupPlot['TT+bb']  = {
+                  'nameHR' : 'TT+bb',
                   'isSignal' : 0,
                   'color': dict_TColor['blue'],
                   'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bb']
+                  'samples'  : ['TTLJ+bb','TTLJ+bj','TTLL+bb','TTLL+bj']
               }
 
-
-
-
+groupPlot['TT+cc']  = {
+                  'nameHR' : 'TT+cc',
+                  'isSignal' : 0,
+                  'color': dict_TColor['red']+4,
+                  'isData'   : 0,                 
+                  'samples'  : ['TTLJ+cc','TTLL+cc']
+              }
 
 
 plot['QCD_MU']  = {
@@ -176,45 +168,6 @@ plot['ST']  = {
                   'samples'  : ['ST']
               }
 
-plot['TTLL']  = {
-                  'nameHR' : 'TTLL',
-                  'isSignal' : 0,
-                  'color': dict_TColor['magenta'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLL']
-              }
-
-plot['TTLJ+jj']  = {
-                  'nameHR' : 'TTLJ+jj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['orange'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+jj']
-              }
-
-plot['TTLJ+cc']  = {
-                  'nameHR' : 'TTLJ+cc',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+4,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+cc']
-              }
-
-plot['TTLJ+bj']  = {
-                  'nameHR' : 'TTLJ+bj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+1,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bj']
-              }
-
-plot['TTLJ+bb']  = {
-                  'nameHR' : 'TTLJ+bb',
-                  'isSignal' : 0,
-                  'color': dict_TColor['blue'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ+bb']
-              }
 
 plot['TTWjets']  = {
                   'nameHR' : 'TTWjets',

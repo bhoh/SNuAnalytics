@@ -4,12 +4,12 @@
 tag='2016_SKIM7_comb'
 
 variablesFile='variables_comb.py' ##what variables to draw
-cutsFile='cuts.py' ## event selection##region selection
+cutsFile='cuts_comb.py' ## event selection##region selection
 plotFile='plot_comb.py' ##color code and some format-related things
 
 samplesFile = 'samples_2016.py'
 
-lumi=35.92
+lumi=36.33
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

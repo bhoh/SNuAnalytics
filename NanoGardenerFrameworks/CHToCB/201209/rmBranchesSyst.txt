@@ -17,6 +17,10 @@ keep hadronic_top_b_jet_pull_*
 keep leptonic_top_b_jet_pull_*
 keep w_ch_up_type_jet_pull_*
 keep w_ch_down_type_jet_pull_*
+keep fitted_hadronic_top_b_jet_pull_*
+keep fitted_leptonic_top_b_jet_pull_*
+keep fitted_w_ch_up_type_jet_pull_*
+keep fitted_w_ch_down_type_jet_pull_*
 keep hadronic_top_mass_F_*
 keep leptonic_top_mass_F_*
 keep leptonic_w_mass_F_*

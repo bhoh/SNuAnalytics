@@ -3,13 +3,13 @@
 #
 #python doCombi_batch.py -Year='All' -M='MultiDimFit' -options='--saveWorkspace --cminPreScan --cminPreFit 1 --verbose 9'
 #python doCombi.py -Year='All' -options='--rAbsAcc 0 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1 --verbose 9'
-python doCombi_batch.py -Year='All' -options='--rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 100 --verbose 9 --minosAlgo minos -t 100'
+#python doCombi_batch.py -Year='All' -options='--rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 100 --verbose 9 --minosAlgo minos -t 100'
 #python doCombi.py -Year='All' -options='--rAbsAcc 0 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1 --verbose 9' -snapshot
 #python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1 ' -snapshot
 #
 # -- pre-fit expectation and significance
 #
-#python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0.1 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1'
+python doCombi_batch.py -Year='All' -options='-t -1 --rAbsAcc 0.1 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1'
 #python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0.1 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1 --setParameters BR10ToMinus7=0.01'
 #python doCombi.py -Year='All' -M='Significance' -options='-t -1 --cminPreScan --cminPreFit 1 --setParameters BR10ToMinus7=0.1'
 #

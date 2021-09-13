@@ -3,20 +3,19 @@ import argparse
 import collections
 
 
-#masses = ['090']
-masses = ['075','080','085','090','100','110','120','130','140','150']
-#mass_points = [("CH090",90),("CH100",100),("CH110",110),("CH120",120),("CH130",130),("CH140",140),("CH150",150)]
+masses = ['075','080','085','090','100','110','120','130','140','150','160']
+mass_points = [("CH090",90),("CH100",100),("CH110",110),("CH120",120),("CH130",130),("CH140",140),("CH150",150),("CH160,160")]
 cuts_2b =[0.00] #[0.00,0.35,0.55]
 cuts_3b =[0.00] #[0.00,0.2,0.30,0.40,0.50,0.60]
 dirBase={}
-dirBase['2016'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/StackNew_comb/'
-dirBase['2017'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2017/StackNew_comb/'
-dirBase['2018'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv6/2018/StackNew_comb/'
-variableName = ['fitted_dijet_M','fitted_dijet_M_high']
+dirBase['2016'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv7/2016/StackNew_comb/'
+dirBase['2017'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv7/2017/StackNew_comb/'
+dirBase['2018'] = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv7/2018/StackNew_comb/'
+variableName = ['fitted_dijet_M','fitted_dijet_M_high','Event']
 
 class LimitCalc():
 
-    def __init__(self,StatOnly, Ch, Cut, Variables, Year, Method, Options, Run, Snapshot):
+    def __init__(self,StatOnly, Ch, Cut, Year, Method, Options, Run, Snapshot):
       if StatOnly==True:
           self.StatOnlyLabel = "stat_only"
           self.StatOnly = '-S 0'
@@ -27,16 +26,19 @@ class LimitCalc():
           raise RuntimeError("no such args: %s"%StatOnly)
 
       if Ch == "All":
-        #self.Ch = ['sngCH']
-        self.Ch = ['muCH', 'eleCH']
+        self.Ch = ['sng_4j_muCH', 'sng_4j_eleCH']
+        self.Ch += ['dbl_2j_mm', 'dbl_2j_em','dbl_2j_me', 'dbl_2j_ee']
       elif Ch in ['sngCH']:
-        self.Ch = [Ch]
+        self.Ch = ['sng_4j_muCH', 'sng_4j_eleCH']
       else:
         print 'There is no channel like',Ch, 'Exiting....'
         exit()
 
       if Year == "All":
         self.Year = ['2016','2017','2018']
+        #self.Year = ['2018']
+        #self.Year = ['2017']
+        #self.Year = ['2016']
         #self.Year = ['2017','2018']
       elif Year in ['2016','2017','2018']:
         self.Year    = [Year]
@@ -48,23 +50,17 @@ class LimitCalc():
       if Cut == 'All':
         #self.Cuts = ['4j5j2b','4j5j3b']
         #self.Cuts = ['4j5j2b','6j2b','4j5j3b','6j3b']
-        self.Cuts['2016'] = ['Top4j2b__noHEMveto','Top4j3b__noHEMveto']
-        self.Cuts['2017'] = ['Top4j2b__noHEMveto','Top4j3b__noHEMveto']
-        self.Cuts['2018'] = ['Top4j2b__HEMveto','Top4j3b__HEMveto']
+        #self.Cuts['2016'] = ['Top4j2b__noHEMveto','Top4j3b__noHEMveto']
+        #self.Cuts['2017'] = ['Top4j2b__noHEMveto','Top4j3b__noHEMveto']
+        self.Cuts['2016'] = ['2b','3b']
+        self.Cuts['2017'] = ['2b','3b']
+        self.Cuts['2018'] = ['2b','3b']
       elif Cut in ['Top4j2b__noHEMveto','Top4j3b__noHEMveto']:
         self.Cuts['2016'] = [Cut]
         self.Cuts['2017'] = [Cut]
       else:
         print 'there is no cut like',Cut,'Exiting...'
         exit()
-
-      self.Variables=Variables
-      if Variables == "fitted_dijet_M":
-          self.VariablesName = ['fitted_dijet_M','fitted_dijet_M_high']
-      elif Variables == "initial_dijet_M":
-          self.VariablesName = ['initial_dijet_M','initial_dijet_M_high']
-      else:
-          raise RuntimeError("Variable %s is not available"%(Variables))
 
       if Run !='':
         self.Run = '--run '+Run
@@ -99,21 +95,26 @@ class LimitCalc():
         for year in self.Year:
           combName = combName + 'Y'+year
           for ch in self.Ch:
-            combName += ch
+            #combName += ch
             for cut in self.Cuts[year]:
-              combName += cut.replace('Top','').replace('noHEMveto','')
               processName = 'Y'+year+'__'+ch+'__'+cut
-              if (mass > "125" and "3b" in cut):
-                tmp_variableName = self.VariablesName[1]
+              if 'dbl_2j' in ch:
+                tmp_variableName = variableName[2]
+              elif (mass > "125" and "3b" in cut):
+                tmp_variableName = variableName[1]
               else:
-                tmp_variableName = self.VariablesName[0]
-              if '4j3b' in cut and 'dijet_M' in tmp_variableName:
+                tmp_variableName = variableName[0]
+              if '3b' in cut and 'dbl_2j' not in ch:
                 tmp_variableName += '_down_type_jet_b_tagged'
-              cardName= dirBase[year]+'/Datacards'+'/'+ch+'__'+cut+'/'+tmp_variableName+'/datacard_CHToCB_M{MASS}.txt'.format(MASS=mass)
+              cardDir = dirBase[year]+'/Datacards'+'/'+ch+'_'+cut+'/'+tmp_variableName
+              if ch in ['dbl_2j_mm', 'dbl_2j_em','dbl_2j_me', 'dbl_2j_ee']:
+                mass_suffix = ''
+              else:
+                mass_suffix = '_CHToCB_M{MASS}'.format(MASS=mass)
+              cardName= '{DIR}/datacard{SUFFIX}.txt'.format(DIR=cardDir,SUFFIX=mass_suffix)
               #print processName
               #print cardName
               cards[processName]=cardName
-        combName += self.Variables
         cmd = 'combineCards.py '
         for process in cards:
           #print process, cards[process]
@@ -246,7 +247,6 @@ if __name__ == '__main__':
     parser.add_argument('-StatOnly',help="False or True", default=False, type=bool)
     parser.add_argument('-Ch',help="Mu of El", default='All')
     parser.add_argument('-Cuts',help="Cuts", default='All')
-    parser.add_argument('-Variables',help="Variables", default='fitted_dijet_M')
     parser.add_argument('-Year',help="Which year to use", default='All')
     parser.add_argument('-combineCards',help="combine data cards", action='store_true')
     parser.add_argument('-text2workspace',help="run text2workspace script", action='store_true')
@@ -259,7 +259,6 @@ if __name__ == '__main__':
     StatOnly=args.StatOnly
     Ch=args.Ch
     Cuts=args.Cuts
-    Variables=args.Variables
     Year=args.Year
     combineCards = args.combineCards
     text2workspace = args.text2workspace
@@ -275,7 +274,7 @@ if __name__ == '__main__':
     print 'Method:'.ljust(20),Method
     print 'Run:'.ljust(20),Run
 
-    s = LimitCalc(StatOnly,Ch,Cuts,Variables,Year,Method,Options,Run,Snapshot)
+    s = LimitCalc(StatOnly,Ch,Cuts,Year,Method,Options,Run,Snapshot)
     s.CombineCards(combineCards)
     s.Text_to_Workspace(text2workspace)
     s.Combine(True)

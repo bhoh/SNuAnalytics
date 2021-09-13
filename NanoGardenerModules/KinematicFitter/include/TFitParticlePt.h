@@ -5,6 +5,7 @@
 #include "TAbsFitParticle.h"
 #include "TLorentzVector.h"
 #include "TMatrixD.h"
+#include "TRandom.h"
 
 
 class TFitParticlePt: public TAbsFitParticle {
@@ -36,6 +37,8 @@ protected :
 
 
 private:
+  Double_t _iniPt;
+  Double_t _iniE;
   Double_t _iniEta;
   Double_t _iniPhi;
   Double_t _iniM;

@@ -33,7 +33,7 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/jhchoi/Latino/HWWNano/"
 
-include_mva = True
+include_mva = False
 
 CAMPAIGN='Fall2017_102X_nAODv7_Full2017v7'
 #STEP="MCl1loose2017v7__MCCorr2017v7__CHToCBJetMETCorr__kinFitTTSemiLep_2017"
@@ -98,8 +98,9 @@ EMTFbug_veto\
 '
 SFweight=SFweight+'*'+LepWPCut+'*'+LepWPweight
 
-GenLepMatch = 'Lepton_genmatched[0]'
-#GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
+#GenLepMatch = 'Lepton_genmatched[0]'
+GenLepMatch = '1'
+##GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
 
 #SFweight=SFweight+'*HEMweight'
 
@@ -363,7 +364,8 @@ samples['TTWjets'] = {    'name'   :   getSampleFiles(directory,'TTWjets',False,
 samples['ttH'] = {'name'   :
                   getSampleFiles(directory,'ttHToNonbb_M125',False,'nanoLatino_')
                   +getSampleFiles(directory,'ttHTobb_ttToSemiLep_M125',False,'nanoLatino_')
-                  +getSampleFiles(directory,'ttHTobb_ttTo2L2Nu_M125',False,'nanoLatino_')
+                  #XXX
+                  #+getSampleFiles(directory,'ttHTobb_ttTo2L2Nu_M125',False,'nanoLatino_')
                   ,
                   'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                   'FilesPerJob' : 1,

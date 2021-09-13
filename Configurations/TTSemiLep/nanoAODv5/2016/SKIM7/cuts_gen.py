@@ -26,13 +26,13 @@ LepCut="(  Lepton_pt[0]>30 \
 LepPtCut='(Lepton_pt[0] > ('+elePtCut+'*(abs(Lepton_pdgId[0])==11) + '+muPtCut+'*(abs(Lepton_pdgId[0])==13)) )'
 
 
-#JetCut='nCleanJet30_2p5 >=4'
+#JetCut='nCleanJet30_2p4 >=4'
 
 #------End of Variable Definition-----#
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&isFatJetEvent[0]'
 #supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut+'&&'+JetCut
 supercut = LepWPCut+'&&'+LepPtCut+'&&'+LepCut
-supercut += '&&(nCleanJet30_2p5 >=4)'
+supercut += '&&(nCleanJet30_2p4 >=4)'
 supercut += '&&( nBJets_WP_M >= 2)'
 METtype="PuppiMET"
 supercut +='&&'+"( %s_pt > 20 )"%METtype

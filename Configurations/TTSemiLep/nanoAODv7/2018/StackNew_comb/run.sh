@@ -5,8 +5,8 @@
 
 
 
-#mkShapesMulti.py --pycfg=configuration_val.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM7_val
-mkShapesMulti.py --pycfg=configuration_val.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM7_val --dry-run
+mkShapesMulti.py --pycfg=configuration_val.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM7_val
+#mkShapesMulti.py --pycfg=configuration_val.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM7_val --dry-run
 
 
 

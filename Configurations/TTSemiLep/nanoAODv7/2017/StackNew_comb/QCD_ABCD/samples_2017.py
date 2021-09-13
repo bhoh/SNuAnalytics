@@ -82,8 +82,9 @@ EMTFbug_veto\
 '
 SFweight=SFweight+'*'+LepWPCut+'*'+LepWPweight
 
-GenLepMatch = 'Lepton_genmatched[0]'
-#GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
+#GenLepMatch = 'Lepton_genmatched[0]'
+GenLepMatch = '1'
+##GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
 
 #SFweight=SFweight+'*HEMweight'
 

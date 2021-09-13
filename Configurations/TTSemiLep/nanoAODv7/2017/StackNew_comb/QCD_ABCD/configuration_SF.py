@@ -4,13 +4,13 @@
 tag='2017_SKIM7_QCD_ABCD_SF'
 
 #variablesFile='variables_SF.py' ##what variables to draw
-variablesFile='variables_comb.py' ##what variables to draw
+variablesFile='variables_SF.py' ##what variables to draw
 cutsFile='cuts_SF.py' ## event selection##region selection
 plotFile='plot.py' ##color code and some format-related things
 
 samplesFile = 'samples_2017_SF.py'
 
-lumi=41.5
+lumi=41.53
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

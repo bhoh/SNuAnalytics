@@ -9,6 +9,7 @@ BinByBinJERMaker.py
 genCHToCB.py
 GenKinFitterProducer.py
 KinFitterProducer.py
+reduceStat.py
 )
 
 for m in ${MODULES[@]};do

@@ -41,9 +41,26 @@ ElectronWP = {
                                 # Common cuts
                                 'True' :
                                    [
-                                    'abs(electron_col[LF_idx]["eta"]) < 2.5' ,
-                                    'electron_col[LF_idx]["cutBased"] >= 2',
-                                   ] ,             
+                                    'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) < 2.5' ,
+                                    'electron_col[LF_idx]["cutBased"] >= 2',  #loose
+                                    'electron_col[LF_idx]["pt"]>15.',
+                                   ] ,
+                                #impact cuts
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <= 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.05' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.1'  ,
+                                   ] ,
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) > 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.1' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.2'  ,
+                                   ] ,
+                                 #gap veto
+                                 'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <=1.56 and abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) >= 1.4442' :
+                                   [
+                                     'False'
+                                   ] ,
                                   },
                        } ,
 
@@ -157,13 +174,30 @@ ElectronWP = {
  'FakeObjWP'  : {
 
            'HLTsafe' : { 
-                         'cuts' : { 
+                         'cuts' : {
                                 # Common cuts
                                 'True' :
                                    [
-                                    'abs(electron_col[LF_idx]["eta"]) < 2.5' ,
-                                    'electron_col[LF_idx]["cutBased"] >= 2',
-                                   ] ,             
+                                    'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) < 2.5' ,
+                                    'electron_col[LF_idx]["cutBased"] >= 2',  #loose
+                                    'electron_col[LF_idx]["pt"]>15.',
+                                   ] ,
+                                #impact cuts
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <= 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.05' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.1'  ,
+                                   ] ,
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) > 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.1' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.2'  ,
+                                   ] ,
+                                 #gap veto
+                                 'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <=1.56 and abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) >= 1.4442' :
+                                   [
+                                     'False'
+                                   ] ,
                                   },
                        } ,
 
@@ -293,13 +327,31 @@ ElectronWP = {
  'FakeObjWP'  : {
 
            'HLTsafe' : { 
-                         'cuts' : { 
+                         'cuts' : {
                                 # Common cuts
                                 'True' :
                                    [
-                                    'abs(electron_col[LF_idx]["eta"]) < 2.5' ,
-                                    'electron_col[LF_idx]["cutBased"] >= 2',
-                                   ] ,             
+                                    'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) < 2.5' ,
+                                    'electron_col[LF_idx]["cutBased"] >= 2',  #loose
+                                    'electron_col[LF_idx]["pt"]>15.',
+                                    'electron_col[LF_idx]["cutBased_HLTPreSel"] == 1' , #HLT safe
+                                   ] ,
+                                #impact cuts
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <= 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.05' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.1'  ,
+                                   ] ,
+                                'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) > 1.479' :
+                                   [
+                                     'abs(electron_col[LF_idx]["dxy"]) < 0.1' ,
+                                     'abs(electron_col[LF_idx]["dz"]) < 0.2'  ,
+                                   ] ,
+                                 #gap veto
+                                 'abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) <=1.56 and abs(electron_col[LF_idx]["eta"]+electron_col[LF_idx]["deltaEtaSC"]) >= 1.4442' :
+                                   [
+                                     'False'
+                                   ] ,
                                   },
                        } ,
 
@@ -422,8 +474,9 @@ MuonWP = {
                                 'True' :
                                  [
                                    'abs(muon_col[LF_idx]["eta"]) < 2.4' , 
-                                   'muon_col[LF_idx]["looseId"] == 1' ,
-                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.4',
+                                   'muon_col[LF_idx]["tightId"] == 1' ,
+                                   'muon_col[LF_idx]["pt"]>15.' ,
+                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.225',
                                  ] ,
                                   } ,
 
@@ -537,8 +590,9 @@ MuonWP = {
                                 'True' :
                                  [
                                    'abs(muon_col[LF_idx]["eta"]) < 2.4' , 
-                                   'muon_col[LF_idx]["looseId"] == 1' ,
-                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.4',
+                                   'muon_col[LF_idx]["tightId"] == 1' ,
+                                   'muon_col[LF_idx]["pt"]>15.' ,
+                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.225',
                                  ] ,
                                   } ,
 
@@ -660,8 +714,9 @@ MuonWP = {
                                 'True' :
                                  [
                                    'abs(muon_col[LF_idx]["eta"]) < 2.4' , 
-                                   'muon_col[LF_idx]["looseId"] == 1' ,
-                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.4',
+                                   'muon_col[LF_idx]["tightId"] == 1' ,
+                                   'muon_col[LF_idx]["pt"]>15.' ,
+                                   'muon_col[LF_idx]["pfRelIso04_all"] < 0.225',
                                  ] ,
                                   } ,
 

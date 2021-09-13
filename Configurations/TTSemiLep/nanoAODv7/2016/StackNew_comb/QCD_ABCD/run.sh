@@ -1,7 +1,9 @@
 #mkShapesMulti.py --pycfg=configuration.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events
 #mkShapesMulti.py --pycfg=configuration.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --dry-run
-mkShapesMulti.py --pycfg=configuration_SF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016_SKIM7_QCD_ABCD_SF
+#mkShapesMulti.py --pycfg=configuration_SF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016_SKIM7_QCD_ABCD_SF
 #mkShapesMulti.py --pycfg=configuration_SF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --dry-run
+mkShapesMulti.py --pycfg=configuration_SF_final.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016_SKIM7_QCD_ABCD_SF_final
+#mkShapesMulti.py --pycfg=configuration_SF_final.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --dry-run
 #
 #
 #

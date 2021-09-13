@@ -15,8 +15,6 @@ drop *GenJetAK8*
 drop *GenVisTau*
 drop *IsoTrack*
 drop *SV*
-drop nLeptonGen
-drop LeptonGen*
 drop nMuon
 drop Muon*
 drop nElectron
@@ -24,7 +22,6 @@ drop Electron*
 drop Gen_ZGstar*
 drop higgsGen*
 drop Jet_btagSF*
-drop LepSF2l*
 drop LepSF3l*
 drop LepSF4l*
 drop MHTrigger*

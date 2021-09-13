@@ -19,6 +19,7 @@ dict_TColor={
 
 scriptname=opt.plotFile
 
+splitTTLL = False
 
 groupQCD = []
 if not 'ele' in scriptname:
@@ -45,31 +46,80 @@ groupPlot['QCD']  = {
     'cuts'     : ['sng_4j_eleCH_2b','sng_4j_muCH_2b'],
 }
 
-
-
-groupPlot['TT+jj']  = {
-                  'nameHR' : 'TT+jj',
-                  'isSignal' : 0,
-                  'color': dict_TColor['orange'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ_jj','TTLL_jj']
-              }
-
-groupPlot['TT+cc']  = {
-                  'nameHR' : 'TT+cc',
-                  'isSignal' : 0,
-                  'color': dict_TColor['red']+4,
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ_cc','TTLL_cc']
-              }
-# merge TT+bj to TT+bb : its xsec scale is highly correlated
-groupPlot['TT+bb']  = { 
-                  'nameHR' : 'TT+bb',
-                  'isSignal' : 0,
-                  'color': dict_TColor['blue'],
-                  'isData'   : 0,                 
-                  'samples'  : ['TTLJ_bb','TTLL_bb','TTLJ_bj','TTLL_bj']
-              }
+if not splitTTLL:
+  groupPlot['TT+jj']  = {
+                    'nameHR' : 'TT+jj',
+                    'isSignal' : 0,
+                    'color': dict_TColor['orange'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_jj','TTLL_jj']
+                }
+  
+  groupPlot['TT+cc']  = {
+                    'nameHR' : 'TT+cc',
+                    'isSignal' : 0,
+                    'color': dict_TColor['red']+4,
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_cc','TTLL_cc']
+                }
+  
+  # merge TT+bj to TT+bb : its xsec scale is highly correlated
+  groupPlot['TT+bb']  = { 
+                    'nameHR' : 'TT+bb',
+                    'isSignal' : 0,
+                    'color': dict_TColor['blue'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_bb','TTLL_bb','TTLJ_bj','TTLL_bj']
+                }
+else:
+  groupPlot['TTLJ+jj']  = {
+                    'nameHR' : 'TTLJ+jj',
+                    'isSignal' : 0,
+                    'color': dict_TColor['orange'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_jj',]
+                }
+  
+  groupPlot['TTLJ+cc']  = {
+                    'nameHR' : 'TTLJ+cc',
+                    'isSignal' : 0,
+                    'color': dict_TColor['red']+4,
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_cc',]
+                }
+  
+  # merge TT+bj to TT+bb : its xsec scale is highly correlated
+  groupPlot['TTLJ+bb']  = { 
+                    'nameHR' : 'TTLJ+bb',
+                    'isSignal' : 0,
+                    'color': dict_TColor['blue'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLJ_bb','TTLJ_bj']
+                }
+  groupPlot['TTLL+jj']  = {
+                    'nameHR' : 'TTLL+jj',
+                    'isSignal' : 0,
+                    'color': dict_TColor['orange'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLL_jj',]
+                }
+  
+  groupPlot['TTLL+cc']  = {
+                    'nameHR' : 'TTLL+cc',
+                    'isSignal' : 0,
+                    'color': dict_TColor['red']+4,
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLL_cc',]
+                }
+  
+  # merge TT+bj to TT+bb : its xsec scale is highly correlated
+  groupPlot['TTLL+bb']  = { 
+                    'nameHR' : 'TTLL+bb',
+                    'isSignal' : 0,
+                    'color': dict_TColor['blue'],
+                    'isData'   : 0,                 
+                    'samples'  : ['TTLL_bb','TTLL_bj']
+                }
 
 
 
@@ -100,8 +150,14 @@ for mass in ['075','080','085','090','100','110','120','130','140','150', '160']
         'samples' : [sample_name]
     }
 
-
-
+#yield study. same shape as TTLJ, yield taken from CHToCB_M080
+groupPlot['CHToCB_M080_yield']={
+    'nameHR':'M{0}(BR=0.01)'.format('080'),
+    'isData'   : 0,
+    'isSignal' : 2,
+    'color':dict_TColor['red'],
+    'samples' : ['TTLJ_jj','TTLJ_cc','TTLJ_bj','TTLJ_bb']
+}
 
 if not 'ele' in scriptname:
     plot['QCD_MU']  = {
@@ -310,7 +366,7 @@ for mass in ['075','080','085','090','100','110','120','130','140','150', '160']
 #        'samples' : ['ggHWWlnuqq_M'+str(MX)]
 #    }
 
-legend['lumi'] = 'L = 41.5/fb'
+legend['lumi'] = 'L = 41.53/fb'
 
 legend['sqrt'] = '#sqrt{s} = 13 TeV'
 legend['extraText'] = 'work in progress'

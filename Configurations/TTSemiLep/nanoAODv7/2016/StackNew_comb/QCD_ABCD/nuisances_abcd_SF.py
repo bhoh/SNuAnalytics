@@ -24,31 +24,42 @@ ABCD_SF_2l =  '(nLooseLep==2)*(1)'
 ABCD_SF      = '(%s+%s)'%(ABCD_SF_1l, ABCD_SF_2l)
 
 
-#for shift in ['jes', 'lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
-for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
-    btag_up, btag_down = '(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift
-
-    name = 'btag_%s' % shift
-    if 'stats' in shift:
-        name += '_2016'
-    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',name+'[1]')
-    ABCD_SF_syst_down = ABCD_SF.replace('[0]',name+'[2]')
-    btag_up, btag_down = '(%s)*%s/%s'%(btag_up,ABCD_SF_syst_up,ABCD_SF), '(%s)*%s/%s'%(btag_down,ABCD_SF_syst_down,ABCD_SF)
-    btag_syst = ['({var}<9999?{var}:1.)'.format(var=btag_up),'({var}<9999?{var}:1.)'.format(var=btag_down)]
-
-    samples_dict = dict((skey, btag_syst) for skey in mc)
-    samples_dict.update({ 'DATA' : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'%s/%s'%(ABCD_SF_syst_down,ABCD_SF)]})
-    nuisances['btag_shape_%s' % shift] = {
-        'name': name,
-        'kind': 'weight',
-        'type': 'shape',
-        'samples': samples_dict,
-        'group': 'experimental',
-    }
-
-for syst in ['ttbb','ttcc','ttXsec']:
-    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',syst+'[1]')
-    ABCD_SF_syst_down = ABCD_SF.replace('[0]',syst+'[2]')
+##for shift in ['jes', 'lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
+#for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
+#    btag_up, btag_down = '(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift
+#
+#    name = 'btag_%s' % shift
+#    if 'stats' in shift:
+#        name += '_2016'
+#    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',name+'[1]')
+#    ABCD_SF_syst_down = ABCD_SF.replace('[0]',name+'[2]')
+#    btag_up, btag_down = '(%s)*%s/%s'%(btag_up,ABCD_SF_syst_up,ABCD_SF), '(%s)*%s/%s'%(btag_down,ABCD_SF_syst_down,ABCD_SF)
+#    btag_syst = ['({var}<9999?{var}:1.)'.format(var=btag_up),'({var}<9999?{var}:1.)'.format(var=btag_down)]
+#
+#    samples_dict = dict((skey, btag_syst) for skey in mc)
+#    samples_dict.update({ 'DATA' : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'%s/%s'%(ABCD_SF_syst_down,ABCD_SF)]})
+#    nuisances['btag_shape_%s' % shift] = {
+#        'name': name,
+#        'kind': 'weight',
+#        'type': 'shape',
+#        'samples': samples_dict,
+#        'group': 'experimental',
+#    }
+#
+#for syst in ['ttbb','ttcc','ttXsec']:
+#    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',syst+'[1]')
+#    ABCD_SF_syst_down = ABCD_SF.replace('[0]',syst+'[2]')
+#    nuisances['ABCD_SF'+syst] = {
+#        'name': syst,
+#        'kind': 'weight',
+#        'type': 'shape',
+#        'samples': { key : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'%s/%s'%(ABCD_SF_syst_down,ABCD_SF)] for key in samples_key },
+#        'group': 'theory',
+#    } 
+#for syst in ['binningVar']: #one-side
+for syst in ['iso',]:
+    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',syst+'[1]').replace('_noTight','_noTight_isoUp')
+    ABCD_SF_syst_down = ABCD_SF.replace('[0]',syst+'[2]').replace('_noTight','_noTight_isoDown')
     nuisances['ABCD_SF'+syst] = {
         'name': syst,
         'kind': 'weight',
@@ -56,35 +67,4 @@ for syst in ['ttbb','ttcc','ttXsec']:
         'samples': { key : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'%s/%s'%(ABCD_SF_syst_down,ABCD_SF)] for key in samples_key },
         'group': 'theory',
     } 
-for syst in ['isoVar','binningVar']: #one-side
-    ABCD_SF_syst_up   = ABCD_SF.replace('[0]',syst+'[1]')
-    nuisances['ABCD_SF'+syst] = {
-        'name': syst,
-        'kind': 'weight',
-        'type': 'shape',
-        'samples': { key : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'1.'] for key in samples_key },
-        'group': 'theory',
-    } 
-hist_path_dict = {}
-hist_path_dict['mu_2b']  = 'sng_4j_muCH_2b/MuonEta/histo_TF_data_driven'
-hist_path_dict['mu_3b']  = 'sng_4j_muCH_3b/MuonEta/histo_TF_data_driven'
-hist_path_dict['ele_2b'] = 'sng_4j_eleCH_2b/EleSCEta/histo_TF_data_driven'
-hist_path_dict['ele_3b'] = 'sng_4j_eleCH_3b/EleSCEta/histo_TF_data_driven'
-for syst in ['mu_2b', 'mu_3b','ele_2b','ele_3b']:
-  # i th bin syst
-  hist_source = '%s/src/SNuAnalytics/Configurations/TTSemiLep/patches/ABCD_SF/ABCD_data_driven_SF_2016.root' % os.getenv('CMSSW_BASE')
-  f = ROOT.TFile(hist_source,"READ")
-  h = f.Get(hist_path_dict[syst])
-  Nbins = h.GetNbinsX()
-  for i in range(1,Nbins+1):
-    ABCD_SF_syst_up   = ABCD_SF.replace('%s[0]'%syst,'%s[%d]'%(syst,int(2*i-1)))
-    ABCD_SF_syst_down = ABCD_SF.replace('%s[0]'%syst,'%s[%d]'%(syst,int(2*i)))
-    name = "ABCD_SF_%s_bins%d_2016"%(syst,int(i))
-    nuisances[name] = {
-        'name': name,
-        'kind': 'weight',
-        'type': 'shape',
-        'samples': { key : ['%s/%s'%(ABCD_SF_syst_up,ABCD_SF),'%s/%s'%(ABCD_SF_syst_down,ABCD_SF)] for key in samples_key },
-        'group': 'experiment',
-    }
 

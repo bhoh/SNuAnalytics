@@ -1012,6 +1012,66 @@ Steps = {
                   #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201008_CHToCBLepton/rmBranches.txt'
                },
+    'kinFitTTSemiLepV2_2018': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2018 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.2770\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+                  'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201008_CHToCBLepton/rmBranches.txt'
+               },
+    'kinFitTTSemiLepV2_2017': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2017 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.5 &&\
+                                        Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033\
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+                  'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201008_CHToCBLepton/rmBranches.txt'
+               },
+    'kinFitTTSemiLepV2_2016': {
+                  'isChain'    : False ,
+                  'do4MC'      : True ,
+                  'do4Data'    : True ,
+                  #'selection'  : '"Entry$<1000"',
+                  #XXX
+                  #2016 cuts
+                  #XXX
+                  #XXX
+                  'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
+                                        Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3093 \
+                                       )>=2))\
+                                  "',
+                  'import'     : 'LatinoAnalysis.NanoGardener.modules.KinFitterProducer' ,
+                  'declare'    : 'kinFitting = lambda : KinFitterProducer(RPLME_YEAR)',
+                  'module'     : 'kinFitting()',
+                  #'outputbranchsel'  : os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerModules/removeBranch_CHToCB.txt',
+                  'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201008_CHToCBLepton/rmBranches.txt'
+               },
 
     'mvaTreeCHToCB': {
                   'isChain'    : False ,
@@ -5624,6 +5684,9 @@ Steps.update(addSystChainMembers_CombJJLNu())
 Steps.update(prepare_CHToCB_syst("kinFitTTSemiLep_2016",Steps['kinFitTTSemiLep_2016']['selection']))
 Steps.update(prepare_CHToCB_syst("kinFitTTSemiLep_2017",Steps['kinFitTTSemiLep_2017']['selection']))
 Steps.update(prepare_CHToCB_syst("kinFitTTSemiLep_2018",Steps['kinFitTTSemiLep_2018']['selection']))
+Steps.update(prepare_CHToCB_syst("kinFitTTSemiLepV2_2016",Steps['kinFitTTSemiLepV2_2016']['selection']))
+Steps.update(prepare_CHToCB_syst("kinFitTTSemiLepV2_2017",Steps['kinFitTTSemiLepV2_2017']['selection']))
+Steps.update(prepare_CHToCB_syst("kinFitTTSemiLepV2_2018",Steps['kinFitTTSemiLepV2_2018']['selection']))
 
 syst_tot = ['jer','jesTotal','unclustEn']
 syst_uncorr = ['jesAbsolute_RPLME_YEAR','jesBBEC1_RPLME_YEAR','jesEC2_RPLME_YEAR','jesHF_RPLME_YEAR','jesRelativeSample_RPLME_YEAR']
@@ -5631,7 +5694,7 @@ syst_corr = ['jesAbsolute','jesBBEC1','jesEC2','jesFlavorQCD','jesHF','jesRelati
 syst_all = syst_tot + syst_uncorr + syst_corr
 
 # add CHToCB syst. kinFitTTSemiLep
-for base_name in ["kinFitTTSemiLep_2016", "kinFitTTSemiLep_2017", "kinFitTTSemiLep_2018"]:
+for base_name in ["kinFitTTSemiLep_2016", "kinFitTTSemiLep_2017", "kinFitTTSemiLep_2018"] + ["kinFitTTSemiLepV2_2016", "kinFitTTSemiLepV2_2017", "kinFitTTSemiLepV2_2018"]:
   Steps.update(prepare_module_CHToCB_syst(base_name,
                        syst_all,
                        'LatinoAnalysis.NanoGardener.modules.KinFitterProducer',
@@ -5651,13 +5714,22 @@ Steps.update(prepare_HEM_CHToCB_syst("kinFitTTSemiLep_2018",
                         'kinFitting_HEM = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix="HEM")',
                         'kinFitting_HEM()',
                         ))
+Steps.update(prepare_HEM_CHToCB_syst("kinFitTTSemiLepV2_2018",
+                        'LatinoAnalysis.NanoGardener.modules.KinFitterProducer',
+                        'kinFitting_HEM = lambda : KinFitterProducer(RPLME_YEAR,syst_suffix="HEM")',
+                        'kinFitting_HEM()',
+                        ))
 
 Steps.update(prepare_HEM_chain_CHToCB_syst("kinFitTTSemiLep_2018",
                          ["kinFitTTSemiLep_2018_HEM"],
                          True,
                          Steps['kinFitTTSemiLep_2018']['selection']
                         ))
-
+Steps.update(prepare_HEM_chain_CHToCB_syst("kinFitTTSemiLepV2_2018",
+                         ["kinFitTTSemiLepV2_2018_HEM"],
+                         True,
+                         Steps['kinFitTTSemiLepV2_2018']['selection']
+                        ))
 # add CHToCB syst. mvaTreeCHToCB
 Steps.update(prepare_module_CHToCB_syst("mvaTreeCHToCB",
                        syst_all,
@@ -5693,7 +5765,7 @@ Steps.update(prepare_HEM_CHToCB_syst("mvaFillCHToCB_2018",
                        'mvaFillCHToCB_2018_HEM = lambda : TMVAfiller_CHToCB("data/MVA/CHToCB/mvaDict_2018.py",syst_suffix="HEM")',
                        'mvaFillCHToCB_2018_HEM()'
                         ))
-Steps.update(prepare_HEM_chain_CHToCB_syst("mvaCHToCB",
+Steps.update(prepare_HEM_chain_CHToCB_syst("mvaCHToCB_2018",
                          ["mvaTreeCHToCB_HEM","mvaFillCHToCB_2018_HEM"],
                          False,
                         '""' 

@@ -13,8 +13,7 @@
 # --rRelAcc arg (=0.0050000000000000001)
 #python doCombi.py -Year='All' -options='--run blind --rAbsAcc 0.1 --rRelAcc 0.005000000000000001'
 #python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0.1 --rRelAcc 0.005000000000000001'
-#python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes --saveWithUncertainties --saveOverallShapes --cminPreScan --cminPreFit 1' -Variables fitted_dijet_M -combineCards -text2workspace
-python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes --saveWithUncertainties --saveOverallShapes --cminPreScan --cminPreFit 1 --cminFallbackAlgo Minuit2,Simplex,1:0.1 ' -Variables initial_dijet_M -combineCards -text2workspace
+#python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes --saveWithUncertainties --saveOverallShapes --cminPreScan --cminPreFit 1' -combineCards -text2workspace
 #python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes --saveWithUncertainties --saveOverallShapes --cminPreScan --cminPreFit 1' -text2workspace
 #python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes --saveWithUncertainties --saveOverallShapes --cminPreScan --cminPreFit 1'
 #
@@ -30,7 +29,13 @@ python doCombi.py -Year='All' -M='FitDiagnostics' -options='--plots --saveShapes
 #
 #python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 2 --minosAlgo bisection --verbose 4 '
 #python doCombi.py -Year='All' -options='-t -1 --rAbsAcc 0 --rRelAcc 0.005000000000000001 --cminPreScan --cminPreFit 1 --setParameters BR10ToMinus7=0.01'
-#python doCombi.py -Year='All' -M='Significance' -options='-t -1 --cminPreScan --cminPreFit 1 --setParameters BR10ToMinus7=0.1'
+#python doCombi.py -Year='All' -options='-t -1 --cminPreScan  --freezeNuisanceGroups theory,experimental,autoMCStats --minosAlgo new'
+#python doCombi.py -Year='All' -Ch='sngCH' -options='--cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection' -combineCards -text2workspace
+#python doCombi.py -Year='All' -Ch='All' -options='--cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection' -combineCards -text2workspace
+#python doCombi.py -Year='All' -Ch='All' -options='--cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection' -text2workspace
+python doCombi.py -Year='All' -options='--cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection'  -combineCards
+#python doCombi.py -Year='All' -options='--cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection' -combineCards -text2workspace
+#python doCombi.py -Year='All' -options='-t -1 --cminPreScan --rAbsAcc 0 --rRelAcc 0.005000000000000001 --minosAlgo bisection'
 #
 # -- likilhood scan
 #

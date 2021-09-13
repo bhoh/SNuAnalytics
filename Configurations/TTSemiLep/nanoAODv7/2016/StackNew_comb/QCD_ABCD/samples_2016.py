@@ -88,8 +88,9 @@ EMTFbug_veto\
 '
 SFweight=SFweight+'*'+LepWPCut+'*'+LepWPweight
 
-GenLepMatch = 'Lepton_genmatched[0]'
-#GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
+#GenLepMatch = 'Lepton_genmatched[0]'
+GenLepMatch = '1'
+##GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
 
 #SFweight=SFweight+'*HEMweight'
 
@@ -202,8 +203,8 @@ DataTrig = {
 #
 #                    }
 
-samples['TTLJ'] = {    'name'   :   getSampleFiles(directory,'TT_TuneCUETP8M2T4_PSweights',False,'nanoLatino_'),
-                                    #getSampleFiles(directory,'TT_TuneCUETP8M2T4',False,'nanoLatino_'),
+samples['TTLJ'] = {    'name'   :   getSampleFiles(directory,'TT_TuneCUETP8M2T4',False,'nanoLatino_'),
+                                    #getSampleFiles(directory,'TT_TuneCUETP8M2T4_PSweights',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight_SemiLeptonic+'*'+GenLepMatch+'*'+METFilter_MC,
                       #'FilesPerJob' : 4,
                       'FilesPerJob' : 1,
@@ -262,8 +263,8 @@ samples['TTLJ'] = {    'name'   :   getSampleFiles(directory,'TT_TuneCUETP8M2T4_
 
 
 
-samples['TTLL'] = {    'name'   :   getSampleFiles(directory,'TT_TuneCUETP8M2T4_PSweights',False,'nanoLatino_'),
-                                    #getSampleFiles(directory,'TT_TuneCUETP8M2T4',False,'nanoLatino_'),
+samples['TTLL'] = {    'name'   :   getSampleFiles(directory,'TT_TuneCUETP8M2T4',False,'nanoLatino_'),
+                                    #getSampleFiles(directory,'TT_TuneCUETP8M2T4_PSweights',False,'nanoLatino_'),
                       'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight_2L2Nu+'*'+GenLepMatch+'*'+METFilter_MC,
                       'FilesPerJob' : 4,
                       'subsamples': {

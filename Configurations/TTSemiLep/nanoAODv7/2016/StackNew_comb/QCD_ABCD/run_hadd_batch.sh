@@ -17,7 +17,7 @@ CMD_TO_RUN_CHToCB0='(cd '$TARGET_PATH') && (hadd -j 10 -d /cms_scratch/bhoh hadd
 CMD_TO_RUN_CHToCB1='(cd '$TARGET_PATH') && (hadd -j 10 -d /cms_scratch/bhoh hadd_CHToCB1.root '$TARGET_PATH'/*CHToCB*[4-6].root)'
 CMD_TO_RUN_CHToCB2='(cd '$TARGET_PATH') && (hadd -j 10 -d /cms_scratch/bhoh hadd_CHToCB2.root '$TARGET_PATH'/*CHToCB*[7-9].root)'
 # ST, QCD, DY, Wjets, TTWjets, TTZjets
-CMD_TO_RUN_nonTT='(cd '$TARGET_PATH') && (hadd -j 10 -d /cms_scratch/bhoh hadd_nonTT.root '$TARGET_PATH'/*ST*.root '$TARGET_PATH'/*QCD*.root '$TARGET_PATH'/*DY*.root '$TARGET_PATH'/*Wjets*.root '$TARGET_PATH'/*TTWjets*.root '$TARGET_PATH'/*TTZjets*.root '$TARGET_PATH'/*ZZ*.root '$TARGET_PATH'/*WZ*.root '$TARGET_PATH'/*WW*.root)'
+CMD_TO_RUN_nonTT='(cd '$TARGET_PATH') && (hadd -j 10 -d /cms_scratch/bhoh hadd_nonTT.root '$TARGET_PATH'/*ST*.root '$TARGET_PATH'/*QCD_EM*.root '$TARGET_PATH'/*QCD_MU*.root '$TARGET_PATH'/*DY*.root '$TARGET_PATH'/*Wjets*.root '$TARGET_PATH'/*TTWjets*.root '$TARGET_PATH'/*TTZjets*.root '$TARGET_PATH'/*ZZ*.root '$TARGET_PATH'/*WZ*.root '$TARGET_PATH'/*WW*.root)'
 #WORK_DIR='hadd_batch'
 #JOB_NAME='hadd_TTLL'
 

@@ -9,7 +9,7 @@ plotFile='plot_mu.py' ##color code and some format-related things
 
 samplesFile = 'samples_2016.py'
 
-lumi=35.9
+lumi=35.92
 
 #outputDirPlots='plots_'+tag+'Blined'
 outputDirPlots='plots_'+tag

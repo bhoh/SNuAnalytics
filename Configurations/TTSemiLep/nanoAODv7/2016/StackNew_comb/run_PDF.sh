@@ -1,4 +1,5 @@
 python mkPDFShape.py --pycfg=configuration_final.py --inputFile=rootFile_2016_SKIM7_final/hadd.root --outputDirPDF rootFile_2016_SKIM7_final/PDF/
+#python mkPDFShape.py --pycfg=configuration_val.py --inputFile=rootFile_2016_SKIM7_val/hadd.root --outputDirPDF rootFile_2016_SKIM7_val/PDF/
 #
 #
 #

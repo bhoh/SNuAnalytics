@@ -26,6 +26,8 @@ class DatacardFactory:
       
         self._fileIn = None
         self._skipMissingNuisance = False
+        self._structureFile = None
+        self._rescale_ratio = {}
 
     # _____________________________________________________________________________
     # a datacard for each "cut" and each "variable" will be produced, in separate sub-folders, names after "cut/variable"
@@ -45,6 +47,8 @@ class DatacardFactory:
         #      raise RuntimeError('Input file for sample ' + sampleName + ' missing')
         #else:
         #  self._fileIn = ROOT.TFile(inputFile, "READ")
+
+        self._structureFile = structureFile
 
         # categorize the sample names
         signal_ids = collections.OrderedDict() # id map of alternative_signals + cumulative_signals
@@ -189,11 +193,19 @@ class DatacardFactory:
                    #      if not sampleName in killBinSig : killBinSig[sampleName] = []
                    #      killBinSig[sampleName].append(iBin)
                    #      histo.SetBinContent(iBin,0.)
+
+                  if 'rescaleTo' in structureFile[sampleName] and structureFile[sampleName]['rescaleTo'] :
+                    histo_tmp = self._getHisto(cutName, variableName, structureFile[sampleName]['rescaleTo'])
+                    if histo.Integral()>0.:
+                      self._rescale_ratio[sampleName] = histo_tmp.Integral()/histo.Integral()
+                    else:
+                      self._rescale_ratio[sampleName] = 1.
+                    histo.Scale(self._rescale_ratio[sampleName])
                     
                   yields[sampleName] = histo.Integral()
                                                                                                                         
                 self._outFile.cd()
-                histo.Write()
+                histo.Write("",ROOT.TObject.kOverwrite)
 
             # Loop over alternative signal samples. One card per signal (there is always at least one entry (""))
             for signalName in alternative_signals:
@@ -285,9 +297,10 @@ class DatacardFactory:
               # add normalization and shape nuisances
               for nuisanceName, nuisance in nuisances.iteritems():
                 if 'type' not in nuisance:
-                  raise RuntimeError('Nuisance ' + nuisanceName + ' is missing the type specification')
+                  print('Nuisance ' + nuisanceName + ' is missing the type specification')
+                  continue
 
-                if nuisanceName == 'stat' or nuisance['type'] == 'rateParam':
+                if nuisanceName == 'stat' or nuisance['type'] == 'rateParam' or nuisance['type'] == 'param':
                   # will deal with these later
                   continue
 
@@ -358,8 +371,13 @@ class DatacardFactory:
                           histoDown.SetName('%s_%sDown' % (histo.GetName(), nuisance['name']))
                           self._outFile.cd()
                           print ">>>>>", nuisance['name'], " write"
-                          histoUp.Write()
-                          histoDown.Write()
+                          if 'rescaleTo' in structureFile[sampleName] and structureFile[sampleName]['rescaleTo'] :
+                            histo.Scale(self._rescale_ratio[sampleName])
+                            histoUp.Scale(self._rescale_ratio[sampleName])
+                            histoDown.Scale(self._rescale_ratio[sampleName])
+
+                          histoUp.Write("",ROOT.TObject.kOverwrite)
+                          histoDown.Write("",ROOT.TObject.kOverwrite)
 
 
                         else:
@@ -379,8 +397,14 @@ class DatacardFactory:
                             histoDown.Scale(1. / float(nuisance['samples'][sampleName]))
 
                           self._outFile.cd()
-                          histoUp.Write()
-                          histoDown.Write()
+                          if 'rescaleTo' in structureFile[sampleName] and structureFile[sampleName]['rescaleTo'] :
+                            histo_tmp = self._getHisto(cutName, variableName, structureFile[sampleName]['rescaleTo'])
+                            histo.Scale(self._rescale_ratio[sampleName])
+                            histoUp.Scale(self._rescale_ratio[sampleName])
+                            histoDown.Scale(self._rescale_ratio[sampleName])
+
+                          histoUp.Write("",ROOT.TObject.kOverwrite)
+                          histoDown.Write("",ROOT.TObject.kOverwrite)
 
                         card.write('1.000'.ljust(columndef))
 
@@ -410,6 +434,8 @@ class DatacardFactory:
                   #
                   if 'skipCMS' in nuisance and nuisance['skipCMS'] == 1:
                     entryName = nuisance['name']
+                  elif 'rename' in nuisance:
+                    entryName = 'CMS_' + nuisance['rename']
                   else:
                     entryName = 'CMS_' + nuisance['name']
 
@@ -470,18 +496,10 @@ class DatacardFactory:
                         else:
                           diffDo = 0.
 
-                        if 'symmetrize_syst' in nuisance and nuisance['symmetrize_ttsyst']:
+                        if 'symmetrize_ttsyst' in nuisance and nuisance['symmetrize_ttsyst']:
                           diff = (diffUp - diffDo) * 0.5
-                          if diff >= 1.:
-                              # can't symmetrize
-                              diffUp = diff * 2. - 0.999
-                              diffDo = -0.999
-                          elif diff <= -1.:
-                              diffUp = -0.999
-                              diffDo = -diff * 2. - 0.999
-                          else:
-                              diffUp = diff
-                              diffDo = -diff
+                          diffUp = diff
+                          diffDo = 1./(1.+diff) - 1.
         
                         lnNUp = 1. + diffUp
                         lnNDo = 1. + diffDo
@@ -514,14 +532,25 @@ class DatacardFactory:
                         # save the nuisance histograms in the root file
                         if ('skipCMS' in nuisance.keys()) and nuisance['skipCMS'] == 1:
                           suffixOut = None
+                        elif 'rename' in nuisance:
+                          suffixOut = '_CMS_' + nuisance['rename']
                         else:
                           suffixOut = '_CMS_' + nuisance['name']
 
-                        symmetrize = 'symmetrize_ttsyst' in nuisance and nuisance['symmetrize_ttsyst']
+                        symmetrize      = 'symmetrize_ttsyst' in nuisance and nuisance['symmetrize_ttsyst']
+                        syncronize_stat = 'syncronize_stat'   in nuisance and nuisance['syncronize_stat']
 
-                        saved = self._saveNuisanceHistos(cutName, variableName, sampleName, '_' + nuisance['name'], suffixOut, symmetrize, nuisance['samples'])
+                        if 'rescaleTo' in structureFile[sampleName] and structureFile[sampleName]['rescaleTo'] :
+                          rescale = self._rescale_ratio[sampleName]
+                        else:
+                          rescale = None
+
+                        saved = self._saveNuisanceHistos(cutName, variableName, sampleName, '_' + nuisance['name'], suffixOut, syncronize_stat, symmetrize, nuisance['samples'], rescale = rescale)
                         if saved:
-                          card.write('1.000'.ljust(columndef))
+                          if 'shape' in nuisance:
+                            card.write(('%.3f'%(nuisance['shape'])).ljust(columndef))
+                          else:
+                            card.write('1.000'.ljust(columndef))
                         else:
                           # saved can be false if skipMissingNuisance is true and histogram cannot be found
                           card.write(('-').ljust(columndef))
@@ -617,28 +646,35 @@ class DatacardFactory:
               # 'rateParam' has a separate treatment -> it's just a line at the end of the datacard. It defines "free floating" samples
               # I do it here and not before because I want the freee floating parameters at the end of the datacard
               for nuisance in nuisances.itervalues():
-                if nuisance['type'] != 'rateParam':
+                if 'type' not in nuisance or (nuisance['type'] != 'rateParam' and nuisance['type'] != 'param'):
                   continue
 
                 # check if a nuisance can be skipped because not in this particular cut
                 if 'cuts' in nuisance and cutName not in nuisance['cuts']:
                   continue
 
-                card.write(nuisance['name'].ljust(80-20))
-                card.write('rateParam'.ljust(20))
-                card.write(tagNameToAppearInDatacard.ljust(columndef))   # the bin
-                # there can be only 1 sample per rateParam
-                if len(nuisance['samples']) != 1:
-                  raise RuntimeError('Invalid rateParam: number of samples != 1')
+                if nuisance['type'] == 'rateParam':
+                  # there can be only 1 sample per rateParam
+                  #if len(nuisance['samples']) != 1:
+                  #  raise RuntimeError('Invalid rateParam: number of samples != 1')
 
-                sampleName, formula = nuisance['samples'].items()[0]
-                if sampleName not in groupPlot:
-                  raise RuntimeError('Invalid rateParam: unknown sample %s' % sampleName)
+                  for sampleName, formula in nuisance['samples'].iteritems():
+                    if sampleName not in groupPlot:
+                      raise RuntimeError('Invalid rateParam: unknown sample %s' % sampleName)
 
-                card.write(sampleName.ljust(20))
-                card.write(('%s' % formula).ljust(columndef))
-                card.write('\n')
+                    card.write(nuisance['name'].ljust(80-20))
+                    card.write('%s'%(nuisance['type']).ljust(20))
+                    card.write(tagNameToAppearInDatacard.ljust(columndef))   # the bin
+                    card.write(sampleName.ljust(20))
+                    card.write(('%s' % formula).ljust(columndef))
+                    card.write('\n')
+                else:
+                  card.write(nuisance['name'].ljust(80-20))
+                  card.write('%s'%(nuisance['type']).ljust(20))
+                  card.write(nuisance['constraint'])
+                  card.write('\n')
 
+              ##
               # now add other nuisances            
               # Are there other kind of nuisances I forgot?
             
@@ -658,7 +694,7 @@ class DatacardFactory:
               self._fileIn.Close()
 
     # _____________________________________________________________________________
-    def _saveNuisanceHistos(self, cutName, variableName, sampleName, suffixIn, suffixOut = None, symmetrize = False, subSamples = []):
+    def _saveNuisanceHistos(self, cutName, variableName, sampleName, suffixIn, suffixOut = None, syncronize_stat=False, symmetrize = False, subSamples = [], rescale = None):
         if sampleName in groupPlot:
           subIdx = 0
           for subSample in groupPlot[sampleName]['samples']:
@@ -688,13 +724,31 @@ class DatacardFactory:
         else:
           histoUp = self._getHisto(cutName, variableName, sampleName, suffixIn + 'Up')
           histoDown = self._getHisto(cutName, variableName, sampleName, suffixIn + 'Down')
-                                                                                                                      
+                               
+        if rescale == None:
+          pass
+        else:
+          histoUp.Scale(rescale)
+          histoDown.Scale(rescale)
+
         if not histoUp or not histoDown:
           print 'Up/down histogram for', cutName, variableName, sampleName, suffixIn, 'missing'
           if self._skipMissingNuisance:
             return False
           # else let ROOT raise
-                                                                                                                      
+        #######                                                                                                              
+        if syncronize_stat:
+          if sampleName in groupPlot:
+            histoNom = self._outFile.Get("histo_%s"%sampleName)
+            histoNom.SetName('histo_%s' %(sampleName))
+            for iBin in range(1,histoNom.GetNbinsX()+1):
+              iBinErr = max( [ histo_.GetBinError(iBin) for histo_ in [histoNom, histoUp, histoDown] ] )
+              # reset bin stat. err. to that from nuisance
+              histoNom.SetBinError(iBin, iBinErr)
+            self._outFile.cd()
+            histoNom.Write("",ROOT.TObject.kOverwrite)
+
+        #######                                                                                                              
         if symmetrize:
           if sampleName in groupPlot:
             subIdx = 0
@@ -709,26 +763,24 @@ class DatacardFactory:
           else:
             histoNom = self._getHisto(cutName, variableName, sampleName)
           histoDiff = histoUp.Clone('histoDiff')
-          histoDiff.Add(histoDown, -1.)
-          histoDiff.Scale(0.5)
-          #for iBin in range(1,histoDiff.GetNbinsX()+1):
-          #  iBinErr     = histoDiff.GetBinError(iBin)
-          #  iBinContent = histoDiff.GetBinContent(iBin)
-          #  iBinErrorNew = ROOT.TMath.Sqrt(iBinContent**2 + iBinErr**2)
-          #  iBinErrNorm = histoNom.GetBinError(iBin)
-          #  iBinErrorNew = ROOT.TMath.Sqrt(iBinErrorNew**2 - iBinErrNorm**2) if iBinErrorNew > iBinErrNorm else 0.
-          #  histoDiff.SetBinContent(iBin,iBinErrorNew)
+          for iBin in range(1,histoDiff.GetNbinsX()+1):
+            iBinUp   = abs(histoUp.GetBinContent(iBin)  -  histoNom.GetBinContent(iBin))
+            iBinDown = abs(histoNom.GetBinContent(iBin) -  histoDown.GetBinContent(iBin))
+            if iBinUp < iBinDown:
+              histoDiff.SetBinContent(iBin,iBinDown)
+            else:
+              histoDiff.SetBinContent(iBin,iBinUp)
           #  histoDiff.SetBinError(iBin,0.)
+          norm   = histoNom.Integral()
+          normUp = histoUp.Integral()
+          normDown = histoDown.Integral()
           histoUp.Reset()
           histoUp.Add(histoNom)
-          histoUp.Add(histoDiff)
+          histoUp.Add(histoDiff,1)
           histoDown.Reset()
           histoDown.Add(histoNom)
-          histoDown.Add(histoDiff, -1.)
-          #for iBin in range(1,histoDiff.GetNbinsX()+1):
-          #  iBinErrNorm = histoNom.GetBinError(iBin)
-          #  histoUp.SetBinError(iBin,iBinErrNorm)
-          #  histoDown.SetBinError(iBin,iBinErrNorm)
+          histoDown.Add(histoDiff,-1)
+        #######                                                                                                              
                                                                                                                       
         histoUp.SetDirectory(self._outFile)
         histoDown.SetDirectory(self._outFile)
@@ -737,8 +789,9 @@ class DatacardFactory:
             histoDown.SetName('histo_%s%sDown' % (sampleName, suffixOut))
                                                                                                                       
         self._outFile.cd()
-        histoUp.Write()
-        histoDown.Write()
+
+        histoUp.Write("",ROOT.TObject.kOverwrite)
+        histoDown.Write("",ROOT.TObject.kOverwrite)
                                                                                                                       
         return True
 
@@ -760,7 +813,12 @@ class DatacardFactory:
             print shapeName, 'not found'
 
         self._fixNegativeBinAndError(histo)
-      
+        #XXX
+        #if "dijet_M" in variableName:
+        #  if histo.GetNbinsX() > 30:
+        #    histo.Rebin()
+
+
         return histo
 
 

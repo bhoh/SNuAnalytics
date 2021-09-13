@@ -1,4 +1,5 @@
 import ROOT
+import os, tarfile, tempfile, shutil
 ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collection 
@@ -8,23 +9,84 @@ from ROOT import TLorentzVector
 from itertools import combinations
 from operator import itemgetter, attrgetter
 from math import cosh, sqrt
+import random
 
 
 ##
-
+LARGE_NUM=9999999999
 
 ##
 # this module is to add variables for MVA training to skim tree.
 ##
 class mvaTreeCHToCB(Module):
-    def __init__(self, Year, syst_suffix='nom'):
+    def __init__(self, Year, syst_suffix='nom', isSmear=False, genMatched=False):
+        random.seed(12345)
+        #self._lowerBjetPt = lowerBjetPt
+        self._lowerBjetPt = False
+        self._genMatched = genMatched
+        self.isSmear = isSmear 
         self.Year = Year
         self._syst_suffix = syst_suffix
-        pass
+        self._isDeltaR = True # use delta R variables instead of delta Eta and Phi
+        # read jet energy resolution (JER) and JER scale factors and uncertainties
+        # (the txt files were downloaded from https://github.com/cms-jet/JRDatabase/tree/master/textFiles/ )
+        # Text files are now tarred so must extract first
+        #
+        if self.isSmear:
+          if int(Year) == 2016:
+            jerInputFileName_eta = "Summer16_25nsV1_MC_EtaResolution_AK4PFchs.txt"
+            jerInputFileName_phi = "Summer16_25nsV1_MC_PhiResolution_AK4PFchs.txt"
+            jerInputFileName     = "Summer16_25nsV1_MC_PtResolution_AK4PFchs.txt"
+            jerUncertaintyInputFileName = "Summer16_25nsV1_MC_SF_AK4PFchs.txt"
+          elif int(Year) == 2017:
+            jerInputFileName_eta = "Fall17_V3_MC_EtaResolution_AK4PFchs.txt"
+            jerInputFileName_phi = "Fall17_V3_MC_PhiResolution_AK4PFchs.txt"
+            jerInputFileName     = "Fall17_V3_MC_PtResolution_AK4PFchs.txt"
+            jerUncertaintyInputFileName = "Fall17_V3_MC_SF_AK4PFchs.txt"
+          elif int(Year) == 2018:
+            jerInputFileName_eta = "Autumn18_V7_MC_EtaResolution_AK4PFchs.txt"
+            jerInputFileName_phi = "Autumn18_V7_MC_PhiResolution_AK4PFchs.txt"
+            jerInputFileName     = "Autumn18_V7_MC_PtResolution_AK4PFchs.txt"
+            jerUncertaintyInputFileName = "Autumn18_V7_MC_SF_AK4PFchs.txt"
+          #
+          self.jerInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
+          self.jerTag = jerInputFileName[:jerInputFileName.find('_MC_')+len('_MC')]
+          self.jerArchive = tarfile.open(self.jerInputArchivePath+self.jerTag+".tgz", "r:gz")
+          self.jerInputFilePath = tempfile.mkdtemp()
+          self.jerArchive.extractall(self.jerInputFilePath)
+          self.jerInputFileName_eta = jerInputFileName_eta
+          self.jerInputFileName_phi = jerInputFileName_phi
+          self.jerInputFileName     = jerInputFileName
+          self.jerUncertaintyInputFileName = jerUncertaintyInputFileName
+          
+          #self.jmr_vals = jmr_vals
+          
+          self.params_sf_and_uncertainty = ROOT.PyJetParametersWrapper()
+          self.params_resolution = ROOT.PyJetParametersWrapper()
+          
+          # load libraries for accessing JER scale factors and uncertainties from txt files
+          for library in [ "libCondFormatsJetMETObjects", "libPhysicsToolsNanoAODTools" ]:
+              if library not in ROOT.gSystem.GetLibraries():
+                  print("Load Library '%s'" % library.replace("lib", ""))
+                  ROOT.gSystem.Load(library)
+
+
     def beginJob(self):
-        pass
+        # initialize JER scale factors and uncertainties
+        # (cf. PhysicsTools/PatUtils/interface/SmearedJetProducerT.h )
+        if self.isSmear:
+          print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName))
+          self.jer = {}
+          self.jer['Pt']  = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName))
+          self.jer['Eta'] = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_eta))
+          self.jer['Phi'] = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
+          print("Loading JER scale factors and uncertainties from file '%s'" % os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
+          self.jerSF_and_Uncertainty = ROOT.PyJetResolutionScaleFactorWrapper(os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
+
     def endJob(self):
-        pass
+        if self.isSmear:
+          shutil.rmtree(self.jerInputFilePath)
+
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         self.out = wrappedOutputTree
         self.out.branch("nbtags_had_top_mvaCHToCB_%s"%self._syst_suffix,             "I")
@@ -33,6 +95,7 @@ class mvaTreeCHToCB(Module):
         self.out.branch("csv_jet0_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("csv_jet1_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("csv_jet2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("csv_jet3_mvaCHToCB_%s"%self._syst_suffix, "F")
 
         self.out.branch("avg_csv_had_top_%s"%self._syst_suffix, "F")
         self.out.branch("second_moment_csv_jet0_mvaCHToCB_%s"%self._syst_suffix, "F")
@@ -43,18 +106,95 @@ class mvaTreeCHToCB(Module):
         #self.out.branch("jet_vector1_mvaCHToCB", "F")
         #self.out.branch("jet_vector2_mvaCHToCB", "F")
 
-        self.out.branch("dijet_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
-        self.out.branch("dijet_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
-        self.out.branch("Hplus_b_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
-        self.out.branch("Hplus_b_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
-        self.out.branch("bb_deltaR_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_pt0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_pt1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_pt2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_pt3_mvaCHToCB_%s"%self._syst_suffix, "F")
 
-        self.out.branch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, "F")
-        self.out.branch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, "F")
 
-        self.out.branch("had_top_pt_scalar_sum_mvaCHToCB_%s"%self._syst_suffix, "F")
+        if self._isDeltaR:
+          self.out.branch("dijet_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaR2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaR3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaR4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaR5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaR5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaR2_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+          #self.out.branch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          #self.out.branch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+
+          self.out.branch("lj_deltaR0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaR1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaR2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaR3_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+        else:
+          #delta Eta
+          self.out.branch("dijet_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaEta4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaEta5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaEta5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+          #self.out.branch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          #self.out.branch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+
+          self.out.branch("lj_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+          #delta Phi
+          self.out.branch("dijet_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaPhi4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("dijet_deltaPhi5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi4_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("Hplus_b_deltaPhi5_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("bb_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+          #self.out.branch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          #self.out.branch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+
+          self.out.branch("lj_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, "F")
+          self.out.branch("lj_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, "F")
+
         self.out.branch("min_deltaR_bb_event_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("min_deltaR_jj_event_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("had_top_pt_scalar_sum_mvaCHToCB_%s"%self._syst_suffix, "F")
+
         self.out.branch("HT_btagged_L_%s"%self._syst_suffix, "F")
         self.out.branch("HT_btagged_M_%s"%self._syst_suffix, "F")
         self.out.branch("HT_btagged_T_%s"%self._syst_suffix, "F")
@@ -65,19 +205,39 @@ class mvaTreeCHToCB(Module):
         self.out.branch("mcb0_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("mcb1_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("hadronic_top_mass_mvaCHToCB_%s"%self._syst_suffix, "F")
+        
+        if self._syst_suffix == 'nom':
+          self.out.branch("EventNum_mvaCHToCB", "I")
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
     def analyze(self, event):
+        self.eventNum = random.randint(0,99)
+        if not self.isSmear:
+          return_ = self.analyze_once(event)
+        else:
+          nSmear = 1
+          for i in range(nSmear):
+            self.i_Smear = i
+            return_ = self.analyze_once(event)
+            if i<nSmear - 1:
+              self.out.fill()
+            if not return_:
+              break
+          
+        return return_
+
+    def analyze_once(self,event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # select jets
         self.Jet_coll       = Collection(event, 'CleanJet')
         self.rawJet_coll    = Collection(event, 'Jet')
+        self.Lepton         = Collection(event, 'Lepton')
 
         #XXX set pt eta cut by years
-        ptcut = 20.
+        ptcut = 25.
         if int(self.Year) == 2016:
           absetacut = 2.4
           self.csvcut_L    = 0.0614
@@ -94,20 +254,22 @@ class mvaTreeCHToCB(Module):
           self.csvcut_M    = 0.2770
           self.csvcut_T    = 0.7264
 
-        good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut)
+        good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut, event.fixedGridRhoFastjetAll)
 
         # return if not more than 4 jets
         if len(good_jets) < 4:
           return True
 
-        self.nbtags_event = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in good_jets_idx ]])
 
-        if self.nbtags_event < 2:
-          return True
 
         # get minimum deltaR b-tagged pair among all possible b-jet combination
         min_deltaR_bb_event = self.min_deltaR_bb(good_jets, good_jets_idx)
         min_deltaR_jj_event = self.min_deltaR_jj(good_jets, good_jets_idx)
+        HT_btagged_L, HT_not_btagged_L = self.get_HT_btagged(good_jets_idx, self.csvcut_L)
+        HT_btagged_M, HT_not_btagged_M = self.get_HT_btagged(good_jets_idx, self.csvcut_M)
+        HT_btagged_T, HT_not_btagged_T = self.get_HT_btagged(good_jets_idx, self.csvcut_T)
+
+
 
         #
         # 1) select jet from top
@@ -129,16 +291,24 @@ class mvaTreeCHToCB(Module):
         # if proper variables(index of jet candidate, b-tagging status) exist in skimed Tree,
         #use that variables for making variables
         if self.exist_variables_in_skimTree(event): # is there any smater way?
-          down_type_jet_b_tagged_nom = getattr(event, 'down_type_jet_b_tagged_%s'%self._syst_suffix)
-          hadronic_top_b_jet_idx_nom = getattr(event, 'hadronic_top_b_jet_idx_%s'%self._syst_suffix)
-          leptonic_top_b_jet_idx_nom = getattr(event, 'leptonic_top_b_jet_idx_%s'%self._syst_suffix)
-          w_ch_up_type_jet_idx_nom   = getattr(event, 'w_ch_up_type_jet_idx_%s'%self._syst_suffix)
-          w_ch_down_type_jet_idx_nom = getattr(event, 'w_ch_down_type_jet_idx_%s'%self._syst_suffix)
+          if self._genMatched:
+            hadronic_top_b_jet_idx_nom = getattr(event, "had_top_b_matched_jet_idx"        )
+            leptonic_top_b_jet_idx_nom = getattr(event, "lep_top_b_matched_jet_idx"        )
+            w_ch_up_type_jet_idx_nom   = getattr(event, "had_top_up_type_matched_jet_idx"  )
+            w_ch_down_type_jet_idx_nom = getattr(event, "had_top_down_type_matched_jet_idx")
+          else:
+            hadronic_top_b_jet_idx_nom = getattr(event, 'hadronic_top_b_jet_idx_%s'%self._syst_suffix)
+            leptonic_top_b_jet_idx_nom = getattr(event, 'leptonic_top_b_jet_idx_%s'%self._syst_suffix)
+            w_ch_up_type_jet_idx_nom   = getattr(event, 'w_ch_up_type_jet_idx_%s'%self._syst_suffix)
+            w_ch_down_type_jet_idx_nom = getattr(event, 'w_ch_down_type_jet_idx_%s'%self._syst_suffix)
 
-          hadronic_top_b_jet_pull_nom = getattr(event, 'hadronic_top_b_jet_pull_%s'%self._syst_suffix)
-          w_ch_up_type_jet_pull_nom   = getattr(event, 'w_ch_up_type_jet_pull_%s'%self._syst_suffix)
-          w_ch_down_type_jet_pull_nom = getattr(event, 'w_ch_down_type_jet_pull_%s'%self._syst_suffix)
-          
+            hadronic_top_b_jet_pull_nom = getattr(event, 'hadronic_top_b_jet_pull_%s'%self._syst_suffix)
+            w_ch_up_type_jet_pull_nom   = getattr(event, 'w_ch_up_type_jet_pull_%s'%self._syst_suffix)
+            w_ch_down_type_jet_pull_nom = getattr(event, 'w_ch_down_type_jet_pull_%s'%self._syst_suffix)
+            
+          self.nbtags_event = getattr(event,'nbtagsCleanJet_{}'.format(self._syst_suffix))
+
+
           if not (hadronic_top_b_jet_idx_nom >= 0 and\
                   leptonic_top_b_jet_idx_nom >= 0 and\
                   w_ch_up_type_jet_idx_nom   >= 0 and\
@@ -152,14 +322,20 @@ class mvaTreeCHToCB(Module):
                             w_ch_down_type_jet_idx_nom,
                           ]
 
+          leptonic_top_jets_idx = [ leptonic_top_b_jet_idx_nom
+                  ]
+
           # find index of element in good_jets_idx
           try:
             good_jets_idx_mask = [
                                    good_jets_idx.index(idx) for idx in had_top_jets_idx
                                  ]
-          except IndexError:
-            raise RuntimeWarning('index is not found in good_jets_idx')
-            return True
+            leptonic_top_jets_idx_mask = good_jets_idx.index(leptonic_top_jets_idx[0])
+          except ValueError:
+            if self._genMatched:
+              return True
+            else:
+              raise RuntimeWarning('index is not found in good_jets_idx')
 
           
           # copy good_jets using good_jets_idx_mask
@@ -172,11 +348,12 @@ class mvaTreeCHToCB(Module):
                                ]
 
           # override good_jets, good_jets_idx.
+          good_leptonic_top_jet    = good_jets[leptonic_top_jets_idx_mask]
           good_jets, good_jets_idx = good_jets_, good_jets_idx_
           
           
           nearest_top_mass_pair_jetIdx = [0,1,2] # good_jets contain only 3 had top candidate
-          self.nbtags_had_top = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in good_jets_idx]])
+          self.nbtags_had_top =  2 if getattr(event,'down_type_jet_b_tagged_{}'.format(self._syst_suffix))>0.5 else 1
 
 
 
@@ -191,6 +368,7 @@ class mvaTreeCHToCB(Module):
 
         # otherwise, find jet pairs
         else:
+          self.nbtags_event = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in good_jets_idx ]])
           # select jet pair, find nearest top mass jet pair
           nearest_top_mass_pair_jetIdx = self.nearest_top_mass_pair(good_jets, good_jets_idx)
           maximum_top_pt_pair_jetIdx = self.maximum_top_pt_pair(good_jets, good_jets_idx)
@@ -201,6 +379,8 @@ class mvaTreeCHToCB(Module):
         # sort this jet pair in leading csv ordering
         nearest_top_mass_pair_jetIdx.sort(key=lambda idx: self.rawJet_coll[good_jets_idx[idx]].btagDeepFlavB, reverse=True)
 
+        if self.nbtags_event < 2:
+          return True
         #
         #
         #
@@ -219,6 +399,7 @@ class mvaTreeCHToCB(Module):
         csv_jet0 = self.rawJet_coll[idx0].btagDeepFlavB #leading csv
         csv_jet1 = self.rawJet_coll[idx1].btagDeepFlavB #2nd leading csv
         csv_jet2 = self.rawJet_coll[idx2].btagDeepFlavB #smallest csv
+        csv_jet3 = self.rawJet_coll[leptonic_top_jets_idx[0]].btagDeepFlavB #leptonic csv
 
         avg_csv_had_top     = (csv_jet0+csv_jet1+csv_jet2)/3
         second_moment_csv_jet0 = (csv_jet0-avg_csv_had_top)*(csv_jet0-avg_csv_had_top)
@@ -233,29 +414,129 @@ class mvaTreeCHToCB(Module):
         jet_vector0 = good_jets[nearest_top_mass_pair_jetIdx[0]]
         jet_vector1 = good_jets[nearest_top_mass_pair_jetIdx[1]]
         jet_vector2 = good_jets[nearest_top_mass_pair_jetIdx[2]]
+        jet_vector3 = good_leptonic_top_jet  #leptonic_top_jets_idx
 
         jet_pt0 = jet_vector0.Pt()
         jet_pt1 = jet_vector1.Pt()
         jet_pt2 = jet_vector2.Pt()
+        jet_pt3 = jet_vector3.Pt()
+
+        lepton_vector = TLorentzVector()
+        lepton_vector.SetPtEtaPhiM(self.Lepton[0].pt, self.Lepton[0].eta, self.Lepton[0].phi, 0.)
 
         # jet_vector2 is 3rd leading csv jet
         # consider this jet as a jet comming from c
         # dijet_deltaR0/1 variables are deltaR between c jet and b jet comming from H+
         # 0,1 are labeled in pT order
+        #
+        #
         dijet_deltaR0     = jet_vector2.DeltaR(jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
         dijet_deltaR1     = jet_vector2.DeltaR(jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
+        # flip with jet_pt0 and jet_pt3 
+        dijet_deltaR2     = jet_vector2.DeltaR(jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
+        dijet_deltaR3     = jet_vector2.DeltaR(jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        # flip with jet_pt1 and jet_pt3
+        dijet_deltaR4     = jet_vector2.DeltaR(jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
+        dijet_deltaR5     = jet_vector2.DeltaR(jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
         Hplus_b_deltaR0   = jet_vector0.DeltaR(jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector1.DeltaR(jet_vector0+jet_vector2)
         Hplus_b_deltaR1   = jet_vector1.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector0.DeltaR(jet_vector1+jet_vector2)
+        # flip with jet_pt0 and jet_pt3 
+        Hplus_b_deltaR2   = jet_vector3.DeltaR(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaR(jet_vector3+jet_vector2)
+        Hplus_b_deltaR3   = jet_vector3.DeltaR(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaR(jet_vector3+jet_vector2)
+        # flip with jet_pt1 and jet_pt3
+        Hplus_b_deltaR4   = jet_vector3.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaR(jet_vector3+jet_vector2)
+        Hplus_b_deltaR5   = jet_vector3.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaR(jet_vector3+jet_vector2)
 
-        bb_deltaR         = jet_vector0.DeltaR(jet_vector1)
-        dijet_ptD0        = dijet_deltaR0
-        dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
-        dijet_ptD1        = dijet_deltaR1
-        dijet_ptD1        *= (jet_vector2+jet_vector1).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector0).Pt()
+        bb_deltaR0         = jet_vector0.DeltaR(jet_vector1)
+        # flip with jet_pt0 and jet_pt3 
+        bb_deltaR1         = jet_vector3.DeltaR(jet_vector1)
+        # flip with jet_pt1 and jet_pt3
+        bb_deltaR2         = jet_vector0.DeltaR(jet_vector3)
 
-        HT_btagged_L, HT_not_btagged_L = self.get_HT_btagged(good_jets_idx, self.csvcut_L)
-        HT_btagged_M, HT_not_btagged_M = self.get_HT_btagged(good_jets_idx, self.csvcut_M)
-        HT_btagged_T, HT_not_btagged_T = self.get_HT_btagged(good_jets_idx, self.csvcut_T)
+        #dijet_ptD0        = dijet_deltaR0
+        #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
+        #dijet_ptD1        = dijet_deltaR1
+        #dijet_ptD1        *= (jet_vector2+jet_vector1).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector0).Pt()
+
+        lj_deltaR0        = lepton_vector.DeltaR(jet_vector0)
+        lj_deltaR1        = lepton_vector.DeltaR(jet_vector1)
+        lj_deltaR2        = lepton_vector.DeltaR(jet_vector2)
+        lj_deltaR3        = lepton_vector.DeltaR(jet_vector3)
+
+        # delta Eta
+        DeltaEta = lambda vec_1, vec_2: abs(vec_1.Eta() - vec_2.Eta())
+
+        dijet_deltaEta0     = DeltaEta(jet_vector2,jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
+        dijet_deltaEta1     = DeltaEta(jet_vector2,jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
+        # flip with jet_pt0 and jet_pt3 
+        dijet_deltaEta2     = DeltaEta(jet_vector2,jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
+        dijet_deltaEta3     = DeltaEta(jet_vector2,jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        # flip with jet_pt1 and jet_pt3
+        dijet_deltaEta4     = DeltaEta(jet_vector2,jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
+        dijet_deltaEta5     = DeltaEta(jet_vector2,jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
+        Hplus_b_deltaEta0   = DeltaEta(jet_vector0,jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else DeltaEta(jet_vector1,jet_vector0+jet_vector2)
+        Hplus_b_deltaEta1   = DeltaEta(jet_vector1,jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else DeltaEta(jet_vector0,jet_vector1+jet_vector2)
+        # flip with jet_pt0 and jet_pt3 
+        Hplus_b_deltaEta2   = DeltaEta(jet_vector3,jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else DeltaEta(jet_vector1,jet_vector3+jet_vector2)
+        Hplus_b_deltaEta3   = DeltaEta(jet_vector3,jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else DeltaEta(jet_vector1,jet_vector3+jet_vector2)
+        # flip with jet_pt1 and jet_pt3
+        Hplus_b_deltaEta4   = DeltaEta(jet_vector3,jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else DeltaEta(jet_vector0,jet_vector3+jet_vector2)
+        Hplus_b_deltaEta5   = DeltaEta(jet_vector3,jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else DeltaEta(jet_vector0,jet_vector3+jet_vector2)
+
+        bb_deltaEta0         = DeltaEta(jet_vector0,jet_vector1)
+        # flip with jet_pt0 and jet_pt3 
+        bb_deltaEta1         = DeltaEta(jet_vector3,jet_vector1)
+        # flip with jet_pt1 and jet_pt3
+        bb_deltaEta2         = DeltaEta(jet_vector0,jet_vector3)
+
+        #dijet_ptD0        = dijet_deltaEta0
+        #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
+        #dijet_ptD1        = dijet_deltaEta1
+        #dijet_ptD1        *= (jet_vector2+jet_vector1).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector0).Pt()
+
+        lj_deltaEta0        = DeltaEta(lepton_vector,jet_vector0)
+        lj_deltaEta1        = DeltaEta(lepton_vector,jet_vector1)
+        lj_deltaEta2        = DeltaEta(lepton_vector,jet_vector2)
+        lj_deltaEta3        = DeltaEta(lepton_vector,jet_vector3)
+
+        # delta phi
+        dijet_deltaPhi0     = jet_vector2.DeltaPhi(jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
+        dijet_deltaPhi1     = jet_vector2.DeltaPhi(jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
+        # flip with jet_pt0 and jet_pt3 
+        dijet_deltaPhi2     = jet_vector2.DeltaPhi(jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
+        dijet_deltaPhi3     = jet_vector2.DeltaPhi(jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        # flip with jet_pt1 and jet_pt3
+        dijet_deltaPhi4     = jet_vector2.DeltaPhi(jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
+        dijet_deltaPhi5     = jet_vector2.DeltaPhi(jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
+        Hplus_b_deltaPhi0   = jet_vector0.DeltaPhi(jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector0+jet_vector2)
+        Hplus_b_deltaPhi1   = jet_vector1.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector0.DeltaPhi(jet_vector1+jet_vector2)
+        # flip with jet_pt0 and jet_pt3 
+        Hplus_b_deltaPhi2   = jet_vector3.DeltaPhi(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector3+jet_vector2)
+        Hplus_b_deltaPhi3   = jet_vector3.DeltaPhi(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector3+jet_vector2)
+        # flip with jet_pt1 and jet_pt3
+        Hplus_b_deltaPhi4   = jet_vector3.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaPhi(jet_vector3+jet_vector2)
+        Hplus_b_deltaPhi5   = jet_vector3.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaPhi(jet_vector3+jet_vector2)
+
+        bb_deltaPhi0         = jet_vector0.DeltaPhi(jet_vector1)
+        # flip with jet_pt0 and jet_pt3 
+        bb_deltaPhi1         = jet_vector3.DeltaPhi(jet_vector1)
+        # flip with jet_pt1 and jet_pt3
+        bb_deltaPhi2         = jet_vector0.DeltaPhi(jet_vector3)
+
+        #dijet_ptD0        = dijet_deltaPhi0
+        #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
+        #dijet_ptD1        = dijet_deltaPhi1
+        #dijet_ptD1        *= (jet_vector2+jet_vector1).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector0).Pt()
+
+        lj_deltaPhi0        = lepton_vector.DeltaPhi(jet_vector0)
+        lj_deltaPhi1        = lepton_vector.DeltaPhi(jet_vector1)
+        lj_deltaPhi2        = lepton_vector.DeltaPhi(jet_vector2)
+        lj_deltaPhi3        = lepton_vector.DeltaPhi(jet_vector3)
+
+
+
+
+
 
 
         had_top_pt_scalar_sum = jet_pt0 + jet_pt1 + jet_pt2
@@ -270,6 +551,7 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("csv_jet0_mvaCHToCB_%s"%self._syst_suffix, csv_jet0)
         self.out.fillBranch("csv_jet1_mvaCHToCB_%s"%self._syst_suffix, csv_jet1)
         self.out.fillBranch("csv_jet2_mvaCHToCB_%s"%self._syst_suffix, csv_jet2)
+        self.out.fillBranch("csv_jet3_mvaCHToCB_%s"%self._syst_suffix, csv_jet3)
 
         self.out.fillBranch("avg_csv_had_top_%s"%self._syst_suffix, avg_csv_had_top)
         self.out.fillBranch("second_moment_csv_jet0_mvaCHToCB_%s"%self._syst_suffix, second_moment_csv_jet0)
@@ -279,19 +561,94 @@ class mvaTreeCHToCB(Module):
         #self.out.fillBranch("jet_vector0_mvaCHToCB", jet_vector0)
         #self.out.fillBranch("jet_vector1_mvaCHToCB", jet_vector1)
         #self.out.fillBranch("jet_vector2_mvaCHToCB", jet_vector2)
+        self.out.fillBranch("jet_pt0_mvaCHToCB_%s"%self._syst_suffix, jet_pt0)
+        self.out.fillBranch("jet_pt1_mvaCHToCB_%s"%self._syst_suffix, jet_pt1)
+        self.out.fillBranch("jet_pt2_mvaCHToCB_%s"%self._syst_suffix, jet_pt2)
+        self.out.fillBranch("jet_pt3_mvaCHToCB_%s"%self._syst_suffix, jet_pt3)
 
-        self.out.fillBranch("dijet_deltaR0_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR0)
-        self.out.fillBranch("dijet_deltaR1_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR1)
-        self.out.fillBranch("Hplus_b_deltaR0_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR0)
-        self.out.fillBranch("Hplus_b_deltaR1_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR1)
-        self.out.fillBranch("bb_deltaR_mvaCHToCB_%s"%self._syst_suffix, bb_deltaR)
+        if self._isDeltaR:
+          self.out.fillBranch("dijet_deltaR0_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR0)
+          self.out.fillBranch("dijet_deltaR1_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR1)
+          self.out.fillBranch("dijet_deltaR2_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR2)
+          self.out.fillBranch("dijet_deltaR3_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR3)
+          self.out.fillBranch("dijet_deltaR4_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR4)
+          self.out.fillBranch("dijet_deltaR5_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR5)
+          self.out.fillBranch("Hplus_b_deltaR0_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR0)
+          self.out.fillBranch("Hplus_b_deltaR1_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR1)
+          self.out.fillBranch("Hplus_b_deltaR2_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR2)
+          self.out.fillBranch("Hplus_b_deltaR3_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR3)
+          self.out.fillBranch("Hplus_b_deltaR4_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR4)
+          self.out.fillBranch("Hplus_b_deltaR5_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaR5)
+          self.out.fillBranch("bb_deltaR0_mvaCHToCB_%s"%self._syst_suffix, bb_deltaR0)
+          self.out.fillBranch("bb_deltaR1_mvaCHToCB_%s"%self._syst_suffix, bb_deltaR1)
+          self.out.fillBranch("bb_deltaR2_mvaCHToCB_%s"%self._syst_suffix, bb_deltaR2)
 
-        self.out.fillBranch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD0)
-        self.out.fillBranch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD1)
+          #self.out.fillBranch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD0)
+          #self.out.fillBranch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD1)
 
-        self.out.fillBranch("had_top_pt_scalar_sum_mvaCHToCB_%s"%self._syst_suffix, had_top_pt_scalar_sum)
+          self.out.fillBranch("lj_deltaR0_mvaCHToCB_%s"%self._syst_suffix, lj_deltaR0)
+          self.out.fillBranch("lj_deltaR1_mvaCHToCB_%s"%self._syst_suffix, lj_deltaR1)
+          self.out.fillBranch("lj_deltaR2_mvaCHToCB_%s"%self._syst_suffix, lj_deltaR2)
+          self.out.fillBranch("lj_deltaR3_mvaCHToCB_%s"%self._syst_suffix, lj_deltaR3)
+
+
+        else:
+          # delta Eta
+          self.out.fillBranch("dijet_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta0)
+          self.out.fillBranch("dijet_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta1)
+          self.out.fillBranch("dijet_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta2)
+          self.out.fillBranch("dijet_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta3)
+          self.out.fillBranch("dijet_deltaEta4_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta4)
+          self.out.fillBranch("dijet_deltaEta5_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaEta5)
+          self.out.fillBranch("Hplus_b_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta0)
+          self.out.fillBranch("Hplus_b_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta1)
+          self.out.fillBranch("Hplus_b_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta2)
+          self.out.fillBranch("Hplus_b_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta3)
+          self.out.fillBranch("Hplus_b_deltaEta4_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta4)
+          self.out.fillBranch("Hplus_b_deltaEta5_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaEta5)
+          self.out.fillBranch("bb_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, bb_deltaEta0)
+          self.out.fillBranch("bb_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, bb_deltaEta1)
+          self.out.fillBranch("bb_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, bb_deltaEta2)
+
+          #self.out.fillBranch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD0)
+          #self.out.fillBranch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD1)
+
+          self.out.fillBranch("lj_deltaEta0_mvaCHToCB_%s"%self._syst_suffix, lj_deltaEta0)
+          self.out.fillBranch("lj_deltaEta1_mvaCHToCB_%s"%self._syst_suffix, lj_deltaEta1)
+          self.out.fillBranch("lj_deltaEta2_mvaCHToCB_%s"%self._syst_suffix, lj_deltaEta2)
+          self.out.fillBranch("lj_deltaEta3_mvaCHToCB_%s"%self._syst_suffix, lj_deltaEta3)
+
+          # delta Phi
+          self.out.fillBranch("dijet_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi0)
+          self.out.fillBranch("dijet_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi1)
+          self.out.fillBranch("dijet_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi2)
+          self.out.fillBranch("dijet_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi3)
+          self.out.fillBranch("dijet_deltaPhi4_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi4)
+          self.out.fillBranch("dijet_deltaPhi5_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaPhi5)
+          self.out.fillBranch("Hplus_b_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi0)
+          self.out.fillBranch("Hplus_b_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi1)
+          self.out.fillBranch("Hplus_b_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi2)
+          self.out.fillBranch("Hplus_b_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi3)
+          self.out.fillBranch("Hplus_b_deltaPhi4_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi4)
+          self.out.fillBranch("Hplus_b_deltaPhi5_mvaCHToCB_%s"%self._syst_suffix, Hplus_b_deltaPhi5)
+          self.out.fillBranch("bb_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, bb_deltaPhi0)
+          self.out.fillBranch("bb_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, bb_deltaPhi1)
+          self.out.fillBranch("bb_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, bb_deltaPhi2)
+
+          #self.out.fillBranch("dijet_ptD0_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD0)
+          #self.out.fillBranch("dijet_ptD1_mvaCHToCB_%s"%self._syst_suffix, dijet_ptD1)
+
+          self.out.fillBranch("lj_deltaPhi0_mvaCHToCB_%s"%self._syst_suffix, lj_deltaPhi0)
+          self.out.fillBranch("lj_deltaPhi1_mvaCHToCB_%s"%self._syst_suffix, lj_deltaPhi1)
+          self.out.fillBranch("lj_deltaPhi2_mvaCHToCB_%s"%self._syst_suffix, lj_deltaPhi2)
+          self.out.fillBranch("lj_deltaPhi3_mvaCHToCB_%s"%self._syst_suffix, lj_deltaPhi3)
+
+
         self.out.fillBranch("min_deltaR_bb_event_mvaCHToCB_%s"%self._syst_suffix, min_deltaR_bb_event)
         self.out.fillBranch("min_deltaR_jj_event_mvaCHToCB_%s"%self._syst_suffix, min_deltaR_jj_event)
+
+        self.out.fillBranch("had_top_pt_scalar_sum_mvaCHToCB_%s"%self._syst_suffix, had_top_pt_scalar_sum)
+
         self.out.fillBranch("HT_btagged_L_%s"%self._syst_suffix, HT_btagged_L)
         self.out.fillBranch("HT_btagged_M_%s"%self._syst_suffix, HT_btagged_M)
         self.out.fillBranch("HT_btagged_T_%s"%self._syst_suffix, HT_btagged_T)
@@ -302,6 +659,8 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("mcb0_mvaCHToCB_%s"%self._syst_suffix, mcb0)
         self.out.fillBranch("mcb1_mvaCHToCB_%s"%self._syst_suffix, mcb1)
         self.out.fillBranch("hadronic_top_mass_mvaCHToCB_%s"%self._syst_suffix, hadronic_top_mass)
+        if self._syst_suffix == 'nom':
+          self.out.fillBranch("EventNum_mvaCHToCB", self.eventNum)
 
         return True
 
@@ -314,7 +673,7 @@ class mvaTreeCHToCB(Module):
         return getattr(object_,syst_suffix)
 
 
-    def get_jets_vectors(self, absetacut, ptcut):
+    def get_jets_vectors(self, absetacut, ptcut, rho):
         '''
         Returns a list of 4-momenta for jets
                                                                                                                     
@@ -337,22 +696,39 @@ class mvaTreeCHToCB(Module):
           passabsetacut = True
           if abs(eta) >= absetacut or pt <= ptcut: 
             passabsetacut = False
-          if pt > 20 and pt<=30:
-            if not (puId_M & (1<<1)):
-              passabsetacut = False
-            if csv <= self.csvcut_M:
-              passabsetacut = False
+          if pt > 25 and pt<=30:
+            #if not self._lowerBjetPt:
+            #  passabsetacut = False
+            #if not (puId_M & (1<<1)):
+            #  passabsetacut = False
+            #if csv <= self.csvcut_M:
+            #  passabsetacut = False
           #if self.debug: 
           #  print "Jet index: ", jetindex, " CUT > pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
           if not passabsetacut : continue
           
+          
+
           p = pt * cosh(eta)
           en = sqrt(p**2 + mass**2)
           vec = TLorentzVector()
           vec.SetPtEtaPhiE(pt, eta, phi, en)
+          # smear resolution
+          if self.isSmear:
+            # do not smear at first iteration for smearing
+            if not self.i_Smear == 0:
+              jetPtResolution_, jetEtaResolution_, jetPhiResolution_ = self.getJetPtResolution(vec, rho)
+
+              # generate random number
+              rand = [random.gauss(0,1), random.gauss(0,1), random.gauss(0,1)]
+              # truncate random normal
+              rand = [ rand_ if rand_ > -2. else -2  for rand_ in rand  ]
+              rand = [ rand_ if rand_ <  2. else  2. for rand_ in rand  ]
+              var = [jetPtResolution_*rand[0], jetEtaResolution_*rand[1], jetPhiResolution_*rand[2]]
+              vec.SetPtEtaPhiE(pt*(1+var[0]), eta*(1+var[1]), phi*(1+var[2]), en)
           # check if different from the previous one
           #if self.debug:
-          #    print "Jet index: ", jetindex, "> pt:", pt ," eta:", eta, " phi:", phi, " mass:", mass
+          #print "Jet index: ", jetindex, "> pt:", pt, "> pt_res:", pt*(1+var[0]), " eta:", eta, " eta_res:", eta*(1+var[1]), " phi:", phi, " phi_res:", phi*(1+var[2])," mass:", mass
           jets.append(vec)
           coll_idx.append(jetindex)
         return jets, coll_idx
@@ -362,7 +738,6 @@ class mvaTreeCHToCB(Module):
         # check if variables exist in skimed tree
         # which kinFitTTSemiLep module produce
         # 
-        # 'down_type_jet_b_tagged_nom'
         # 'hadronic_top_b_jet_idx_nom'
         # 'leptonic_top_b_jet_idx_nom'
         # 'w_ch_up_type_jet_idx_nom'
@@ -371,14 +746,19 @@ class mvaTreeCHToCB(Module):
         # these variables return index of Jet assigned as top candidate
         #
         #
-        return hasattr(event,'down_type_jet_b_tagged_%s'%self._syst_suffix) and\
-               hasattr(event,'hadronic_top_b_jet_idx_%s'%self._syst_suffix) and\
-               hasattr(event,'leptonic_top_b_jet_idx_%s'%self._syst_suffix) and\
-               hasattr(event,'w_ch_up_type_jet_idx_%s'%self._syst_suffix) and\
-               hasattr(event,'w_ch_down_type_jet_idx_%s'%self._syst_suffix) and\
-               hasattr(event,'hadronic_top_b_jet_pull_%s'%self._syst_suffix) and\
-               hasattr(event,'w_ch_up_type_jet_pull_%s'%self._syst_suffix) and\
-               hasattr(event,'w_ch_down_type_jet_pull_%s'%self._syst_suffix)
+        if self._genMatched:
+          return hasattr(event,"had_top_b_matched_jet_idx"        ) and\
+                 hasattr(event,"lep_top_b_matched_jet_idx"        ) and\
+                 hasattr(event,"had_top_up_type_matched_jet_idx"  ) and\
+                 hasattr(event,"had_top_down_type_matched_jet_idx")
+        else:
+          return hasattr(event,'hadronic_top_b_jet_idx_%s'%self._syst_suffix) and\
+                 hasattr(event,'leptonic_top_b_jet_idx_%s'%self._syst_suffix) and\
+                 hasattr(event,'w_ch_up_type_jet_idx_%s'%self._syst_suffix) and\
+                 hasattr(event,'w_ch_down_type_jet_idx_%s'%self._syst_suffix) and\
+                 hasattr(event,'hadronic_top_b_jet_pull_%s'%self._syst_suffix) and\
+                 hasattr(event,'w_ch_up_type_jet_pull_%s'%self._syst_suffix) and\
+                 hasattr(event,'w_ch_down_type_jet_pull_%s'%self._syst_suffix)
 
 
     def nearest_top_mass_pair(self, vectors, idxs):
@@ -391,7 +771,7 @@ class mvaTreeCHToCB(Module):
           # if there's no btagged jets in hadronic top, assign large number
           # in the 2 btagged event, 1 b tagged jet is allowed in had top
           # in the >=3 btagged event, more than 2 b tagged jet are allowed in had top
-          l.append(([i,j,k], abs(172.5 - (vectors[i]+vectors[j]+vectors[k]).M() ) if (self.nbtags_event==2 and nbtags_had_top == 1) or (self.nbtags_event>=3 and nbtags_had_top >= 2) else 9999999999, nbtags_had_top ))
+          l.append(([i,j,k], abs(172.5 - (vectors[i]+vectors[j]+vectors[k]).M() ) if (self.nbtags_event==2 and nbtags_had_top == 1) or (self.nbtags_event>=3 and nbtags_had_top >= 2) else LARGE_NUM, nbtags_had_top ))
         l = sorted(l, key=itemgetter(1))
         self.nbtags_had_top = l[0][2] #store number of b-tagged jet in hadronic top
         return l[0][0]
@@ -406,7 +786,7 @@ class mvaTreeCHToCB(Module):
           # in the 2 btagged event, 1 b tagged jet is allowed in had top
           # in the >=3 btagged event, more than 2 b tagged jet are allowed in had top
           #XXX require top mass window
-          l.append(([i,j,k], (vectors[i]+vectors[j]+vectors[k]).Pt() if ((self.nbtags_event==2 and nbtags_had_top == 1) or (self.nbtags_event>=3 and nbtags_had_top >= 2)) and 100 < (vectors[i]+vectors[j]+vectors[k]).M() < 240 else -9999999999, nbtags_had_top ))
+          l.append(([i,j,k], (vectors[i]+vectors[j]+vectors[k]).Pt() if ((self.nbtags_event==2 and nbtags_had_top == 1) or (self.nbtags_event>=3 and nbtags_had_top >= 2)) and 100 < (vectors[i]+vectors[j]+vectors[k]).M() < 240 else -LARGE_NUM, nbtags_had_top ))
         l = sorted(l, key=itemgetter(1), reverse=True)
         self.nbtags_had_top = l[0][2] #store number of b-tagged jet in hadronic top
         return l[0][0]
@@ -415,7 +795,7 @@ class mvaTreeCHToCB(Module):
         l = []
         for i ,j in combinations(range(len(vectors)),2):
           is_bb = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
-          l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_bb else 9999999999 ))
+          l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_bb else LARGE_NUM ))
         l = sorted(l, key=itemgetter(1))
         return l[0][1]
 
@@ -423,16 +803,56 @@ class mvaTreeCHToCB(Module):
         l = []
         for i ,j in combinations(range(len(vectors)),2):
           is_jj = sum([ csv <= self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
-          l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_jj else 9999999999 ))
+          l.append(([i,j], vectors[i].DeltaR(vectors[j]) if is_jj else LARGE_NUM ))
+        l = sorted(l, key=itemgetter(1))
+        return l[0][1] if not l[0][1] == LARGE_NUM else -1
+
+    def min_deltaPhi_bb(self, vectors, idxs):
+        l = []
+        for i ,j in combinations(range(len(vectors)),2):
+          is_bb = sum([ csv > self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
+          l.append(([i,j], vectors[i].DeltaPhi(vectors[j]) if is_bb else LARGE_NUM ))
         l = sorted(l, key=itemgetter(1))
         return l[0][1]
 
+    def min_deltaPhi_jj(self, vectors, idxs):
+        l = []
+        for i ,j in combinations(range(len(vectors)),2):
+          is_jj = sum([ csv <= self.csvcut_M for csv in [ self.rawJet_coll[idxs[i]].btagDeepFlavB, self.rawJet_coll[idxs[j]].btagDeepFlavB]]) == 2
+          l.append(([i,j], vectors[i].DeltaPhi(vectors[j]) if is_jj else -1 ))
+        l = sorted(l, key=itemgetter(1))
+        return l[0][1]
     def get_HT_btagged(self, idxs, csvcut):
         is_btagged       = [ csv > csvcut for csv in [ self.rawJet_coll[idx].btagDeepFlavB for idx in idxs ]]
         idxs_btagged     = [ idxs[i] for i, is_tagged in enumerate(is_btagged) if is_tagged is True  ]
         idxs_not_btagged = [ idxs[i] for i, is_tagged in enumerate(is_btagged) if is_tagged is False ]
 
-        HT_btagged     = sum( [ self.rawJet_coll[idx].pt for idx in idxs_btagged if self.rawJet_coll[idx].pt>0 ] )
-        HT_not_btagged = sum( [ self.rawJet_coll[idx].pt for idx in idxs_not_btagged if self.rawJet_coll[idx].pt>0 ] )
+        HT_btagged     = sum( [ self.findJetPtSystAttr( self.rawJet_coll[idx] ) for idx in idxs_btagged if self.findJetPtSystAttr( self.rawJet_coll[idx] )>0 ] )
+        HT_not_btagged = sum( [ self.findJetPtSystAttr( self.rawJet_coll[idx] ) for idx in idxs_not_btagged if self.findJetPtSystAttr( self.rawJet_coll[idx] )>0 ] )
         return HT_btagged, HT_not_btagged
+
+    def getJetPtResolution(self, jetIn, rho):
+        if hasattr( jetIn, "p4"):
+          jet = jetIn.p4()
+        else:
+          jet = jetIn
+
+        if not (jet.Perp() > 0.):
+            print("WARNING: jet pT = %1.1f !!" % jet.Perp())
+            return ( jet.Perp(), jet.Perp(), jet.Perp() )
+
+        self.params_resolution.setJetPt(jet.Perp())
+        self.params_resolution.setJetEta(jet.Eta())
+        self.params_resolution.setRho(rho)
+        jet_pt_resolution = self.jer['Pt'].getResolution(self.params_resolution)
+        jet_eta_resolution = self.jer['Eta'].getResolution(self.params_resolution)
+        jet_phi_resolution = self.jer['Phi'].getResolution(self.params_resolution)
+        self.params_sf_and_uncertainty.setJetEta(jet.Eta())
+        self.params_sf_and_uncertainty.setJetPt(jet.Pt())
+        jet_pt_resolution_SF = self.jerSF_and_Uncertainty.getScaleFactor(self.params_sf_and_uncertainty, 0) # 0 for nominal
+
+        # debug
+        #print_msg = "MC jer : {0:.4f} \t\t   MC jer SF : {1:.4f}".format(jet_pt_resolution,jet_pt_resolution_SF)
+        #print(print_msg)
+        return jet_pt_resolution*jet_pt_resolution_SF, jet_eta_resolution, jet_phi_resolution
 

@@ -15,7 +15,9 @@ run_keys = [
         # --- 2016 ---
         #
         #('2016','Summer16_102X_nAODv7_Full2016v7','Prod','MCl1loose2016v7','MC_signal'),
-        ('2016','Summer16_102X_nAODv7_Full2016v7','Prod','MCl1loose2016v7','MC_ttsyst'),
+        #('2016','Summer16_102X_nAODv7_Full2016v7','Prod','MCl1loose2016v7','MC_ttsyst'),
+        #('2016','Summer16_102X_nAODv7_Full2016v7','MCl1loose2016v7','MCCorr2016v7','MC_signal'),
+        #('2016','Summer16_102X_nAODv7_Full2016v7','MCl1loose2016v7','MCCorr2016v7','MC_ttsyst'),
         #('2016','Summer16_102X_nAODv5_Full2016v6','MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10','genCHToCB_2016','MC'),
         #('2016','Summer16_102X_nAODv5_Full2016v6','MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10','genCHToCB_2016','MC_signal'),
         #('2016','Summer16_102X_nAODv5_Full2016v6','MCl1loose2016v6__MCCorr2016v6__HMSemilepSKIMv6_10','genCHToCB_2016','MC_ttsyst'),
@@ -35,11 +37,15 @@ run_keys = [
         #
         #('2017','Fall2017_102X_nAODv7_Full2017v7','Prod','MCl1loose2017v7','MC_signal'),
         #('2017','Fall2017_102X_nAODv7_Full2017v7','Prod','MCl1loose2017v7','MC_ttsyst'),
+        #('2017','Fall2017_102X_nAODv7_Full2017v7','MCl1loose2017v7','MCCorr2017v7','MC_signal'),
+        #('2017','Fall2017_102X_nAODv7_Full2017v7','MCl1loose2017v7','MCCorr2017v7','MC_ttsyst'),
         #
         # --- 2018 ---
         #
         #('2018','Autumn18_102X_nAODv7_Full2018v7','Prod','MCl1loose2018v7','MC_signal'),
         #('2018','Autumn18_102X_nAODv7_Full2018v7','Prod','MCl1loose2018v7','MC_ttsyst'),
+        ('2018','Autumn18_102X_nAODv7_Full2018v7','MCl1loose2018v7','MCCorr2018v7','MC_signal'),
+        ('2018','Autumn18_102X_nAODv7_Full2018v7','MCl1loose2018v7','MCCorr2018v7','MC_ttsyst'),
     ]
 
 sleep_interval = {

@@ -20,6 +20,7 @@ public :
   virtual TMatrixD* getDerivative( TAbsFitParticle* particle ) = 0 ;
   virtual Double_t getInitValue() = 0;
   virtual Double_t getCurrentValue() = 0;
+  virtual Double_t getChi2(){ return 0; }
 
   // new ---  additional parameters
   Int_t getNPar() { return _nPar; } 

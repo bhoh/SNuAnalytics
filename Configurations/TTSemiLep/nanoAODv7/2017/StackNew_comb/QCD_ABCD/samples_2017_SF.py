@@ -17,7 +17,7 @@ except ImportError:
   sys.path.append(BASE_PATH)
   from WPandCut2017 import *
 
-include_mva = True
+include_mva = False
 
 samples={}
 
@@ -90,8 +90,9 @@ EMTFbug_veto\
 '
 SFweight=SFweight+'*'+LepWPCut+'*'+LepWPweight
 
-GenLepMatch = 'Lepton_genmatched[0]'
-#GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
+#GenLepMatch = 'Lepton_genmatched[0]'
+GenLepMatch = '1'
+##GenLepMatch = 'Lepton_promptgenmatched[0]*Alt$(!Lepton_promptgenmatched[1], 1)'
 
 #SFweight=SFweight+'*HEMweight'
 

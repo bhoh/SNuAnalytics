@@ -112,7 +112,8 @@ TLorentzVector* TFitParticlePt::calc4Vec( const TMatrixD* params ) {
   Double_t pt = (*params)(0,0);
   Double_t eta = _iniEta;
   Double_t phi = _iniPhi;
-  Double_t m = _iniM;
+  //Double_t m = _iniM;
+  Double_t m = _iniM*(pt/_iniPt);
 
   Double_t X = pt*TMath::Cos(phi);
   Double_t Y = pt*TMath::Sin(phi);
@@ -145,6 +146,8 @@ void TFitParticlePt::setIni4Vec(const TLorentzVector* pini) {
   } else {
     
     Double_t pt = pini->Pt();
+    _iniPt  = pini->Pt();
+    _iniE  = pini->Et();
     _iniEta = pini->Eta();
     _iniPhi = pini->Phi();
     _iniM = pini->M();
@@ -182,7 +185,8 @@ TMatrixD* TFitParticlePt::getDerivative() {
   (*DerivativeMatrix)(1,0) = TMath::Sin(phi);
   (*DerivativeMatrix)(2,0) = TMath::SinH(eta);
   Double_t cosh_eta = TMath::CosH(eta);
-  (*DerivativeMatrix)(3,0) = _parameters(0,0)*cosh_eta*cosh_eta/_pcurr.E();
+  //(*DerivativeMatrix)(3,0) = _parameters(0,0)*cosh_eta*cosh_eta/_pcurr.E();
+  (*DerivativeMatrix)(3,0) = _parameters(0,0)*(cosh_eta*cosh_eta + (_iniM*_iniM)/(_iniPt*_iniPt))/_pcurr.E();
 
    return DerivativeMatrix;
 
