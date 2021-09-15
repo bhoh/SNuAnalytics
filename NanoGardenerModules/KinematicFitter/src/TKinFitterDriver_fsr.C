@@ -5,7 +5,7 @@ TKinFitterDriver::TKinFitterDriver(){
 }
 
 
-TKinFitterDriver::TKinFitterDriver(int DataYear_){
+TKinFitterDriver::TKinFitterDriver(Int_t DataYear_){
 
   isMGaus = true;
   isMinimumChi2 = true;
@@ -85,7 +85,7 @@ TKinFitterDriver::~TKinFitterDriver(){
 }
 
 
-void TKinFitterDriver::SetDataYear(int i){
+void TKinFitterDriver::SetDataYear(Int_t i){
   DataYear = i;
 }
 
@@ -109,7 +109,7 @@ void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
   nbtags = std::accumulate(btag_vector.begin(), btag_vector.end(),0);
 
   permutation_vector.clear();
-  for(int i(0); i<njets; i++){
+  for(Int_t i(0); i<njets; i++){
     if(i==0) permutation_vector.push_back( HADRONIC_TOP_B );
     else if(i==1) permutation_vector.push_back( LEPTONIC_TOP_B );
     else if(i==2) permutation_vector.push_back( W_CH_UP_TYPE );
@@ -125,8 +125,8 @@ void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
 
 
 void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
-                                     std::vector<double> btag_csv_vector_,
-                                     double btag_cut_,
+                                     std::vector<Double_t> btag_csv_vector_,
+                                     Double_t btag_cut_,
                                      TLorentzVector lepton_,
                                      TLorentzVector met_){
   btag_csv_vector = btag_csv_vector_;
@@ -149,19 +149,19 @@ void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
 }
 
 
-void TKinFitterDriver::SetJetPtResolution(std::vector<float> jetPtResolution_){
+void TKinFitterDriver::SetJetPtResolution(std::vector<Double_t> jetPtResolution_){
   jet_pt_resolution_vector.clear();
   for(auto& x : jetPtResolution_){
     jet_pt_resolution_vector.push_back(x);
   }
 }
-void TKinFitterDriver::SetJetEtaResolution(std::vector<float> jetEtaResolution_){
+void TKinFitterDriver::SetJetEtaResolution(std::vector<Double_t> jetEtaResolution_){
   jet_eta_resolution_vector.clear();
   for(auto& x : jetEtaResolution_){
     jet_eta_resolution_vector.push_back(x);
   }
 }
-void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_){
+void TKinFitterDriver::SetJetPhiResolution(std::vector<Double_t> jetPhiResolution_){
   jet_phi_resolution_vector.clear();
   for(auto& x : jetPhiResolution_){
     jet_phi_resolution_vector.push_back(x);
@@ -169,9 +169,9 @@ void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_)
 }
 //void TKinFitterDriver::SetHadronicTopBJets(TLorentzVector jet_){
 //  hadronic_top_b_jet = jet_;
-//  double Pt = hadronic_top_b_jet.Pt();
-//  double Eta = hadronic_top_b_jet.Eta();
-//  double Phi = hadronic_top_b_jet.Phi();
+//  Double_t Pt = hadronic_top_b_jet.Pt();
+//  Double_t Eta = hadronic_top_b_jet.Eta();
+//  Double_t Phi = hadronic_top_b_jet.Phi();
 //  this->SetJetError(&error_hadronic_top_b_jet, Pt, Eta, Phi, "b");
 //  corr_hadronic_top_b_jet = ts_correction->GetCorrectedJet("b",hadronic_top_b_jet);
 //  fit_hadronic_top_b_jet->~TFitParticlePt();
@@ -187,9 +187,9 @@ void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_)
 
 //void TKinFitterDriver::SetLeptonicTopBJets(TLorentzVector jet_){
 //  leptonic_top_b_jet=jet_;
-//  double Pt = leptonic_top_b_jet.Pt();
-//  double Eta = leptonic_top_b_jet.Eta();
-//  double Phi = leptonic_top_b_jet.Phi();
+//  Double_t Pt = leptonic_top_b_jet.Pt();
+//  Double_t Eta = leptonic_top_b_jet.Eta();
+//  Double_t Phi = leptonic_top_b_jet.Phi();
 //  this->SetJetError(&error_leptonic_top_b_jet, Pt, Eta, Phi, "b");
 //  //XXX when we vary only leptonic top b jet pt
 //  //corr_leptonic_top_b_jet = ts_correction->GetCorrectedJet("b",leptonic_top_b_jet) + lepton + neutrino_pxpy + neutrino_pz;
@@ -208,9 +208,9 @@ void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_)
 //
 //void TKinFitterDriver::SetWCHUpTypeJets(TLorentzVector jet_){
 //  hadronic_w_ch_jet1=jet_;
-//  double Pt = hadronic_w_ch_jet1.Pt();
-//  double Eta = hadronic_w_ch_jet1.Eta();
-//  double Phi = hadronic_w_ch_jet1.Phi();
+//  Double_t Pt = hadronic_w_ch_jet1.Pt();
+//  Double_t Eta = hadronic_w_ch_jet1.Eta();
+//  Double_t Phi = hadronic_w_ch_jet1.Phi();
 //  this->SetJetError(&error_hadronic_w_ch_jet1, Pt, Eta, Phi, "udsc");
 //  corr_hadronic_w_ch_jet1 = ts_correction->GetCorrectedJet("udsc",hadronic_w_ch_jet1);
 //  fit_hadronic_w_ch_jet1->~TFitParticlePt();
@@ -225,9 +225,9 @@ void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_)
 //
 //void TKinFitterDriver::SetWCHDownTypeJets(TLorentzVector jet_){
 //  hadronic_w_ch_jet2=jet_;
-//  double Pt = hadronic_w_ch_jet2.Pt();
-//  double Eta = hadronic_w_ch_jet2.Eta();
-//  double Phi = hadronic_w_ch_jet2.Phi();
+//  Double_t Pt = hadronic_w_ch_jet2.Pt();
+//  Double_t Eta = hadronic_w_ch_jet2.Eta();
+//  Double_t Phi = hadronic_w_ch_jet2.Phi();
 //  TString flav =  nbtags>2 ? "b":"udsc";
 //  this->SetJetError(&error_hadronic_w_ch_jet2, Pt, Eta, Phi, flav);
 //  corr_hadronic_w_ch_jet2 = ts_correction->GetCorrectedJet(flav, hadronic_w_ch_jet2);
@@ -240,29 +240,29 @@ void TKinFitterDriver::SetJetPhiResolution(std::vector<float> jetPhiResolution_)
 //  //cout << "TKinFitterDriver::SetWCHDownTypeJets : " << endl;
 //}
 
-void TKinFitterDriver::SetHadronicTopBJets(int jet_, std::vector<int> fsr_jet_){
+void TKinFitterDriver::SetHadronicTopBJets(Int_t jet_, std::vector<Int_t> fsr_jet_){
   hadronic_top_b_jet.clear();
   hadronic_top_b_jet.push_back(jet_vector.at(jet_));
   //
-  int nPar;
+  Int_t nPar;
   if(isEtaPhiFit){
     nPar = 3;
   }
   else{
     nPar = 1;
   }
-  double Et = hadronic_top_b_jet.at(0).Et();
-  double Pt = hadronic_top_b_jet.at(0).Pt();
-  double Eta = hadronic_top_b_jet.at(0).Eta();
-  double Phi = hadronic_top_b_jet.at(0).Phi();
+  Double_t Et = hadronic_top_b_jet.at(0).Et();
+  Double_t Pt = hadronic_top_b_jet.at(0).Pt();
+  Double_t Eta = hadronic_top_b_jet.at(0).Eta();
+  Double_t Phi = hadronic_top_b_jet.at(0).Phi();
   error_hadronic_top_b_jet.clear();
   error_hadronic_top_b_jet.emplace_back(nPar,nPar);
   error_hadronic_top_b_jet.at(0).Zero();
-  double resolution_pt = jet_pt_resolution_vector.at(jet_);
+  Double_t resolution_pt = jet_pt_resolution_vector.at(jet_);
   error_hadronic_top_b_jet.at(0)(0,0) = resolution_pt*resolution_pt*Pt*Pt;
   if(isEtaPhiFit){
-    double resolution_eta = jet_eta_resolution_vector.at(jet_);
-    double resolution_phi = jet_phi_resolution_vector.at(jet_);
+    Double_t resolution_eta = jet_eta_resolution_vector.at(jet_);
+    Double_t resolution_phi = jet_phi_resolution_vector.at(jet_);
     error_hadronic_top_b_jet.at(0)(0,0) = resolution_pt*resolution_pt*Et*Et;
     error_hadronic_top_b_jet.at(0)(1,1) = resolution_eta*resolution_eta*Eta*Eta;
     error_hadronic_top_b_jet.at(0)(2,2) = resolution_phi*resolution_phi*Phi*Phi;
@@ -273,18 +273,18 @@ void TKinFitterDriver::SetHadronicTopBJets(int jet_, std::vector<int> fsr_jet_){
   // push back fsr jets
   for(unsigned i(0); i != fsr_jet_.size(); i++){
     hadronic_top_b_jet.push_back(jet_vector.at(fsr_jet_.at(i)));
-    double Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
-    double Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
-    double Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
-    double Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
+    Double_t Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
+    Double_t Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
+    Double_t Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
+    Double_t Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
     error_hadronic_top_b_jet.emplace_back(nPar,nPar);
     error_hadronic_top_b_jet.back().Zero();
-    double fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
     error_hadronic_top_b_jet.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Pt_fsr*Pt_fsr;
     if(isEtaPhiFit){
 
-      double fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
-      double fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
       error_hadronic_top_b_jet.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Et_fsr*Et_fsr;
       error_hadronic_top_b_jet.back()(1,1) = fsr_resolution_eta*fsr_resolution_eta*Eta_fsr*Eta_fsr;
       error_hadronic_top_b_jet.back()(2,2) = fsr_resolution_phi*fsr_resolution_phi*Phi_fsr*Phi_fsr;
@@ -322,30 +322,30 @@ void TKinFitterDriver::SetHadronicTopBJets(int jet_, std::vector<int> fsr_jet_){
 }
 
 
-void TKinFitterDriver::SetLeptonicTopBJets(int jet_, std::vector<int> fsr_jet_){
+void TKinFitterDriver::SetLeptonicTopBJets(Int_t jet_, std::vector<Int_t> fsr_jet_){
   leptonic_top_b_jet.clear();
   leptonic_top_b_jet.push_back(jet_vector.at(jet_));
   //
-  int nPar;
+  Int_t nPar;
   if(isEtaPhiFit){
     nPar = 3;
   }
   else{
     nPar = 1;
   }
-  double Pt = leptonic_top_b_jet.at(0).Pt();
-  double Et = leptonic_top_b_jet.at(0).Et();
-  double Eta = leptonic_top_b_jet.at(0).Eta();
-  double Phi = leptonic_top_b_jet.at(0).Phi();
+  Double_t Pt = leptonic_top_b_jet.at(0).Pt();
+  Double_t Et = leptonic_top_b_jet.at(0).Et();
+  Double_t Eta = leptonic_top_b_jet.at(0).Eta();
+  Double_t Phi = leptonic_top_b_jet.at(0).Phi();
   error_leptonic_top_b_jet.clear();
   error_leptonic_top_b_jet.emplace_back(nPar,nPar);
   error_leptonic_top_b_jet.at(0).Zero();
-  double resolution_pt = jet_pt_resolution_vector.at(jet_);
+  Double_t resolution_pt = jet_pt_resolution_vector.at(jet_);
   error_leptonic_top_b_jet.at(0)(0,0) = resolution_pt*resolution_pt*Pt*Pt;
   if(isEtaPhiFit){
 
-    double resolution_eta = jet_eta_resolution_vector.at(jet_);
-    double resolution_phi = jet_phi_resolution_vector.at(jet_);
+    Double_t resolution_eta = jet_eta_resolution_vector.at(jet_);
+    Double_t resolution_phi = jet_phi_resolution_vector.at(jet_);
     error_leptonic_top_b_jet.at(0)(0,0) = resolution_pt*resolution_pt*Et*Et;
     error_leptonic_top_b_jet.at(0)(1,1) = resolution_eta*resolution_eta*Eta*Eta;
     error_leptonic_top_b_jet.at(0)(2,2) = resolution_phi*resolution_phi*Phi*Phi;
@@ -357,18 +357,18 @@ void TKinFitterDriver::SetLeptonicTopBJets(int jet_, std::vector<int> fsr_jet_){
   // push back fsr jets
   for(unsigned i(0); i != fsr_jet_.size(); i++){
     leptonic_top_b_jet.push_back(jet_vector.at(fsr_jet_.at(i)));
-    double Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
-    double Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
-    double Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
-    double Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
+    Double_t Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
+    Double_t Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
+    Double_t Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
+    Double_t Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
     error_leptonic_top_b_jet.emplace_back(nPar,nPar);
     error_leptonic_top_b_jet.back().Zero();
-    double fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
     error_leptonic_top_b_jet.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Pt_fsr*Pt_fsr;
     if(isEtaPhiFit){
 
-      double fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
-      double fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
       error_leptonic_top_b_jet.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Et_fsr*Et_fsr;
       error_leptonic_top_b_jet.back()(1,1) = fsr_resolution_eta*fsr_resolution_eta*Eta_fsr*Eta_fsr;
       error_leptonic_top_b_jet.back()(2,2) = fsr_resolution_phi*fsr_resolution_phi*Phi_fsr*Phi_fsr;
@@ -405,30 +405,30 @@ void TKinFitterDriver::SetLeptonicTopBJets(int jet_, std::vector<int> fsr_jet_){
 }
 
 
-void TKinFitterDriver::SetWCHUpTypeJets(int jet_, std::vector<int> fsr_jet_){
+void TKinFitterDriver::SetWCHUpTypeJets(Int_t jet_, std::vector<Int_t> fsr_jet_){
   hadronic_w_ch_jet1.clear();
   hadronic_w_ch_jet1.push_back(jet_vector.at(jet_));
   //
-  int nPar;
+  Int_t nPar;
   if(isEtaPhiFit){
     nPar = 3;
   }
   else{
     nPar = 1;
   }
-  double Pt = hadronic_w_ch_jet1.at(0).Pt();
-  double Et = hadronic_w_ch_jet1.at(0).Et();
-  double Eta = hadronic_w_ch_jet1.at(0).Eta();
-  double Phi = hadronic_w_ch_jet1.at(0).Phi();
+  Double_t Pt = hadronic_w_ch_jet1.at(0).Pt();
+  Double_t Et = hadronic_w_ch_jet1.at(0).Et();
+  Double_t Eta = hadronic_w_ch_jet1.at(0).Eta();
+  Double_t Phi = hadronic_w_ch_jet1.at(0).Phi();
   error_hadronic_w_ch_jet1.clear();
   error_hadronic_w_ch_jet1.emplace_back(nPar,nPar);
   error_hadronic_w_ch_jet1.at(0).Zero();
-  double resolution_pt = jet_pt_resolution_vector.at(jet_);
+  Double_t resolution_pt = jet_pt_resolution_vector.at(jet_);
   error_hadronic_w_ch_jet1.at(0)(0,0) = resolution_pt*resolution_pt*Pt*Pt;
   if(isEtaPhiFit){
 
-    double resolution_eta = jet_eta_resolution_vector.at(jet_);
-    double resolution_phi = jet_phi_resolution_vector.at(jet_);
+    Double_t resolution_eta = jet_eta_resolution_vector.at(jet_);
+    Double_t resolution_phi = jet_phi_resolution_vector.at(jet_);
     error_hadronic_w_ch_jet1.at(0)(0,0) = resolution_pt*resolution_pt*Et*Et;
     error_hadronic_w_ch_jet1.at(0)(1,1) = resolution_eta*resolution_eta*Eta*Eta;
     error_hadronic_w_ch_jet1.at(0)(2,2) = resolution_phi*resolution_phi*Phi*Phi;
@@ -440,18 +440,18 @@ void TKinFitterDriver::SetWCHUpTypeJets(int jet_, std::vector<int> fsr_jet_){
   // push back fsr jets
   for(unsigned i(0); i != fsr_jet_.size(); i++){
     hadronic_w_ch_jet1.push_back(jet_vector.at(fsr_jet_.at(i)));
-    double Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
-    double Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
-    double Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
-    double Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
+    Double_t Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
+    Double_t Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
+    Double_t Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
+    Double_t Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
     error_hadronic_w_ch_jet1.emplace_back(nPar,nPar);
     error_hadronic_w_ch_jet1.back().Zero();
-    double fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
     error_hadronic_w_ch_jet1.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Pt_fsr*Pt_fsr;
   if(isEtaPhiFit){
 
-    double fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
-    double fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
     error_hadronic_w_ch_jet1.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Et_fsr*Et_fsr;
     error_hadronic_w_ch_jet1.back()(1,1) = fsr_resolution_eta*fsr_resolution_eta*Eta_fsr*Eta_fsr;
     error_hadronic_w_ch_jet1.back()(2,2) = fsr_resolution_phi*fsr_resolution_phi*Phi_fsr*Phi_fsr;
@@ -489,30 +489,30 @@ void TKinFitterDriver::SetWCHUpTypeJets(int jet_, std::vector<int> fsr_jet_){
 }
 
 
-void TKinFitterDriver::SetWCHDownTypeJets(int jet_, std::vector<int> fsr_jet_){
+void TKinFitterDriver::SetWCHDownTypeJets(Int_t jet_, std::vector<Int_t> fsr_jet_){
   hadronic_w_ch_jet2.clear();
   hadronic_w_ch_jet2.push_back(jet_vector.at(jet_));
   //
-  int nPar;
+  Int_t nPar;
   if(isEtaPhiFit){
     nPar = 3;
   }
   else{
     nPar = 1;
   }
-  double Pt = hadronic_w_ch_jet2.at(0).Pt();
-  double Et = hadronic_w_ch_jet2.at(0).Et();
-  double Eta = hadronic_w_ch_jet2.at(0).Eta();
-  double Phi = hadronic_w_ch_jet2.at(0).Phi();
+  Double_t Pt = hadronic_w_ch_jet2.at(0).Pt();
+  Double_t Et = hadronic_w_ch_jet2.at(0).Et();
+  Double_t Eta = hadronic_w_ch_jet2.at(0).Eta();
+  Double_t Phi = hadronic_w_ch_jet2.at(0).Phi();
   error_hadronic_w_ch_jet2.clear();
   error_hadronic_w_ch_jet2.emplace_back(nPar,nPar);
   error_hadronic_w_ch_jet2.at(0).Zero();
-  double resolution_pt = jet_pt_resolution_vector.at(jet_);
+  Double_t resolution_pt = jet_pt_resolution_vector.at(jet_);
   error_hadronic_w_ch_jet2.at(0)(0,0) = resolution_pt*resolution_pt*Pt*Pt;
   if(isEtaPhiFit){
 
-    double resolution_eta = jet_eta_resolution_vector.at(jet_);
-    double resolution_phi = jet_phi_resolution_vector.at(jet_);
+    Double_t resolution_eta = jet_eta_resolution_vector.at(jet_);
+    Double_t resolution_phi = jet_phi_resolution_vector.at(jet_);
     error_hadronic_w_ch_jet2.at(0)(0,0) = resolution_pt*resolution_pt*Et*Et;
     error_hadronic_w_ch_jet2.at(0)(1,1) = resolution_eta*resolution_eta*Eta*Eta;
     error_hadronic_w_ch_jet2.at(0)(2,2) = resolution_phi*resolution_phi*Phi*Phi;
@@ -524,18 +524,18 @@ void TKinFitterDriver::SetWCHDownTypeJets(int jet_, std::vector<int> fsr_jet_){
   // push back fsr jets
   for(unsigned i(0); i != fsr_jet_.size(); i++){
     hadronic_w_ch_jet2.push_back(jet_vector.at(fsr_jet_.at(i)));
-    double Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
-    double Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
-    double Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
-    double Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
+    Double_t Pt_fsr = jet_vector.at(fsr_jet_.at(i)).Pt();
+    Double_t Et_fsr = jet_vector.at(fsr_jet_.at(i)).Et();
+    Double_t Eta_fsr = jet_vector.at(fsr_jet_.at(i)).Eta();
+    Double_t Phi_fsr = jet_vector.at(fsr_jet_.at(i)).Phi();
     error_hadronic_w_ch_jet2.emplace_back(nPar,nPar);
     error_hadronic_w_ch_jet2.back().Zero();
-    double fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
+    Double_t fsr_resolution_pt = jet_pt_resolution_vector.at(fsr_jet_.at(i));
     error_hadronic_w_ch_jet2.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Pt_fsr*Pt_fsr;
     if(isEtaPhiFit){
 
-      double fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
-      double fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_eta = jet_eta_resolution_vector.at(fsr_jet_.at(i));
+      Double_t fsr_resolution_phi = jet_phi_resolution_vector.at(fsr_jet_.at(i));
       error_hadronic_w_ch_jet2.back()(0,0) = fsr_resolution_pt*fsr_resolution_pt*Et_fsr*Et_fsr;
       error_hadronic_w_ch_jet2.back()(1,1) = fsr_resolution_eta*fsr_resolution_eta*Eta_fsr*Eta_fsr;
       error_hadronic_w_ch_jet2.back()(2,2) = fsr_resolution_phi*fsr_resolution_phi*Phi_fsr*Phi_fsr;
@@ -574,10 +574,10 @@ void TKinFitterDriver::SetWCHDownTypeJets(int jet_, std::vector<int> fsr_jet_){
   //cout << "TKinFitterDriver::SetWCHDownTypeJets : " << endl;
 }
 
-void TKinFitterDriver::SetExtraJets(std::vector<int> extra_jet_){
+void TKinFitterDriver::SetExtraJets(std::vector<Int_t> extra_jet_){
   corr_extra_jets.clear();
   // push back extra jets
-  int nPar;
+  Int_t nPar;
   if(isEtaPhiFit){
     nPar = 3;
   }
@@ -586,18 +586,18 @@ void TKinFitterDriver::SetExtraJets(std::vector<int> extra_jet_){
   }
   for(unsigned i(0); i != extra_jet_.size(); i++){
     corr_extra_jets.push_back(jet_vector.at(extra_jet_.at(i)));
-    double Pt_extra = jet_vector.at(extra_jet_.at(i)).Pt();
-    double Et_extra = jet_vector.at(extra_jet_.at(i)).Et();
-    double Eta_extra = jet_vector.at(extra_jet_.at(i)).Eta();
-    double Phi_extra = jet_vector.at(extra_jet_.at(i)).Phi();
+    Double_t Pt_extra = jet_vector.at(extra_jet_.at(i)).Pt();
+    Double_t Et_extra = jet_vector.at(extra_jet_.at(i)).Et();
+    Double_t Eta_extra = jet_vector.at(extra_jet_.at(i)).Eta();
+    Double_t Phi_extra = jet_vector.at(extra_jet_.at(i)).Phi();
     error_extra_jets.emplace_back(nPar,nPar);
     error_extra_jets.back().Zero();
-    double extra_resolution_pt = jet_pt_resolution_vector.at(extra_jet_.at(i));
+    Double_t extra_resolution_pt = jet_pt_resolution_vector.at(extra_jet_.at(i));
     error_extra_jets.back()(0,0) = extra_resolution_pt*extra_resolution_pt*Pt_extra*Pt_extra;
   if(isEtaPhiFit){
 
-    double extra_resolution_eta = jet_eta_resolution_vector.at(extra_jet_.at(i));
-    double extra_resolution_phi = jet_phi_resolution_vector.at(extra_jet_.at(i));
+    Double_t extra_resolution_eta = jet_eta_resolution_vector.at(extra_jet_.at(i));
+    Double_t extra_resolution_phi = jet_phi_resolution_vector.at(extra_jet_.at(i));
     error_extra_jets.back()(0,0) = extra_resolution_pt*extra_resolution_pt*Et_extra*Et_extra;
     error_extra_jets.back()(1,1) = extra_resolution_eta*extra_resolution_eta*Eta_extra*Eta_extra;
     error_extra_jets.back()(2,2) = extra_resolution_phi*extra_resolution_phi*Phi_extra*Phi_extra;
@@ -635,8 +635,8 @@ void TKinFitterDriver::SetExtraJets(std::vector<int> extra_jet_){
 
 void TKinFitterDriver::SetLepton(TLorentzVector lepton_){
   lepton=lepton_;
-  double Pt = lepton.Pt();
-  double Eta = lepton.Eta();
+  Double_t Pt = lepton.Pt();
+  Double_t Eta = lepton.Eta();
   error_lepton(0,0)=TMath::Power(0.0000001*Pt,2);
   delete fit_lepton;
   fit_lepton = new TFitParticlePt("lepton",
@@ -645,7 +645,7 @@ void TKinFitterDriver::SetLepton(TLorentzVector lepton_){
                                         &error_lepton
                                        );
 
-  //XXX below line cause 'double release' error ??
+  //XXX below line cause 'Double_t release' error ??
   //fit_lepton->~TFitParticlePt();
   //new(fit_lepton) TFitParticlePt("lepton",
   //                                      "lepton",
@@ -661,20 +661,20 @@ void TKinFitterDriver::SetMET(TLorentzVector met_){
 }
 
 
-void TKinFitterDriver::SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down){
+void TKinFitterDriver::SetMETShift(Double_t met_pt_up, Double_t met_pt_down, Double_t met_phi_up, Double_t met_phi_down){
   
-  double met_pt = METv.Pt();
-  double met_phi = METv.Phi();
+  Double_t met_pt = METv.Pt();
+  Double_t met_phi = METv.Phi();
   MET_pt_shift = std::max(fabs(met_pt_up-met_pt), fabs(met_pt-met_pt_down));
   MET_phi_shift = std::max(fabs(met_phi_up-met_phi), fabs(met_phi-met_phi_down));
 }
 
 
-void TKinFitterDriver::SetMETShift(double met_shiftX, double met_shiftY){
+void TKinFitterDriver::SetMETShift(Double_t met_shiftX, Double_t met_shiftY){
   
-  double met_px = METv.Px();
-  double met_py = METv.Py();
-  double met_phi = METv.Phi();
+  Double_t met_px = METv.Px();
+  Double_t met_py = METv.Py();
+  Double_t met_phi = METv.Phi();
 
   MET_pt_shift = met_shiftX; //XXX pt->px, phi->py
   MET_phi_shift = met_shiftY; //XXX pt->px, phi->py
@@ -687,25 +687,25 @@ void TKinFitterDriver::SetMETShift(double met_shiftX, double met_shiftY){
 }
 
 
-void TKinFitterDriver::SetNeutrino(TLorentzVector met_, int i){
+void TKinFitterDriver::SetNeutrino(TLorentzVector met_, Int_t i){
 
-  double met_px = met_.Px();
-  double met_py = met_.Py();
-  double pz = neutrino_pz_sol[i];
+  Double_t met_px = met_.Px();
+  Double_t met_py = met_.Py();
+  Double_t pz = neutrino_pz_sol[i];
   neutrino_pxpypz.SetPxPyPzE(met_px, met_py, pz, TMath::Sqrt(met_.E()*met_.E()+pz*pz));
   neutrino_vec3 = neutrino_pxpypz.Vect();
 
   error_neutrino_pxpypz(0,0) = 1e6;  
   error_neutrino_pxpypz(1,1) = 1e6;
   error_neutrino_pxpypz(2,2) = 1e6;
-  //XXX below lines cause 'double release' error???
+  //XXX below lines cause 'Double_t release' error???
   delete fit_neutrino_pxpypz;
   fit_neutrino_pxpypz = new TFitParticleMCCart("neutrino_pxpypz",
                                           "neutrino_pxpypz",
                                           &neutrino_vec3,
                                           0.,
-                                          &error_neutrino_pxpypz
-                                          //NULL
+                                          //&error_neutrino_pxpypz
+                                          NULL
                                          );
   //fit_neutrino_pxpypz->~TFitParticleMCCart();
   //new(fit_neutrino_pxpypz) TFitParticleMCCart("neutrino_pxpypz",
@@ -741,7 +741,7 @@ void TKinFitterDriver::SetNeutrinoSmallerPz(TLorentzVector met_){
 }
 
 
-void TKinFitterDriver::SetGenJets(std::vector<float> genjet_pt_vector_){
+void TKinFitterDriver::SetGenJets(std::vector<Double_t> genjet_pt_vector_){
   genjet_pt_vector.clear();
   for(auto& x : genjet_pt_vector_){
     genjet_pt_vector.push_back(x);
@@ -774,16 +774,16 @@ void TKinFitterDriver::SetCurrentPermutationJets(bool fsr_recover){
   // check if dR<0.8 with the closest jet and softer than the closest jet.
   // push_back to fsr_vector for correspoing four jets.
   //
-  std::vector<int> fsr_hadronic_top_b_jet;
-  std::vector<int> fsr_leptonic_top_b_jet;
-  std::vector<int> fsr_w_ch_up_type_jet;
-  std::vector<int> fsr_w_ch_down_type_jet;
-  std::vector<int> extra_jets;
+  std::vector<Int_t> fsr_hadronic_top_b_jet;
+  std::vector<Int_t> fsr_leptonic_top_b_jet;
+  std::vector<Int_t> fsr_w_ch_up_type_jet;
+  std::vector<Int_t> fsr_w_ch_down_type_jet;
+  std::vector<Int_t> extra_jets;
   if(fsr_recover){
     for(UInt_t i=0; i<permutation_vector.size(); i++){
       JET_ASSIGNMENT jet_assignment_idx = permutation_vector.at(i);
-      double dR_hadronic_top_b_jet, dR_leptonic_top_b_jet, dR_w_ch_up_type_jet, dR_w_ch_down_type_jet;
-      double dPt_hadronic_top_b_jet, dPt_leptonic_top_b_jet, dPt_w_ch_up_type_jet, dPt_w_ch_down_type_jet;
+      Double_t dR_hadronic_top_b_jet, dR_leptonic_top_b_jet, dR_w_ch_up_type_jet, dR_w_ch_down_type_jet;
+      Double_t dPt_hadronic_top_b_jet, dPt_leptonic_top_b_jet, dPt_w_ch_up_type_jet, dPt_w_ch_down_type_jet;
       if( jet_assignment_idx != JET_ASSIGNMENT::NONE ){
         continue;
       }
@@ -796,10 +796,10 @@ void TKinFitterDriver::SetCurrentPermutationJets(bool fsr_recover){
       dPt_w_ch_up_type_jet   = jet_vector.at(w_ch_up_type_jet_idx).Pt()   - jet_vector.at(jet_assignment_idx).Pt();
       dPt_w_ch_down_type_jet = jet_vector.at(w_ch_down_type_jet_idx).Pt() - jet_vector.at(jet_assignment_idx).Pt();
       // find cloest jet among four jets
-      double min_dR=9999;
-      double dR[4]  = {dR_hadronic_top_b_jet, dR_leptonic_top_b_jet, dR_w_ch_up_type_jet, dR_w_ch_down_type_jet};
-      double dPt[4] = {dPt_hadronic_top_b_jet, dPt_leptonic_top_b_jet, dPt_w_ch_up_type_jet, dPt_w_ch_down_type_jet};
-      for(int i(0); i<4; i++){
+      Double_t min_dR=9999;
+      Double_t dR[4]  = {dR_hadronic_top_b_jet, dR_leptonic_top_b_jet, dR_w_ch_up_type_jet, dR_w_ch_down_type_jet};
+      Double_t dPt[4] = {dPt_hadronic_top_b_jet, dPt_leptonic_top_b_jet, dPt_w_ch_up_type_jet, dPt_w_ch_down_type_jet};
+      for(Int_t i(0); i<4; i++){
         if(dR[i]<min_dR && dPt[i] >0){
           min_dR = dR[i];
         }
@@ -844,9 +844,9 @@ void TKinFitterDriver::SetCurrentPermutationJets(bool fsr_recover){
 
 bool TKinFitterDriver::Check_BJet_Assignment(){
 
-  int nbtags_in_four_jets=0;
-  int w_ch_up_type_jet_idx=-1;
-  int w_ch_down_type_jet_idx=-1;
+  Int_t nbtags_in_four_jets=0;
+  Int_t w_ch_up_type_jet_idx=-1;
+  Int_t w_ch_down_type_jet_idx=-1;
   for(UInt_t i=0; i<permutation_vector.size(); i++){
     JET_ASSIGNMENT jet_assignment_idx = permutation_vector.at(i);
     bool IsBTagged = btag_vector.at(i);
@@ -892,8 +892,8 @@ bool TKinFitterDriver::Kinematic_Cut(){
   TLorentzVector hadronic_top = hadronic_top_b_jet_ + hadronic_w_ch_jet1_ + hadronic_w_ch_jet2_;
   //TLorentzVector leptonic_top = leptonic_top_b_jet + lepton + neutrino_pxpy + neutrino_pz;
   TLorentzVector leptonic_top = leptonic_top_b_jet_ + lepton + neutrino_pxpypz;
-  double hadronic_top_mass = hadronic_top.M();
-  double leptonic_top_mass = leptonic_top.M();
+  Double_t hadronic_top_mass = hadronic_top.M();
+  Double_t leptonic_top_mass = leptonic_top.M();
 
          // jet pt cut. If 3b>=, one of b tagged jet in hadronic side allowed to be below 30GeV
   return (hadronic_w_ch_jet1.at(0).Pt() > 25. &&
@@ -1060,8 +1060,8 @@ void TKinFitterDriver::SetConstraint(){
     constrain_pY->addParticle(fit_par);
   }
   //
-  double pX = constrain_pX->getInitValue();
-  double pY = constrain_pY->getInitValue();
+  Double_t pX = constrain_pX->getInitValue();
+  Double_t pY = constrain_pY->getInitValue();
   constrain_pX->setConstraint(pX);
   constrain_pY->setConstraint(pY);
 }
@@ -1163,7 +1163,7 @@ void TKinFitterDriver::SaveResults(){
                                       
   //
   ///////
-  int down_type_jet_b_tagged = 0;
+  Int_t down_type_jet_b_tagged = 0;
   for(UInt_t i=0; i<permutation_vector.size(); i++){
     JET_ASSIGNMENT jet_assignment_idx = permutation_vector.at(i);
     bool IsBTagged = btag_vector.at(i);
@@ -1280,7 +1280,7 @@ void TKinFitterDriver::SaveResults(){
 
 }
 
-double TKinFitterDriver::ComparingInHadTopRestFrame(const TLorentzVector *jet1,const TLorentzVector *jet2, const TLorentzVector *had_top_b_jet){
+Double_t TKinFitterDriver::ComparingInHadTopRestFrame(const TLorentzVector *jet1,const TLorentzVector *jet2, const TLorentzVector *had_top_b_jet){
   const TLorentzVector fitted_had_top = *jet1 + *jet2 + *had_top_b_jet;
   const TLorentzVector w_ch_cand1 = *jet1 + *jet2;
   const TLorentzVector w_ch_cand2 = *jet1 + *had_top_b_jet;
@@ -1296,7 +1296,7 @@ double TKinFitterDriver::ComparingInHadTopRestFrame(const TLorentzVector *jet1,c
   w_ch_cand2_top_rest.Boost(-had_top_boost_vector);
   top_b_cand2_top_rest.Boost(-had_top_boost_vector);
 
-  double out_mass;
+  Double_t out_mass;
   if(fabs(w_ch_cand1_top_rest.DeltaPhi(top_b_cand1_top_rest)) > fabs(w_ch_cand2_top_rest.DeltaPhi(top_b_cand2_top_rest))){
     out_mass = w_ch_cand1.M();
   }
@@ -1306,9 +1306,9 @@ double TKinFitterDriver::ComparingInHadTopRestFrame(const TLorentzVector *jet1,c
   return out_mass;
 }
 
-double TKinFitterDriver::CalcChi2(TString option){
-  double chi2=0;
-  double NDF=0;
+Double_t TKinFitterDriver::CalcChi2(TString option){
+  Double_t chi2=0;
+  Double_t NDF=0;
   // jets
   if(option == "had" || option == "all"){
   for(auto* fit_par : fit_hadronic_top_b_jet){
@@ -1379,59 +1379,59 @@ double TKinFitterDriver::CalcChi2(TString option){
   }
 }
 
-double TKinFitterDriver::CalcEachChi2(TAbsFitParticle* ptr){
+Double_t TKinFitterDriver::CalcEachChi2(TAbsFitParticle* ptr){
 
   const TMatrixD* iniPar = ptr->getParIni();
   const TMatrixD* currPar = ptr->getParCurr();
   const TMatrixD* covMatrix = ptr->getCovMatrix();
-  double S = 0.;
+  Double_t S = 0.;
 
-  for(int i(0); i<iniPar->GetNcols(); i++){
-    double deltaY = (*iniPar)(i,i) - (*currPar)(i,i);
+  for(Int_t i(0); i<iniPar->GetNcols(); i++){
+    Double_t deltaY = (*iniPar)(i,i) - (*currPar)(i,i);
     S += deltaY*deltaY/(*covMatrix)(i,i);
   }
   return S;
 }
 
-double TKinFitterDriver::CalcPull(TAbsFitParticle* ptr){
+Double_t TKinFitterDriver::CalcPull(TAbsFitParticle* ptr){
   //(*fit_hadronic_top_b_jet->getPull())(0,0);
   const TMatrixD* covMatrix = ptr->getPull();
-  double S = 0.;
+  Double_t S = 0.;
 
-  //ptr->Print();
+  //ptr->PrInt_t();
   // 4 parm for jets, 1 parm for lep, 3 parm for neu
   // 8 params total, 3 mass constraint
-  for(int i(0); i< min(1,covMatrix->GetNrows()); i++){ // min() is used not to include neu pz fit err. 
-    double pull = (*covMatrix)(i,0);
+  for(Int_t i(0); i< min(1,covMatrix->GetNrows()); i++){ // min() is used not to include neu pz fit err. 
+    Double_t pull = (*covMatrix)(i,0);
     S += pull*pull;
     //cout << "i col: " << i << "\t\tS: " << S << endl;
   }
   return S;
 }
 
-double TKinFitterDriver::CalcPull(std::vector<TAbsFitParticle*> ptrs){
-  double out=0;
+Double_t TKinFitterDriver::CalcPull(std::vector<TAbsFitParticle*> ptrs){
+  Double_t out=0;
   for(auto ptr:ptrs)
     out += this->CalcPull(ptr);
   out /= ptrs.size();
   return out;
 }
 
-double TKinFitterDriver::CalcEachChi2(TAbsFitConstraint* ptr, double width){
-  double S = 0.;
+Double_t TKinFitterDriver::CalcEachChi2(TAbsFitConstraint* ptr, Double_t width){
+  Double_t S = 0.;
 
   if(isMGaus){
     S = ptr->getChi2();
   }
   else{
-    double deltaY = ptr->getCurrentValue();
+    Double_t deltaY = ptr->getCurrentValue();
     S = (deltaY*deltaY)/(width*width);
   }
   return S;
 }
 
-double TKinFitterDriver::CalcEachChi2(std::vector<TAbsFitParticle*> ptrs){
-  double out=0;
+Double_t TKinFitterDriver::CalcEachChi2(std::vector<TAbsFitParticle*> ptrs){
+  Double_t out=0;
   for(auto ptr:ptrs)
     out += this->CalcEachChi2(ptr);
   out /= ptrs.size();
@@ -1459,12 +1459,12 @@ void TKinFitterDriver::FindBestChi2Fit(bool UseLeading4Jets, bool IsHighMassFitt
   //cout << "start jet permutation" << endl;
   //cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
   // for debug
-  double best_chi2=99999999;
+  Double_t best_chi2=99999999;
   unsigned nFSR1, nFSR2, nFSR3, nFSR4;
   do{
       if(this->Check_BJet_Assignment() == false) continue;
       // loop to try no fsr recover and fsr recover
-      for(int i_fsr(0); i_fsr<1; i_fsr++){
+      for(Int_t i_fsr(0); i_fsr<1; i_fsr++){
       //for(int i_fsr(1); i_fsr<2; i_fsr++){
       //for(int i_fsr(0); i_fsr<2; i_fsr++){
         if(i_fsr==0){
@@ -1475,7 +1475,7 @@ void TKinFitterDriver::FindBestChi2Fit(bool UseLeading4Jets, bool IsHighMassFitt
         }
         //nu pz
         this->Sol_Neutrino_Pz();
-        for(int i_pz(0); i_pz<2; i_pz++) { // neu. pz loop
+        for(Int_t i_pz(0); i_pz<2; i_pz++) { // neu. pz loop
   	      if(IsRealNeuPz){
   	        this->SetNeutrino(METv, i_pz);
   	      }
@@ -1527,33 +1527,33 @@ void TKinFitterDriver::FindBestChi2Fit(bool UseLeading4Jets, bool IsHighMassFitt
 }
 
 
-int TKinFitterDriver::GetStatus(){
+Int_t TKinFitterDriver::GetStatus(){
   return fit_result.status;
 }
 
 
-double TKinFitterDriver::GetChi2(){
+Double_t TKinFitterDriver::GetChi2(){
   return fit_result.chi2;
 }
 
 
-double TKinFitterDriver::GetFittedDijetMass(){
+Double_t TKinFitterDriver::GetFittedDijetMass(){
   return fit_result.fitted_dijet_M;
 }
 
 
-double TKinFitterDriver::GetInitialDijetMass(){
+Double_t TKinFitterDriver::GetInitialDijetMass(){
   return fit_result.initial_dijet_M;
 }
 
 
-double TKinFitterDriver::GetCorrectedDijetMass(){
+Double_t TKinFitterDriver::GetCorrectedDijetMass(){
   return fit_result.corrected_dijet_M;
 }
 
 
-int TKinFitterDriver::GetBestStatus(){
-  int out=-1;
+Int_t TKinFitterDriver::GetBestStatus(){
+  Int_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).status;
   }
@@ -1561,32 +1561,32 @@ int TKinFitterDriver::GetBestStatus(){
 }
 
 
-double TKinFitterDriver::GetBestChi2(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestChi2(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).chi2;
   }
   return out==9999 ? -1. : out;
 }
 
-double TKinFitterDriver::GetBestLambda(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestLambda(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).lambda;
   }
   return out==9999 ? -1. : out;
 }
 
-int TKinFitterDriver::GetBestDownTypeJetBTagged(){
-  int out=-1;
+Int_t TKinFitterDriver::GetBestDownTypeJetBTagged(){
+  Int_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).down_type_jet_b_tagged;
   }
   return out;
 }
 
-double TKinFitterDriver::GetBestFittedDijetMass(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestFittedDijetMass(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).fitted_dijet_M;
   }
@@ -1594,8 +1594,8 @@ double TKinFitterDriver::GetBestFittedDijetMass(){
 }
 
 
-double TKinFitterDriver::GetBestFittedDijetMass_high(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestFittedDijetMass_high(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).fitted_dijet_M_high;
   }
@@ -1603,8 +1603,8 @@ double TKinFitterDriver::GetBestFittedDijetMass_high(){
 }
 
 
-double TKinFitterDriver::GetBestInitialDijetMass(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestInitialDijetMass(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).initial_dijet_M;
   }
@@ -1612,8 +1612,8 @@ double TKinFitterDriver::GetBestInitialDijetMass(){
 }
 
 
-double TKinFitterDriver::GetBestInitialDijetMass_high(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestInitialDijetMass_high(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).initial_dijet_M_high;
   }
@@ -1621,8 +1621,8 @@ double TKinFitterDriver::GetBestInitialDijetMass_high(){
 }
 
 
-double TKinFitterDriver::GetBestCorrectedDijetMass(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestCorrectedDijetMass(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).corrected_dijet_M;
   }
@@ -1630,8 +1630,8 @@ double TKinFitterDriver::GetBestCorrectedDijetMass(){
 }
 
 
-double TKinFitterDriver::GetBestCorrectedDijetMass_high(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestCorrectedDijetMass_high(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).corrected_dijet_M_high;
   }
@@ -1639,24 +1639,24 @@ double TKinFitterDriver::GetBestCorrectedDijetMass_high(){
 }
 
 
-double TKinFitterDriver::GetBestHadronicTopMass(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestHadronicTopMass(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).hadronic_top_M;
   }
   return out;
 }
 
-double TKinFitterDriver::GetBestHadronicTopPt(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestHadronicTopPt(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).hadronic_top_pt;
   }
   return out;
 }
 
-double TKinFitterDriver::GetBestLeptonicTopMass(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestLeptonicTopMass(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_top_M;
   }
@@ -1664,8 +1664,8 @@ double TKinFitterDriver::GetBestLeptonicTopMass(){
 }
 
 
-double TKinFitterDriver::GetBestLeptonicWMass(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestLeptonicWMass(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_W_M;
   }
@@ -1682,55 +1682,55 @@ bool TKinFitterDriver::GetBestIsRealNeuPz(){
 }
 
 
-double TKinFitterDriver::GetBestHadronicTopMassF(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestHadronicTopMassF(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).hadronic_top_mass_F;
   }
   return out;
 }
 
-int TKinFitterDriver::GetBestHadronicTopBJetIdx(){
-  int out=-1;
+Int_t TKinFitterDriver::GetBestHadronicTopBJetIdx(){
+  Int_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).hadronic_top_b_jet_idx;
   }
   return out;
 }
 
-int TKinFitterDriver::GetBestLeptonicTopBJetIdx(){
-  double out=-1;
+Int_t TKinFitterDriver::GetBestLeptonicTopBJetIdx(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_top_b_jet_idx;
   }
   return out;
 }
 
-int TKinFitterDriver::GetBestHadronicWCHUpTypeJetIdx(){
-  double out=-1;
+Int_t TKinFitterDriver::GetBestHadronicWCHUpTypeJetIdx(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).w_ch_up_type_jet_idx;
   }
   return out;
 }
 
-int TKinFitterDriver::GetBestHadronicWCHDownTypeJetIdx(){
-  int out=-1;
+Int_t TKinFitterDriver::GetBestHadronicWCHDownTypeJetIdx(){
+  Int_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).w_ch_down_type_jet_idx;
   }
   return out;
 }
 
-double TKinFitterDriver::GetBestHadronicTopBJetPull(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestHadronicTopBJetPull(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).hadronic_top_b_jet_pull;
   }
   return out;
 }
-double TKinFitterDriver::GetBestLeptonicTopBJetPull(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestLeptonicTopBJetPull(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_top_b_jet_pull;
   }
@@ -1739,15 +1739,15 @@ double TKinFitterDriver::GetBestLeptonicTopBJetPull(){
 
 
 
-double TKinFitterDriver::GetBestHadronicWCHUptypeJetIdxPull(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestHadronicWCHUptypeJetIdxPull(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).w_ch_up_type_jet_pull;
   }
   return out;
 }
-double TKinFitterDriver::GetBestHadronicWCHDowntypeJetIdxPull(){
-  double out=-1;
+Double_t TKinFitterDriver::GetBestHadronicWCHDowntypeJetIdxPull(){
+  Double_t out=-1;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).w_ch_down_type_jet_pull;
   }
@@ -1758,8 +1758,8 @@ double TKinFitterDriver::GetBestHadronicWCHDowntypeJetIdxPull(){
 
 
 
-double TKinFitterDriver::GetBestLeptonicTopMassF(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestLeptonicTopMassF(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_top_mass_F;
   }
@@ -1767,8 +1767,8 @@ double TKinFitterDriver::GetBestLeptonicTopMassF(){
 }
 
 
-double TKinFitterDriver::GetBestLeptonicWMassF(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestLeptonicWMassF(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).leptonic_w_mass_F;
   }
@@ -1776,8 +1776,8 @@ double TKinFitterDriver::GetBestLeptonicWMassF(){
 }
 
 
-double TKinFitterDriver::GetBestDeltaS(){
-  double out=-100;
+Double_t TKinFitterDriver::GetBestDeltaS(){
+  Double_t out=-100;
   if(fit_result_vector.size()>0){
     out =fit_result_vector.at(0).deltaS;
   }
@@ -1785,8 +1785,8 @@ double TKinFitterDriver::GetBestDeltaS(){
 }
 
 
-std::vector<double> TKinFitterDriver::GetHadronicTopMassVector(bool IsConverge){
-  std::vector<double> out_vector;
+std::vector<Double_t> TKinFitterDriver::GetHadronicTopMassVector(bool IsConverge){
+  std::vector<Double_t> out_vector;
   for(auto &x : fit_result_vector){
     if(IsConverge==true && x.status==0){
       out_vector.push_back(x.hadronic_top_M);
@@ -1799,8 +1799,8 @@ std::vector<double> TKinFitterDriver::GetHadronicTopMassVector(bool IsConverge){
 }
 
 
-std::vector<double> TKinFitterDriver::GetHadronicTopBPtVector(bool IsConverge){
-  std::vector<double> out_vector;
+std::vector<Double_t> TKinFitterDriver::GetHadronicTopBPtVector(bool IsConverge){
+  std::vector<Double_t> out_vector;
   for(auto &x : fit_result_vector){
     if(IsConverge==true && x.status==0){
       out_vector.push_back(x.hadronic_top_b_pt);
@@ -1813,8 +1813,8 @@ std::vector<double> TKinFitterDriver::GetHadronicTopBPtVector(bool IsConverge){
 }
 
 
-std::vector<double> TKinFitterDriver::GetLeptonicTopBPtVector(bool IsConverge){
-  std::vector<double> out_vector;
+std::vector<Double_t> TKinFitterDriver::GetLeptonicTopBPtVector(bool IsConverge){
+  std::vector<Double_t> out_vector;
   for(auto &x : fit_result_vector){
     if(IsConverge==true && x.status==0){
       out_vector.push_back(x.leptonic_top_b_pt);
@@ -1827,8 +1827,8 @@ std::vector<double> TKinFitterDriver::GetLeptonicTopBPtVector(bool IsConverge){
 }
 
 
-std::vector<double> TKinFitterDriver::GetWCHDownTypePtVector(bool IsConverge){
-  std::vector<double> out_vector;
+std::vector<Double_t> TKinFitterDriver::GetWCHDownTypePtVector(bool IsConverge){
+  std::vector<Double_t> out_vector;
   for(auto &x : fit_result_vector){
     if(IsConverge==true && x.status==0){
       out_vector.push_back(x.w_ch_up_type_pt);
@@ -1841,8 +1841,8 @@ std::vector<double> TKinFitterDriver::GetWCHDownTypePtVector(bool IsConverge){
 }
 
 
-std::vector<double> TKinFitterDriver::GetWCHUpTypePtVector(bool IsConverge){
-  std::vector<double> out_vector;
+std::vector<Double_t> TKinFitterDriver::GetWCHUpTypePtVector(bool IsConverge){
+  std::vector<Double_t> out_vector;
   for(auto &x : fit_result_vector){
     if(IsConverge==true && x.status==0){
       out_vector.push_back(x.w_ch_down_type_pt);
@@ -1879,38 +1879,38 @@ bool TKinFitterDriver::NextPermutation(bool UseLeading4Jets){
 }
 
 
-void TKinFitterDriver::SetJetError(TMatrixD *matrix,  double Pt, double Eta, double Phi, TString flavour_key){
+void TKinFitterDriver::SetJetError(TMatrixD *matrix,  Double_t Pt, Double_t Eta, Double_t Phi, TString flavour_key){
   (*matrix)(0,0) = TMath::Power(Pt*this->JetErrorPt(Pt, Eta, flavour_key), 2);
   //(*matrix)(1,1) = TMath::Power(Eta*this->JetErrorEta(Et, Eta, flavour_key), 2);
   //(*matrix)(2,2) = TMath::Power(Phi*this->JetErrorPhi(Et, Eta, flavour_key), 2);
 }
 
 
-double TKinFitterDriver::JetErrorPt(double Pt, double Eta, TString flavour_key){
+Double_t TKinFitterDriver::JetErrorPt(Double_t Pt, Double_t Eta, TString flavour_key){
   return ts_correction->GetFittedError("Pt", flavour_key, Pt, Eta);
 }
 
 
-double TKinFitterDriver::JetErrorEta(double Pt, double Eta, TString flavour_key){
+Double_t TKinFitterDriver::JetErrorEta(Double_t Pt, Double_t Eta, TString flavour_key){
   return ts_correction->GetFittedError("Eta", flavour_key, Pt, Eta);
 }
 
 
-double TKinFitterDriver::JetErrorPhi(double Pt, double Eta, TString flavour_key){
+Double_t TKinFitterDriver::JetErrorPhi(Double_t Pt, Double_t Eta, TString flavour_key){
   return ts_correction->GetFittedError("Phi", flavour_key, Pt, Eta);
 }
 
 
 void TKinFitterDriver::Sol_Neutrino_Pz(){
   
-  double lepton_mass =  lepton.M();
+  Double_t lepton_mass =  lepton.M();
 
-  double k = 80.4*80.4/2.0 - lepton_mass*lepton_mass/2.0 + lepton.Px()*METv.Px() + lepton.Py()*METv.Py();
-  double a = TMath::Power(lepton.Px(), 2.0) + TMath::Power(lepton.Py(), 2.0);
-  double b = -2*k*lepton.Pz();                                                           
-  double c = TMath::Power(lepton.Pt(), 2.0)*TMath::Power(METv.Pt(), 2.0) - TMath::Power(k, 2.0);
+  Double_t k = 80.4*80.4/2.0 - lepton_mass*lepton_mass/2.0 + lepton.Px()*METv.Px() + lepton.Py()*METv.Py();
+  Double_t a = TMath::Power(lepton.Px(), 2.0) + TMath::Power(lepton.Py(), 2.0);
+  Double_t b = -2*k*lepton.Pz();                                                           
+  Double_t c = TMath::Power(lepton.Pt(), 2.0)*TMath::Power(METv.Pt(), 2.0) - TMath::Power(k, 2.0);
 
-  double determinant = TMath::Power(b, 2.0) - 4*a*c;
+  Double_t determinant = TMath::Power(b, 2.0) - 4*a*c;
   
   //cout << "determinant = " << determinant << endl;
   
@@ -1934,23 +1934,23 @@ void TKinFitterDriver::Resol_Neutrino_Pt(){
   //cout << "Kinematic_Fitter_MVA::Resol_Neutino_Pt" << endl;
     
   //recal MET
-  double lepton_mass = lepton.M();
-  double cosine = TMath::Cos(METv.Phi());
-  double sine = TMath::Sin(METv.Phi());
+  Double_t lepton_mass = lepton.M();
+  Double_t cosine = TMath::Cos(METv.Phi());
+  Double_t sine = TMath::Sin(METv.Phi());
   
-  double a = lepton.E()*lepton.E() - lepton.Pz()*lepton.Pz() - TMath::Power(lepton.Px()*cosine + lepton.Py()*sine , 2.0);
-  double b = (lepton.Px()*cosine + lepton.Py()*sine)*(lepton_mass*lepton_mass - 80.4*80.4);
-  double determinant = TMath::Power(lepton_mass*lepton_mass - 80.4*80.4, 2.)*(lepton.E()*lepton.E() - lepton.Pz()*lepton.Pz());
+  Double_t a = lepton.E()*lepton.E() - lepton.Pz()*lepton.Pz() - TMath::Power(lepton.Px()*cosine + lepton.Py()*sine , 2.0);
+  Double_t b = (lepton.Px()*cosine + lepton.Py()*sine)*(lepton_mass*lepton_mass - 80.4*80.4);
+  Double_t determinant = TMath::Power(lepton_mass*lepton_mass - 80.4*80.4, 2.)*(lepton.E()*lepton.E() - lepton.Pz()*lepton.Pz());
   
   //cout << "a = " << a << endl;
   //cout << "b = " << b << endl;
   //cout << "det = "<< determinant << endl;
 
-  double met_recal[2];
+  Double_t met_recal[2];
   met_recal[0] = (-b + TMath::Sqrt(determinant))/2./a;
   met_recal[1] = (-b - TMath::Sqrt(determinant))/2./a;
   
-  double mass_diff[2];
+  Double_t mass_diff[2];
   TLorentzVector met_recal_vector[2];
   for(Int_t i=0; i<2; i++)
     {
@@ -1959,7 +1959,7 @@ void TKinFitterDriver::Resol_Neutrino_Pt(){
       TLorentzVector w_lnu;
       w_lnu = lepton + met_recal_vector[i];
       
-      double w_lnu_mass = w_lnu.M();
+      Double_t w_lnu_mass = w_lnu.M();
       mass_diff[i] = TMath::Abs(80.4 - w_lnu_mass);
       
       //cout << METv.Pt() << "\t" << met_recal[i] << "\t" << w_lnu.M() << "\t" << mass_diff[i] << endl;
@@ -2013,9 +2013,9 @@ bool TKinFitterDriver::TopPtComparing(const TKinFitterDriver::ResultContainer& r
 }
 
 
-double TKinFitterDriver::GetChi2Dist(double chi2_, double NDF_){
-  double lambda = NDF_/2.;
-  double norm = TMath::Gamma(lambda)*TMath::Power(2.,lambda);
+Double_t TKinFitterDriver::GetChi2Dist(Double_t chi2_, Double_t NDF_){
+  Double_t lambda = NDF_/2.;
+  Double_t norm = TMath::Gamma(lambda)*TMath::Power(2.,lambda);
   return 1. - TMath::Power(chi2_,lambda-1)*TMath::Exp(-0.5*chi2_)/norm;
 }
 

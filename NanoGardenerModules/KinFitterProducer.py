@@ -74,9 +74,9 @@ class KinFitterProducer(Module):
           # fatal error in python 
           #Error in `python': double free or corruption
           try:
-            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+g' % macro)
+            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+' % macro)
           except RuntimeError:
-            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s++g' % macro)
+            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s++' % macro)
 
         self._branch_map = branch_map
         #
@@ -226,11 +226,11 @@ class KinFitterProducer(Module):
 
         jets            = ROOT.std.vector(ROOT.TLorentzVector)(0)
         orig_jets_idx   = ROOT.std.vector(int)(0) # to store orig jet idx to see which jets are selected
-        jetPtResolution = ROOT.std.vector(float)(0)
-        jetEtaResolution = ROOT.std.vector(float)(0)
-        jetPhiResolution = ROOT.std.vector(float)(0)
+        jetPtResolution = ROOT.std.vector(ROOT.Double)(0)
+        jetEtaResolution = ROOT.std.vector(ROOT.Double)(0)
+        jetPhiResolution = ROOT.std.vector(ROOT.Double)(0)
         btag_csv_vector = ROOT.std.vector(ROOT.Double)(0)
-        genJetPt        = ROOT.std.vector(float)(0)
+        genJetPt        = ROOT.std.vector(ROOT.Double)(0)
 
         nbtags = 0
         njets  = 0
