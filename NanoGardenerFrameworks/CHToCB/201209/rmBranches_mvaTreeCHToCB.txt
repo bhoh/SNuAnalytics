@@ -1,0 +1,10 @@
+keep *
+drop HLT*
+drop LHE*
+drop Photon*
+drop Electron*
+drop Muon*
+drop Gen*
+drop Trig*
+drop Tau*
+drop Jet*
