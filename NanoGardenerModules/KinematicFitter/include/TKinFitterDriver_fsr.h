@@ -7,17 +7,13 @@
 
 #include "TMath.h"
 
-#include "TFitConstraintM.h"
-#include "TFitConstraintM2Gaus.h"
-#include "TFitConstraintMGaus.h"
-#include "TFitConstraintEp.h"
-#include "TAbsFitParticle.h"
-#include "TFitParticleEt.h"
+#include "PhysicsTools/KinFitter/interface/TFitConstraintM.h"
+#include "PhysicsTools/KinFitter/interface/TFitConstraintMGaus.h"
+#include "PhysicsTools/KinFitter/interface/TFitConstraintEp.h"
+#include "PhysicsTools/KinFitter/interface/TAbsFitParticle.h"
 #include "TFitParticlePt.h"
-#include "TFitParticleEtEtaPhi.h"
-//#include "TFitParticlePz.h"
-#include "TFitParticleMCCart.h"
-#include "TFitParticleEtPhi.h"
+#include "PhysicsTools/KinFitter/interface/TFitParticleEtEtaPhi.h"
+#include "PhysicsTools/KinFitter/interface/TFitParticleMCCart.h"
 #include "TKinFitter.h"
 #include "TSCorrection.h"
 
@@ -81,7 +77,7 @@ public:
 
   Int_t GetBestStatus();
   Double_t GetBestChi2();
-  Double_t GetBestLambda();
+  //Double_t GetBestLambda();
   Double_t GetBestFittedDijetMass();
   Double_t GetBestFittedDijetMass_high();
   Double_t GetBestInitialDijetMass();
@@ -105,10 +101,10 @@ public:
   Double_t GetBestHadronicWCHUptypeJetIdxPull();
   Double_t GetBestHadronicWCHDowntypeJetIdxPull();
 
-  Double_t GetBestHadronicTopMassF();
-  Double_t GetBestLeptonicTopMassF();
-  Double_t GetBestLeptonicWMassF();
-  Double_t GetBestDeltaS();
+  //Double_t GetBestHadronicTopMassF();
+  //Double_t GetBestLeptonicTopMassF();
+  //Double_t GetBestLeptonicWMassF();
+  //Double_t GetBestDeltaS();
 
   std::vector<Double_t> GetHadronicTopMassVector(bool IsConverge=true);
   std::vector<Double_t> GetHadronicTopBPtVector(bool IsConverge=true);
@@ -171,16 +167,16 @@ public:
     Int_t down_type_jet_b_tagged;
 
     // F from constraints
-    Double_t hadronic_top_mass_F;
-    Double_t leptonic_top_mass_F;
-    Double_t leptonic_w_mass_F;
-    Double_t currS;
-    Double_t deltaS;
+    //Double_t hadronic_top_mass_F;
+    //Double_t leptonic_top_mass_F;
+    //Double_t leptonic_w_mass_F;
+    //Double_t currS;
+    //Double_t deltaS;
     Double_t chi2;
     Double_t initChi2;
     Double_t chi2_lep;
     Double_t chi2_had;
-    Double_t lambda;
+    //Double_t lambda;
 
     // pX pY
     Double_t init_pX;
@@ -265,9 +261,7 @@ private:
   std::vector<TAbsFitParticle*> fit_hadronic_w_ch_jet2;
   std::vector<TAbsFitParticle*> fit_extra_jets;
   TFitParticlePt *fit_lepton;
-  //TFitParticleEtPhi *fit_neutrino_etphi;
   TFitParticleMCCart *fit_neutrino_pxpypz;
-  //TFitParticlePz *fit_neutrino_pz;
 
   Int_t hadronic_top_b_jet_idx;
   Int_t leptonic_top_b_jet_idx;

@@ -1183,20 +1183,20 @@ void TKinFitterDriver::SaveResults(){
   fit_result.chi2 = 9999;
   //if(fit_result.status!=-10){ // -10 means singular matrix
   // save S and F
-  fit_result.currS = fitter->getS();
-  fit_result.deltaS = fitter->getDeltaS();
-  if(isMGaus){
-    fit_result.hadronic_top_mass_F = constrain_hadronic_top_MGaus->getCurrentValue();
-    if(!isSameTopM)
-      fit_result.leptonic_top_mass_F = constrain_leptonic_top_MGaus->getCurrentValue();
-    fit_result.leptonic_w_mass_F = constrain_leptonic_W_MGaus->getCurrentValue();
-  }
-  else{
-    fit_result.hadronic_top_mass_F = constrain_hadronic_top_M->getCurrentValue();
-    if(!isSameTopM)
-      fit_result.leptonic_top_mass_F = constrain_leptonic_top_M->getCurrentValue();
-    fit_result.leptonic_w_mass_F = constrain_leptonic_W_M->getCurrentValue();
-  }
+  //fit_result.currS = fitter->getS();
+  //fit_result.deltaS = fitter->getDeltaS();
+  //if(isMGaus){
+  //  fit_result.hadronic_top_mass_F = constrain_hadronic_top_MGaus->getCurrentValue();
+  //  if(!isSameTopM)
+  //    fit_result.leptonic_top_mass_F = constrain_leptonic_top_MGaus->getCurrentValue();
+  //  fit_result.leptonic_w_mass_F = constrain_leptonic_W_MGaus->getCurrentValue();
+  //}
+  //else{
+  //  fit_result.hadronic_top_mass_F = constrain_hadronic_top_M->getCurrentValue();
+  //  if(!isSameTopM)
+  //    fit_result.leptonic_top_mass_F = constrain_leptonic_top_M->getCurrentValue();
+  //  fit_result.leptonic_w_mass_F = constrain_leptonic_W_M->getCurrentValue();
+  //}
   // re-calculate chi2,
   //chi2 term comes from constraint is not accurate
   fit_result.chi2 = this->CalcChi2("all");
@@ -1205,7 +1205,7 @@ void TKinFitterDriver::SaveResults(){
                       + (fit_result.leptonic_W_M - 80.4 )*(fit_result.leptonic_W_M - 80.4 )/(2.085*2.085);
   fit_result.chi2_lep = this->CalcChi2("lep");
   fit_result.chi2_had = this->CalcChi2("had");
-  fit_result.lambda = fitter->getLambda();
+  //fit_result.lambda = fitter->getLambda();
 
   fit_result.init_pX = constrain_pX->getInitValue();
   fit_result.init_pY = constrain_pY->getInitValue();
@@ -1337,13 +1337,13 @@ Double_t TKinFitterDriver::CalcChi2(TString option){
   }
   // mass constraints
   if(isMGaus){
-    chi2 += this->CalcEachChi2(constrain_leptonic_W_MGaus, 2.085);
+    chi2 += this->CalcEachChi2(constrain_leptonic_W_MGaus, 2.085/80.4);
     if(!isSameTopM){
-      chi2 += this->CalcEachChi2(constrain_hadronic_top_MGaus, 1.5);
-      chi2 += this->CalcEachChi2(constrain_leptonic_top_MGaus, 1.5);
+      chi2 += this->CalcEachChi2(constrain_hadronic_top_MGaus, 1.5/172.5);
+      chi2 += this->CalcEachChi2(constrain_leptonic_top_MGaus, 1.5/172.5);
     }
     else{
-      chi2 += this->CalcEachChi2(constrain_hadronic_top_MGaus, 2.1);
+      chi2 += this->CalcEachChi2(constrain_hadronic_top_MGaus, 2.1/172.5);
     }
     if(option == "lep" || option == "all"){
       if(!isSameTopM){
@@ -1421,7 +1421,9 @@ Double_t TKinFitterDriver::CalcEachChi2(TAbsFitConstraint* ptr, Double_t width){
   Double_t S = 0.;
 
   if(isMGaus){
-    S = ptr->getChi2();
+    const TMatrixD* currPar = ptr->getParCurr();
+    Double_t deltaY = 1 - (*currPar)(0,0);
+    S = (deltaY*deltaY)/(width*width); //here width means: (mass width)/(mean mass)
   }
   else{
     Double_t deltaY = ptr->getCurrentValue();
@@ -1569,13 +1571,13 @@ Double_t TKinFitterDriver::GetBestChi2(){
   return out==9999 ? -1. : out;
 }
 
-Double_t TKinFitterDriver::GetBestLambda(){
-  Double_t out=-1;
-  if(fit_result_vector.size()>0){
-    out =fit_result_vector.at(0).lambda;
-  }
-  return out==9999 ? -1. : out;
-}
+//Double_t TKinFitterDriver::GetBestLambda(){
+//  Double_t out=-1;
+//  if(fit_result_vector.size()>0){
+//    out =fit_result_vector.at(0).lambda;
+//  }
+//  return out==9999 ? -1. : out;
+//}
 
 Int_t TKinFitterDriver::GetBestDownTypeJetBTagged(){
   Int_t out=-1;
@@ -1682,13 +1684,13 @@ bool TKinFitterDriver::GetBestIsRealNeuPz(){
 }
 
 
-Double_t TKinFitterDriver::GetBestHadronicTopMassF(){
-  Double_t out=-100;
-  if(fit_result_vector.size()>0){
-    out =fit_result_vector.at(0).hadronic_top_mass_F;
-  }
-  return out;
-}
+//Double_t TKinFitterDriver::GetBestHadronicTopMassF(){
+//  Double_t out=-100;
+//  if(fit_result_vector.size()>0){
+//    out =fit_result_vector.at(0).hadronic_top_mass_F;
+//  }
+//  return out;
+//}
 
 Int_t TKinFitterDriver::GetBestHadronicTopBJetIdx(){
   Int_t out=-1;
@@ -1758,31 +1760,31 @@ Double_t TKinFitterDriver::GetBestHadronicWCHDowntypeJetIdxPull(){
 
 
 
-Double_t TKinFitterDriver::GetBestLeptonicTopMassF(){
-  Double_t out=-100;
-  if(fit_result_vector.size()>0){
-    out =fit_result_vector.at(0).leptonic_top_mass_F;
-  }
-  return out;
-}
-
-
-Double_t TKinFitterDriver::GetBestLeptonicWMassF(){
-  Double_t out=-100;
-  if(fit_result_vector.size()>0){
-    out =fit_result_vector.at(0).leptonic_w_mass_F;
-  }
-  return out;
-}
-
-
-Double_t TKinFitterDriver::GetBestDeltaS(){
-  Double_t out=-100;
-  if(fit_result_vector.size()>0){
-    out =fit_result_vector.at(0).deltaS;
-  }
-  return out;
-}
+//Double_t TKinFitterDriver::GetBestLeptonicTopMassF(){
+//  Double_t out=-100;
+//  if(fit_result_vector.size()>0){
+//    out =fit_result_vector.at(0).leptonic_top_mass_F;
+//  }
+//  return out;
+//}
+//
+//
+//Double_t TKinFitterDriver::GetBestLeptonicWMassF(){
+//  Double_t out=-100;
+//  if(fit_result_vector.size()>0){
+//    out =fit_result_vector.at(0).leptonic_w_mass_F;
+//  }
+//  return out;
+//}
+//
+//
+//Double_t TKinFitterDriver::GetBestDeltaS(){
+//  Double_t out=-100;
+//  if(fit_result_vector.size()>0){
+//    out =fit_result_vector.at(0).deltaS;
+//  }
+//  return out;
+//}
 
 
 std::vector<Double_t> TKinFitterDriver::GetHadronicTopMassVector(bool IsConverge){

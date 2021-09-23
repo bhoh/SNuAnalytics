@@ -35,48 +35,7 @@ class KinFitterProducer(Module):
         self._syst_suffix = syst_suffix
         self._lowerBjetPt = lowerBjetPt
         cmssw_base = os.getenv('CMSSW_BASE')
-        ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/include/')
-        ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/')
-        self._MacroList = [
-                     'TAbsFitConstraint.C',
-                     'TAbsFitParticle.C',
-                     'TFitConstraintEp.C',
-                     'TFitConstraintM.C',
-                     'TFitConstraintM2Gaus.C',
-                     'TFitConstraintMGaus.C',
-                     #'TFitParticleCart.C',
-                     #'TFitParticleECart.C',
-                     #'TFitParticleEMomDev.C',
-                     #'TFitParticleEScaledMomDev.C',
-                     #'TFitParticleESpher.C',
-                     'TFitParticleEt.C',
-                     'TFitParticleEtEtaPhi.C',
-                     'TFitParticleEtPhi.C',
-                     #'TFitParticleEtThetaPhi.C',
-                     #'TFitParticleMCCart.C',
-                     #'TFitParticleMCMomDev.C',
-                     #'TFitParticleMCPInvSpher.C',
-                     #'TFitParticleMCSpher.C',
-                     #'TFitParticleMomDev.C',
-                     'TFitParticlePt.C',
-                     'TFitParticlePxPy.C',
-                     'TFitParticlePz.C',
-                     #'TFitParticleSpher.C',
-                     'TKinFitter.C',
-                     'TSCorrection.C',
-                     #'TKinFitterDriver.C'
-                     'TKinFitterDriver_fsr.C'
-                    ]
-
-        for macro in self._MacroList:
-          #ROOT.gROOT.ProcessLineSync('.L '+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+g' % macro)
-          # original code lines, but it cause
-          # fatal error in python 
-          #Error in `python': double free or corruption
-          try:
-            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+' % macro)
-          except RuntimeError:
-            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s++' % macro)
+        
 
         self._branch_map = branch_map
         #
@@ -125,12 +84,58 @@ class KinFitterProducer(Module):
         
         self.params_sf_and_uncertainty = ROOT.PyJetParametersWrapper()
         self.params_resolution = ROOT.PyJetParametersWrapper()
-        
+
+
+        # load libraries for kinematic fitter 
         # load libraries for accessing JER scale factors and uncertainties from txt files
-        for library in [ "libCondFormatsJetMETObjects", "libPhysicsToolsNanoAODTools" ]:
+        for library in [ "libCondFormatsJetMETObjects", "libPhysicsToolsNanoAODTools", "libPhysicsToolsKinFitter" ]:
             if library not in ROOT.gSystem.GetLibraries():
                 print("Load Library '%s'" % library.replace("lib", ""))
                 ROOT.gSystem.Load(library)
+
+        ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/include/')
+        ROOT.gSystem.AddIncludePath('-I'+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/')
+        self._MacroList = [
+                     #'TAbsFitConstraint.C',
+                     #'TAbsFitParticle.C',
+                     #'TFitConstraintEp.C',
+                     #'TFitConstraintM.C',
+                     #'TFitConstraintM2Gaus.C',
+                     #'TFitConstraintMGaus.C',
+                     ##'TFitParticleCart.C',
+                     ##'TFitParticleECart.C',
+                     ##'TFitParticleEMomDev.C',
+                     ##'TFitParticleEScaledMomDev.C',
+                     ##'TFitParticleESpher.C',
+                     #'TFitParticleEt.C',
+                     #'TFitParticleEtEtaPhi.C',
+                     #'TFitParticleEtPhi.C',
+                     ##'TFitParticleEtThetaPhi.C',
+                     #'TFitParticleMCCart.C',
+                     ##'TFitParticleMCMomDev.C',
+                     ##'TFitParticleMCPInvSpher.C',
+                     ##'TFitParticleMCSpher.C',
+                     ##'TFitParticleMomDev.C',
+                      'TFitParticlePt.C',
+                     #'TFitParticlePxPy.C',
+                     #'TFitParticlePz.C',
+                     ##'TFitParticleSpher.C',
+                     #'TKinFitter.C',
+                      'TSCorrection.C',
+                     ##'TKinFitterDriver.C'
+                      'TKinFitterDriver_fsr.C'
+                    ]
+
+        for macro in self._MacroList:
+          #ROOT.gROOT.ProcessLineSync('.L '+cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+g' % macro)
+          # original code lines, but it cause
+          # fatal error in python 
+          #Error in `python': double free or corruption
+          try:
+            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s+' % macro)
+          except RuntimeError:
+            ROOT.gROOT.LoadMacro(cmssw_base+'/src/SNuAnalytics/NanoGardenerModules/KinematicFitter/src/%s++' % macro)
+
 
       
     def beginJob(self):
@@ -144,11 +149,9 @@ class KinFitterProducer(Module):
         self.jer_phi = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
         print("Loading JER scale factors and uncertainties from file '%s'" % os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
         self.jerSF_and_Uncertainty = ROOT.PyJetResolutionScaleFactorWrapper(os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
-        self._fitter = ROOT.TKinFitterDriver(int(self._Year))
 
 
     def endJob(self):
-        del self._fitter
         shutil.rmtree(self.jerInputFilePath)
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -163,7 +166,7 @@ class KinFitterProducer(Module):
             'leptonic_top_M_{}'.format(self._syst_suffix),
             'leptonic_W_M_{}'.format(self._syst_suffix),
             'chi2_{}'.format(self._syst_suffix),
-            'lambda_{}'.format(self._syst_suffix),
+            #'lambda_{}'.format(self._syst_suffix),
             'hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
             'leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
             'w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
@@ -172,9 +175,9 @@ class KinFitterProducer(Module):
             'fitted_leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
             'fitted_w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
             'fitted_w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
-            'hadronic_top_mass_F_{}'.format(self._syst_suffix),
-            'leptonic_top_mass_F_{}'.format(self._syst_suffix),
-            'leptonic_w_mass_F_{}'.format(self._syst_suffix),
+            #'hadronic_top_mass_F_{}'.format(self._syst_suffix),
+            #'leptonic_top_mass_F_{}'.format(self._syst_suffix),
+            #'leptonic_w_mass_F_{}'.format(self._syst_suffix),
             #'init_pX_{}'.format(self._syst_suffix),
             #'init_pY_{}'.format(self._syst_suffix),
             #'fitted_pX_{}'.format(self._syst_suffix),
@@ -201,6 +204,7 @@ class KinFitterProducer(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
+        self._fitter = ROOT.TKinFitterDriver(int(self._Year))
         event = mappedEvent(event, mapname=self._branch_map)
         #muons = Collection(event, "Muon")
         #electrons = Collection(event, "Electron")
