@@ -10,15 +10,15 @@ import argparse
 from collections import OrderedDict
 
 input_files = {
-  '8tev' : OrderedDict({
-      90  : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_90_syst.out',
-      100 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_100_syst.out',
-      110 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_110_syst.out',
-      120 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_120_syst.out',
-      130 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_130_syst.out',
-      140 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_140_syst.out',
-      150 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_150_syst.out',
-  }),
+  #'8tev' : OrderedDict({
+  #    90  : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_90_syst.out',
+  #    100 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_100_syst.out',
+  #    110 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_110_syst.out',
+  #    120 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_120_syst.out',
+  #    130 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_130_syst.out',
+  #    140 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_140_syst.out',
+  #    150 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_150_syst.out',
+  #}),
   'not_flip' : OrderedDict({
       75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__075.out',
       80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__080.out',
@@ -40,7 +40,7 @@ input_files = {
       100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__100.out',
       110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__110.out',
       120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__120.out',
-      130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__130.out',
+      130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__130.out',
       140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__140.out',
       150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__150.out',
       160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__160.out',
@@ -58,32 +58,32 @@ input_files = {
       150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__150.out',
       160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high/mkCombine__Asym_fitted_dijet_M_high__ALL__160.out',
   }),       
-  'BDT' : OrderedDict({
-      75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__075.out',
-      80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__080.out',
-      85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__085.out',
-      90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__090.out',
-      100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__100.out',
-      110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__110.out',
-      120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__120.out',
-      130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__130.out',
-      140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__140.out',
-      150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__150.out',
-      160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__160.out',
-  }),  
-  'DNN' : OrderedDict({
-      75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__075.out',
-      80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__080.out',
-      85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__085.out',
-      90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__090.out',
-      100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__100.out',
-      110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__110.out',
-      120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__120.out',
-      130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__130.out',
-      140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__140.out',
-      150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__150.out',
-      160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__160.out',
-  }),
+  #'BDT' : OrderedDict({
+  #    75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__075.out',
+  #    80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__080.out',
+  #    85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__085.out',
+  #    90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__090.out',
+  #    100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__100.out',
+  #    110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__110.out',
+  #    120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_BDT_Low/mkCombine__Asym_fitted_dijet_M_BDT_Low__ALL__120.out',
+  #    130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__130.out',
+  #    140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__140.out',
+  #    150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__150.out',
+  #    160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__160.out',
+  #}),  
+  #'DNN' : OrderedDict({
+  #    75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__075.out',
+  #    80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__080.out',
+  #    85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__085.out',
+  #    90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__090.out',
+  #    100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__100.out',
+  #    110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__110.out',
+  #    120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__120.out',
+  #    130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__130.out',
+  #    140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__140.out',
+  #    150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__150.out',
+  #    160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__160.out',
+  #}),
 }
 
 
@@ -198,7 +198,7 @@ class CombiPlot:
     import CMS_lumi as CMS_lumi
 
     #CMS_lumi.lumi_13TeV = 'L = 58.8/fb'
-    CMS_lumi.lumi_13TeV = 'L = 137.2/fb'
+    CMS_lumi.lumi_13TeV = 'L = 137.65/fb'
     CMS_lumi.sqrtS = '#sqrt{s} = 13 TeV'
     CMS_lumi.extraText = "preliminary"
 
@@ -271,7 +271,7 @@ class CombiPlot:
     import CMS_lumi as CMS_lumi
 
     #CMS_lumi.lumi_13TeV = 'L = 58.8/fb'
-    CMS_lumi.lumi_13TeV = 'L = 137.2/fb'
+    CMS_lumi.lumi_13TeV = 'L = 137.65/fb'
     CMS_lumi.sqrtS = '#sqrt{s} = 13 TeV'
     CMS_lumi.extraText = "preliminary"
 

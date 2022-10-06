@@ -7,8 +7,8 @@ class BRChargedHiggsCB(PhysicsModel):
 
     def doParametersOfInterest(self):
         """Create POI and other parameters, and define the POI set."""
-        self.modelBuilder.doVar('BR[0,0,0.005]');
-        #self.modelBuilder.doVar('BR[0,0,0.05]'); #upper bound constrained from ttbar normalization
+        #self.modelBuilder.doVar('BR[0,0,0.005]');
+        self.modelBuilder.doVar('BR[0.0001,0,0.05]'); #upper bound constrained from ttbar normalization
         self.modelBuilder.doSet('POI','BR')
         #self.modelBuilder.doVar('sqrtBR[0,0.00001,1]');
         #self.modelBuilder.doSet('POI','sqrtBR')
@@ -16,7 +16,9 @@ class BRChargedHiggsCB(PhysicsModel):
         self.modelBuilder.factory_('expr::Scaling_BR("@0", BR)')
         #self.modelBuilder.factory_('expr::Scaling_ttCH("(1-@0)*@0 * (2*364.35)", Scaling_BR)')
         if not isVcbModel:
-          self.modelBuilder.factory_('expr::Scaling_ttCH("(1-@0)*@0 * (2 * 831.76 * 0.1080 * 3)", Scaling_BR)')
+          #XXX OLD  
+          self.modelBuilder.factory_('expr::Scaling_ttCH("(1-@0)*@0 * (2 * 364.35)", Scaling_BR)')
+          #self.modelBuilder.factory_('expr::Scaling_ttCH("(1-@0)*@0 * (2 * 831.76 * 0.1080 * 3)", Scaling_BR)')
           self.modelBuilder.factory_('expr::Scaling_tt("(1-@0)*(1-@0)", Scaling_BR)')
         else:
           self.modelBuilder.factory_('expr::Scaling_ttCH("@0 * (364.35)", Scaling_BR)')
