@@ -1,0 +1,23 @@
+python signalBcorr.py 075 matched_dijet_mass 15 135
+python signalBcorr.py 080 matched_dijet_mass 20 140
+python signalBcorr.py 085 matched_dijet_mass 25 145
+python signalBcorr.py 090 matched_dijet_mass 30 150
+python signalBcorr.py 100 matched_dijet_mass 40 160
+python signalBcorr.py 110 matched_dijet_mass 40 170
+python signalBcorr.py 120 matched_dijet_mass 50 180
+python signalBcorr.py 130 matched_dijet_mass 60 190
+python signalBcorr.py 140 matched_dijet_mass 60 200
+python signalBcorr.py 150 matched_dijet_mass 70 210
+python signalBcorr.py 160 matched_dijet_mass 70 220
+
+#python signalBcorr.py 075 matched_had_top_mass 50 300
+#python signalBcorr.py 080 matched_had_top_mass 50 300
+#python signalBcorr.py 085 matched_had_top_mass 50 300
+#python signalBcorr.py 090 matched_had_top_mass 50 300
+#python signalBcorr.py 100 matched_had_top_mass 50 300
+#python signalBcorr.py 110 matched_had_top_mass 50 300
+#python signalBcorr.py 120 matched_had_top_mass 50 300
+#python signalBcorr.py 130 matched_had_top_mass 50 300
+#python signalBcorr.py 140 matched_had_top_mass 50 300
+#python signalBcorr.py 150 matched_had_top_mass 50 300
+#python signalBcorr.py 160 matched_had_top_mass 50 300
