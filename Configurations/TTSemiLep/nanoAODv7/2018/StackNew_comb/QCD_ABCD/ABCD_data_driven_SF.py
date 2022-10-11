@@ -58,10 +58,14 @@ samples = [
 
 
 cuts_variables = {
-  'sng_4j_eleCH_2b' : ['EleSCEta','EleSCEta_HEM',],
-  'sng_4j_eleCH_3b' : ['EleSCEta','EleSCEta_HEM',],
-  'sng_4j_muCH_2b'  : ['MuonEta','MuonEta_HEM',],
-  'sng_4j_muCH_3b'  : ['MuonEta','MuonEta_HEM',],
+  #'sng_4j_eleCH_2b' : ['EleSCEta','EleSCEta_HEM',],
+  #'sng_4j_eleCH_3b' : ['EleSCEta','EleSCEta_HEM',],
+  #'sng_4j_muCH_2b'  : ['MuonEta','MuonEta_HEM',],
+  #'sng_4j_muCH_3b'  : ['MuonEta','MuonEta_HEM',],
+  'sng_4j_eleCH_2b' : ['EleSCEta',],
+  'sng_4j_eleCH_3b' : ['EleSCEta',],
+  'sng_4j_muCH_2b'  : ['MuonEta',],
+  'sng_4j_muCH_3b'  : ['MuonEta',],
   #'dbl_2j_eeORmmORemORme_2b' : ['EleSCEta_2l','MuonEta_2l'],
   #'dbl_2j_eeORmmORemORme_3b' : ['EleSCEta_2l','MuonEta_2l'],
   #'dbl_2j_ee_2b' : ['mll'],

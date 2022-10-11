@@ -3,6 +3,7 @@ from keras.layers.core import Dense, Activation, Dropout, SpatialDropout1D
 from keras.layers import Input, Add, Lambda, Conv1D, GRU, AveragePooling1D, MaxPooling1D, GlobalAveragePooling1D, Flatten, Reshape, TimeDistributed, Concatenate
 from keras.layers.noise import GaussianNoise
 from keras.layers.normalization import BatchNormalization
+from keras.constraints import unit_norm
 from keras import initializers
 from keras import regularizers
 from keras.optimizers import SGD, Adam, Nadam, RMSprop
@@ -35,28 +36,28 @@ class KerasModel():
     #
     # order of regularization : ~0.1 oder of loss. (# of parameters)*lambda ~ 0.01
     X = GaussianNoise(0.1)(X)
-    X = Conv1D(256,9,strides=3,padding='same',kernel_regularizer=regularizers.l1_l2(l1=0, l2=1e-5))(X)
+    X = Conv1D(256,9,strides=3,padding='same', kernel_constraint=unit_norm())(X)
     X = BatchNormalization()(X)
     X = SpatialDropout1D(0.10)(X)
-    X = Activation('relu')(X)
+    X = Activation('elu')(X)
     X = MaxPooling1D(3,strides=2,padding='same')(X)
     #
-    X = Conv1D(32,1,strides=1,padding='same',kernel_regularizer=regularizers.l1_l2(l1=0, l2=1e-5))(X)
+    X = Conv1D(32,1,strides=1,padding='same', kernel_constraint=unit_norm())(X)
     X = BatchNormalization()(X)
     X = SpatialDropout1D(0.10)(X)
-    X = Activation('relu')(X)
+    X = Activation('elu')(X)
     #X = AveragePooling1D(2,padding='same')(X)
     #
-    X = Conv1D(32,3,strides=1,padding='valid',kernel_regularizer=regularizers.l1_l2(l1=0, l2=1e-5))(X)
+    X = Conv1D(32,3,strides=1,padding='valid', kernel_constraint=unit_norm())(X)
     X = BatchNormalization()(X)
     X = SpatialDropout1D(0.10)(X)
-    X = Activation('relu')(X)
+    X = Activation('elu')(X)
     #X = AveragePooling1D(2,padding='same')(X)
     #
-    X = Conv1D(256,1,strides=1,padding='valid',kernel_regularizer=regularizers.l1_l2(l1=0, l2=1e-5))(X)
+    X = Conv1D(256,1,strides=1,padding='valid', kernel_constraint=unit_norm())(X)
     X = BatchNormalization()(X)
     X = SpatialDropout1D(0.10)(X)
-    X = Activation('relu')(X)
+    X = Activation('elu')(X)
 
     # flatten using global pooling
     X = GlobalAveragePooling1D()(X)
@@ -82,13 +83,13 @@ class KerasModel():
     #  
     #X = Flatten()(X)
 
-    X = Dense(128, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0, l2=1e-5))(X)
+    X = Dense(128, kernel_initializer=initializers.he_normal(seed=1232),  kernel_constraint=unit_norm())(X)
     X = BatchNormalization()(X)
-    X = Activation('relu')(X)
+    X = Activation('elu')(X)
     #X = Dropout(0.5)(X)
 
     # we can think of this chunk as the output layer
-    X = Dense(2, kernel_initializer=initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=1234), kernel_regularizer=regularizers.l1_l2(l1=0, l2=0))(X)
+    X = Dense(2, kernel_initializer=initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=1234),  kernel_constraint=unit_norm())(X)
     X = Activation('softmax')(X)
     self.model = Model(inputs, X)
 
@@ -97,11 +98,12 @@ class KerasModel():
     #self.model.add(Dense(2, kernel_initializer=initializers.he_normal(seed=None), activation='softmax'))
 
   def compile(self,lossftn='categorical_crossentropy',
-		   optimizer_=SGD(lr=0.1,decay=1e-5),
+		   #optimizer_=SGD(lr=0.1,decay=1e-5),
            # default lr=0.001
 		   #optimizer_=Adam(lr=0.1, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.1),
 		   #optimizer_=Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004),
            #optimizer_=RMSprop(lr=0.001, rho=0.9, epsilon=None, decay=0.0),
+		   optimizer_=Adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0, clipnorm=0.1),
 		   metrics_=['accuracy',]
 	     ):
     # Set loss and optimizer

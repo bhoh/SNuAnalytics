@@ -169,6 +169,7 @@ aliases = {
         
   "mvaTree"  :[
   
+     ('2016','Summer16_102X_nAODv7_Full2016v7','CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016','mvaTreeCHToCB','MC'),
      ('2016','Summer16_102X_nAODv7_Full2016v7','CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016','mvaTreeCHToCB','MC_ttsyst'),
      ('2016','Summer16_102X_nAODv7_Full2016v7','CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016','mvaTreeCHToCB','MC_signal'),
 

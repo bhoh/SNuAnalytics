@@ -134,8 +134,8 @@ ttch      = '(1/364.35)'
 
 ########
 ########
-ABCD_SF_1l = '(nLooseLep==1)*((eleCH || muCH || MET_CHToCB_pt_nom<=20)*1 + (muCH_noTight  && (nBJets_WP_M + nBJets_WP_M_20to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_2b) + (muCH_noTight  && ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_3b) + (eleCH_noTight && (nBJets_WP_M + nBJets_WP_M_20to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_2b) + (eleCH_noTight && ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_3b))'
-#ABCD_SF_2l = '(nLooseLep==2)*((isOSpair || MET_CHToCB_pt_nom<=40)*1 + (!isOSpair && MET_CHToCB_pt_nom>40)*((nBJets_WP_M + nBJets_WP_M_20to30 == 2)*((eeCH)*OTF_ABCD_SF_ee_2b + (emCH)*OTF_ABCD_SF_em_2b + (meCH)*OTF_ABCD_SF_me_2b + (mmCH)*OTF_ABCD_SF_mm_2b) + ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3)*((eeCH)*OTF_ABCD_SF_ee_3b + (emCH)*OTF_ABCD_SF_em_3b + (meCH)*OTF_ABCD_SF_me_3b + (mmCH)*OTF_ABCD_SF_mm_3b)))'
+ABCD_SF_1l = '(nLooseLep==1)*((eleCH || muCH || MET_CHToCB_pt_nom<=20)*1 + (muCH_noTight  && (nBJets_WP_M + nBJets_WP_M_25to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_2b) + (muCH_noTight  && ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_3b) + (eleCH_noTight && (nBJets_WP_M + nBJets_WP_M_25to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_2b) + (eleCH_noTight && ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_3b))'
+#ABCD_SF_2l = '(nLooseLep==2)*((isOSpair || MET_CHToCB_pt_nom<=40)*1 + (!isOSpair && MET_CHToCB_pt_nom>40)*((nBJets_WP_M + nBJets_WP_M_25to30 == 2)*((eeCH)*OTF_ABCD_SF_ee_2b + (emCH)*OTF_ABCD_SF_em_2b + (meCH)*OTF_ABCD_SF_me_2b + (mmCH)*OTF_ABCD_SF_mm_2b) + ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3)*((eeCH)*OTF_ABCD_SF_ee_3b + (emCH)*OTF_ABCD_SF_em_3b + (meCH)*OTF_ABCD_SF_me_3b + (mmCH)*OTF_ABCD_SF_mm_3b)))'
 ABCD_SF_2l = '(nLooseLep==2)*(1)'
 
 

@@ -33,19 +33,19 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/bhoh/Latino/HWWNano/"
 
-include_mva = False
+include_mva = True
 
 CAMPAIGN='Summer20UL18_106x_nAODv9_Full2018v9'
 
 if include_mva:
-  STEP='CHToCBLepton2018v7__CHToCBJetMETCorr2018v7__kinFitTTSemiLepV4_2018__mvaCHToCB_2018'
+  STEP='CHToCBLepton2018v9__CHToCBJetMETCorr2018v9__kinFitTTSemiLepV5__mvaCHToCB_2018'
 else:
   STEP='CHToCBLepton2018v9__CHToCBJetMETCorr2018v9__kinFitTTSemiLepV5'
 
 CAMPAIGN_DATA='Run2018_UL2018_nAODv9_Full2018v9'
 #STEP_DATA='DATAl1loose2018v7__CHToCBJetMETCorr_data__kinFitTTSemiLep_2018'
 if include_mva:
-  STEP_DATA='DATACHToCBLepton2018v7__CHToCBJetMETCorr_data__kinFitTTSemiLepV4_2018__mvaCHToCB_2018'
+  STEP_DATA='DATACHToCBLepton2018v9__CHToCBJetMETCorr_data__kinFitTTSemiLepV5__mvaCHToCB_2018'
 else:
   STEP_DATA='DATACHToCBLepton2018v9__CHToCBJetMETCorr_data__kinFitTTSemiLepV5'
 

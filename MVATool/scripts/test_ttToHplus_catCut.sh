@@ -10,5 +10,6 @@ eval `scramv1 ru -sh`
 ulimit -c 0
 
 cd /cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/MVATool/scripts
-python test_ttToHplus_catCut.py | tee log.txt
 
+#
+python test_ttToHplus_catCut.py $1 | tee log_$1.txt

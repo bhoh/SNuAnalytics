@@ -34,7 +34,7 @@ qcdmc += ['QCD']
 
 
 
-include_mva   = False
+include_mva   = True
 regrouped_jec = True if '_final' in opt.pycfg or '_comb' in opt.pycfg else False  #will include regrouped jec in final
 QCD_data_driven = False
 include_bincl = True if not '_final' in opt.pycfg else False
@@ -583,8 +583,8 @@ if True:
           #'samples': dict((skey, ['1.','1.']) for skey in mc),
   
           'samples': dict((skey, ['1.','1.']) for skey in mc),
-          'folderUp'   : makeMCDirectory('_jetMETSyst_{SKIM}Up'.format(SKIM=skim_)) if not include_mva else makeMCDirectory_mva('_jetMETSyst_{SKIM}__mvaCHToCB_2018_jetMETSyst_{SKIM}Up'.format(SKIM=skim_))    ,
-          'folderDown' : makeMCDirectory('_jetMETSyst_{SKIM}Down'.format(SKIM=skim_)) if not include_mva else makeMCDirectory_mva('_jetMETSyst_{SKIM}__mvaCHToCB_2018_jetMETSyst_{SKIM}Down'.format(SKIM=skim_)),
+          'folderUp'   : makeMCDirectory('_jetMETSyst_{SKIM}Up'.format(SKIM=skim_)) if not include_mva else makeMCDirectory_mva('_jetMETSyst_{SKIM}Up__mvaCHToCB_2018_jetMETSyst_{SKIM}Up'.format(SKIM=skim_))    ,
+          'folderDown' : makeMCDirectory('_jetMETSyst_{SKIM}Down'.format(SKIM=skim_)) if not include_mva else makeMCDirectory_mva('_jetMETSyst_{SKIM}Down__mvaCHToCB_2018_jetMETSyst_{SKIM}Down'.format(SKIM=skim_)),
           'group': 'experimental',
           'FromNormTree': [btag_jes_up, btag_jes_down],
       }

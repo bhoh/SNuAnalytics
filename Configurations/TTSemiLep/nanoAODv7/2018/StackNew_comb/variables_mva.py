@@ -190,8 +190,8 @@ variables ['PV_npvs']={
     'fold':0
 }
 
-variables ['nCleanJet_2p5']={
-    'name' : 'nCleanJet_2p5',
+variables ['nCleanJet_2p4']={
+    'name' : 'nCleanJet_2p4',
     'range' : (6,4,10),
     'xaxis' : 'jet multiplicity',
     'fold':0
@@ -205,20 +205,20 @@ variables ['nBJets_WP_M']={
 }
 
 
-#variables ['nCleanJet_2p5_lepveto0p4']={
-#    'name' : 'nCleanJet_2p5_lepveto0p4',
+#variables ['nCleanJet_2p4_lepveto0p4']={
+#    'name' : 'nCleanJet_2p4_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet_2p5_tightlepvetoID']={
-#    'name' : 'nCleanJet_2p5_tightlepvetoID',
+#variables ['nCleanJet_2p4_tightlepvetoID']={
+#    'name' : 'nCleanJet_2p4_tightlepvetoID',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet_2p5_tightlepvetoID_lepveto0p4']={
-#    'name' : 'nCleanJet_2p5_tightlepvetoID_lepveto0p4',
+#variables ['nCleanJet_2p4_tightlepvetoID_lepveto0p4']={
+#    'name' : 'nCleanJet_2p4_tightlepvetoID_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0

@@ -1,11 +1,12 @@
 from keras.models import Sequential
 from keras.layers.core import Dense, Activation, Dropout
 from keras.layers import Add, Lambda
+from keras.constraints import unit_norm
 #from keras.layers.noise import GaussianNoise
 from keras.layers.normalization import BatchNormalization
 from keras import initializers
 from keras import regularizers
-from keras.optimizers import SGD, Adam, Nadam
+from keras.optimizers import SGD, Adam, Nadam, Adadelta
 
 
 # Define initialization
@@ -25,23 +26,28 @@ class KerasModel():
     #
     # we can think of this chunk as the input layer
     self.model.add(Lambda(lambda X : X, input_shape=(input_dim_,))) #dummy Lamda layer for test
-    #self.model.add(Dense(400, input_dim=input_dim_, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
-    self.model.add(Dense(400, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
     self.model.add(BatchNormalization())
-    self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.20))
+
+    self.model.add(Dense(256, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    #self.model.add(Dense(256, kernel_initializer=initializers.he_normal(seed=1231), kernel_constraint=unit_norm()))
+    self.model.add(BatchNormalization())
+    self.model.add(Activation('elu'))
+    self.model.add(Dropout(0.50))
 
     # we can think of this chunk as the input layer
-    self.model.add(Dense(200, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
+    self.model.add(Dense(128, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    #self.model.add(Dense(128, kernel_initializer=initializers.he_normal(seed=1232), kernel_constraint=unit_norm()))
     self.model.add(BatchNormalization())
-    self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.20))
+    self.model.add(Activation('elu'))
+    self.model.add(Dropout(0.50))
 
     # we can think of this chunk as the input layer
-    self.model.add(Dense(100, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=1e-5, l2=1e-5)))
+    self.model.add(Dense(64, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    #self.model.add(Dense(64, kernel_initializer=initializers.he_normal(seed=1232), kernel_constraint=unit_norm()))
     self.model.add(BatchNormalization())
-    self.model.add(Activation('relu'))
-    self.model.add(Dropout(0.20))
+    self.model.add(Activation('elu'))
+    self.model.add(Dropout(0.50))
+
 
     # we can think of this chunk as the output layer
     self.model.add(Dense(2, kernel_initializer=initializers.RandomUniform(minval=-0.05, maxval=0.05, seed=1234)))
@@ -55,7 +61,8 @@ class KerasModel():
 		   #optimizer_=SGD(lr=0.1,decay=1e-5),
            # default lr=0.001
 		   #optimizer_=Adam(lr=0.1, beta_1=0.9, beta_2=0.999, epsilon=None, decay=0.1),
-		   optimizer_=Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004),
+		   #optimizer_=Nadam(lr=0.002, beta_1=0.9, beta_2=0.999, epsilon=None, schedule_decay=0.004),
+		   optimizer_=Adadelta(lr=1.0, rho=0.95, epsilon=None, decay=0.0, clipnorm=0.1),
 		   metrics_=['accuracy',]
 	     ):
     # Set loss and optimizer

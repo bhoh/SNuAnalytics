@@ -19,13 +19,32 @@ LARGE_NUM=9999999999
 # this module is to add variables for MVA training to skim tree.
 ##
 class mvaTreeCHToCB(Module):
-    def __init__(self, Year, syst_suffix='nom', isSmear=False, genMatched=False):
+    def __init__(self, cmssw, syst_suffix='nom', isSmear=False, genMatched=False):
         random.seed(12345)
         #self._lowerBjetPt = lowerBjetPt
         self._lowerBjetPt = False
         self._genMatched = genMatched
         self.isSmear = isSmear 
-        self.Year = Year
+        self.cmssw = cmssw
+
+        if '2016' in cmssw:
+          self.Year = 2016
+        if '2017' in cmssw:
+          self.Year = 2017
+        if '2018' in cmssw:
+          self.Year = 2018
+
+        if '2016v9HIPM' in cmssw:
+          self.year_label = 0
+        elif '2016v9noHIPM' in cmssw:
+          self.year_label = 1
+        elif '2017' in cmssw:
+          self.year_label = 2
+        elif '2018' in cmssw:
+          self.year_label = 3
+        else:
+          raise Exception("no cmssw: {}".format(cmssw))
+
         self._syst_suffix = syst_suffix
         self._isDeltaR = True # use delta R variables instead of delta Eta and Phi
         # read jet energy resolution (JER) and JER scale factors and uncertainties
@@ -110,6 +129,18 @@ class mvaTreeCHToCB(Module):
         self.out.branch("jet_pt1_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("jet_pt2_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("jet_pt3_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_eta0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_eta1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_eta2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_eta3_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_phi0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_phi1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_phi2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("jet_phi3_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("dijet_pt0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("dijet_pt1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("dijet_gamma0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("dijet_gamma1_mvaCHToCB_%s"%self._syst_suffix, "F")
 
 
         if self._isDeltaR:
@@ -205,6 +236,8 @@ class mvaTreeCHToCB(Module):
         self.out.branch("mcb0_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("mcb1_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("hadronic_top_mass_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("hadronic_top_gamma_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("year_label", "F")
         
         if self._syst_suffix == 'nom':
           self.out.branch("EventNum_mvaCHToCB", "I")
@@ -234,27 +267,38 @@ class mvaTreeCHToCB(Module):
         # select jets
         self.Jet_coll       = Collection(event, 'CleanJet')
         self.rawJet_coll    = Collection(event, 'Jet')
-        self.Lepton         = Collection(event, 'Lepton')
+        if hasattr(event, 'Lepton'):
+          self.Lepton         = Collection(event, 'Lepton')
+        else:
+          #XXX dumy
+          self.Lepton = self.Jet_coll
 
         #XXX set pt eta cut by years
         ptcut = 25.
-        if int(self.Year) == 2016:
+        if self.cmssw == "Full2016v9HIPM":
           absetacut = 2.4
-          self.csvcut_L    = 0.0614
-          self.csvcut_M    = 0.3093
-          self.csvcut_T    = 0.7221
-        elif int(self.Year) == 2017:
-          absetacut = 2.5
-          self.csvcut_L    = 0.0521
-          self.csvcut_M    = 0.3033
-          self.csvcut_T    = 0.7489
+          self.csvcut_L    = 0.0480
+          self.csvcut_M    = 0.2489
+          self.csvcut_T    = 0.6377
+        elif self.cmssw == "Full2016v9noHIPM":
+          absetacut = 2.4
+          self.csvcut_L    = 0.0508
+          self.csvcut_M    = 0.2598
+          self.csvcut_T    = 0.6502
+        elif self.cmssw == "Full2017v9":
+          absetacut = 2.4
+          self.csvcut_L    = 0.0532
+          self.csvcut_M    = 0.3040
+          self.csvcut_T    = 0.7476
         else:
-          absetacut = 2.5
-          self.csvcut_L    = 0.0494
-          self.csvcut_M    = 0.2770
-          self.csvcut_T    = 0.7264
-
-        good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut, event.fixedGridRhoFastjetAll)
+          absetacut = 2.4
+          self.csvcut_L    = 0.0490
+          self.csvcut_M    = 0.2783
+          self.csvcut_T    = 0.7100
+        if self.isSmear:
+          good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut, event.fixedGridRhoFastjetAll)
+        else:
+          good_jets, good_jets_idx = self.get_jets_vectors(absetacut, ptcut, 0)
 
         # return if not more than 4 jets
         if len(good_jets) < 4:
@@ -265,9 +309,6 @@ class mvaTreeCHToCB(Module):
         # get minimum deltaR b-tagged pair among all possible b-jet combination
         min_deltaR_bb_event = self.min_deltaR_bb(good_jets, good_jets_idx)
         min_deltaR_jj_event = self.min_deltaR_jj(good_jets, good_jets_idx)
-        HT_btagged_L, HT_not_btagged_L = self.get_HT_btagged(good_jets_idx, self.csvcut_L)
-        HT_btagged_M, HT_not_btagged_M = self.get_HT_btagged(good_jets_idx, self.csvcut_M)
-        HT_btagged_T, HT_not_btagged_T = self.get_HT_btagged(good_jets_idx, self.csvcut_T)
 
 
 
@@ -355,6 +396,10 @@ class mvaTreeCHToCB(Module):
           nearest_top_mass_pair_jetIdx = [0,1,2] # good_jets contain only 3 had top candidate
           self.nbtags_had_top =  2 if getattr(event,'down_type_jet_b_tagged_{}'.format(self._syst_suffix))>0.5 else 1
 
+          # pt sum of hadronic top jets
+          HT_btagged_L, HT_not_btagged_L = self.get_HT_btagged(good_jets_idx, self.csvcut_L)
+          HT_btagged_M, HT_not_btagged_M = self.get_HT_btagged(good_jets_idx, self.csvcut_M)
+          HT_btagged_T, HT_not_btagged_T = self.get_HT_btagged(good_jets_idx, self.csvcut_T)
 
 
           pull_cut = False
@@ -420,6 +465,22 @@ class mvaTreeCHToCB(Module):
         jet_pt1 = jet_vector1.Pt()
         jet_pt2 = jet_vector2.Pt()
         jet_pt3 = jet_vector3.Pt()
+        jet_eta0 = jet_vector0.Eta()
+        jet_eta1 = jet_vector1.Eta()
+        jet_eta2 = jet_vector2.Eta()
+        jet_eta3 = jet_vector3.Eta()
+        jet_phi0 = jet_vector0.Phi()
+        jet_phi1 = jet_vector1.Phi()
+        jet_phi2 = jet_vector2.Phi()
+        jet_phi3 = jet_vector3.Phi()
+        dijet_pt0 = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).Pt()
+        dijet_pt1 = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).Pt()
+        dijet_E0  = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).E()
+        dijet_E1  = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).E()
+        dijet_M0  = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).M()
+        dijet_M1  = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).M()
+        dijet_gamma0 = dijet_E0 / dijet_M0
+        dijet_gamma1 = dijet_E1 / dijet_M1
 
         lepton_vector = TLorentzVector()
         lepton_vector.SetPtEtaPhiM(self.Lepton[0].pt, self.Lepton[0].eta, self.Lepton[0].phi, 0.)
@@ -544,6 +605,8 @@ class mvaTreeCHToCB(Module):
         mcb0 = ( jet_vector2 + jet_vector1 ).M() if jet_pt0 < jet_pt1 else ( jet_vector2 + jet_vector0 ).M()
         mcb1 = ( jet_vector2 + jet_vector0 ).M() if jet_pt0 < jet_pt1 else ( jet_vector2 + jet_vector1 ).M()
         hadronic_top_mass = ( jet_vector0 + jet_vector1 + jet_vector2 ).M()
+        hadronic_top_E = ( jet_vector0 + jet_vector1 + jet_vector2 ).E()
+        hadronic_top_gamma = hadronic_top_E / hadronic_top_mass
 
         self.out.fillBranch("nbtags_had_top_mvaCHToCB_%s"%self._syst_suffix, nbtags_had_top)
         self.out.fillBranch("nbtags_event_mvaCHToCB_%s"%self._syst_suffix, self.nbtags_event)
@@ -565,6 +628,18 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("jet_pt1_mvaCHToCB_%s"%self._syst_suffix, jet_pt1)
         self.out.fillBranch("jet_pt2_mvaCHToCB_%s"%self._syst_suffix, jet_pt2)
         self.out.fillBranch("jet_pt3_mvaCHToCB_%s"%self._syst_suffix, jet_pt3)
+        self.out.fillBranch("jet_eta0_mvaCHToCB_%s"%self._syst_suffix, jet_eta0)
+        self.out.fillBranch("jet_eta1_mvaCHToCB_%s"%self._syst_suffix, jet_eta1)
+        self.out.fillBranch("jet_eta2_mvaCHToCB_%s"%self._syst_suffix, jet_eta2)
+        self.out.fillBranch("jet_eta3_mvaCHToCB_%s"%self._syst_suffix, jet_eta3)
+        self.out.fillBranch("jet_phi0_mvaCHToCB_%s"%self._syst_suffix, jet_phi0)
+        self.out.fillBranch("jet_phi1_mvaCHToCB_%s"%self._syst_suffix, jet_phi1)
+        self.out.fillBranch("jet_phi2_mvaCHToCB_%s"%self._syst_suffix, jet_phi2)
+        self.out.fillBranch("jet_phi3_mvaCHToCB_%s"%self._syst_suffix, jet_phi3)
+        self.out.fillBranch("dijet_pt0_mvaCHToCB_%s"%self._syst_suffix, dijet_pt0)
+        self.out.fillBranch("dijet_pt1_mvaCHToCB_%s"%self._syst_suffix, dijet_pt1)
+        self.out.fillBranch("dijet_gamma0_mvaCHToCB_%s"%self._syst_suffix, dijet_gamma0)
+        self.out.fillBranch("dijet_gamma1_mvaCHToCB_%s"%self._syst_suffix, dijet_gamma1)
 
         if self._isDeltaR:
           self.out.fillBranch("dijet_deltaR0_mvaCHToCB_%s"%self._syst_suffix, dijet_deltaR0)
@@ -658,7 +733,9 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("mbb_mvaCHToCB_%s"%self._syst_suffix, mbb)
         self.out.fillBranch("mcb0_mvaCHToCB_%s"%self._syst_suffix, mcb0)
         self.out.fillBranch("mcb1_mvaCHToCB_%s"%self._syst_suffix, mcb1)
-        self.out.fillBranch("hadronic_top_mass_mvaCHToCB_%s"%self._syst_suffix, hadronic_top_mass)
+        self.out.fillBranch("hadronic_top_mass_mvaCHToCB_%s"  % self._syst_suffix, hadronic_top_mass)
+        self.out.fillBranch("hadronic_top_gamma_mvaCHToCB_%s" % self._syst_suffix, hadronic_top_gamma)
+        self.out.fillBranch("year_label", self.year_label)
         if self._syst_suffix == 'nom':
           self.out.fillBranch("EventNum_mvaCHToCB", self.eventNum)
 
@@ -697,6 +774,7 @@ class mvaTreeCHToCB(Module):
           if abs(eta) >= absetacut or pt <= ptcut: 
             passabsetacut = False
           if pt > 25 and pt<=30:
+            pass
             #if not self._lowerBjetPt:
             #  passabsetacut = False
             #if not (puId_M & (1<<1)):

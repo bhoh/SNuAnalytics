@@ -37,7 +37,7 @@ class MLTools():
     
   def doTrain(self,sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch=1):
     self._tools.doTrain(sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch)
-    os.system('mv TMVAClassification/weights TMVAClassification/weights_%s'%(outWeightsSuffix))
+    #os.system('mv TMVAClassification/weights TMVAClassification/weights_%s'%(outWeightsSuffix))
 
   def doCrossValidation(self,sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch=1):
     self._tools.doCrossValidation(sigTreeName,bkgTreeName,outWeightsSuffix,outFileName,epoch)

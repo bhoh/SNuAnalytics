@@ -12,7 +12,8 @@ except ImportError:
 #------End of Variable Definition-----#
 #variables={}
 
-include_mva = False
+include_mva = True
+exclude_BDT = True
 
 variables['3_4rd_leading_b_disc'] = {
     'name' : ('Jet_btagDeepFlavB[SelectedBJetIdx[2]]','Jet_btagDeepFlavB[SelectedBJetIdx[3]]'),
@@ -58,8 +59,8 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
     mva_template_passMVA = '(({MVA_VAR}>{MVA_CUT})*({VAR})+({MVA_VAR}<={MVA_CUT})*999)'
 
     #2016 : set sig 100, bkg 1000 optimize S/sqrt(S+B) 
-    Cut_DNN_High_nom  = 0.6203
-    Cut_DNN_Low_nom   = 0.5584
+    Cut_DNN_High_nom  = 0.7546
+    Cut_DNN_Low_nom   = 0.7036
     Cut_BDT_High_nom  = 0.1538
     Cut_BDT_Low_nom   = 0.0287
     Name_DNN_High_nom = mva_template.format(MVA_VAR='DNN_High_nom', MVA_CUT = Cut_DNN_High_nom,VAR1='fitted_dijet_M_nom',VAR2=key,BIN_INTERVAL='4.') 
@@ -76,6 +77,8 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
     Name_BDT_Low_nom_passMVA  = mva_template_passMVA.format(MVA_VAR='BDT_Low_nom' , MVA_CUT = Cut_BDT_Low_nom,VAR=key)
    
     for var_key, var_name in [('DNN_High',Name_DNN_High_nom),('DNN_Low',Name_DNN_Low_nom),('BDT_High',Name_BDT_High_nom),('BDT_Low',Name_BDT_Low_nom)]:
+      if exclude_BDT and "BDT" in var_key:
+        continue
       variables[key.replace("_nom","")+"_down_type_jet_b_tagged_"+var_key] = {
           'name' : name_template.format(var_name,common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
           'range':(90,0,90),
@@ -84,6 +87,8 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
     for var_key, var_name in [('DNN_High_failMVA',Name_DNN_High_nom_failMVA),('DNN_Low_failMVA',Name_DNN_Low_nom_failMVA),('BDT_High_failMVA',Name_BDT_High_nom_failMVA),('BDT_Low_failMVA',Name_BDT_Low_nom_failMVA)]:
+      if exclude_BDT and "BDT" in var_key:
+        continue
       variables[key.replace("_nom","")+"_down_type_jet_b_tagged_"+var_key] = {
           'name' : name_template.format(var_name,common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
           'range':(45,0,180),
@@ -92,6 +97,8 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
     for var_key, var_name in [('DNN_High_passMVA',Name_DNN_High_nom_passMVA),('DNN_Low_passMVA',Name_DNN_Low_nom_passMVA),('BDT_High_passMVA',Name_BDT_High_nom_passMVA),('BDT_Low_passMVA',Name_BDT_Low_nom_passMVA)]:
+      if exclude_BDT and "BDT" in var_key:
+        continue
       variables[key.replace("_nom","")+"_down_type_jet_b_tagged_"+var_key] = {
           'name' : name_template.format(var_name,common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
           'range':(45,0,180),

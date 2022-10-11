@@ -27,48 +27,58 @@ import sys
 
 
 class KinFitterProducer(Module):
-    def __init__(self, Year, syst_suffix='nom', lowerBjetPt=False,branch_map=''):
+    def __init__(self, cmssw, syst_suffix='nom', lowerBjetPt=False,branch_map=''):
 
         # change this part into correct path structure... 
 
-        self._Year = Year
+        if '2016' in cmssw:
+          self._Year = 2016
+        if '2017' in cmssw:
+          self._Year = 2017
+        if '2018' in cmssw:
+          self._Year = 2018
+
         self._syst_suffix = syst_suffix
         self._lowerBjetPt = lowerBjetPt
         cmssw_base = os.getenv('CMSSW_BASE')
         
 
         self._branch_map = branch_map
+        self.cmssw = cmssw
         #
-        if int(Year) == 2016:
-          self._DeepFlavB_WP_M = 0.3093
-          self._jet_abseta_cut = 2.4
-        elif int(Year) == 2017:
-          self._DeepFlavB_WP_M = 0.3033
-          self._jet_abseta_cut = 2.5
-        elif int(Year) == 2018:
-          self._DeepFlavB_WP_M = 0.2770
-          self._jet_abseta_cut = 2.5
+        if self.cmssw == "Full2016v9HIPM":
+            self._DeepFlavB_WP_M   = 0.2598
+        elif self.cmssw == "Full2016v9noHIPM":
+            self._DeepFlavB_WP_M   = 0.2489
+        elif self.cmssw == "Full2017v9":
+            self._DeepFlavB_WP_M   = 0.3040
+        elif self.cmssw == "Full2018v9":
+            self._DeepFlavB_WP_M   = 0.2783
+        else:
+            raise RuntimeError("no cmssw configuration: " + self.cmssw)
+
+        self._jet_abseta_cut = 2.4
 
         # read jet energy resolution (JER) and JER scale factors and uncertainties
         # (the txt files were downloaded from https://github.com/cms-jet/JRDatabase/tree/master/textFiles/ )
         # Text files are now tarred so must extract first
         #
+        jerTagsMC = {
+            'Full2016v7': 'Summer16_25nsV1_MC',
+            'Full2017v7': 'Fall17_V3_MC',
+            'Full2018v7': 'Autumn18_V7b_MC',
+            'Full2016v9HIPM': 'Summer20UL16APV_JRV3_MC',
+            'Full2016v9noHIPM': 'Summer20UL16_JRV3_MC',
+            'Full2017v9': 'Summer19UL17_JRV2_MC',
+            'Full2018v9': 'Summer19UL18_JRV2_MC',
+        }
 
-        if int(Year) == 2016:
-          jerInputFileName_pt  = "Summer16_25nsV1_MC_PtResolution_AK4PFchs.txt"
-          jerInputFileName_eta = "Summer16_25nsV1_MC_EtaResolution_AK4PFchs.txt"
-          jerInputFileName_phi = "Summer16_25nsV1_MC_PhiResolution_AK4PFchs.txt"
-          jerUncertaintyInputFileName = "Summer16_25nsV1_MC_SF_AK4PFchs.txt"
-        elif int(Year) == 2017:
-          jerInputFileName_pt  = "Fall17_V3_MC_PtResolution_AK4PFchs.txt"
-          jerInputFileName_eta = "Fall17_V3_MC_EtaResolution_AK4PFchs.txt"
-          jerInputFileName_phi = "Fall17_V3_MC_PhiResolution_AK4PFchs.txt"
-          jerUncertaintyInputFileName = "Fall17_V3_MC_SF_AK4PFchs.txt"
-        elif int(Year) == 2018:
-          jerInputFileName_pt  = "Autumn18_V7_MC_PtResolution_AK4PFchs.txt"
-          jerInputFileName_eta = "Autumn18_V7_MC_EtaResolution_AK4PFchs.txt"
-          jerInputFileName_phi = "Autumn18_V7_MC_PhiResolution_AK4PFchs.txt"
-          jerUncertaintyInputFileName = "Autumn18_V7_MC_SF_AK4PFchs.txt"
+        jerTagMC = jerTagsMC[self.cmssw]
+        jerInputFileName_pt  = jerTagMC + "_PtResolution_AK4PFchs.txt"
+        jerInputFileName_eta = jerTagMC + "_EtaResolution_AK4PFchs.txt"
+        jerInputFileName_phi = jerTagMC + "_PhiResolution_AK4PFchs.txt"
+        jerUncertaintyInputFileName = jerTagMC + "_SF_AK4PFchs.txt"
+
         #
         self.jerInputArchivePath = os.environ['CMSSW_BASE'] + "/src/PhysicsTools/NanoAODTools/data/jme/"
         self.jerTag = jerInputFileName_pt[:jerInputFileName_pt.find('_MC_')+len('_MC')]
@@ -117,13 +127,13 @@ class KinFitterProducer(Module):
                      ##'TFitParticleMCSpher.C',
                      ##'TFitParticleMomDev.C',
                       'TFitParticlePt.C',
-                     #'TFitParticlePxPy.C',
+                      'TFitParticlePxPy.C',
                      #'TFitParticlePz.C',
                      ##'TFitParticleSpher.C',
                      #'TKinFitter.C',
                       'TSCorrection.C',
                      ##'TKinFitterDriver.C'
-                      'TKinFitterDriver_fsr.C'
+                      'TKinFitterDriver.C'
                     ]
 
         for macro in self._MacroList:
@@ -142,11 +152,11 @@ class KinFitterProducer(Module):
         # initialize JER scale factors and uncertainties
         # (cf. PhysicsTools/PatUtils/interface/SmearedJetProducerT.h )
         print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName_pt ))
-        print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName_eta))
-        print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
+        #print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName_eta))
+        #print("Loading jet energy resolutions (JER) from file '%s'" % os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
         self.jer_pt  = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_pt ))
-        self.jer_eta = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_eta))
-        self.jer_phi = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
+        #self.jer_eta = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_eta))
+        #self.jer_phi = ROOT.PyJetResolutionWrapper(os.path.join(self.jerInputFilePath, self.jerInputFileName_phi))
         print("Loading JER scale factors and uncertainties from file '%s'" % os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
         self.jerSF_and_Uncertainty = ROOT.PyJetResolutionScaleFactorWrapper(os.path.join(self.jerInputFilePath, self.jerUncertaintyInputFileName))
 
@@ -171,10 +181,10 @@ class KinFitterProducer(Module):
             'leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
             'w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
             'w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
-            'fitted_hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
-            'fitted_leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
-            'fitted_w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
-            'fitted_w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
+            #'fitted_hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
+            #'fitted_leptonic_top_b_jet_pull_{}'.format(self._syst_suffix),
+            #'fitted_w_ch_up_type_jet_pull_{}'.format(self._syst_suffix),
+            #'fitted_w_ch_down_type_jet_pull_{}'.format(self._syst_suffix),
             #'hadronic_top_mass_F_{}'.format(self._syst_suffix),
             #'leptonic_top_mass_F_{}'.format(self._syst_suffix),
             #'leptonic_w_mass_F_{}'.format(self._syst_suffix),
@@ -204,7 +214,9 @@ class KinFitterProducer(Module):
 
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
-        self._fitter = ROOT.TKinFitterDriver(int(self._Year))
+        # top mass 171.77 \pm 0.38 GeV
+        # https://cms.cern/news/cms-collaboration-measures-mass-top-quark-unparalleled-accuracy
+        self._fitter = ROOT.TKinFitterDriver(int(self._Year), ROOT.Double(171.77))
         event = mappedEvent(event, mapname=self._branch_map)
         #muons = Collection(event, "Muon")
         #electrons = Collection(event, "Electron")
@@ -224,15 +236,16 @@ class KinFitterProducer(Module):
         Jet   = Collection(event, "CleanJet")
         #auxiliary jet collection to access the mass
         OrigJet   = Collection(event, "Jet")
-        existGenJet = hasattr(event, "GenJet_pt")
-        if existGenJet:
-          GenJet   = Collection(event, "GenJet")
 
         jets            = ROOT.std.vector(ROOT.TLorentzVector)(0)
         orig_jets_idx   = ROOT.std.vector(int)(0) # to store orig jet idx to see which jets are selected
         jetPtResolution = ROOT.std.vector(ROOT.Double)(0)
-        jetEtaResolution = ROOT.std.vector(ROOT.Double)(0)
-        jetPhiResolution = ROOT.std.vector(ROOT.Double)(0)
+        jetPtBregCorr   = ROOT.std.vector(ROOT.Double)(0)
+        jetPtBregRes    = ROOT.std.vector(ROOT.Double)(0)
+        jetPtCregCorr   = ROOT.std.vector(ROOT.Double)(0)
+        jetPtCregRes    = ROOT.std.vector(ROOT.Double)(0)
+        #jetEtaResolution = ROOT.std.vector(ROOT.Double)(0)
+        #jetPhiResolution = ROOT.std.vector(ROOT.Double)(0)
         btag_csv_vector = ROOT.std.vector(ROOT.Double)(0)
         genJetPt        = ROOT.std.vector(ROOT.Double)(0)
 
@@ -242,7 +255,8 @@ class KinFitterProducer(Module):
         #print("jets")
         for jet in Jet :
           # jet_pt syst branch should exist in skim
-          jet_pt   = self.findJetPtSystAttr(OrigJet[jet.jetIdx])
+          jet_pt   = self.findJetPtSystAttr(OrigJet[jet.jetIdx], "pt")
+          jet_mass   = self.findJetPtSystAttr(OrigJet[jet.jetIdx], "mass")
           jet_csv  = OrigJet[jet.jetIdx].btagDeepFlavB
           #jet_puId_M = OrigJet[jet.jetIdx].puId
           if jet_pt <= 25. or abs(jet.eta)>=self._jet_abseta_cut:
@@ -256,33 +270,31 @@ class KinFitterProducer(Module):
             #  continue
             pass
           njets += 1
+          btag_csv_vector.push_back(jet_csv)
+          # b taggging
+          isBtaged = jet_csv > self._DeepFlavB_WP_M
+          if isBtaged:
+            nbtags += 1
           tmp_jet = ROOT.TLorentzVector()
-          tmp_jet.SetPtEtaPhiM(jet_pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
+          tmp_jet.SetPtEtaPhiM(jet_pt, jet.eta, jet.phi, jet_mass)
           jets.push_back(tmp_jet)
           orig_jets_idx.push_back(jet.jetIdx)
           tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
           # set jet resolution
           jetPtResolution_, jetEtaResolution_, jetPhiResolution_ = self.getJetPtResolution(tmp_jet, event.fixedGridRhoFastjetAll)
+          # sigma = 1.482 * IQR 
+          jetPtBregCorr_ = OrigJet[jet.jetIdx].bRegCorr
+          jetPtBregRes_  = 1.482 * OrigJet[jet.jetIdx].bRegRes
+          jetPtCregCorr_ = OrigJet[jet.jetIdx].cRegCorr
+          jetPtCregRes_  = 1.482 * OrigJet[jet.jetIdx].cRegRes
           jetPtResolution.push_back(jetPtResolution_)
-          jetEtaResolution.push_back(jetEtaResolution_)
-          jetPhiResolution.push_back(jetPhiResolution_)
-          btag_csv_vector.push_back(jet_csv)
-          # gen jet pt to estimate pull
-          if not existGenJet:
-            genJetPt.push_back(-1)
-          else:
-            genJetIdx = OrigJet[jet.jetIdx].genJetIdx
-            if genJetIdx<0:
-              genJetPt.push_back(-1)
-            elif len(GenJet)<=genJetIdx:
-              genJetPt.push_back(-1)
-            elif genJetIdx>=0:
-              genJetPt.push_back(GenJet[genJetIdx].pt)
-            else:
-              raise Exception("genJetIdx if else condition")
-          # b taggging
-          if jet_csv > self._DeepFlavB_WP_M:
-            nbtags += 1
+          jetPtBregCorr.push_back(jetPtBregCorr_)
+          jetPtBregRes .push_back(jetPtBregRes_ )
+          jetPtCregCorr.push_back(jetPtCregCorr_)
+          jetPtCregRes .push_back(jetPtCregRes_ )
+          #jetEtaResolution.push_back(jetEtaResolution_)
+          #jetPhiResolution.push_back(jetPhiResolution_)
+
         
 
         # propagate MET by syst suffix
@@ -301,10 +313,13 @@ class KinFitterProducer(Module):
         
         self._fitter.SetAllObjects(jets, btag_csv_vector, self._DeepFlavB_WP_M, lepton, MET_CHToCB)
         self._fitter.SetJetPtResolution(jetPtResolution)
-        self._fitter.SetJetEtaResolution(jetEtaResolution)
-        self._fitter.SetJetPhiResolution(jetPhiResolution)
+        self._fitter.SetJetBregCorr(jetPtBregCorr)
+        self._fitter.SetJetBregRes (jetPtBregRes)
+        self._fitter.SetJetCregCorr(jetPtCregCorr)
+        self._fitter.SetJetCregRes (jetPtCregRes)
+        #self._fitter.SetJetEtaResolution(jetEtaResolution)
+        #self._fitter.SetJetPhiResolution(jetPhiResolution)
         self._fitter.SetMETShift(METShiftX, METShiftY)
-        self._fitter.SetGenJets(genJetPt)
         self._fitter.FindBestChi2Fit()
         #self._fitter.FindBestSelTopFit(False,True,True) #old. closest leptonic top, closet had. top, max. had. top
         #void TKinFitterDriver::FindBestSelTopFit(bool IsMaxHadTopPt, bool IsClosestHadTopM, bool IsMaxLepTopPt, bool IsClosestLepTopM){
@@ -365,8 +380,8 @@ class KinFitterProducer(Module):
         self.params_resolution.setJetEta(jet.Eta())
         self.params_resolution.setRho(rho)
         jet_pt_resolution  = self.jer_pt.getResolution(self.params_resolution)
-        jet_eta_resolution = self.jer_eta.getResolution(self.params_resolution)
-        jet_phi_resolution = self.jer_phi.getResolution(self.params_resolution)
+        jet_eta_resolution = 1. #self.jer_eta.getResolution(self.params_resolution)
+        jet_phi_resolution = 1. #self.jer_phi.getResolution(self.params_resolution)
         self.params_sf_and_uncertainty.setJetEta(jet.Eta())
         self.params_sf_and_uncertainty.setJetPt(jet.Pt())
         jet_pt_resolution_SF = self.jerSF_and_Uncertainty.getScaleFactor(self.params_sf_and_uncertainty, 0) # 0 for nominal
@@ -384,11 +399,11 @@ class KinFitterProducer(Module):
           return orig_jets_idx[fitter_jet_idx]
 
 
-    def findJetPtSystAttr(self,object_):
+    def findJetPtSystAttr(self,object_,suffix_):
         if "unclustEn" in self._syst_suffix:
-          syst_suffix = "pt_nom"
+          syst_suffix = "{}_nom".format(suffix_)
         else:
-          syst_suffix = "pt_{}".format(self._syst_suffix)
+          syst_suffix = "{}_{}".format(suffix_, self._syst_suffix)
         return getattr(object_,syst_suffix)
 
 
@@ -428,7 +443,7 @@ class KinFitterProducer(Module):
           if syst==False:
             pt = Jet[jet.jetIdx].pt_nom #jet pt with JER smearing
           else:
-            pt = self.findJetPtSystAttr(Jet[jet.jetIdx]) # for nominal syst, propagate Jet_pt_nom
+            pt = self.findJetPtSystAttr(Jet[jet.jetIdx],"pt") # for nominal syst, propagate Jet_pt_nom
           phi=jet.phi
           JetPxSum+=pt*math.cos(phi)
           JetPySum+=pt*math.sin(phi)
@@ -439,18 +454,13 @@ class KinFitterProducer(Module):
         if "unclustEn" not in self._syst_suffix:
           return met_pt, met_phi
         elif "unclustEnUp" in self._syst_suffix:
-          METShiftX =event_.MET_MetUnclustEnUpDeltaX
-          METShiftY =event_.MET_MetUnclustEnUpDeltaY
+          met_pt_shift  = event_.PuppiMET_ptUnclusteredUp
+          met_phi_shift = event_.PuppiMET_phiUnclusteredUp
         elif "unclustEnDown" in self._syst_suffix:
-          METShiftX =-(event_.MET_MetUnclustEnUpDeltaX)
-          METShiftY =-(event_.MET_MetUnclustEnUpDeltaY)
-        met_px = met_pt*math.cos(met_phi) + METShiftX
-        met_py = met_pt*math.sin(met_phi) + METShiftY
+          met_pt_shift  = event_.PuppiMET_ptUnclusteredDown
+          met_phi_shift = event_.PuppiMET_phiUnclusteredDown
 
-        new_met_pt = math.sqrt(met_px**2 + met_py**2)
-        new_met_phi = math.atan2(met_py,met_px)
-
-        return new_met_pt, new_met_phi
+        return met_pt_shift, met_phi_shift
         
         
 

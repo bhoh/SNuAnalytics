@@ -38,6 +38,8 @@ protected:
   IntArrayReader*   Lepton_electronIdx{};
   UIntValueReader*  nLepton{};
   FloatArrayReader* Electron_deltaEtaSC{};
+  FloatArrayReader* Electron_eCorr{};
+  FloatArrayReader* Lepton_rochesterSF{};
 
 
   std::vector<double> leptonEff{};
@@ -83,8 +85,23 @@ LeptonEff::LeptonEff(char const* fileNameEle, char const* fileNameMu, char const
 
   rootFileEle = new TFile(fileNameEle_);
   rootFileMu  = new TFile(fileNameMu_);
+
+  if(!rootFileEle){
+    throw std::runtime_error("file not exist: " + fileNameEle_);
+  }
+  if(!rootFileMu){
+    throw std::runtime_error("file not exist: " + fileNameMu_);
+  }
+
   histLeptonEffEle = (TH2F*)rootFileEle->Get(histNameEle_);
   histLeptonEffMu = (TH2F*)rootFileMu->Get(histNameMu_);
+
+  if(!histLeptonEffEle){
+    throw std::runtime_error("hist not exist: " + histNameEle_);
+  }
+  if(!histLeptonEffMu){
+    throw std::runtime_error("hist not exist: " + histNameMu_);
+  }
 }
 
 
@@ -107,6 +124,8 @@ LeptonEff::bindTree_(multidraw::FunctionLibrary& _library)
   _library.bindBranch(Lepton_electronIdx, "Lepton_electronIdx");
   _library.bindBranch(nLepton, "nLepton");
   _library.bindBranch(Electron_deltaEtaSC, "Electron_deltaEtaSC");
+  _library.bindBranch(Electron_eCorr, "Electron_eCorr");
+  _library.bindBranch(Lepton_rochesterSF, "Lepton_rochesterSF");
 }
 
 
@@ -131,12 +150,18 @@ LeptonEff::setValues()
 
     double lepEta{Lepton_eta->At(iL)};
     double lepDeltaEtaSC{0.};
+    double lepeCorr{1.};
     int lepFlav{abs(Lepton_pdgId->At(iL))};
     if(lepFlav==11){
       lepDeltaEtaSC = Electron_deltaEtaSC->At(Lepton_electronIdx->At(iL));
+      lepeCorr      = Electron_eCorr->At(Lepton_electronIdx->At(iL));
+    }
+    else if(lepFlav==13){
+      lepeCorr = Lepton_rochesterSF->At(iL);
     }
 
-    double lepPt{Lepton_pt->At(iL)};   
+    double lepPt{Lepton_pt->At(iL)};
+    lepPt /=lepeCorr;
 
     double xvar, yvar;
     TH2F* histLeptonEff;

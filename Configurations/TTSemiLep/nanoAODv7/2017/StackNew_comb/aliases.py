@@ -13,6 +13,7 @@ configurations = '%s/src/SNuAnalytics/Configurations/TTSemiLep' % os.getenv('CMS
 print configurations
 
 mc = [skey for skey in samples if skey not in ('Fake', 'DATA')]
+ttmc_syst = ['TTLJ','TTLJ_jj','TTLJ_cc','TTLJ_bb','TTLJ_bj','TTLL','TTLL_jj','TTLL_cc','TTLL_bb','TTLL_bj']
 
 # veto loose lepton
 
@@ -127,16 +128,19 @@ aliases['dblCH'] = {
 
 # Jet cut
 
-aliases['nCleanJet20_2p5'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && abs(CleanJet_eta) < 2.5)'
+aliases['nCleanJet20_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && abs(CleanJet_eta) < 2.4)'
             }
 
-aliases['nCleanJet20to30_2p5_PU_M'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && Jet_pt_nom[CleanJet_jetIdx] <= 30. && abs(CleanJet_eta) < 2.5 && (Jet_puId[CleanJet_jetIdx] & (1 << 1)) )'
+aliases['nCleanJet25_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 25. && abs(CleanJet_eta) < 2.4)'
+            }
+aliases['nCleanJet25to30_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 25. && Jet_pt_nom[CleanJet_jetIdx] <= 30. && abs(CleanJet_eta) < 2.4 )'
             }
 
-aliases['nCleanJet30_2p5'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5)'
+aliases['nCleanJet30_2p4'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4)'
             }
 
 aliases['SelectedJetIdx'] = {
@@ -144,7 +148,7 @@ aliases['SelectedJetIdx'] = {
         '.L %s/patches/selectedjet.cc+' % configurations,
     ],
     'class': 'SelectedJet',
-    'args': (30.,2.5), # pT, |eta| cut
+    'args': (30.,2.4), # pT, |eta| cut
     'samples': samples.keys(),
 }
 aliases['SelectedBJetIdx'] = {
@@ -152,18 +156,18 @@ aliases['SelectedBJetIdx'] = {
         '.L %s/patches/selectedbjet.cc+' % configurations,
     ],
     'class': 'SelectedBJet',
-    'args': (20.,2.5, 0.), # pT, |eta| cut, csv cut(not used variable)
+    'args': (25.,2.4, 0.), # pT, |eta| cut, csv cut(not used variable)
     'samples': samples.keys(),
 }
 
 # B tagging
 
 aliases['nBJets_WP_M'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.5 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033 )'
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 30. && abs(CleanJet_eta) < 2.4 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033 )'
             }
 
-aliases['nBJets_WP_M_20to30'] = {
-            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 20. && Jet_pt_nom[CleanJet_jetIdx] <= 30. && abs(CleanJet_eta) < 2.5 && (Jet_puId[CleanJet_jetIdx] & (1 << 1)) && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033)'
+aliases['nBJets_WP_M_25to30'] = {
+            'expr': 'Sum$(Jet_pt_nom[CleanJet_jetIdx] > 25. && Jet_pt_nom[CleanJet_jetIdx] <= 30. && abs(CleanJet_eta) < 2.4 && Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033)'
             }
 
 ###---Btag SF---###
@@ -196,11 +200,11 @@ aliases['Jet_btagSF_shapeFixNorm_top'] = {
 }
 
 aliases['btagSF'] = {
-        'expr': 'TMath::Exp(Sum$(TMath::Log(((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5))*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5)))+Sum$(TMath::Log(((Jet_pt_nom[CleanJet_jetIdx]>20 && Jet_pt_nom[CleanJet_jetIdx]<=30 && (Jet_puId[CleanJet_jetIdx] & (1<<1)) && abs(CleanJet_eta)<2.5))*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=20 || Jet_pt_nom[CleanJet_jetIdx]>30 || !(Jet_puId[CleanJet_jetIdx] & (1<<1))|| abs(CleanJet_eta)>=2.5))))',
+        'expr': 'TMath::Exp(Sum$(TMath::Log(((Jet_pt_nom[CleanJet_jetIdx]>25 && abs(CleanJet_eta)<2.4))*Jet_btagSF_shapeFix[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=25 || abs(CleanJet_eta)>=2.4))))',
     'samples': mc
 }
 aliases['btagSFNorm_top'] = {
-    #'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
+    #'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.4)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.4))))',
     'expr' : '1',
     'samples': mc
 }
@@ -400,9 +404,23 @@ aliases['SelectedJetIdx'] = {
         '.L %s/patches/selectedjet.cc+' % configurations,
     ],
     'class': 'SelectedJet',
-    'args': (30.,2.5), # pT, |eta| cut
+    'args': (30.,2.4), # pT, |eta| cut
     'samples': samples.keys(),
 }
+
+aliases['ttGenPt'] = {
+     'expr': 'TMath::Sqrt( topGenPt*topGenPt + antitopGenPt*antitopGenPt + 2*topGenPt*antitopGenPt*TMath::Cos(topGenPhi - antitopGenPhi) )',
+     'samples': ttmc_syst,
+}
+
+aliases['avgtopGenMass'] = {
+     'expr': 'TMath::Sqrt( topGenMass * antitopGenMass )',
+     'samples': ttmc_syst,
+}
+
+
+
+
 #aliases['topGen'] = {
 #    'expr' : '(GenPart_pdgId == 6) && (GenPart_statusFlags >> 13 & 1)',
 #    'samples': ['TTLJ']

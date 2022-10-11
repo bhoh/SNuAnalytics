@@ -3,6 +3,7 @@ removeFromCuts=[
   'dbl_2j_eeORmmORemORme_2b','dbl_2j_eeORmmORemORme_3b','dbl_2j_eeORmmORemORme_2b_onZ','dbl_2j_eeORmmORemORme_3b_onZ',
   'dbl_2j_ee_2b','dbl_2j_em_2b','dbl_2j_me_2b','dbl_2j_mm_2b','dbl_2j_ee_2b_onZ','dbl_2j_mm_2b_onZ',
   'dbl_2j_ee_3b','dbl_2j_em_3b','dbl_2j_me_3b','dbl_2j_mm_3b','dbl_2j_ee_3b_onZ','dbl_2j_mm_3b_onZ',
+  'dbl_2j_ee_2b_onZ', 'dbl_2j_ee_3b_onZ', 'dbl_2j_mm_2b_onZ', 'dbl_2j_mm_3b_onZ', 'dbl_4j_ee_onZ', 'dbl_4j_eeORmmORemORme_onZ', 'dbl_4j_mm_onZ',
         ]
 
 splitTTLL = False

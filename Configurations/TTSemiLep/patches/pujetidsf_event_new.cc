@@ -61,7 +61,7 @@ protected:
   typedef std::array<std::unique_ptr<TH1>, nWPs> MapSet;
   typedef std::array<MapSet, 2> MapSets;
   static MapSets sfMapSets;
-  static MapSets sfMapSets_Systuncty;
+  static MapSets sfMapSets_SystUncty;
   static MapSets effMapSets;
 
   static void setValues(long long);
@@ -84,7 +84,7 @@ IntArrayReader * PUJetIdEventSF::Jet_puId{};
 IntArrayReader* PUJetIdEventSF::Jet_genJetIdx{};
 PUJetIdEventSF::MapSets PUJetIdEventSF::effMapSets{};
 PUJetIdEventSF::MapSets PUJetIdEventSF::sfMapSets{};
-PUJetIdEventSF::MapSets PUJetIdEventSF::sfMapSets_Systuncty{};
+PUJetIdEventSF::MapSets PUJetIdEventSF::sfMapSets_SystUncty{};
 std::vector<std::array<float, PUJetIdEventSF::nWPs> > PUJetIdEventSF::scalefactors{};
 
 PUJetIdEventSF::PUJetIdEventSF(char const* filename, char const* yr, char const* wp) :
@@ -92,25 +92,48 @@ PUJetIdEventSF::PUJetIdEventSF(char const* filename, char const* yr, char const*
   filename_{filename},
   wpStr_{wp}
 {
-  if (wpStr_ == "loose")
-    wp_ = kLoose;
-  else if (wpStr_ == "medium")
-    wp_ = kMedium;
-  else if (wpStr_ == "tight")
-    wp_ = kTight;
-  else
-    throw std::runtime_error("unknown working point " + wpStr_);
+
 
   if (year.size() == 0)
     year = yr;
   else if (year != yr)
     throw std::runtime_error("PUJetIdEventSF already set up for " + year);
+
+  if (year == "UL2016" || year == "UL2016APV"){
+
+    if (wpStr_ == "loose")
+      wp_ = kTight; // nanoAODv8/9 level issue
+    else if (wpStr_ == "medium")
+      wp_ = kMedium;
+    else if (wpStr_ == "tight")
+      wp_ = kLoose; // nanoAODv8/9 level issue
+    else
+      throw std::runtime_error("unknown working point " + wpStr_);
+  
+  }
+  else{
+      
+    if (wpStr_ == "loose")
+      wp_ = kLoose;
+    else if (wpStr_ == "medium")
+      wp_ = kMedium;
+    else if (wpStr_ == "tight")
+      wp_ = kTight;
+    else
+      throw std::runtime_error("unknown working point " + wpStr_);
+ 
+  }
+
+  //cout << "debug 1-1" << endl;
+
 }
 
 void
 PUJetIdEventSF::beginEvent(long long _iEntry)
 {
+  //cout << "debug 1-2" << endl;
   setValues(_iEntry);
+  //cout << "debug 1-3" << endl;
 }
 unsigned
 PUJetIdEventSF::getNdata()
@@ -120,6 +143,7 @@ PUJetIdEventSF::getNdata()
 double
 PUJetIdEventSF::evaluate(unsigned iJ)
 {
+  //cout << "debug 1-4" << endl;
   return scalefactors[iJ][wp_];
 }
 
@@ -132,6 +156,7 @@ PUJetIdEventSF::setValues(long long _iEntry)
 
   currentEntry = _iEntry;
 
+  std::array<float,3> scalefactor{};
   scalefactors.clear();
   scalefactors.resize(3);
 
@@ -144,7 +169,10 @@ PUJetIdEventSF::setValues(long long _iEntry)
     double pt{Jet_pt->At(iJ)};
     double eta{Jet_eta->At(iJ)};
 
-    if (pt < 20. || pt > 50.|| std::abs(eta) > 4.7 || Jet_jetId->At(iJ)<6)
+    //BHO: pt cut 25. -> 15. fixed.
+    //     min pT for jet: 15 GeV
+    //     PU Id eff. binning minimum 15 GeV
+    if (pt < 25. || pt > 50.|| std::abs(eta) >= 2.5 || Jet_jetId->At(iJ)<6)
     // excluding also the jets with jetId < 6 since we are considering only these jets in the selection before PUid selection.
     // 
     //  <2 -> ask tightId
@@ -181,7 +209,7 @@ PUJetIdEventSF::setValues(long long _iEntry)
       //  iWP_ = kMedium;
       //}
       auto& sf_map{sfMapSets[mapType][iWP_]};
-      auto& sf_map_Systuncty{sfMapSets_Systuncty[mapType][iWP_]};
+      auto& sf_map_SystUncty{sfMapSets_SystUncty[mapType][iWP_]};
       auto& eff_map{effMapSets[mapType][iWP_]};
 
       int iX{eff_map->GetXaxis()->FindFixBin(pt)};
@@ -197,17 +225,22 @@ PUJetIdEventSF::setValues(long long _iEntry)
         iY = eff_map->GetNbinsY();
 
       // iWP = 0 Tight, 1 Medium, 2 Loose 
+      // or iWP = 0 Loose, 1 Medium, 2 Tight
       bool passId = (Jet_puId->At(iJ)) & (1 << iWP_);
       if (passId){
-        scalefactors[0][iWP] *= (sf_map->GetBinContent(iX, iY));
-        scalefactors[1][iWP] *= (sf_map->GetBinContent(iX, iY) + sf_map->GetBinError(iX, iY) + sf_map_Systuncty->GetBinContent(iX, iY));
-        scalefactors[2][iWP] *= (sf_map->GetBinContent(iX, iY) - sf_map->GetBinError(iX, iY) - sf_map_Systuncty->GetBinContent(iX, iY));
+        scalefactor[0] = (sf_map->GetBinContent(iX, iY));
+        scalefactor[1] = (sf_map->GetBinContent(iX, iY) + sf_map->GetBinError(iX, iY) + sf_map_SystUncty->GetBinContent(iX, iY));
+        scalefactor[2] = (sf_map->GetBinContent(iX, iY) - sf_map->GetBinError(iX, iY) - sf_map_SystUncty->GetBinContent(iX, iY));
       }
       else {
-        scalefactors[0][iWP] *= (1- sf_map->GetBinContent(iX, iY)*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
-        scalefactors[1][iWP] *= (1- (sf_map->GetBinContent(iX, iY) + sf_map->GetBinError(iX, iY) + sf_map_Systuncty->GetBinContent(iX, iY))*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
-        scalefactors[2][iWP] *= (1- (sf_map->GetBinContent(iX, iY) - sf_map->GetBinError(iX, iY) - sf_map_Systuncty->GetBinContent(iX, iY))*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
+        scalefactor[0] = (1- sf_map->GetBinContent(iX, iY)*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
+        scalefactor[1] = (1- (sf_map->GetBinContent(iX, iY) + sf_map->GetBinError(iX, iY) + sf_map_SystUncty->GetBinContent(iX, iY))*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
+        scalefactor[2] = (1- (sf_map->GetBinContent(iX, iY) - sf_map->GetBinError(iX, iY) - sf_map_SystUncty->GetBinContent(iX, iY))*eff_map->GetBinContent(iX,iY)) / (1-eff_map->GetBinContent(iX,iY));
       }
+      // safty for empty histogram bins
+      scalefactors[0][iWP] *= scalefactor[0]>0.?scalefactor[0]:1.;
+      scalefactors[1][iWP] *= scalefactor[1]>0.?scalefactor[1]:1.;
+      scalefactors[2][iWP] *= scalefactor[2]>0.?scalefactor[2]:1.;
     }
   }
   //cout << "SF L norm/up/down: "<< scalefactors[0][kLoose] << " "<<scalefactors[1][kLoose] << " "<<scalefactors[2][kLoose] << endl;
@@ -222,10 +255,43 @@ PUJetIdEventSF::bindTree_(multidraw::FunctionLibrary& _library)
     {
       TDirectory::TContext context;
 
+      //cout << "debug 2-1" << endl;
       auto* source{TFile::Open(filename_.c_str())};
+      //cout << "debug 2-2" << endl;
       // Same order of bit to check the Jetid 
-      std::string wps[nWPs] = {"T", "M", "L"};
+      std::string wps16[nWPs] = {"L","M","T"};
+      std::string wps1718[nWPs] = {"T","M","L"};
+
+      std::string* wps;
+
+      if (year == "UL2016" || year == "UL2016APV"){
+        wps = wps16;
+      }
+      else{
+        wps = wps1718;
+      }
+
       for (unsigned iwp{0}; iwp != nWPs; ++iwp) {
+
+        if(!source->Get(("h2_eff_mc"+year +"_" + wps[iwp]).c_str())){
+          cout << ("h2_eff_mc"+year +"_" + wps[iwp]).c_str() << " is not exist!!!!!" << endl;
+        }
+        if(!source->Get(("h2_mistag_mc"+year +"_" + wps[iwp]).c_str())){
+          cout << ("h2_mistag_mc"+year +"_" + wps[iwp]).c_str() << " is not exist!!!!!" << endl;
+        }
+        if(!source->Get(("h2_eff_sf"+year +"_" + wps[iwp]).c_str())){
+          cout << ("h2_eff_sf"+year +"_" + wps[iwp]).c_str() << " is not exist!!!!!" << endl;
+        }
+        if(!source->Get(("h2_mistag_sf"+year +"_" + wps[iwp]).c_str())){
+          cout << ("h2_mistag_sf"+year +"_" + wps[iwp]).c_str() << " is not exist!!!!!" << endl;
+        }
+        if(!source->Get(("h2_eff_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str())){
+          cout << ("h2_eff_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str() << " is not exist!!!!!" << endl;
+        }
+        if(!source->Get(("h2_mistag_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str())){
+          cout << ("h2_mistag_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str() << " is not exist!!!!!" << endl;
+        }
+
         effMapSets[0][iwp].reset(static_cast<TH1*>(source->Get(("h2_eff_mc"+year +"_" + wps[iwp]).c_str())));
         effMapSets[1][iwp].reset(static_cast<TH1*>(source->Get(("h2_mistag_mc"+year +"_" + wps[iwp]).c_str())));
         effMapSets[0][iwp]->SetDirectory(nullptr);
@@ -234,17 +300,19 @@ PUJetIdEventSF::bindTree_(multidraw::FunctionLibrary& _library)
         sfMapSets[1][iwp].reset(static_cast<TH1*>(source->Get(("h2_mistag_sf"+year +"_" + wps[iwp]).c_str())));
         sfMapSets[0][iwp]->SetDirectory(nullptr);
         sfMapSets[1][iwp]->SetDirectory(nullptr);
-        sfMapSets_Systuncty[0][iwp].reset(static_cast<TH1*>(source->Get(("h2_eff_sf"+year +"_" + wps[iwp]+"_Systuncty").c_str())));
-        sfMapSets_Systuncty[1][iwp].reset(static_cast<TH1*>(source->Get(("h2_mistag_sf"+year +"_" + wps[iwp]+"_Systuncty").c_str())));
-        sfMapSets_Systuncty[0][iwp]->SetDirectory(nullptr);
-        sfMapSets_Systuncty[1][iwp]->SetDirectory(nullptr);
+        sfMapSets_SystUncty[0][iwp].reset(static_cast<TH1*>(source->Get(("h2_eff_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str())));
+        sfMapSets_SystUncty[1][iwp].reset(static_cast<TH1*>(source->Get(("h2_mistag_sf"+year +"_" + wps[iwp]+"_SystUncty").c_str())));
+        sfMapSets_SystUncty[0][iwp]->SetDirectory(nullptr);
+        sfMapSets_SystUncty[1][iwp]->SetDirectory(nullptr);
       }
+      //cout << "debug 2-3" << endl;
       delete source;
     }
     
     _library.bindBranch(nJet, "nJet");
     _library.bindBranch(nLepton, "nLepton");
-    _library.bindBranch(Jet_pt, "Jet_pt");
+    _library.bindBranch(Jet_pt, "Jet_pt"); // nanoAOD pT
+    //_library.bindBranch(Jet_pt, "Jet_pt_nom"); // JER smeared PT
     _library.bindBranch(Jet_jetId, "Jet_jetId");
     _library.bindBranch(Jet_eta, "Jet_eta");
     _library.bindBranch(Jet_phi, "Jet_phi");
@@ -269,7 +337,7 @@ PUJetIdEventSF::bindTree_(multidraw::FunctionLibrary& _library)
           for (auto& sfMap : sms)
             sfMap.reset();
         }
-        for (auto& sms_syst : sfMapSets_Systuncty) {
+        for (auto& sms_syst : sfMapSets_SystUncty) {
           for (auto& sfMap_syst : sms_syst)
             sfMap_syst.reset();
         }

@@ -40,12 +40,12 @@ class LimitCalc():
         exit()
 
       if Year == "All":
-        self.Year = ['2016','2017','2018']
+        self.Year = ['2016HIPM','2016noHIPM','2017','2018']
         #self.Year = ['2018']
         #self.Year = ['2017']
         #self.Year = ['2016']
         #self.Year = ['2017','2018']
-      elif Year in ['2016','2017','2018']:
+      elif Year in ['2016HIPM','2016noHIPM','2017','2018']:
         self.Year    = [Year]
       else:
         print 'there is no year like',Year,'Exiting....'

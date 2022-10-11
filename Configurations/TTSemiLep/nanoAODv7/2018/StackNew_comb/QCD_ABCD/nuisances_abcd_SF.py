@@ -29,8 +29,8 @@ qcdmc += ['QCD']
 
 include_mva = False
 
-ABCD_SF_1l =  '(nLooseLep==1)*((eleCH || muCH || MET_CHToCB_pt_nom<=20)*1 + (muCH_noTight  && (nBJets_WP_M + nBJets_WP_M_20to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_2b[0]) + (muCH_noTight  && ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_3b[0]) + (eleCH_noTight && (nBJets_WP_M + nBJets_WP_M_20to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_2b[0]) + (eleCH_noTight && ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_3b[0]))'
-#ABCD_SF_2l =  '(nLooseLep==2)*((isOSpair || MET_CHToCB_pt_nom<=40)*1 + (!isOSpair && MET_CHToCB_pt_nom>40)*((nBJets_WP_M + nBJets_WP_M_20to30 == 2)*((eeCH)*OTF_ABCD_SF_ee_2b[0] + (emCH)*OTF_ABCD_SF_em_2b[0] + (meCH)*OTF_ABCD_SF_me_2b[0] + (mmCH)*OTF_ABCD_SF_mm_2b[0]) + ((nBJets_WP_M + nBJets_WP_M_20to30) >= 3)*((eeCH)*OTF_ABCD_SF_ee_3b[0] + (emCH)*OTF_ABCD_SF_em_3b[0] + (meCH)*OTF_ABCD_SF_me_3b[0] + (mmCH)*OTF_ABCD_SF_mm_3b[0])))'
+ABCD_SF_1l =  '(nLooseLep==1)*((eleCH || muCH || MET_CHToCB_pt_nom<=20)*1 + (muCH_noTight  && (nBJets_WP_M + nBJets_WP_M_25to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_2b[0]) + (muCH_noTight  && ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_mu_3b[0]) + (eleCH_noTight && (nBJets_WP_M + nBJets_WP_M_25to30 == 2) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_2b[0]) + (eleCH_noTight && ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3) && (MET_CHToCB_pt_nom>20))*(OTF_ABCD_SF_ele_3b[0]))'
+#ABCD_SF_2l =  '(nLooseLep==2)*((isOSpair || MET_CHToCB_pt_nom<=40)*1 + (!isOSpair && MET_CHToCB_pt_nom>40)*((nBJets_WP_M + nBJets_WP_M_25to30 == 2)*((eeCH)*OTF_ABCD_SF_ee_2b[0] + (emCH)*OTF_ABCD_SF_em_2b[0] + (meCH)*OTF_ABCD_SF_me_2b[0] + (mmCH)*OTF_ABCD_SF_mm_2b[0]) + ((nBJets_WP_M + nBJets_WP_M_25to30) >= 3)*((eeCH)*OTF_ABCD_SF_ee_3b[0] + (emCH)*OTF_ABCD_SF_em_3b[0] + (meCH)*OTF_ABCD_SF_me_3b[0] + (mmCH)*OTF_ABCD_SF_mm_3b[0])))'
 ABCD_SF_2l =  '(nLooseLep==2)*(1)'
 
 

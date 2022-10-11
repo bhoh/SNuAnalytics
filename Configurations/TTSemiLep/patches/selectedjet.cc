@@ -31,7 +31,6 @@ protected:
   IntArrayReader* CleanJet_jetIdx{};
 
   FloatArrayReader* Jet_pt_nom{};
-  FloatArrayReader* Jet_btagDeepB{};
 
 
   std::vector<unsigned> selected_jet{};
@@ -74,7 +73,6 @@ SelectedJet::bindTree_(multidraw::FunctionLibrary& _library)
   _library.bindBranch(CleanJet_eta, "CleanJet_eta");
   _library.bindBranch(CleanJet_jetIdx, "CleanJet_jetIdx");
   _library.bindBranch(Jet_pt_nom, "Jet_pt_nom");
-  _library.bindBranch(Jet_btagDeepB, "Jet_btagDeepB");
 }
 
 

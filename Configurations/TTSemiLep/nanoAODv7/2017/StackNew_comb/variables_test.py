@@ -47,8 +47,8 @@ variables['Lepton_eta[1]']={
     'fold':0
 }
 
-variables ['nCleanJet_2p5']={
-    'name' : 'nCleanJet_2p5',
+variables ['nCleanJet_2p4']={
+    'name' : 'nCleanJet_2p4',
     'range' : (8,2,10),
     'xaxis' : 'jet multiplicity',
     'fold':0

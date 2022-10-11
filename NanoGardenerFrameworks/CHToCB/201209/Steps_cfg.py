@@ -864,7 +864,7 @@ Steps = {
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
                      'subTargets' : ['baseW','JERsMC2016','PrefCorr2016','JetPUID_SF_16',
-                                     'rochesterMC','trigMC','POGLeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
+                                     'trigMC','POGLeptonSF','rochesterMC','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
                 },
 
   #BHO
@@ -1004,7 +1004,7 @@ Steps = {
                   #XXX
                   #XXX
                   'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 12. &&\
-                                        abs(CleanJet_eta) < 2.5 &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
                                         Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.2770\
                                        )>=2))\
                                   "',
@@ -1024,7 +1024,7 @@ Steps = {
                   #XXX
                   #XXX
                   'selection'  : '"((Sum$(Jet_pt_nom[CleanJet_jetIdx] > 12. &&\
-                                        abs(CleanJet_eta) < 2.5 &&\
+                                        abs(CleanJet_eta) < 2.4 &&\
                                         Jet_btagDeepFlavB[CleanJet_jetIdx] > 0.3033\
                                        )>=2))\
                                   "',
@@ -1059,7 +1059,7 @@ Steps = {
                   'do4MC'      : True  ,
                   'do4Data'    : False  ,
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.genCHToCB',
-                  'declare'    : 'genCHToCB_ = lambda : genCHToCB()',
+                  'declare'    : 'genCHToCB_ = lambda : genCHToCB(RPLME_YEAR)',
                   'module'     : 'genCHToCB_()',
                },
 
@@ -1069,9 +1069,9 @@ Steps = {
                   'do4Data'    : False,
                   'selection'  : '"(Sum$(abs(LHEPart_pdgId)==11 || abs(LHEPart_pdgId)==13 || abs(LHEPart_pdgId)==15)==1)"',
                   'import'     : 'LatinoAnalysis.NanoGardener.modules.mvaTreeCHToCB' ,
-                  'declare'    : 'mvaTreeCHToCB__ = lambda : mvaTreeCHToCB(RPLME_YEAR,syst_suffix="nom",isSmear=True,genMatched=True)',
+                  'declare'    : 'mvaTreeCHToCB__ = lambda : mvaTreeCHToCB(RPLME_YEAR,syst_suffix="nom",isSmear=False,genMatched=False)',
                   'module'     : 'mvaTreeCHToCB__()',
-                  'onlySample'    : ['TT_TuneCUETP8M2T4','TTToSemiLeptonic','TTTo2L2Nu','CHToCB_M075','CHToCB_M080','CHToCB_M085','CHToCB_M090','CHToCB_M100','CHToCB_M110','CHToCB_M120','CHToCB_M130','CHToCB_M140','CHToCB_M150','CHToCB_M160'],
+                  'onlySample'    : ['TT_TuneCUETP8M2T4','TTToSemiLeptonic','CHToCB_M075','CHToCB_M080','CHToCB_M085','CHToCB_M090','CHToCB_M100','CHToCB_M110','CHToCB_M120','CHToCB_M130','CHToCB_M140','CHToCB_M150','CHToCB_M160'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201209/rmBranches_mvaTreeCHToCB.txt'
                },
     'mvaTreeCHToCB': {
@@ -1080,7 +1080,7 @@ Steps = {
                   'do4Data'    : False,
                   'selection'  : '"(Sum$(abs(LHEPart_pdgId)==11 || abs(LHEPart_pdgId)==13 || abs(LHEPart_pdgId)==15)==1)"',
                   'subTargets' : ['genCHToCB','mvaTreeCHToCB_'],
-                  'onlySample'    : ['TT_TuneCUETP8M2T4','TTToSemiLeptonic','TTTo2L2Nu','CHToCB_M075','CHToCB_M080','CHToCB_M085','CHToCB_M090','CHToCB_M100','CHToCB_M110','CHToCB_M120','CHToCB_M130','CHToCB_M140','CHToCB_M150','CHToCB_M160'],
+                  'onlySample'    : ['TT_TuneCUETP8M2T4','TTToSemiLeptonic','CHToCB_M075','CHToCB_M080','CHToCB_M085','CHToCB_M090','CHToCB_M100','CHToCB_M110','CHToCB_M120','CHToCB_M130','CHToCB_M140','CHToCB_M150','CHToCB_M160'],
                   'outputbranchsel': os.getenv('CMSSW_BASE') + '/src/SNuAnalytics/NanoGardenerFrameworks/CHToCB/201209/rmBranches_mvaTreeCHToCB.txt'
                },
     'mvaTreeCHToCB_Test': {
@@ -1212,7 +1212,7 @@ Steps = {
        'do4Data'    : False  ,
         #'selection'  :'"( (Lepton_pt[0]>20) && ( Alt$( Lepton_pt[1],-1) < 20 ) )"',
        'selection'  :'"( Sum$(CleanJet_pt > 10 && abs(CleanJet_eta) < 2.5) > 1 )"',
-       'subTargets' : ['MCCorr2016v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
+       'subTargets' : ['TopGenVars','MCCorr2016v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
    },
    'CHToCBJetMETCorr2017v7': {
        'isChain'    : True  ,
@@ -1220,7 +1220,7 @@ Steps = {
        'do4Data'    : False  ,
         #'selection'  :'"( (Lepton_pt[0]>20) && ( Alt$( Lepton_pt[1],-1) < 20 ) )"',
        'selection'  :'"( Sum$(CleanJet_pt > 10 && abs(CleanJet_eta) < 2.5) > 1 )"',
-       'subTargets' : ['MCCorr2017v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
+       'subTargets' : ['TopGenVars','MCCorr2017v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
    },
    'CHToCBJetMETCorr2018v7': {
        'isChain'    : True  ,
@@ -1228,7 +1228,7 @@ Steps = {
        'do4Data'    : False  ,
         #'selection'  :'"( (Lepton_pt[0]>20) && ( Alt$( Lepton_pt[1],-1) < 20 ) )"',
        'selection'  :'"( Sum$(CleanJet_pt > 10 && abs(CleanJet_eta) < 2.5) > 1 )"',
-       'subTargets' : ['MCCorr2018v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
+       'subTargets' : ['TopGenVars','MCCorr2018v7', 'CorrJetMC', 'CorrMET','HEMweightMC','ReduceStat'],
    },
   'CHToCBJetMETCorr_data' : {
        'isChain'    : True  ,
@@ -1370,7 +1370,7 @@ Steps = {
                      'do4Data'    : False ,
 
                      'subTargets' : ['baseW','JERsMC2017','PrefCorr2017','JetPUID_SF_17',
-                                     'rochesterMC','trigMC','POGLeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
+                                     'trigMC','POGLeptonSF','rochesterMC','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
                 },
 
   'MCCorr2017LP19' : {
@@ -1473,7 +1473,7 @@ Steps = {
                      'do4MC'      : True  ,
                      'do4Data'    : False ,
                      'subTargets' : ['baseW','JERsMC2018','JetPUID_SF_18',
-                                     'rochesterMC','trigMC','POGLeptonSF','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
+                                     'trigMC','POGLeptonSF','rochesterMC','puW','l2Kin', 'l3Kin', 'l4Kin','formulasMCCHToCB','EmbeddingVeto'],
                 },
 
 
@@ -5686,32 +5686,32 @@ Steps = {
                               'UEdo' : {
                                           'TTToSemiLeptonic_TuneCP5Down' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_TuneCP5Down' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_TuneCUETP8M2T4Down' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_TuneCUETP8M2T4Down' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'UEup' : {
                                           'TTToSemiLeptonic_TuneCP5Up' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_TuneCP5Up' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_TuneCUETP8M2T4Up' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_TuneCUETP8M2T4Up' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'HDAMPdo' : {
                                           'TTToSemiLeptonic_hdampDown' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_hdampDown' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_hdampDown' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_hdampDown' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'HDAMPup' : {
                                           'TTToSemiLeptonic_hdampUp' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_hdampUp' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_hdampUp' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_hdampUp' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'MTOPdo'  : {
                                           'TTToSemiLeptonic_mtopDown' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_mtopDown' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_mtopDown' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_mtopDown' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'MTOPup'  : {
                                           'TTToSemiLeptonic_mtopUp' : ['TTToSemiLeptonic'],
                                           'TTTo2L2Nu_mtopUp' : ['TTTo2L2Nu','TTTo2L2Nu_PSWeights'],
-                                          'TT_mtopUp' : ['TT_TuneCUETP8M2T4'],
+                                          'TT_mtopUp' : ['TT_TuneCUETP8M2T4_PSweights'],
                                        },
                               'ISRup'   : {
                                           'TT_isrUp' : ['TT_TuneCUETP8M2T4'],
@@ -5898,6 +5898,7 @@ if __name__ == '__main__':
   import pprint
   #pprint.pprint(Steps)
 
+  #pprint.pprint(DATAbyPeriod)
 
 
 

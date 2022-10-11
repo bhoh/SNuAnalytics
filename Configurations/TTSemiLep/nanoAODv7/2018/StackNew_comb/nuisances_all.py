@@ -676,8 +676,10 @@ if not 'comb' in opt.pycfg:
   
   }
 
-  hdamp_syst_up   = '(nLepton==1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(1.0208)+(nCleanJet20_2p5==5)*(1.0067)+(nCleanJet20_2p5>=6)*(1.0326)) + (nLepton!=1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(1.0142)+(nCleanJet20_2p5==5)*(1.0438)+(nCleanJet20_2p5>=6)*(1.0921))'
-  hdamp_syst_down = '(nLepton==1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(0.9832)+(nCleanJet20_2p5==5)*(0.9918)+(nCleanJet20_2p5>=6)*(0.9622)) + (nLepton!=1)*((nCleanJet20_2p5<4)+(nCleanJet20_2p5==4)*(0.9611)+(nCleanJet20_2p5==5)*(0.9478)+(nCleanJet20_2p5>=6)*(0.9031))'
+  hdamp_syst_up   = '(ttGenPt<0.00)*(1.) + (ttGenPt>=0.00 && ttGenPt<10.00)*(0.97)+ (ttGenPt>=10.00 && ttGenPt<20.00)*(0.97)+ (ttGenPt>=20.00 && ttGenPt<30.00)*(0.97)+ (ttGenPt>=30.00 && ttGenPt<40.00)*(0.98)+ (ttGenPt>=40.00 && ttGenPt<50.00)*(0.99)+ (ttGenPt>=50.00 && ttGenPt<60.00)*(0.99)+ (ttGenPt>=60.00 && ttGenPt<80.00)*(1.00)+ (ttGenPt>=80.00 && ttGenPt<100.00)*(1.01)+ (ttGenPt>=100.00 && ttGenPt<200.00)*(1.05)+ (ttGenPt>=200.00 && ttGenPt<1000.00)*(1.09) + (ttGenPt>=1000.00)*(1.)'
+  hdamp_syst_down = '(ttGenPt<0.00)*(1.) + (ttGenPt>=0.00 && ttGenPt<10.00)*(1.05)+ (ttGenPt>=10.00 && ttGenPt<20.00)*(1.05)+ (ttGenPt>=20.00 && ttGenPt<30.00)*(1.04)+ (ttGenPt>=30.00 && ttGenPt<40.00)*(1.03)+ (ttGenPt>=40.00 && ttGenPt<50.00)*(1.02)+ (ttGenPt>=50.00 && ttGenPt<60.00)*(1.00)+ (ttGenPt>=60.00 && ttGenPt<80.00)*(0.99)+ (ttGenPt>=80.00 && ttGenPt<100.00)*(0.96)+ (ttGenPt>=100.00 && ttGenPt<200.00)*(0.92)+ (ttGenPt>=200.00 && ttGenPt<1000.00)*(0.91) + (ttGenPt>=1000.00)*(1.)'
+  mtop_syst_up    = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(0.96)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(0.96)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(0.96)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(0.97)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(0.97)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(0.97)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(0.98)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(0.99)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(0.99)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(0.99)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(1.00)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(1.00) + (hadronic_top_M_nom>=200.00)*(1.)'
+  mtop_syst_down  = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(1.04)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(1.04)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(1.04)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(1.04)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(1.03)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(1.03)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(1.02)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(1.01)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(1.01)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(1.00)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(0.99)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(0.99) + (hadronic_top_M_nom>=200.00)*(1.)'
   nuisances['hdamp_weight'] = {
       'name': 'hdamp_weight',
       'kind': 'weight',
@@ -685,6 +687,26 @@ if not 'comb' in opt.pycfg:
       #'symmetrize_ttsyst': True,
       #'syncronize_stat' : True,
       'samples': dict((skey, [hdamp_syst_up, hdamp_syst_down]) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
+  nuisances['mtop'] = {
+      'name': 'mtop',
+      'kind': 'tree',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
+      'folderUp'   : makeMCDirectory('__MTOPup'),
+      'folderDown' : makeMCDirectory('__MTOPdo'),
+      'group': 'theory',
+  
+  }
+  nuisances['mtop_weight'] = {
+      'name': 'mtop_weight',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, [mtop_syst_up, mtop_syst_down]) for skey in ttmc_syst ),
       'group': 'theory',
   }
 
@@ -699,18 +721,17 @@ else:
       'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
       'group': 'theory',
   }
+  nuisances['mtop_weight'] = {
+      'name': 'mtop_weight',
+      'rename': 'mtop',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
 
-nuisances['mtop'] = {
-    'name': 'mtop',
-    'kind': 'tree',
-    'type': 'shape',
-    #'symmetrize_ttsyst': True,
-    'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
-    'folderUp'   : makeMCDirectory('__MTOPup'),
-    'folderDown' : makeMCDirectory('__MTOPdo'),
-    'group': 'theory',
-
-}
 
 nuisances['PU_ID_L'] = {
     'name': 'eff_puid_2018',
@@ -855,20 +876,20 @@ nuisances['FSR_TT'] = {
 #lhe_scale_syst = [ 'LHEScaleWeight[%s]'%i for i in range(9) ]
 ## This should work for samples with either 8 or 9 LHE scale weights (Length$(LHEScaleWeight) == 8 or 9)
 lhe_scale_syst = ['LHEScaleWeight[0]', 'LHEScaleWeight[1]', 'LHEScaleWeight[3]', 'LHEScaleWeight[Length$(LHEScaleWeight)-4]', 'LHEScaleWeight[Length$(LHEScaleWeight)-2]', 'LHEScaleWeight[Length$(LHEScaleWeight)-1]']
-lhe_scale_syst_tt_4j5j = lambda skey : [ '((nCleanJet20_2p5==4 || nCleanJet20_2p5==5)*%s+(nCleanJet20_2p5!=4 && nCleanJet20_2p5!=5)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p5<4)*%s+(nCleanJet20_2p5>=4)*1.)'%weight for weight in lhe_scale_syst ]
-lhe_scale_syst_tt_6j = lambda skey : [ '((nCleanJet20_2p5>=6)*%s+(nCleanJet20_2p5<6)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p5>=4)*%s+(nCleanJet20_2p5<4)*1.)'%weight for weight in lhe_scale_syst ]
+lhe_scale_syst_tt_4j5j = lambda skey : [ '((nCleanJet20_2p4==4 || nCleanJet20_2p4==5)*%s+(nCleanJet20_2p4!=4 && nCleanJet20_2p4!=5)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p4<4)*%s+(nCleanJet20_2p4>=4)*1.)'%weight for weight in lhe_scale_syst ]
+lhe_scale_syst_tt_6j = lambda skey : [ '((nCleanJet20_2p4>=6)*%s+(nCleanJet20_2p4<6)*1.)'%weight if 'TTLL' not in skey else '((nCleanJet20_2p4>=4)*%s+(nCleanJet20_2p4<4)*1.)'%weight for weight in lhe_scale_syst ]
 
-lhe_scale_syst_ttlj_4j = ['(nCleanJet20_2p5>=4)*(1.1085)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.8883)+(nCleanJet20_2p5<4)']
-lhe_scale_syst_ttlj_5j = ['(nCleanJet20_2p5>=5)*(1.0122)+(nCleanJet20_2p5<5)','(nCleanJet20_2p5>=5)*(0.9915)+(nCleanJet20_2p5<5)']
-lhe_scale_syst_ttlj_6j = ['(nCleanJet20_2p5>=6)*(1.0244)+(nCleanJet20_2p5<6)','(nCleanJet20_2p5>=6)*(0.9835)+(nCleanJet20_2p5<6)']
+lhe_scale_syst_ttlj_4j = ['(nCleanJet20_2p4>=4)*(1.1085)+(nCleanJet20_2p4<4)','(nCleanJet20_2p4>=4)*(0.8883)+(nCleanJet20_2p4<4)']
+lhe_scale_syst_ttlj_5j = ['(nCleanJet20_2p4>=5)*(1.0122)+(nCleanJet20_2p4<5)','(nCleanJet20_2p4>=5)*(0.9915)+(nCleanJet20_2p4<5)']
+lhe_scale_syst_ttlj_6j = ['(nCleanJet20_2p4>=6)*(1.0244)+(nCleanJet20_2p4<6)','(nCleanJet20_2p4>=6)*(0.9835)+(nCleanJet20_2p4<6)']
 
-lhe_scale_syst_chtocb_4j = ['(nCleanJet20_2p5>=4)*(1.2833)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.7931)+(nCleanJet20_2p5<4)']
-lhe_scale_syst_chtocb_5j = ['(nCleanJet20_2p5>=5)*(1.0050)+(nCleanJet20_2p5<5)','(nCleanJet20_2p5>=5)*(0.9954)+(nCleanJet20_2p5<5)']
-lhe_scale_syst_chtocb_6j = ['(nCleanJet20_2p5>=6)*(1.0043)+(nCleanJet20_2p5<6)','(nCleanJet20_2p5>=6)*(0.9961)+(nCleanJet20_2p5<6)']
+lhe_scale_syst_chtocb_4j = ['(nCleanJet20_2p4>=4)*(1.2833)+(nCleanJet20_2p4<4)','(nCleanJet20_2p4>=4)*(0.7931)+(nCleanJet20_2p4<4)']
+lhe_scale_syst_chtocb_5j = ['(nCleanJet20_2p4>=5)*(1.0050)+(nCleanJet20_2p4<5)','(nCleanJet20_2p4>=5)*(0.9954)+(nCleanJet20_2p4<5)']
+lhe_scale_syst_chtocb_6j = ['(nCleanJet20_2p4>=6)*(1.0043)+(nCleanJet20_2p4<6)','(nCleanJet20_2p4>=6)*(0.9961)+(nCleanJet20_2p4<6)']
 
-lhe_scale_syst_ttll_4j =['(nCleanJet20_2p5>=2)*(1.1085)+(nCleanJet20_2p5<2)','(nCleanJet20_2p5>=2)*(0.8883)+(nCleanJet20_2p5<2)']
-lhe_scale_syst_ttll_5j =['(nCleanJet20_2p5>=3)*(1.0122)+(nCleanJet20_2p5<3)','(nCleanJet20_2p5>=3)*(0.9915)+(nCleanJet20_2p5<3)']
-lhe_scale_syst_ttll_6j =['(nCleanJet20_2p5>=4)*(1.1531/1.1085/1.0122)+(nCleanJet20_2p5<4)','(nCleanJet20_2p5>=4)*(0.8641/0.8883/0.9915)+(nCleanJet20_2p5<4)']
+lhe_scale_syst_ttll_4j =['(nCleanJet20_2p4>=2)*(1.1085)+(nCleanJet20_2p4<2)','(nCleanJet20_2p4>=2)*(0.8883)+(nCleanJet20_2p4<2)']
+lhe_scale_syst_ttll_5j =['(nCleanJet20_2p4>=3)*(1.0122)+(nCleanJet20_2p4<3)','(nCleanJet20_2p4>=3)*(0.9915)+(nCleanJet20_2p4<3)']
+lhe_scale_syst_ttll_6j =['(nCleanJet20_2p4>=4)*(1.1531/1.1085/1.0122)+(nCleanJet20_2p4<4)','(nCleanJet20_2p4>=4)*(0.8641/0.8883/0.9915)+(nCleanJet20_2p4<4)']
 
 lhe_scale_syst_tt_4j = lambda skey: lhe_scale_syst_ttlj_4j*('TTLJ' in skey) + lhe_scale_syst_chtocb_4j*('CHToCB' in skey) + lhe_scale_syst_ttll_4j*('TTLL' in skey)
 lhe_scale_syst_tt_5j = lambda skey: lhe_scale_syst_ttlj_5j*('TTLJ' in skey) + lhe_scale_syst_chtocb_5j*('CHToCB' in skey) + lhe_scale_syst_ttll_5j*('TTLL' in skey)
@@ -952,7 +973,7 @@ lhe_scale_syst_st_4j_var = ['Alt$(LHEScaleWeight[0],1.058898)', 'Alt$(LHEScaleWe
 lhe_scale_syst_st_5j_var = ['Alt$(LHEScaleWeight[0],1.073054)', 'Alt$(LHEScaleWeight[1],1.067547)', 'Alt$(LHEScaleWeight[3],0.997817)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-4],1.005757)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-2],0.939583)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-1],0.947824)']
 lhe_scale_syst_st_6j_var = ['Alt$(LHEScaleWeight[0],1.099488)', 'Alt$(LHEScaleWeight[1],1.082491)', 'Alt$(LHEScaleWeight[3],1.007635)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-4],0.996998)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-2],0.929305)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-1],0.930033)']
 
-lhe_scale_syst_st = ['Alt$(LHEScaleWeight[0],(nCleanJet20_2p5==4)*(1.058898)+(nCleanJet20_2p5==5)*(1.073054)+(nCleanJet20_2p5>=6)*(1.099488)+(nCleanJet20_2p5<4)*1.)', 'Alt$(LHEScaleWeight[1],(nCleanJet20_2p5==4)*(1.058810)+(nCleanJet20_2p5==5)*(1.067547)+(nCleanJet20_2p5>=6)*(1.082491)+(nCleanJet20_2p5<4)*1.)', 'Alt$(LHEScaleWeight[3],(nCleanJet20_2p5==4)*(0.993666)+(nCleanJet20_2p5==5)*(0.997817)+(nCleanJet20_2p5>=6)*(1.007635)+(nCleanJet20_2p5<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-4],(nCleanJet20_2p5==4)*(1.009240)+(nCleanJet20_2p5==5)*(1.005757)+(nCleanJet20_2p5>=6)*(0.996998)+(nCleanJet20_2p5<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-2],(nCleanJet20_2p5==4)*(0.945656)+(nCleanJet20_2p5==5)*(0.939583)+(nCleanJet20_2p5>=6)*(0.929305)+(nCleanJet20_2p5<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-1],(nCleanJet20_2p5==4)*(0.956605)+(nCleanJet20_2p5==5)*(0.947824)+(nCleanJet20_2p5>=6)*(0.930033)+(nCleanJet20_2p5<4)*1.)']
+lhe_scale_syst_st = ['Alt$(LHEScaleWeight[0],(nCleanJet20_2p4==4)*(1.058898)+(nCleanJet20_2p4==5)*(1.073054)+(nCleanJet20_2p4>=6)*(1.099488)+(nCleanJet20_2p4<4)*1.)', 'Alt$(LHEScaleWeight[1],(nCleanJet20_2p4==4)*(1.058810)+(nCleanJet20_2p4==5)*(1.067547)+(nCleanJet20_2p4>=6)*(1.082491)+(nCleanJet20_2p4<4)*1.)', 'Alt$(LHEScaleWeight[3],(nCleanJet20_2p4==4)*(0.993666)+(nCleanJet20_2p4==5)*(0.997817)+(nCleanJet20_2p4>=6)*(1.007635)+(nCleanJet20_2p4<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-4],(nCleanJet20_2p4==4)*(1.009240)+(nCleanJet20_2p4==5)*(1.005757)+(nCleanJet20_2p4>=6)*(0.996998)+(nCleanJet20_2p4<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-2],(nCleanJet20_2p4==4)*(0.945656)+(nCleanJet20_2p4==5)*(0.939583)+(nCleanJet20_2p4>=6)*(0.929305)+(nCleanJet20_2p4<4)*1.)', 'Alt$(LHEScaleWeight[Length$(LHEScaleWeight)-1],(nCleanJet20_2p4==4)*(0.956605)+(nCleanJet20_2p4==5)*(0.947824)+(nCleanJet20_2p4>=6)*(0.930033)+(nCleanJet20_2p4<4)*1.)']
 
 nuisances['QCDscale_ST'] = {
     'name': 'QCDscale_ST',

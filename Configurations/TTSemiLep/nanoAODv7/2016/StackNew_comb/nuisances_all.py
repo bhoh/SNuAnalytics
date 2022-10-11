@@ -689,8 +689,10 @@ if not 'comb' in opt.pycfg:
   
   }
 
-  hdamp_syst_up   = '(nLepton==1)*((nCleanJet20_2p4<4)+(nCleanJet20_2p4==4)*(1.0189)+(nCleanJet20_2p4==5)*(1.0061)+(nCleanJet20_2p4>=6)*(1.0291)) + (nLepton!=1)*((nCleanJet20_2p4<4)+(nCleanJet20_2p4==4)*(1.0515)+(nCleanJet20_2p4==5)*(1.0583)+(nCleanJet20_2p4>=6)*(1.0498))'
-  hdamp_syst_down = '(nLepton==1)*((nCleanJet20_2p4<4)+(nCleanJet20_2p4==4)*(0.9820)+(nCleanJet20_2p4==5)*(0.9924)+(nCleanJet20_2p4>=6)*(0.9559)) + (nLepton!=1)*((nCleanJet20_2p4<4)+(nCleanJet20_2p4==4)*(0.9853)+(nCleanJet20_2p4==5)*(0.9425)+(nCleanJet20_2p4>=6)*(0.9178))'
+  hdamp_syst_up   = "(ttGenPt<0.00)*(1.) + (ttGenPt>=0.00 && ttGenPt<10.00)*(0.98)+ (ttGenPt>=10.00 && ttGenPt<20.00)*(0.98)+ (ttGenPt>=20.00 && ttGenPt<30.00)*(0.99)+ (ttGenPt>=30.00 && ttGenPt<40.00)*(0.98)+ (ttGenPt>=40.00 && ttGenPt<50.00)*(0.99)+ (ttGenPt>=50.00 && ttGenPt<60.00)*(1.00)+ (ttGenPt>=60.00 && ttGenPt<80.00)*(1.00)+ (ttGenPt>=80.00 && ttGenPt<100.00)*(1.01)+ (ttGenPt>=100.00 && ttGenPt<200.00)*(1.02)+ (ttGenPt>=200.00 && ttGenPt<1000.00)*(1.06) + (ttGenPt>=1000.00)*(1.)"
+  hdamp_syst_down = "(ttGenPt<0.00)*(1.) + (ttGenPt>=0.00 && ttGenPt<10.00)*(1.04)+ (ttGenPt>=10.00 && ttGenPt<20.00)*(1.04)+ (ttGenPt>=20.00 && ttGenPt<30.00)*(1.03)+ (ttGenPt>=30.00 && ttGenPt<40.00)*(1.02)+ (ttGenPt>=40.00 && ttGenPt<50.00)*(1.01)+ (ttGenPt>=50.00 && ttGenPt<60.00)*(1.01)+ (ttGenPt>=60.00 && ttGenPt<80.00)*(0.99)+ (ttGenPt>=80.00 && ttGenPt<100.00)*(0.97)+ (ttGenPt>=100.00 && ttGenPt<200.00)*(0.93)+ (ttGenPt>=200.00 && ttGenPt<1000.00)*(0.91) + (ttGenPt>=1000.00)*(1.)"
+  mtop_syst_up    = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(0.96)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(0.97)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(0.96)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(0.97)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(0.96)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(0.99)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(0.98)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(0.99)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(1.00)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(1.01)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(1.00)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(1.01) + (hadronic_top_M_nom>=200.00)*(1.)'
+  mtop_syst_down  = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(1.05)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(1.04)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(1.06)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(1.04)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(1.03)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(1.03)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(1.01)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(1.00)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(1.00)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(1.00)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(1.01)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(0.99) + (hadronic_top_M_nom>=200.00)*(1.)'
   nuisances['hdamp_weight'] = {
       'name': 'hdamp_weight',
       'kind': 'weight',
@@ -700,7 +702,26 @@ if not 'comb' in opt.pycfg:
       'samples': dict((skey, [hdamp_syst_up, hdamp_syst_down]) for skey in ttmc_syst ),
       'group': 'theory',
   }
-
+  nuisances['mtop'] = {
+      'name': 'mtop',
+      'kind': 'tree',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
+      'folderUp'   : makeMCDirectory('__MTOPup'),
+      'folderDown' : makeMCDirectory('__MTOPdo'),
+      'group': 'theory',
+  
+  }
+  nuisances['mtop_weight'] = {
+      'name': 'mtop_weight',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, [mtop_syst_up, mtop_syst_down]) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
 else:
   nuisances['hdamp_weight'] = {
       'name': 'hdamp_weight',
@@ -712,18 +733,17 @@ else:
       'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
       'group': 'theory',
   }
+  nuisances['mtop_weight'] = {
+      'name': 'mtop_weight',
+      'rename': 'mtop',
+      'kind': 'weight',
+      'type': 'shape',
+      #'symmetrize_ttsyst': True,
+      #'syncronize_stat' : True,
+      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'group': 'theory',
+  }
 
-nuisances['mtop'] = {
-    'name': 'mtop',
-    'kind': 'tree',
-    'type': 'shape',
-    #'symmetrize_ttsyst': True,
-    'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
-    'folderUp'   : makeMCDirectory('__MTOPup'),
-    'folderDown' : makeMCDirectory('__MTOPdo'),
-    'group': 'theory',
-
-}
 
 nuisances['PU_ID_L'] = {
     'name': 'eff_puid_2016',
@@ -765,7 +785,7 @@ if not 'comb' in opt.pycfg:
 else:
   nuisances['ISR_TTjj'] = {
       'name': 'ttbar_isr',
-      #'rename': ['ttjj_isrDown','ttjj_isrUp'],
+      'rename': 'ttjj_isr',
       'kind': 'weight',
       'type': 'shape',
       #'syncronize_stat' : True,
@@ -775,7 +795,7 @@ else:
   }
   nuisances['ISR_TTcc'] = {
       'name': 'ttbar_isr',
-      #'rename': ['ttcc_isrDown','ttcc_isrUp'], #flip Up and Down histogram
+      'rename': 'ttcc_isr',
       'kind': 'weight',
       'type': 'shape',
       #'syncronize_stat' : True,
@@ -785,7 +805,7 @@ else:
   }
   nuisances['ISR_TTbb'] = {
       'name': 'ttbar_isr',
-      #'rename': ['ttbb_isrDown','ttbb_isrUp'], #flip Up and Down histogram
+      'rename': 'ttbb_isr',
       'kind': 'weight',
       'type': 'shape',
       #'syncronize_stat' : True,

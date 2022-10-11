@@ -1,4 +1,4 @@
-from ROOT import TFile, TTree, TCut, TMVA, gROOT
+from ROOT import TFile, TTree, TChain, TCut, TMVA, gROOT
 
 #------
 # ver.1
@@ -16,6 +16,7 @@ class TMVATools():
     TMVA.Tools.Instance()
     TMVA.PyMethodBase.PyInitialize()
     self._trees = {}
+    self._tree_weights = {}
     self._fout = None
     self._variables = {}
     self._spectators = {}
@@ -25,6 +26,19 @@ class TMVATools():
 
   def SetTrees(self,treeName,trees):
     self._trees[treeName] = trees
+    self._tree_weights[treeName] = self.GetTreeWeight(trees)
+
+  def GetTreeWeight(self, trees):
+    tmp_fchain = TChain("Events")
+    tmp_fchain.Add(trees)
+    tmp_fchain.SetBranchStatus("*",0)
+    tmp_fchain.SetBranchStatus("XSWeight",1)
+    sumw = 0.
+    for i in range(tmp_fchain.GetEntries()):
+      tmp_fchain.GetEntry(i)
+      sumw += tmp_fchain.XSWeight
+    out_weight = 1./sumw
+    return out_weight
 
 
   def SetVariables(self,variables):
@@ -62,20 +76,20 @@ class TMVATools():
     #----
     for sigTreeName in sigTreeNames:
       if "_Train" in sigTreeName:
-        self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"train")
+        self._data_loader.AddSignalTree(self._trees[sigTreeName], self._tree_weights[sigTreeName], "train")
       elif "_Test" in sigTreeName:
-        self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"test")
+        self._data_loader.AddSignalTree(self._trees[sigTreeName], self._tree_weights[sigTreeName],"test")
       else:
-        self._data_loader.AddSignalTree(self._trees[sigTreeName],1.0,"train_test")
+        self._data_loader.AddSignalTree(self._trees[sigTreeName], self._tree_weights[sigTreeName],"train_test")
         #raise Exception("[TMVATools.py] raise exception at _dataLoase")
 
     for bkgTreeName in bkgTreeNames:
       if "_Train" in bkgTreeName:
-        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"train")
+        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName], self._tree_weights[bkgTreeName],"train")
       elif "_Test" in bkgTreeName:
-        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"test")
+        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName], self._tree_weights[bkgTreeName],"test")
       else:
-        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName],1.0,"train_test")
+        self._data_loader.AddBackgroundTree(self._trees[bkgTreeName], self._tree_weights[bkgTreeName],"train_test")
         #raise Exception("[TMVATools.py] raise exception at _dataLoase")
 
     self._data_loader.SetSignalWeightExpression(self._options['factory']['weight'])

@@ -2,17 +2,20 @@
 #define TKinFitterDriver_h
 
 #include "TString.h"
+#include "TSystem.h"
 #include <iostream>
 #include <numeric>
 
-#include "TFitConstraintM.h"
-#include "TFitConstraintM2Gaus.h"
+#include "PhysicsTools/KinFitter/interface/TFitConstraintM.h"
+//#include "TFitConstraintM2Gaus.h"
 #include "TFitConstraintMGaus.h"
-#include "TAbsFitParticle.h"
+#include "PhysicsTools/KinFitter/interface/TFitConstraintEp.h"
+#include "PhysicsTools/KinFitter/interface/TAbsFitParticle.h"
 #include "TFitParticlePt.h"
+#include "TFitParticlePxPy.h"
 //#include "TFitParticlePz.h"
-#include "TFitParticleMCCart.h"
-#include "TFitParticleEtPhi.h"
+#include "PhysicsTools/KinFitter/interface/TFitParticleMCCart.h"
+//#include "TFitParticleEtPhi.h"
 #include "TKinFitter.h"
 #include "TSCorrection.h"
 
@@ -26,11 +29,12 @@ public:
   struct ResultContainer;
 
   TKinFitterDriver();
-  TKinFitterDriver(int DataYear_);
+  TKinFitterDriver(int DataYear_, Double_t top_mass_=172.5);
   ~TKinFitterDriver();
 
   int DataYear;
   void SetDataYear(int i);
+  void SetTopMass(Double_t top_mass_){ top_mass = top_mass_; }
 
   void SetAllObjects(std::vector<TLorentzVector> jet_vector_,
                      std::vector<bool> btag_vector_,
@@ -49,19 +53,30 @@ public:
   void SetLeptonicTopBJets(TLorentzVector jet_, double resolution_); // it doesn't check tagging status
   void SetWCHUpTypeJets(TLorentzVector jet_, double resolution_); // u/c jet from W(H+)
   void SetWCHDownTypeJets(TLorentzVector jet_, double resolution_); // d/s/b jet from W(H+)
-  void SetJetPtResolution(std::vector<float> jetPtResolution_);
+
+  void SetHadronicTopBJets(unsigned jet_idx);
+  void SetLeptonicTopBJets(unsigned jet_idx);
+  void SetWCHUpTypeJets(unsigned jet_idx);
+  void SetWCHDownTypeJets(unsigned jet_idx);
+
+  void SetExtraJets(std::vector<Int_t> extra_jet_);
+  void SetJetPtResolution(std::vector<double> jetPtResolution_);
+  // b/c jet energy regression MVA results
+  void SetJetBregCorr(std::vector<double> jetPtCorrection_);
+  void SetJetBregRes(std::vector<double> jetPtResolution_);
+  void SetJetCregCorr(std::vector<double> jetPtCorrection_);
+  void SetJetCregRes(std::vector<double> jetPtResolution_);
+  //
   void SetLepton(TLorentzVector lepton_);
   void SetMET(TLorentzVector met_);
   void SetMETShift(double met_pt_up, double met_pt_down, double met_phi_up, double met_phi_down);
   void SetMETShift(double met_shiftX, double met_shiftY);
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
   void SetNeutrinoSmallerPz(TLorentzVector met_);
-  void SetGenJets(std::vector<float> genjet_vector_);
 
   void Fit();
   void FitCurrentPermutation();
   void FindBestChi2Fit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
-  void FindBestSelTopFit(bool IsMaxHadTopPt, bool IsClosestHadTopM, bool IsMaxLepTopPt, bool IsClosestLepTopM, bool noAmbiguity);
 
   int GetStatus();
   double GetChi2();
@@ -72,7 +87,6 @@ public:
 
   int GetBestStatus();
   double GetBestChi2();
-  double GetBestLambda();
   double GetBestFittedDijetMass();
   double GetBestFittedDijetMass_high();
   double GetBestInitialDijetMass();
@@ -95,11 +109,6 @@ public:
   double GetBestLeptonicTopBJetPull();
   double GetBestHadronicWCHUptypeJetIdxPull();
   double GetBestHadronicWCHDowntypeJetIdxPull();
-
-  double GetBestHadronicTopMassF();
-  double GetBestLeptonicTopMassF();
-  double GetBestLeptonicWMassF();
-  double GetBestDeltaS();
 
   std::vector<double> GetHadronicTopMassVector(bool IsConverge=true);
   std::vector<double> GetHadronicTopBPtVector(bool IsConverge=true);
@@ -160,15 +169,11 @@ public:
     int down_type_jet_b_tagged;
 
     // F from constraints
-    double hadronic_top_mass_F;
-    double leptonic_top_mass_F;
-    double leptonic_w_mass_F;
-    double currS;
-    double deltaS;
+    //double currS;
+    //double deltaS;
     double chi2;
     double chi2_lep;
     double chi2_had;
-    double lambda;
   };
 
 private:
@@ -187,9 +192,10 @@ private:
 
   double CalcChi2(TString option);
   double CalcEachChi2(TAbsFitParticle* ptr);
+  double CalcFitQuality(TAbsFitParticle* ptr);
   double CalcPull(TAbsFitParticle* ptr);
   double CalcEachChi2(TFitConstraintM* ptr, double width);
-  double CalcEachChi2(TFitConstraintMGaus* ptr);
+  double CalcEachChi2(TFitConstraintMGaus* ptr, double width);
 
   void SetCurrentPermutationJets();
   bool Check_BJet_Assignment();
@@ -199,24 +205,30 @@ private:
 
   void Sol_Neutrino_Pz();
   void Resol_Neutrino_Pt();
-  double neutrino_pz_sol[2];
+  std::vector<double> neutrino_pz_sol;
   bool IsRealNeuPz;
+  bool IsFitExtraJets;
 
   TKinFitter *fitter;
   TSCorrection *ts_correction;
 
   std::vector<TLorentzVector> jet_vector;
-  std::vector<double> genjet_pt_vector;
   std::vector<double> jet_pt_resolution_vector;
+  std::vector<double> jet_pt_bRegCorr_vector;
+  std::vector<double> jet_pt_bRegRes_vector;
+  std::vector<double> jet_pt_cRegCorr_vector;
+  std::vector<double> jet_pt_cRegRes_vector;
   std::vector<bool> btag_vector;
   std::vector<double> btag_csv_vector;
   TLorentzVector METv;
+  TLorentzVector corr_METv;
   double MET_pt_shift;
   double MET_phi_shift;
   TLorentzVector recal_METv;
 
   int njets;
   int nbtags;
+  Double_t top_mass;
   std::vector<TKinFitterDriver::JET_ASSIGNMENT> permutation_vector;
 
   TLorentzVector hadronic_top_b_jet; // b jet comes from hadronic top 
@@ -227,21 +239,23 @@ private:
   TLorentzVector corr_leptonic_top_b_jet; 
   TLorentzVector corr_hadronic_w_ch_jet1;
   TLorentzVector corr_hadronic_w_ch_jet2;
-  TLorentzVector corr_extra_jet;
+  std::vector<TLorentzVector> corr_extra_jets;
   TLorentzVector lepton; // lepton comes from leptonic W
   TLorentzVector neutrino_pxpypz; // neutrino_pxpypz comes from leptonic W
+  TLorentzVector uncl_pxpy; // unclustered energy
   TVector3       neutrino_vec3; 
+  TVector3       uncl_vec3; 
   TLorentzVector neutrino_pz; // neutrino_pz
 
   TFitParticlePt *fit_hadronic_top_b_jet;
   TFitParticlePt *fit_leptonic_top_b_jet;
   TFitParticlePt *fit_hadronic_w_ch_jet1;
   TFitParticlePt *fit_hadronic_w_ch_jet2;
-  TFitParticlePt *fit_extra_jet;
-  //std::vector<TFitParticlePt*> fit_extra_jets;
+  std::vector<TAbsFitParticle*> fit_extra_jets;
   TFitParticlePt *fit_lepton;
   //TFitParticleEtPhi *fit_neutrino_etphi;
   TFitParticleMCCart *fit_neutrino_pxpypz;
+  TFitParticleMCCart *fit_uncl_pxpy;
   //TFitParticlePz *fit_neutrino_pz;
 
   int hadronic_top_b_jet_idx;
@@ -255,13 +269,22 @@ private:
   TMatrixD error_hadronic_w_ch_jet2;
   TMatrixD error_lepton;
   TMatrixD error_neutrino_pxpypz;
+  TMatrixD error_uncl_pxpy;
+  std::vector<TMatrixD> error_extra_jets;
 
-  TFitConstraintM *constrain_hadronic_top_M;
-  //TFitConstraintMGaus *constrain_hadronic_top_MGaus;
-  TFitConstraintM *constrain_leptonic_top_M;
-  //TFitConstraintMGaus *constrain_leptonic_top_MGaus;
-  TFitConstraintM *constrain_leptonic_W_M;
-  //TFitConstraintMGaus *constrain_leptonic_W_MGaus;
+  //TFitConstraintM *constrain_hadronic_top_M;
+  TFitConstraintMGaus *constrain_hadronic_top_MGaus;
+  //TFitConstraintM *constrain_leptonic_top_M;
+  TFitConstraintMGaus *constrain_leptonic_top_MGaus;
+  //TFitConstraintM *constrain_leptonic_W_M;
+  TFitConstraintMGaus *constrain_leptonic_W_MGaus;
+  //TFitConstraintM *constrain_hadronic_W_M;
+  TFitConstraintMGaus *constrain_hadronic_W_MGaus;
+
+  TFitConstraintEp *constrain_pX;
+  TFitConstraintEp *constrain_pY;
+  TFitConstraintEp *constrain_w_ch_pX;
+  TFitConstraintEp *constrain_w_ch_pY;
 
   TKinFitterDriver::ResultContainer fit_result;
 

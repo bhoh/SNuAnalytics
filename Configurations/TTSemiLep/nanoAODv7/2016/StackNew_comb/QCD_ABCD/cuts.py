@@ -13,11 +13,11 @@ except ImportError:
 
 scriptname=opt.cutsFile
 
-supercut = '((nLooseLep == 1) && (nCleanJet30_2p4 >=3) && (nBJets_WP_M >= 2))\
+supercut = '((nLooseLep == 1) && (nCleanJet25_2p4 >=4) && (nBJets_WP_M >= 2))\
            || ((nLooseLep == 2) && (nCleanJet30_2p4 >=2) && (nBJets_WP_M >= 2))'
 
 cuts['sng_4j_eleORmuCH'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     'B_2b' : '(eleCH || muCH) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     'B_3b' : '(eleCH || muCH) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -31,7 +31,7 @@ cuts['sng_4j_eleORmuCH'] = {
   },
 }
 cuts['sng_4j_eleORmuCH_isoDown'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     'B_2b' : '(eleCH || muCH) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     'B_3b' : '(eleCH || muCH) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -41,7 +41,7 @@ cuts['sng_4j_eleORmuCH_isoDown'] = {
   },
 }
 cuts['sng_4j_eleORmuCH_isoUp'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     'B_2b' : '(eleCH || muCH) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     'B_3b' : '(eleCH || muCH) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -51,7 +51,7 @@ cuts['sng_4j_eleORmuCH_isoUp'] = {
   },
 }
 cuts['sng_4j'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     'B_eleCH_2b' : 'eleCH && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     'B_muCH_2b'  : 'muCH  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -73,7 +73,7 @@ cuts['sng_4j'] = {
   },
 }
 cuts['sng_4j_isoDown'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     'B_eleCH_2b' : 'eleCH && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     'B_muCH_2b'  : 'muCH  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',

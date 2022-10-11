@@ -488,7 +488,9 @@ class POGLeptonSFMaker(Module):
               #BHO
               iEle       =  lepton_col[iLep]['electronIdx']
               deltaEtaSC = electron_col[iEle]['deltaEtaSC']
+              eCorr      = electron_col[iEle]['eCorr']
               eta = eta + deltaEtaSC
+              pt  = pt/eCorr
               for wp in self.ElectronWP[self.cmssw]['TightObjWP']:
                   if not did_reco:
                       reco_sf, reco_sf_dwn, reco_sf_up = self.get_reco_SF(pdgId, pt, eta, nvtx, wp, run_period)

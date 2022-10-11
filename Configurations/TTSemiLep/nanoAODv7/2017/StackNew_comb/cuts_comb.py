@@ -12,11 +12,11 @@ except ImportError:
 
 scriptname=opt.cutsFile
 
-supercut = '((nLooseLep == 1) && (nCleanJet_2p5 >=4) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 20.))\
-           || ((nLooseLep == 2) && (nCleanJet_2p5 >=2) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 40.))'
+supercut = '((nLooseLep == 1) && (nCleanJet_2p4 >=4) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 20.))\
+           || ((nLooseLep == 2) && (nCleanJet_2p4 >=2) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 40.))'
 
 cuts['sng_4j'] = {
-  'expr' : '(nLooseLep == 1) && (nCleanJet_2p5 >=4) && (eleCH || muCH)',
+  'expr' : '(nLooseLep == 1) && (nCleanJet_2p4 >=4) && (eleCH || muCH)',
   'categories' : {
     'eleCH_2b' : 'eleCH && (nBJets_WP_M == 2)',
     'muCH_2b'  : 'muCH  && (nBJets_WP_M == 2)',
@@ -27,7 +27,7 @@ cuts['sng_4j'] = {
 
 
 cuts['dbl_2j'] = {
-  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p5>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH)',
+  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH)',
   'categories' : {
     'ee_2b' : 'eeCH && isOSpair && ((nBJets_WP_M) == 2)',
     'mm_2b' : 'mmCH && isOSpair && ((nBJets_WP_M) == 2)',
@@ -45,7 +45,7 @@ cuts['dbl_2j'] = {
 }
 
 cuts['dbl_4j_eeORmmORemORme'] = {
-  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p5>=2) && (nCleanJet20_2p5>=4) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 10)',
+  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nCleanJet20_2p4>=4) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 10)',
   'categories' : {
     'offZ' : 'isOSpair && (emCH || meCH || abs(mll-91.18)>15)',
     'onZ' : 'isOSpair && (!emCH && !meCH && abs(mll-91.18)<=15)',
@@ -53,7 +53,7 @@ cuts['dbl_4j_eeORmmORemORme'] = {
 }
 
 cuts['dbl_4j'] = {
-  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p5>=2) && (nCleanJet20_2p5>=4) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 10)',
+  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nCleanJet20_2p4>=4) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 10)',
   'categories' : {
     'ee'      : 'eeCH && isOSpair && (abs(mll-91.18)>15)',
     'mm'      : 'mmCH && isOSpair && (abs(mll-91.18)>15)',

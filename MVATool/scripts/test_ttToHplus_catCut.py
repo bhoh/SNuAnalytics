@@ -3,7 +3,7 @@
 import os, sys
 
 from collections import OrderedDict
-from variables import *
+from variables import Variables
 
 
 import ROOT
@@ -20,219 +20,220 @@ except ImportError:
   from TMVATools_ttToHplus import TMVATools
 
 
+# first argument will be passed from .sh script
+procId = sys.argv[1]
+
 file_names = {
-  ('2016','TTLJ_powheg') :
+  ('2016HIPM','TTLJ_powheg_Train') :
   [
-    '/cms_scratch/bhoh/mva_TTLJ_powheg_2016.root',
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2016HIPM_Train.root',
   ],
-  ('2017','TTLJ_powheg') :
+  ('2016noHIPM','TTLJ_powheg_Train') :
   [
-    '/cms_scratch/bhoh/mva_TTLJ_powheg_2017.root',
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2016noHIPM_Train.root',
   ],
-  ('2018','TTLJ_powheg') :
+  ('2017','TTLJ_powheg_Train') :
   [
-    '/cms_scratch/bhoh/mva_TTLJ_powheg_2018.root',
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2017_Train.root',
   ],
-  ('2016','CHToCB_High') :
+  ('2018','TTLJ_powheg_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_High_2016.root'
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2018_Train.root',
   ],
-  ('2017','CHToCB_High') :
+  ('2016HIPM','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_High_2017.root'
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2016HIPM_Train.root',
   ],
-  ('2018','CHToCB_High') :
+  ('2016noHIPM','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_High_2018.root'
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2016noHIPM_Train.root',
   ],
-  ('2016','CHToCB_Low') :
+  ('2017','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_Low_2016.root'
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2017_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2017_Train.root',
   ],
-  ('2017','CHToCB_Low') :
+  ('2018','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_Low_2017.root'
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2018_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2018_Train.root',
   ],
-  ('2018','CHToCB_Low') :
+
+  #
+  ('2016HIPM','TTLJ_powheg_Test') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_Low_2018.root'
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2016HIPM_Test.root',
   ],
+  ('2016noHIPM','TTLJ_powheg_Test') :
+  [
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2016noHIPM_Test.root',
+  ],
+  ('2017','TTLJ_powheg_Test') :
+  [
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2017_Test.root',
+  ],
+  ('2018','TTLJ_powheg_Test') :
+  [
+    '/cms_scratch/bhoh/mva_TTLJ_powheg_2018_Test.root',
+  ],
+  ('2016HIPM','CHToCB_Test') :
+  [
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2016HIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2016HIPM_Test.root',
+  ],
+  ('2016noHIPM','CHToCB_Test') :
+  [
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2016noHIPM_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2016noHIPM_Test.root',
+  ],
+  ('2017','CHToCB_Test') :
+  [
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2017_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2017_Test.root',
+  ],
+  ('2018','CHToCB_Test') :
+  [
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M080_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M085_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M090_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M100_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M110_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M120_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M130_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M140_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M150_2018_Test.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M160_2018_Test.root',
+  ],
+
+
 }
 
+# High mass & Low mass samples
+high_mass_sample_list =  ['_M130', '_M140', '_M150', '_M160']
+#low_mass_sample_list  =  ['_M075', '_M080', '_M085', '_M090', '_M100', '_M110', '_M120']
+low_mass_sample_list  =  ['_M080', '_M090', '_M100', '_M110', '_M120']
+high_mass_sample_filter = lambda file_name: sum([ True for mass in high_mass_sample_list if mass in file_name ]) == 1
+low_mass_sample_filter  = lambda file_name: sum([ True for mass in low_mass_sample_list if mass in file_name ]) == 1
 
+for year in ['2016HIPM', '2016noHIPM', '2017', '2018']:
+  file_names[year,"CHToCB_High_Train"] = filter(high_mass_sample_filter, file_names[year,"CHToCB_Train"])
+  file_names[year,"CHToCB_High_Test"]  = filter(high_mass_sample_filter, file_names[year,"CHToCB_Test"])
+  file_names[year,"CHToCB_Low_Train"]  = filter(low_mass_sample_filter,  file_names[year,"CHToCB_Train"])
+  file_names[year,"CHToCB_Low_Test"]   = filter(low_mass_sample_filter,  file_names[year,"CHToCB_Test"])
+
+# 2017 + 2018
+samples = [ sample for year, sample in file_names if year=="2017" ]
+for sample in samples:
+  if ("year_comb",sample) not in file_names:
+    file_names["year_comb",sample] = file_names["2017",sample][:]
+    file_names["year_comb",sample].extend( file_names["2018",sample] )
+    file_names["year_comb",sample].extend( file_names["2016HIPM",sample] )
+    file_names["year_comb",sample].extend( file_names["2016noHIPM",sample] )
 
 cuts = {
   #( Lepton_isTightElectron_POGTight[0]>0.5 || Lepton_isTightMuon_cut_Tight_POG[0] > 0.5 )
   
   #'sig' : '(nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2) && Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 ))) && PuppiMET_pt > 20.', # (event%3)>0 too pass 1/3
-  'sig' : 'Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 ))) && PuppiMET_pt > 20.', # (event%3)>0 too pass 1/3
+  'sig' : '1', # (event%3)>0 too pass 1/3
   # && Sum$(abs(LHEPart_pdgId)==11 || abs(LHEPart_pdgId)==13 || abs(LHEPart_pdgId)==15)==1 
   #'bkg' : '(nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2) && Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 ))) && PuppiMET_pt > 20.',
-  'bkg' : 'Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 ))) && PuppiMET_pt > 20.',
+  'bkg' : '1',
 }
 
-options_High = {
-  'factory' : {
-    'name' : "TMVAClassification",
-    'options' : ":".join(["!V",
-	                  "!Silent",
-			  "Color",
-			  "DrawProgressBar",
-			  "Transformations=I",
-			  "AnalysisType=Classification",
-		         ]),
-    #'weight' : "",
-    #'weight' : "1.",
-    'weight' : "XSWeight",
-  },
+from options import *
 
-  'prepareTrees' : ":".join([
-                 "SplitMode=Alternate",
-                 #"SplitMode=Random",
-                 #"MixMode=Random",
-			     "!V",
-			     #"nTrain_Signal=50000",
-			     #"nTrain_Background=100000",
-			     #"nTest_Signal=50000",
-			     #"nTest_Background=100000",
-             	            ]),
-  'bookMethod' : [
-    {
-      'type' : ROOT.TMVA.Types.kPyKeras,
-      'name' : "DNN",
-      'options' : ":".join(["H",
-                            "!V",
-        		    #"VarTransform=N,D",
-        		    "VarTransform=G",
-        		    "FilenameModel=model.h5",
-        		    "NumEpochs=7",
-                    "SaveBestOnly=false",
-        		    "BatchSize=128",
-                    "verbose=2",
-                    "TriesEarlyStopping=30",
-                    #"LearningRateSchedule=1,0.001;2,0.002;3,0.003;4,0.004;5,0.005;10,0.001",
-                    #"ValidationSize=0.2", #why this option is not found? root version?
-        	           ]),
-    },
-    {
-      'type' : ROOT.TMVA.Types.kBDT,
-      'name' : "BDT",
-      'options' : ":".join(["!H",
-                            "!V",
-			    #"VarTransform=N,D",
-			    "VarTransform=N",
-                   	    "NTrees=400",
-        		    "MaxDepth=2",
-                    #"UseBaggedGrad=True",
-                    #"BaggedSampleFraction=0.5",
-			        "MinNodeSize=5%",
-                    "Shrinkage=1",
-        		    "BoostType=Grad",
-        		    "SeparationType=GiniIndex",
-                    "IgnoreNegWeightsInTraining=True",
-        		    "nCuts=100",
-        		    "PruneMethod=NoPruning",
-        	           ])
-    },
-  ],
-
-}
-options_Low = {
-  'factory' : {
-    'name' : "TMVAClassification",
-    'options' : ":".join(["!V",
-	                  "!Silent",
-			  "Color",
-			  "DrawProgressBar",
-			  "Transformations=I",
-			  "AnalysisType=Classification",
-		         ]),
-    #'weight' : "",
-    #'weight' : "1.",
-    'weight' : "XSWeight",
-  },
-
-  'prepareTrees' : ":".join([
-                 "SplitMode=Alternate",
-                 #"SplitMode=Random",
-                 #"MixMode=Random",
-			     "!V",
-			     #"nTrain_Signal=50000",
-			     #"nTrain_Background=100000",
-			     #"nTest_Signal=50000",
-			     #"nTest_Background=100000",
-             	            ]),
-  'bookMethod' : [
-    {
-      'type' : ROOT.TMVA.Types.kPyKeras,
-      'name' : "DNN",
-      'options' : ":".join(["H",
-                            "!V",
-        		    #"VarTransform=N,D",
-        		    "VarTransform=G",
-        		    "FilenameModel=model.h5",
-        		    "NumEpochs=7",
-                    "SaveBestOnly=false",
-        		    "BatchSize=128",
-                    "verbose=2",
-                    "TriesEarlyStopping=30",
-                    #"LearningRateSchedule=1,0.001;2,0.002;3,0.003;4,0.004;5,0.005;10,0.001",
-                    #"ValidationSize=0.2",
-        	           ]),
-    },
-    {
-      'type' : ROOT.TMVA.Types.kBDT,
-      'name' : "BDT",
-      'options' : ":".join(["!H",
-                            "!V",
-			    #"VarTransform=N,D",
-			    "VarTransform=N",
-                   	    "NTrees=400",
-        		    "MaxDepth=2",
-                    #"UseBaggedGrad=True",
-                    #"BaggedSampleFraction=0.5",
-			        "MinNodeSize=5%",
-                    "Shrinkage=1",
-        		    "BoostType=Grad",
-        		    "SeparationType=GiniIndex",
-                    "IgnoreNegWeightsInTraining=True",
-        		    "nCuts=100",
-        		    "PruneMethod=NoPruning",
-        	           ])
-    },
-  ],
-}
 if __name__ == '__main__':
-  #IsKeras = False
-  IsKeras = True #XXX
-  for option in options_High['bookMethod'] or option in options_Low['bookMethod']:
-    if option['type'] == ROOT.TMVA.Types.kPyKeras:
-      IsKeras = True
-  if IsKeras:
-    #from KerasModel_ttToHplus import KerasModel
-    from KerasModel_ttToHplus_conv_res_test import KerasModel
-    m = KerasModel()
-    m.defineModel_3layer(len(variables.keys()))
-    m.compile()
-    m.save("model.h5")
-    m.summary()
   
   ml_tools =MLTools()
   ml_tools.SetMLTools(TMVATools)
 
   # 100 bins for KS test
   ROOT.TMVA.gConfig().GetVariablePlotting().fNbinsMVAoutput = 100
+  print(ROOT.TMVA.gConfig().GetIONames().fWeightFileDir)
   #
 
   train_years = [
-    '2016',
+    #'2016HIPM',
+    #'2016noHIPM',
     #'2017',
-    #'2018'
+    #'2018',
+    'year_comb'
   ]
   train_samples = [
-  	'TTLJ_powheg',
-    'CHToCB_High',
-    'CHToCB_Low',
+  	'TTLJ_powheg_Train',
+  	'TTLJ_powheg_Test',
+    'CHToCB_Train',
+    'CHToCB_Test',
+    #'CHToCB_High_Train',
+    #'CHToCB_High_Test',
+    #'CHToCB_Low_Train',
+    #'CHToCB_Low_Test',
     #'CHToCB_M090',
     #'CHToCB_M100',
   	#'CHToCB_M110',
@@ -245,28 +246,37 @@ if __name__ == '__main__':
   	#'CHToCB_M090to150'
   ]
   
-  
-  ml_tools.SetVariables(variables)
-  ml_tools.SetSpectators(spectators)
+  option_key = options.keys()[int(procId)]
+
+  mvaVars = Variables()
+  for key in options[option_key]['variables']:
+    setattr(mvaVars, key, options[option_key]['variables'][key])
+
+  # 'variables' : {'include_mass_label':False, },
+
+  ml_tools.SetVariables(mvaVars.getVariables())
+  ml_tools.SetSpectators({})
   ml_tools.SetCuts(cuts)
   
-  for train_year in train_years:
-    for train_sample in train_samples:
-      ml_tools.SetTrees(train_sample,'Events',file_names[train_year, train_sample])
-    for sig in ['CHToCB_High','CHToCB_Low']:
-    #for sig in ['CHToCB_Low']:
-      #set options by mass range
-      if sig == 'CHToCB_High':
-        ml_tools.SetOptions(options_High)
-      else:
-        ml_tools.SetOptions(options_Low)
-      ml_tools.doTrain(['%s_Events'%sig],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s_%s'%(sig,train_year),'out_train_%s_%s.root'%(sig, train_year))
-      #
-      #ml_tools.doCrossValidation(['%s_Events'%sig],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s_%s'%(sig,train_year),'out_train_%s_%s.root'%(sig, train_year))
-      #
-      #---------------------------------------------------
-      #
-      os.system('mv TMVAClassification TMVAClassification_%s_%s'%(sig, train_year))
-      os.system('mkdir out_root_%s_%s'%(sig,train_year))
-      os.system('mv out_*.root out_root_%s_%s'%(sig,train_year))
-      #os.system('mv cv_out_*.root out_root_%s_%s'%(sig,train_year))
+
+  train_year    = options[option_key]['train_year']
+  train_samples = options[option_key]['train_samples']
+  for train_sample in train_samples:
+    ml_tools.SetTrees(train_sample,'Events',file_names[train_year, train_sample])
+  sig = 'CHToCB'
+  if sum([ True for train_sample in train_samples if '_High' in train_sample])> 0:
+    sig += '_High'
+  elif sum([ True for train_sample in train_samples if '_Low' in train_sample])> 0:
+    sig += '_Low'
+  #set options
+  ml_tools.SetOptions(options[option_key])
+  ml_tools.doTrain(['%s_Train_Events'%sig, '%s_Test_Events'%sig],['%s_Events'%bkg for bkg in ['TTLJ_powheg_Train','TTLJ_powheg_Test']],'%s_%s'%(sig,train_year),'out_train_%s_%s.root'%(sig, option_key))
+  #
+  #ml_tools.doCrossValidation(['%s_Events'%sig],['%s_Events'%bkg for bkg in ['TTLJ_powheg']],'%s_%s'%(sig,train_year),'out_train_%s_%s.root'%(sig, train_year))
+  #
+  #---------------------------------------------------
+  #
+  #os.system('mv TMVAClassification TMVAClassification_%s_%s'%(sig, train_year))
+  #os.system('mkdir out_root_%s_%s'%(sig,train_year))
+  #os.system('mv out_*.root out_root_%s_%s'%(sig,train_year))
+  #os.system('mv cv_out_*.root out_root_%s_%s'%(sig,train_year))

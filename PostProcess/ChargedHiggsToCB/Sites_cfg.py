@@ -23,7 +23,7 @@ Sites = {
               'slc_ver'     :  7,
               'mkDir'       : False ,
 	      'xrootdPath'  : 'root://cms-xrdr.private.lo:2094/',
-              'treeBaseDir' : '/xrootd/store/user/jhchoi/Latino/HWWNano/',
+              'treeBaseDir' : '/xrootd/store/user/bhoh/Latino/HWWNano/',
              } ,
               #'lsCmd'       : 'xrdfs cms-xrdr.sdfarm.kr ls' ,
               #'xrootdPath'  : 'root://cms-xrdr.private.lo:2094/', inside of Korean farm

@@ -34,50 +34,50 @@ protected:
 
   enum ShiftType {
     kCentral,
-    kJESUp,
-    kJESDown,
-    kJESAbsolute_2018Up,
-    kJESAbsolute_2018Down,
-    kJESBBEC1_2018Up,
-    kJESBBEC1_2018Down,
-    kJESEC2_2018Up,
-    kJESEC2_2018Down,
-    kJESHF_2018Up,
-    kJESHF_2018Down,
-    kJESRelativeSample_2018Up,
-    kJESRelativeSample_2018Down,
-    kJESAbsolute_2017Up,
-    kJESAbsolute_2017Down,
-    kJESBBEC1_2017Up,
-    kJESBBEC1_2017Down,
-    kJESEC2_2017Up,
-    kJESEC2_2017Down,
-    kJESHF_2017Up,
-    kJESHF_2017Down,
-    kJESRelativeSample_2017Up,
-    kJESRelativeSample_2017Down,
-    kJESAbsolute_2016Up,
-    kJESAbsolute_2016Down,
-    kJESBBEC1_2016Up,
-    kJESBBEC1_2016Down,
-    kJESEC2_2016Up,
-    kJESEC2_2016Down,
-    kJESHF_2016Up,
-    kJESHF_2016Down,
-    kJESRelativeSample_2016Up,
-    kJESRelativeSample_2016Down,
-    kJESAbsoluteUp,
-    kJESAbsoluteDown,
-    kJESBBEC1Up,
-    kJESBBEC1Down,
-    kJESEC2Up,
-    kJESEC2Down,
-    kJESFlavorQCDUp,
-    kJESFlavorQCDDown,
-    kJESHFUp,
-    kJESHFDown,
-    kJESRelativeBalUp,
-    kJESRelativeBalDown,
+    //kJESUp,
+    //kJESDown,
+    //kJESAbsolute_2018Up,
+    //kJESAbsolute_2018Down,
+    //kJESBBEC1_2018Up,
+    //kJESBBEC1_2018Down,
+    //kJESEC2_2018Up,
+    //kJESEC2_2018Down,
+    //kJESHF_2018Up,
+    //kJESHF_2018Down,
+    //kJESRelativeSample_2018Up,
+    //kJESRelativeSample_2018Down,
+    //kJESAbsolute_2017Up,
+    //kJESAbsolute_2017Down,
+    //kJESBBEC1_2017Up,
+    //kJESBBEC1_2017Down,
+    //kJESEC2_2017Up,
+    //kJESEC2_2017Down,
+    //kJESHF_2017Up,
+    //kJESHF_2017Down,
+    //kJESRelativeSample_2017Up,
+    //kJESRelativeSample_2017Down,
+    //kJESAbsolute_2016Up,
+    //kJESAbsolute_2016Down,
+    //kJESBBEC1_2016Up,
+    //kJESBBEC1_2016Down,
+    //kJESEC2_2016Up,
+    //kJESEC2_2016Down,
+    //kJESHF_2016Up,
+    //kJESHF_2016Down,
+    //kJESRelativeSample_2016Up,
+    //kJESRelativeSample_2016Down,
+    //kJESAbsoluteUp,
+    //kJESAbsoluteDown,
+    //kJESBBEC1Up,
+    //kJESBBEC1Down,
+    //kJESEC2Up,
+    //kJESEC2Down,
+    //kJESFlavorQCDUp,
+    //kJESFlavorQCDDown,
+    //kJESHFUp,
+    //kJESHFDown,
+    //kJESRelativeBalUp,
+    //kJESRelativeBalDown,
 
     kHFUp,
     kHFDown,
@@ -107,9 +107,10 @@ protected:
   std::string year_{};
 
   static long long currentEntry;
-  static UIntValueReader* nJet;
-  static FloatArrayReader* Jet_pt;
-  static FloatArrayReader* Jet_eta;
+  static UIntValueReader* nCleanJet;
+  static FloatArrayReader* CleanJet_pt;
+  static FloatArrayReader* CleanJet_eta;
+  static IntArrayReader* CleanJet_jetIdx;
   static IntArrayReader* Jet_hadronFlavour;
   static FloatArrayReader* Jet_btag;
 
@@ -132,59 +133,60 @@ BtagSF::Readers BtagSF::readers{};
 std::string BtagSF::readerFilename{};
 std::string BtagSF::readerAlgo{};
 long long BtagSF::currentEntry{-2};
-UIntValueReader* BtagSF::nJet{};
-FloatArrayReader* BtagSF::Jet_pt{};
-FloatArrayReader* BtagSF::Jet_eta{};
+UIntValueReader* BtagSF::nCleanJet{};
+FloatArrayReader* BtagSF::CleanJet_pt{};
+FloatArrayReader* BtagSF::CleanJet_eta{};
+IntArrayReader* BtagSF::CleanJet_jetIdx{};
 IntArrayReader* BtagSF::Jet_hadronFlavour{};
 FloatArrayReader* BtagSF::Jet_btag{};
 std::vector<std::array<double, BtagSF::nShiftTypes>> BtagSF::scalefactors{};
 
 std::array<std::string, BtagSF::nShiftTypes> BtagSF::shiftNames{{
   "central",
-  "up_jes",
-  "down_jes",
-  "up_jesAbsolute_2018",
-  "down_jesAbsolute_2018",
-  "up_jesBBEC1_2018",
-  "down_jesBBEC1_2018",
-  "up_jesEC2_2018",
-  "down_jesEC2_2018",
-  "up_jesHF_2018",
-  "down_jesHF_2018",
-  "up_jesRelativeSample_2018",
-  "down_jesRelativeSample_2018",
-  "up_jesAbsolute_2017",
-  "down_jesAbsolute_2017",
-  "up_jesBBEC1_2017",
-  "down_jesBBEC1_2017",
-  "up_jesEC2_2017",
-  "down_jesEC2_2017",
-  "up_jesHF_2017",
-  "down_jesHF_2017",
-  "up_jesRelativeSample_2017",
-  "down_jesRelativeSample_2017",
-  "up_jesAbsolute_2016",
-  "down_jesAbsolute_2016",
-  "up_jesBBEC1_2016",
-  "down_jesBBEC1_2016",
-  "up_jesEC2_2016",
-  "down_jesEC2_2016",
-  "up_jesHF_2016",
-  "down_jesHF_2016",
-  "up_jesRelativeSample_2016",
-  "down_jesRelativeSample_2016",
-  "up_jesAbsolute",
-  "down_jesAbsolute",
-  "up_jesBBEC1",
-  "down_jesBBEC1",
-  "up_jesEC2",
-  "down_jesEC2",
-  "up_jesFlavorQCD",
-  "down_jesFlavorQCD",
-  "up_jesHF",
-  "down_jesHF",
-  "up_jesRelativeBal",
-  "down_jesRelativeBal",
+  //"up_jes",
+  //"down_jes",
+  //"up_jesAbsolute_2018",
+  //"down_jesAbsolute_2018",
+  //"up_jesBBEC1_2018",
+  //"down_jesBBEC1_2018",
+  //"up_jesEC2_2018",
+  //"down_jesEC2_2018",
+  //"up_jesHF_2018",
+  //"down_jesHF_2018",
+  //"up_jesRelativeSample_2018",
+  //"down_jesRelativeSample_2018",
+  //"up_jesAbsolute_2017",
+  //"down_jesAbsolute_2017",
+  //"up_jesBBEC1_2017",
+  //"down_jesBBEC1_2017",
+  //"up_jesEC2_2017",
+  //"down_jesEC2_2017",
+  //"up_jesHF_2017",
+  //"down_jesHF_2017",
+  //"up_jesRelativeSample_2017",
+  //"down_jesRelativeSample_2017",
+  //"up_jesAbsolute_2016",
+  //"down_jesAbsolute_2016",
+  //"up_jesBBEC1_2016",
+  //"down_jesBBEC1_2016",
+  //"up_jesEC2_2016",
+  //"down_jesEC2_2016",
+  //"up_jesHF_2016",
+  //"down_jesHF_2016",
+  //"up_jesRelativeSample_2016",
+  //"down_jesRelativeSample_2016",
+  //"up_jesAbsolute",
+  //"down_jesAbsolute",
+  //"up_jesBBEC1",
+  //"down_jesBBEC1",
+  //"up_jesEC2",
+  //"down_jesEC2",
+  //"up_jesFlavorQCD",
+  //"down_jesFlavorQCD",
+  //"up_jesHF",
+  //"down_jesHF",
+  //"up_jesRelativeBal",
+  //"down_jesRelativeBal",
 
   "up_hf",
   "down_hf",
@@ -246,13 +248,13 @@ BtagSF::setValues(long long _iEntry)
 
   scalefactors.clear();
 
-  unsigned nJ{*nJet->Get()};
+  unsigned nJ{*nCleanJet->Get()};
   scalefactors.resize(nJ);
   
   for (unsigned iJ{0}; iJ != nJ; ++iJ) {
     BTagEntry::JetFlavor jf;
-  
-    switch (Jet_hadronFlavour->At(iJ)) {
+    unsigned origJet_idx = CleanJet_jetIdx->At(iJ);
+    switch (Jet_hadronFlavour->At(origJet_idx)) {
     case 5:
       jf = BTagEntry::FLAV_B; // = 0
       break;
@@ -264,14 +266,15 @@ BtagSF::setValues(long long _iEntry)
       break;
     }
 
-    double central{readers[jf]->eval_auto_bounds("central", jf, std::abs(Jet_eta->At(iJ)), Jet_pt->At(iJ), Jet_btag->At(iJ))};
+    double central{readers[jf]->eval_auto_bounds("central", jf, std::abs(CleanJet_eta->At(iJ)), CleanJet_pt->At(iJ), Jet_btag->At(origJet_idx))};
 
     // set all shifts to central first
     std::fill_n(scalefactors[iJ].begin(), nShiftTypes, central);
 
     // then fill the actual shift values for relevant types
     for (auto s : relevantShifts[jf]){
-      scalefactors[iJ][s] = readers[jf]->eval_auto_bounds(shiftNames[s], jf, std::abs(Jet_eta->At(iJ)), Jet_pt->At(iJ), Jet_btag->At(iJ));
+      scalefactors[iJ][s] = readers[jf]->eval_auto_bounds(shiftNames[s], jf, std::abs(CleanJet_eta->At(iJ)), CleanJet_pt->At(iJ), Jet_btag->At(origJet_idx));
+      //std::cout << "BHO bebug: btagsfpatch 3" << std::endl;
 
     }
   }
@@ -322,21 +325,25 @@ BtagSF::bindTree_(multidraw::FunctionLibrary& _library)
     readerFilename = filename_;
     readerAlgo = algo_;
 
+    //std::cout << "BHO bebug: btagsfpatch 0" << std::endl;
     BTagCalibration calib(algo_, filename_);
+    //std::cout << "BHO bebug: btagsfpatch 1" << std::endl;
     for (auto flav : {BTagEntry::FLAV_B, BTagEntry::FLAV_C, BTagEntry::FLAV_UDSG}) {
       std::vector<std::string> shiftsToRead;
       for (auto s : relevantShifts[flav])
         shiftsToRead.push_back(shiftNames[s]);
       readers[flav].reset(new BTagCalibrationReader(BTagEntry::OP_RESHAPING, "central", shiftsToRead));
       readers[flav]->load(calib, flav, "iterativefit");
+      //std::cout << "BHO bebug: btagsfpatch 2" << std::endl;
     }
 
     std::cout << "  done." << std::endl;
 
     currentEntry = -1;
-    _library.bindBranch(nJet, "nJet");
-    _library.bindBranch(Jet_pt, "Jet_pt");
-    _library.bindBranch(Jet_eta, "Jet_eta");
+    _library.bindBranch(nCleanJet, "nCleanJet");
+    _library.bindBranch(CleanJet_pt, "CleanJet_pt");
+    _library.bindBranch(CleanJet_eta, "CleanJet_eta");
+    _library.bindBranch(CleanJet_jetIdx, "CleanJet_jetIdx");
     _library.bindBranch(Jet_hadronFlavour, "Jet_hadronFlavour");
     if (algo_ == "deepcsv")
       _library.bindBranch(Jet_btag, "Jet_btagDeepB");
@@ -347,9 +354,10 @@ BtagSF::bindTree_(multidraw::FunctionLibrary& _library)
 
     _library.addDestructorCallback([]() {
         currentEntry = -2;
-        nJet = nullptr;
-        Jet_pt = nullptr;
-        Jet_eta = nullptr;
+        nCleanJet = nullptr;
+        CleanJet_pt = nullptr;
+        CleanJet_eta = nullptr;
+        CleanJet_jetIdx = nullptr;
         Jet_hadronFlavour = nullptr;
         Jet_btag = nullptr;
         for (auto& reader : readers)

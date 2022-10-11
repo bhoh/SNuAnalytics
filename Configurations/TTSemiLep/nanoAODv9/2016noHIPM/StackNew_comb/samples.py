@@ -33,12 +33,12 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/bhoh/Latino/HWWNano/"
 
-include_mva = False
+include_mva = True
 
 CAMPAIGN='Summer20UL16_106x_nAODv9_noHIPM_Full2016v9'
 #STEP="MCl1loose2016v7__MCCorr2016v7__CHToCBLepton2016v7__CHToCBJetMETCorr__kinFitTTSemiLep_2016"
 if include_mva:
-  STEP="CHToCBLepton2016v7__CHToCBJetMETCorr2016v7__kinFitTTSemiLepV4_2016__mvaCHToCB_2016"
+  STEP="CHToCBLepton2016v9__CHToCBJetMETCorr2016v9__kinFitTTSemiLepV5__mvaCHToCB_2016"
 else:
   STEP="CHToCBLepton2016v9__CHToCBJetMETCorr2016v9__kinFitTTSemiLepV5"
 #STEP="MCl1loose2016v7__MCCorr2016v7"
@@ -47,7 +47,7 @@ else:
 CAMPAIGN_DATA='Run2016_UL2016_nAODv9_noHIPM_Full2016v9'
 #STEP_DATA="DATAl1loose2016v7__DATACHToCBLepton2016v7__CHToCBJetMETCorr_data__kinFitTTSemiLep_2016"
 if include_mva:
-  STEP_DATA="DATACHToCBLepton2016v7__CHToCBJetMETCorr_data__kinFitTTSemiLepV4_2016__mvaCHToCB_2016"
+  STEP_DATA="DATACHToCBLepton2016v9__CHToCBJetMETCorr_data__kinFitTTSemiLepV5__mvaCHToCB_2016"
 else:
   STEP_DATA="DATACHToCBLepton2016v9__CHToCBJetMETCorr_data__kinFitTTSemiLepV5"
 #STEP_DATA="DATAl1loose2016v7"

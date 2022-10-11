@@ -13,10 +13,10 @@
 class SelectedBJet : public multidraw::TTreeFunction {
 public:
   SelectedBJet();
-  SelectedBJet(float ptCut, float absEtaCut, float csvCut);
+  SelectedBJet(float ptCut, float absEtaCut, float csvCut, bool leading4jets);
 
   char const* getName() const override { return "SelectedBJet"; }
-  TTreeFunction* clone() const override { return new SelectedBJet(ptCut_, absEtaCut_, csvCut_); }
+  TTreeFunction* clone() const override { return new SelectedBJet(ptCut_, absEtaCut_, csvCut_, leading4jets_); }
   
   void beginEvent(long long) override;
   unsigned getNdata() override { return selected_jet.size(); }
@@ -41,6 +41,7 @@ protected:
   float ptCut_{};
   float absEtaCut_{};
   float csvCut_{};
+  bool  leading4jets_{};
 
   static bool bdisc_comparing(unsigned i, unsigned j);
 };
@@ -54,11 +55,12 @@ SelectedBJet::beginEvent(long long _iEntry)
 }
 
 
-SelectedBJet::SelectedBJet(float ptCut, float absEtaCut, float csvCut) :
+SelectedBJet::SelectedBJet(float ptCut, float absEtaCut, float csvCut, bool leading4jets) :
   TTreeFunction(),
   ptCut_{ptCut},
   absEtaCut_{absEtaCut},
-  csvCut_{csvCut}
+  csvCut_{csvCut},
+  leading4jets_{leading4jets}
 {
 }
 
@@ -103,7 +105,13 @@ SelectedBJet::setValues()
 
   }
 
-  std::sort(selected_jet.begin(),selected_jet.end(),bdisc_comparing);
+  if(leading4jets_ && ( selected_jet.size() > 3) ){
+    // assume that jet vectore is ordered in pT
+    std::sort(selected_jet.begin(),selected_jet.begin()+4,bdisc_comparing);
+  }
+  else{
+    std::sort(selected_jet.begin(),selected_jet.end(),bdisc_comparing);
+  }
 
 }
 

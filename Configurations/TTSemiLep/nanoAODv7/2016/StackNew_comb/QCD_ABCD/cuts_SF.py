@@ -14,12 +14,12 @@ except ImportError:
 scriptname=opt.cutsFile
 include_bincl = True if not '_final' in opt.pycfg else False
 
-supercut = '((nLooseLep == 1) && (nCleanJet30_2p4 >=3) && (nBJets_WP_M >= 2))\
+supercut = '((nLooseLep == 1) && (nCleanJet25_2p4 >=4) && (nBJets_WP_M >= 2))\
            || ((nLooseLep == 2) && (nCleanJet30_2p4 >=2) && (nBJets_WP_M >= 2))'
 
 if include_bincl:
   cuts['sng_4j_eleORmuCH_bincl'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'B_2b' : '(eleCH || muCH) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'B_3b' : '(eleCH || muCH) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -32,7 +32,7 @@ if include_bincl:
     },
   }
 cuts['sng_4j_eleORmuCH'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'B_2b' : '(eleCH || muCH) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'B_3b' : '(eleCH || muCH) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -48,7 +48,7 @@ cuts['sng_4j_eleORmuCH'] = {
 
 if include_bincl:
   cuts['sng_4j_eleORmuCH_bincl_isoDown'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'C_2b' : '(eleCH_noTight_isoDown || muCH_noTight_isoDown) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'C_3b' : '(eleCH_noTight_isoDown || muCH_noTight_isoDown) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -57,7 +57,7 @@ if include_bincl:
     },
   }
   cuts['sng_4j_eleORmuCH_bincl_isoUp'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'C_2b' : '(eleCH_noTight_isoUp || muCH_noTight_isoUp) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'C_3b' : '(eleCH_noTight_isoUp || muCH_noTight_isoUp) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -66,7 +66,7 @@ if include_bincl:
     },
   }
 cuts['sng_4j_eleORmuCH_isoDown'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'C_2b' : '(eleCH_noTight_isoDown || muCH_noTight_isoDown) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'C_3b' : '(eleCH_noTight_isoDown || muCH_noTight_isoDown) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -76,7 +76,7 @@ cuts['sng_4j_eleORmuCH_isoDown'] = {
   },
 }
 cuts['sng_4j_eleORmuCH_isoUp'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'C_2b' : '(eleCH_noTight_isoUp || muCH_noTight_isoUp) && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'C_3b' : '(eleCH_noTight_isoUp || muCH_noTight_isoUp) && ((nBJets_WP_M) >= 3) && (MET_CHToCB_pt_nom<=20)',
@@ -88,7 +88,7 @@ cuts['sng_4j_eleORmuCH_isoUp'] = {
 
 if include_bincl:
   cuts['sng_4j_bincl'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'B_eleCH_2b' : 'eleCH && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'B_muCH_2b'  : 'muCH  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -110,7 +110,7 @@ if include_bincl:
 
 
 cuts['sng_4j'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'B_eleCH_2b' : 'eleCH && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'B_muCH_2b'  : 'muCH  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -134,7 +134,7 @@ cuts['sng_4j'] = {
 
 if include_bincl:
   cuts['sng_4j_bincl_isoDown'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'C_eleCH_2b' : 'eleCH_noTight_isoDown && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'C_muCH_2b'  : 'muCH_noTight_isoDown  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -146,7 +146,7 @@ if include_bincl:
     },
   }
   cuts['sng_4j_bincl_isoUp'] = {
-    'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+    'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
     'categories' : {
       #'C_eleCH_2b' : 'eleCH_noTight_isoUp && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
       #'C_muCH_2b'  : 'muCH_noTight_isoUp  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -158,7 +158,7 @@ if include_bincl:
     },
   }
 cuts['sng_4j_isoDown'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'C_eleCH_2b' : 'eleCH_noTight_isoDown && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'C_muCH_2b'  : 'muCH_noTight_isoDown  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
@@ -172,7 +172,7 @@ cuts['sng_4j_isoDown'] = {
   },
 }
 cuts['sng_4j_isoUp'] = {
-  'expr' : '(nLooseLep == 1) && ((nCleanJet30_2p4)>=4)',
+  'expr' : '(nLooseLep == 1) && ((nCleanJet25_2p4)>=4)',
   'categories' : {
     #'C_eleCH_2b' : 'eleCH_noTight_isoUp && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',
     #'C_muCH_2b'  : 'muCH_noTight_isoUp  && ((nBJets_WP_M) == 2) && (MET_CHToCB_pt_nom<=20)',

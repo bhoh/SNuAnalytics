@@ -35,7 +35,8 @@ protected:
   IntArrayReader*   Lepton_pdgId{};
   IntArrayReader*   Lepton_electronIdx{};
   FloatArrayReader* Electron_deltaEtaSC{};
-
+  FloatArrayReader* Electron_eCorr{};
+  FloatArrayReader* Lepton_rochesterSF{};
 
   std::vector<double> leptonSF{};
   void setValues();
@@ -91,6 +92,8 @@ LeptonSF::bindTree_(multidraw::FunctionLibrary& _library)
   _library.bindBranch(Lepton_pdgId, "Lepton_pdgId");
   _library.bindBranch(Lepton_electronIdx, "Lepton_electronIdx");
   _library.bindBranch(Electron_deltaEtaSC, "Electron_deltaEtaSC");
+  _library.bindBranch(Electron_eCorr, "Electron_eCorr");
+  _library.bindBranch(Lepton_rochesterSF, "Lepton_rochesterSF");
 }
 
 
@@ -101,11 +104,17 @@ LeptonSF::setValues()
   leptonSF.clear();
   double lepEta{Lepton_eta->At(0)}; //TODO will use scEta for electron
   double lepDeltaEtaSC{0.};
+  double lepeCorr{1.};
   if(abs(Lepton_pdgId->At(0))==11){
     lepDeltaEtaSC = Electron_deltaEtaSC->At(Lepton_electronIdx->At(0));
+    lepeCorr      = Electron_eCorr->At(Lepton_electronIdx->At(0));
+  }
+  else if(abs(Lepton_pdgId->At(0))==13){
+    lepeCorr = Lepton_rochesterSF->At(0);
   }
 
   double lepPt{Lepton_pt->At(0)};
+  lepPt /=lepeCorr;
   double xvar, yvar;
 
   if(binning_=="pteta"){

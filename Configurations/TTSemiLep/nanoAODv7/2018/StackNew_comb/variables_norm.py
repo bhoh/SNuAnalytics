@@ -63,20 +63,20 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'xaxis':'Bins', #0 to 36 for not pass MVA, 36 to 72 for pass MVA, 5 GeV per 1 bin
           'fold':0
       }
-#variables ['nCleanJet30_2p5_lepveto0p4']={
-#    'name' : 'nCleanJet30_2p5_lepveto0p4',
+#variables ['nCleanJet30_2p4_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p4_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet30_2p5_tightlepvetoID']={
-#    'name' : 'nCleanJet30_2p5_tightlepvetoID',
+#variables ['nCleanJet30_2p4_tightlepvetoID']={
+#    'name' : 'nCleanJet30_2p4_tightlepvetoID',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0
 #}
-#variables ['nCleanJet30_2p5_tightlepvetoID_lepveto0p4']={
-#    'name' : 'nCleanJet30_2p5_tightlepvetoID_lepveto0p4',
+#variables ['nCleanJet30_2p4_tightlepvetoID_lepveto0p4']={
+#    'name' : 'nCleanJet30_2p4_tightlepvetoID_lepveto0p4',
 #    'range' : (6,4,10),
 #    'xaxis' : 'jet multiplicity',
 #    'fold':0

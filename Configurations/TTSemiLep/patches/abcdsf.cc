@@ -146,11 +146,11 @@ ABCDSF::setValues()
       leptonSF.push_back(this->GetBinContent4SF(histABCDSF,         xvar,   1, i));
       leptonSF.push_back(this->GetBinContent4SF(histABCDSF,         xvar,  -1, i));
     }
-    std::cout << "//////////////////////////////////////////" << std::endl;
-    for(auto& x : leptonSF){
-      std::cout << x << std::endl;
-    }
-    std::cout << "//////////////////////////////////////////" << std::endl;
+    //std::cout << "//////////////////////////////////////////" << std::endl;
+    //for(auto& x : leptonSF){
+    //  std::cout << x << std::endl;
+    //}
+    //std::cout << "//////////////////////////////////////////" << std::endl;
   }
   else{
     leptonSF.push_back(this->GetBinContent4SF(histABCDSF_syst_up,   xvar,  0));
