@@ -1,0 +1,20 @@
+jobbatchname = CHToCB_MVA
+executable = test_ttToHplus_catCut.sh
+universe   = vanilla
+arguments  = $(Process)
+log = condor.log
+
+getenv     = True
+should_transfer_files = YES
+when_to_transfer_output = ON_EXIT
+
+output = job_$(Process).out
+error = job_$(Process).err
+
+#+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/tensorflow-gpu:2.3-cuda-10.1"
+#+SingularityBindCVMFS = True
+
+request_cpus=2
+request_GPUs = 0
+
+queue 10
