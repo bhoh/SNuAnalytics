@@ -69,6 +69,11 @@ structure['Others'] = {
               'isSignal' : 0,
               'isData'   : 0
             }
+structure['ST'] = {
+              'removeFromCuts' : removeFromCuts,
+              'isSignal' : 0,
+              'isData'   : 0
+            }
 structure['QCD'] = {
               'removeFromCuts' : removeFromCuts +['dbl_4j_ee','dbl_4j_ee_onZ','dbl_4j_em','dbl_4j_me'],
               'isSignal' : 0,

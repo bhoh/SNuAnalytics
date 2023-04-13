@@ -12,7 +12,8 @@ except ImportError:
 #------End of Variable Definition-----#
 #variables={}
 
-include_mva   = False
+include_mva   = True
+exclude_BDT   = True
 include_final = True if '_final' in opt.pycfg else False
 
 variables['Event'] = {
@@ -54,7 +55,7 @@ for key in ['hadronic_top_pt_nom']:
     variables[key.replace("_nom","")] = {
         'name': name_template.format(key,common_KF_cuts),
         'range':(60,0,600),
-        'xaxis': key,
+        'xaxis': 'hadronic top p_{T} [GeV]',
         'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
         'fold': 0
     }
@@ -345,20 +346,21 @@ if include_mva:
 
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
   }
-  variables['BDT_High']={
-      'name' : 'BDT_High_nom',
-      'range':(50,-1,1),
-      'xaxis':'BDT score',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['BDT_Low']={
-      'name' : 'BDT_Low_nom',
-      'range':(50,-1,1),
-      'xaxis':'BDT score',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
+  if not exclude_BDT:
+    variables['BDT_High']={
+        'name' : 'BDT_High_nom',
+        'range':(50,-1,1),
+        'xaxis':'BDT score',
+        'fold':0,
+        'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+    }
+    variables['BDT_Low']={
+        'name' : 'BDT_Low_nom',
+        'range':(50,-1,1),
+        'xaxis':'BDT score',
+        'fold':0,
+        'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+    }
 
   variables['csv_jet0_mvaCHToCB_nom']={
       'name' : 'csv_jet0_mvaCHToCB_nom',
@@ -381,34 +383,7 @@ if include_mva:
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
   }
-  variables['avg_csv_had_top_nom']={
-      'name' : 'avg_csv_had_top_nom',
-      'range':(50,0,1),
-      'xaxis':'avg. b-tag disc. of jet 0,1,2',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['second_moment_csv_jet0_mvaCHToCB_nom']={
-      'name' : 'second_moment_csv_jet0_mvaCHToCB_nom',
-      'range':(50,0,0.5),
-      'xaxis':'2^{nd} moment b-tag disc. of jet 0',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['second_moment_csv_jet1_mvaCHToCB_nom']={
-      'name' : 'second_moment_csv_jet1_mvaCHToCB_nom',
-      'range':(50,0,0.5),
-      'xaxis':'2^{nd} moment b-tag disc. of jet 1',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['second_moment_csv_jet2_mvaCHToCB_nom']={
-      'name' : 'second_moment_csv_jet2_mvaCHToCB_nom',
-      'range':(50,0,0.5),
-      'xaxis':'2^{nd} moment b-tag disc. of jet 2',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
+
   variables['dijet_deltaR0_mvaCHToCB_nom']={
       'name' : 'dijet_deltaR0_mvaCHToCB_nom',
       'range':(50,0,5),
@@ -437,31 +412,17 @@ if include_mva:
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
   }
-  variables['bb_deltaR_mvaCHToCB_nom']={
-      'name' : 'bb_deltaR_mvaCHToCB_nom',
-      'range':(50,0,5),
-      'xaxis':'#DeltaR_{bb}',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
+  #variables['bb_deltaR_mvaCHToCB_nom']={
+  #    'name' : 'bb_deltaR_mvaCHToCB_nom',
+  #    'range':(50,0,5),
+  #    'xaxis':'#DeltaR_{bb}',
+  #    'fold':0,
+  #    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+  #}
   variables['min_deltaR_bb_event_mvaCHToCB_nom']={
       'name' : 'min_deltaR_bb_event_mvaCHToCB_nom',
       'range':(50,0,5),
       'xaxis':'min #DeltaR_{bb}',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['HT_btagged_M_nom']={
-      'name' : 'HT_btagged_M_nom',
-      'range':(60,0,600),
-      'xaxis':'HT b-tagged',
-      'fold':0,
-      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
-  }
-  variables['HT_not_btagged_M_nom']={
-      'name' : 'HT_not_btagged_M_nom',
-      'range':(60,0,600),
-      'xaxis':'HT non b-tagged',
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
   }

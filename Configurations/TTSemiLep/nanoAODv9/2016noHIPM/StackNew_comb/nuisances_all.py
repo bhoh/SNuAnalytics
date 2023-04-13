@@ -74,7 +74,7 @@ nuisances['ttXsec'] = {
     'name': 'ttXsec',
     'type': 'lnN',
     #'AsShape' : 1,
-    'samples': dict((skey, '1.06114') for skey in ttmc),
+    'samples': dict((skey, '1.0439') for skey in ttmc),
     'group': 'theory',
 }
 
@@ -95,13 +95,13 @@ nuisances['ttXsec'] = {
 nuisances['ttbbXsec'] = {
     'name': 'ttbbXsec',
     'type': 'rateParam',
-    'samples': {'TT+bb':'1.0 [0.8,1.3] '},
+    'samples': {'TT+bb':'1.0'},
     'group': 'theory',
 }
 nuisances['ttbbXsec_param'] = {
     'name': 'ttbbXsec',
     'type': 'param',
-    'constraint': '1.0  0.3',
+    'constraint': '1.36  0.15',
     'samples': {},
     'group': 'theory',
 }
@@ -114,13 +114,13 @@ nuisances['ttbbXsec_param'] = {
 nuisances['ttccXsec'] = {
     'name': 'ttccXsec',
     'type': 'rateParam',
-    'samples': {'TT+cc':'1 [0.8,1.3] '},
+    'samples': {'TT+cc':'1'},
     'group': 'theory',
 }
 nuisances['ttccXsec_param'] = {
     'name': 'ttccXsec',
     'type': 'param',
-    'constraint': '1.0  0.3',
+    'constraint': '1.11  0.15',
     'samples': {},
     'group': 'theory',
 }
@@ -134,6 +134,7 @@ nuisances['ttjjXsec'] = {
     #'samples': {'TT+jj':'(364.35-@0*1.433-@1*6.782-@2*28.21)/(327.93)    ttbbXsec,ttbjXsec,ttccXsec'},
     'samples': {'TT+jj':'(451.66-@0*(1.7466+8.2659)-@1*33.970)/(407.68)    ttbbXsec,ttccXsec'},  #XXX 364.35 : Xsec of TTLJ, but TT+jj is TTLJ+TTLL. it's wrong.
     #'samples': {'TT+jj':'(364.35-@0*(1.433+6.782)-1.*28.21)/(327.93)    ttbbXsec'},
+    'cuts': ['dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_mm','dbl_4j_ee_onZ','dbl_4j_mm_onZ',],
     'group': 'theory',
 }
 if splitTTLL:
@@ -322,7 +323,7 @@ else:
 nuisances['STNorm'] = {
     'name': 'STNorm',
     'type': 'lnN',
-    'AsShape' : 1,
+    #'AsShape' : 1,
     'samples': dict((skey, '1.2') for skey in ['ST','Others']),
     'group': 'experimental',
 }
@@ -359,8 +360,9 @@ nuisances['TTVNorm'] = {
 
 ##old ttH multilepton, NLO-NNLO fit
 #(TMath::Sqrt(TMath::Exp(1.61468e-03 + 3.46659e-06*topGenPt - 8.90557e-08*topGenPt*topGenPt) * TMath::Exp(1.61468e-03 + 3.46659e-06*antitopGenPt - 8.90557e-08*antitopGenPt*antitopGenPt))) # CUETP8 -> CP5
-Top_pTrw = '(TMath::Sqrt(TMath::Exp(-0.158631 + 2.00214e-04*{TOP_GEN_PT} - 3.09496e-07*{TOP_GEN_PT}*{TOP_GEN_PT} + 34.93/({TOP_GEN_PT}+135.633)) * TMath::Exp(-0.158631 + 2.00214e-04*{ANTITOP_GEN_PT} - 3.09496e-07*{ANTITOP_GEN_PT}*{ANTITOP_GEN_PT} + 34.93/({ANTITOP_GEN_PT}+135.633)))  *  (TMath::Sqrt(TMath::Exp(1.61468e-03 + 3.46659e-06*topGenPt - 8.90557e-08*topGenPt*topGenPt) * TMath::Exp(1.61468e-03 + 3.46659e-06*antitopGenPt - 8.90557e-08*antitopGenPt*antitopGenPt))) )'.format(TOP_GEN_PT='((topGenPt>472)*472 + (topGenPt<=472)*topGenPt)', ANTITOP_GEN_PT='((antitopGenPt>472)*472 + (antitopGenPt<=472)*antitopGenPt)')
 #Top_pTrw = 'TMath::Sqrt((0.103*TMath::Exp(-0.0118*{TOP_GEN_PT})-0.000134*{TOP_GEN_PT}+0.973)*(0.103*TMath::Exp(-0.0118*{ANTITOP_GEN_PT})-0.000134*{ANTITOP_GEN_PT}+0.973))'.format(TOP_GEN_PT='topGenPt', ANTITOP_GEN_PT='antitopGenPt')
+# TOP PAG NNLO-NLO
+Top_pTrw = 'TMath::Sqrt((0.103*TMath::Exp(-0.0118*{TOP_GEN_PT})-0.000134*{TOP_GEN_PT}+0.973)*(0.103*TMath::Exp(-0.0118*{ANTITOP_GEN_PT})-0.000134*{ANTITOP_GEN_PT}+0.973))'.format(TOP_GEN_PT='topGenPt', ANTITOP_GEN_PT='antitopGenPt')
 #M2T4 derived myself
 #Top_pTrw2 = 'TMath::Sqrt((1.41*TMath::Exp(-0.00481*{TOP_GEN_PT})-0.0001411*{TOP_GEN_PT}+0.935)*(1.41*TMath::Exp(-0.00481*{ANTITOP_GEN_PT})-0.0001411*{ANTITOP_GEN_PT}+0.935))'.format(TOP_GEN_PT='topGenPt', ANTITOP_GEN_PT='antitopGenPt')
 
@@ -369,7 +371,7 @@ nuisances['Top_pTreweight'] = {
     'kind': 'weight',
     'type': 'shape',
     #'symmetrize_ttsyst': True,
-    'samples': { key : [Top_pTrw,'1.'] for key in ttmc_syst },
+    'samples': { key : ['1.','1./Top_pTrw'] for key in ttmc_syst },
     'group': 'theory',
 }
 #nuisances['Top_pTreweight_M2T4'] = {
@@ -387,7 +389,7 @@ for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr
 
     name = 'btag_%s' % shift
     if 'stats' in shift:
-        name += '_2016'
+        name += '_2016b'
 
     nuisances['btag_shape_%s' % shift] = {
         'name': name,
@@ -409,7 +411,7 @@ if merge_trig_syst:
   if not lnN_eff_ele:
     nuisances['eff_ele'] = {
         'name': 'eff_ele',
-        #'rename': 'eff_lepton',
+        #'rename': 'eff_lepton2016b',
         'kind': 'weight',
         'type': 'shape',
         # extrapolation to DY -> ttbar topologies: less than 1%
@@ -428,7 +430,7 @@ if merge_trig_syst:
     }
   nuisances['eff_muon'] = {
       'name': 'eff_muon',
-      #'rename': 'eff_lepton',
+      #'rename': 'eff_lepton2016b',
       'kind': 'weight',
       'type': 'shape',
       # extrapolation to DY -> ttbar topologies: less than 0.5%
@@ -458,7 +460,7 @@ else:
   if not lnN_eff_ele:
     nuisances['eff_ele'] = {
         'name': 'eff_ele',
-        #'rename': 'eff_lepton',
+        #'rename': 'eff_lepton2016b',
         'kind': 'weight',
         'type': 'shape',
         'samples': dict((skey, ['id_ele_up','id_ele_down']) for skey in mc),
@@ -488,7 +490,7 @@ else:
   #}
   nuisances['eff_muon'] = {
       'name': 'eff_muon',
-      #'rename': 'eff_lepton',
+      #'rename': 'eff_lepton2016b',
       'kind': 'weight',
       'type': 'shape',
       'samples': dict((skey, ['id_mu_up','id_mu_down']) for skey in mc),
@@ -502,6 +504,7 @@ pu_syst=['puWeightUp/puWeight','puWeightDown/puWeight']
 
 nuisances['PU'] = {
     'name': 'PU',
+    #'rename': 'PU2016b',
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, pu_syst) for skey in mc),
@@ -597,35 +600,22 @@ if True:
       }
 
 
-nuisances['jer0'] = {
-    'name': 'jer0_2016',
-    #'rename': 'jer0',
+nuisances['jer'] = {
+    'name': 'jer_2016',
+    #'rename': 'jer',
     #'symmetrize_ttsyst': True,
     'kind': 'branch_custom',
     'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(JECUnc_nom_branches,"jer0Up"),
-    'BrFromToDown' : GetJECVariationDict(JECUnc_nom_branches,"jer0Down"),
+    'BrFromToUp'  : GetJECVariationDict(JECUnc_nom_branches,"jerUp"),
+    'BrFromToDown' : GetJECVariationDict(JECUnc_nom_branches,"jerDown"),
     'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_jer0Up')   if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jer0Up__mvaCHToCB_2016_jetMETSyst_jer0Up')    ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_jer0Down') if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jer0Down__mvaCHToCB_2016_jetMETSyst_jer0Down'),
-    'FromNormTree': ['Jet_pt_jer0Up','Jet_pt_jer0Down'],
+    'folderUp'   : makeMCDirectory('_jetMETSyst_jerUp')   if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jerUp__mvaCHToCB_2016_jetMETSyst_jerUp')    ,
+    'folderDown' : makeMCDirectory('_jetMETSyst_jerDown') if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jerDown__mvaCHToCB_2016_jetMETSyst_jerDown'),
+    'FromNormTree': ['Jet_pt_jerUp','Jet_pt_jerDown'],
     'group': 'experimental',
 }
 
-nuisances['jer1'] = {
-    'name': 'jer1_2016',
-    #'rename': 'jer1',
-    #'symmetrize_ttsyst': True,
-    'kind': 'branch_custom',
-    'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(JECUnc_nom_branches,"jer1Up"),
-    'BrFromToDown' : GetJECVariationDict(JECUnc_nom_branches,"jer1Down"),
-    'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_jer1Up')   if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jer1Up__mvaCHToCB_2016_jetMETSyst_jer1Up')    ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_jer1Down') if not include_mva else  makeMCDirectory_mva('_jetMETSyst_jer1Down__mvaCHToCB_2016_jetMETSyst_jer1Down'),
-    'FromNormTree': ['Jet_pt_jer1Up','Jet_pt_jer1Down'],
-    'group': 'experimental',
-}
+
 
 nuisances['unclustEn'] = {
     'name': 'unclustEn_2016',
@@ -639,7 +629,50 @@ nuisances['unclustEn'] = {
     'FromNormTree': ['Jet_pt_unclustEnUp','Jet_pt_unclustEnDown'],
     'group': 'experimental',
 }
-
+nuisances['bRegCorr'] = {
+    'name': 'bRegCorr_2016',
+    'kind': 'branch_custom',
+    'type': 'shape',
+    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegCorrUp"),
+    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegCorrDown"),
+    'samples': dict((skey, ['1.','1.']) for skey in mc),
+    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrUp__mvaCHToCB_2016_jetMETSyst_bRegCorrUp')      ,
+    'folderDown' : makeMCDirectory('_jetMETSyst_bRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrDown__mvaCHToCB_2016_jetMETSyst_bRegCorrDown')  ,
+    'group': 'experimental',
+}
+nuisances['bRegRes'] = {
+    'name': 'bRegRes_2016',
+    'kind': 'branch_custom',
+    'type': 'shape',
+    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegResUp"),
+    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegResDown"),
+    'samples': dict((skey, ['1.','1.']) for skey in mc),
+    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResUp__mvaCHToCB_2016_jetMETSyst_bRegResUp')      ,
+    'folderDown' : makeMCDirectory('_jetMETSyst_bRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResDown__mvaCHToCB_2016_jetMETSyst_bRegResDown')  ,
+    'group': 'experimental',
+}
+nuisances['cRegCorr'] = {
+    'name': 'cRegCorr_2016',
+    'kind': 'branch_custom',
+    'type': 'shape',
+    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegCorrUp"),
+    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegCorrDown"),
+    'samples': dict((skey, ['1.','1.']) for skey in mc),
+    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrUp__mvaCHToCB_2016_jetMETSyst_cRegCorrUp')      ,
+    'folderDown' : makeMCDirectory('_jetMETSyst_cRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrDown__mvaCHToCB_2016_jetMETSyst_cRegCorrDown')  ,
+    'group': 'experimental',
+}
+nuisances['cRegRes'] = {
+    'name': 'cRegRes_2016',
+    'kind': 'branch_custom',
+    'type': 'shape',
+    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegResUp"),
+    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegResDown"),
+    'samples': dict((skey, ['1.','1.']) for skey in mc),
+    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResUp__mvaCHToCB_2016_jetMETSyst_cRegResUp')      ,
+    'folderDown' : makeMCDirectory('_jetMETSyst_cRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResDown__mvaCHToCB_2016_jetMETSyst_cRegResDown')  ,
+    'group': 'experimental',
+}
 
 
 #samples_ttsyst = {}
@@ -695,15 +728,15 @@ if not 'comb' in opt.pycfg:
   hdamp_syst_down = "(ttGenPt<0.00)*(1.) + (ttGenPt>=0.00 && ttGenPt<10.00)*(1.04)+ (ttGenPt>=10.00 && ttGenPt<20.00)*(1.04)+ (ttGenPt>=20.00 && ttGenPt<30.00)*(1.03)+ (ttGenPt>=30.00 && ttGenPt<40.00)*(1.02)+ (ttGenPt>=40.00 && ttGenPt<50.00)*(1.01)+ (ttGenPt>=50.00 && ttGenPt<60.00)*(1.01)+ (ttGenPt>=60.00 && ttGenPt<80.00)*(0.99)+ (ttGenPt>=80.00 && ttGenPt<100.00)*(0.97)+ (ttGenPt>=100.00 && ttGenPt<200.00)*(0.93)+ (ttGenPt>=200.00 && ttGenPt<1000.00)*(0.91) + (ttGenPt>=1000.00)*(1.)"
   mtop_syst_up    = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(0.96)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(0.97)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(0.96)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(0.97)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(0.96)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(0.99)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(0.98)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(0.99)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(1.00)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(1.01)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(1.00)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(1.01) + (hadronic_top_M_nom>=200.00)*(1.)'
   mtop_syst_down  = '(hadronic_top_M_nom<140.00)*(1.) + (hadronic_top_M_nom>=140.00 && hadronic_top_M_nom<145.00)*(1.05)+ (hadronic_top_M_nom>=145.00 && hadronic_top_M_nom<150.00)*(1.04)+ (hadronic_top_M_nom>=150.00 && hadronic_top_M_nom<155.00)*(1.06)+ (hadronic_top_M_nom>=155.00 && hadronic_top_M_nom<160.00)*(1.04)+ (hadronic_top_M_nom>=160.00 && hadronic_top_M_nom<165.00)*(1.03)+ (hadronic_top_M_nom>=165.00 && hadronic_top_M_nom<170.00)*(1.03)+ (hadronic_top_M_nom>=170.00 && hadronic_top_M_nom<175.00)*(1.01)+ (hadronic_top_M_nom>=175.00 && hadronic_top_M_nom<180.00)*(1.00)+ (hadronic_top_M_nom>=180.00 && hadronic_top_M_nom<185.00)*(1.00)+ (hadronic_top_M_nom>=185.00 && hadronic_top_M_nom<190.00)*(1.00)+ (hadronic_top_M_nom>=190.00 && hadronic_top_M_nom<195.00)*(1.01)+ (hadronic_top_M_nom>=195.00 && hadronic_top_M_nom<200.00)*(0.99) + (hadronic_top_M_nom>=200.00)*(1.)'
-  nuisances['hdamp_weight'] = {
-      'name': 'hdamp_weight',
-      'kind': 'weight',
-      'type': 'shape',
-      #'symmetrize_ttsyst': True,
-      #'syncronize_stat' : True,
-      'samples': dict((skey, [hdamp_syst_up, hdamp_syst_down]) for skey in ttmc_syst ),
-      'group': 'theory',
-  }
+  #nuisances['hdamp_weight'] = {
+  #    'name': 'hdamp_weight',
+  #    'kind': 'weight',
+  #    'type': 'shape',
+  #    #'symmetrize_ttsyst': True,
+  #    #'syncronize_stat' : True,
+  #    'samples': dict((skey, [hdamp_syst_up, hdamp_syst_down]) for skey in ttmc_syst ),
+  #    'group': 'theory',
+  #}
   nuisances['mtop'] = {
       'name': 'mtop',
       'kind': 'tree',
@@ -725,30 +758,37 @@ if not 'comb' in opt.pycfg:
       'group': 'theory',
   }
 else:
-  nuisances['hdamp_weight'] = {
-      'name': 'hdamp_weight',
+
+  nuisances['hdamp'] = {
+      #XXX
+      'name': 'hdamp_M2T4',
       'rename': 'hdamp',
-      'kind': 'weight',
+      'kind': 'tree',
       'type': 'shape',
       #'symmetrize_ttsyst': True,
       #'syncronize_stat' : True,
       'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'folderUp'   : makeMCDirectory('__HDAMPup'),
+      'folderDown' : makeMCDirectory('__HDAMPdo'),
       'group': 'theory',
+  
   }
-  nuisances['mtop_weight'] = {
-      'name': 'mtop_weight',
-      'rename': 'mtop',
-      'kind': 'weight',
+  nuisances['mtop'] = {
+      'name': 'mtop',
+      'kind': 'tree',
       'type': 'shape',
       #'symmetrize_ttsyst': True,
-      #'syncronize_stat' : True,
-      'samples': dict((skey, ['1.','1.']) for skey in ttmc_syst ),
+      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
+      'folderUp'   : makeMCDirectory('__MTOPup'),
+      'folderDown' : makeMCDirectory('__MTOPdo'),
       'group': 'theory',
+  
   }
+
 
 
 nuisances['PU_ID_L'] = {
-    'name': 'eff_puid_2016',
+    'name': 'eff_puid_2016b',
     'kind': 'weight',
     'type': 'shape',
     'samples': dict((skey, ['Jet_PUID_SF_L[1]/Jet_PUID_SF_L[0]','Jet_PUID_SF_L[2]/Jet_PUID_SF_L[0]']) for skey in mc),
@@ -825,11 +865,34 @@ else:
 #    'samples': dict((skey, isr_syst) for skey in ['ST','Wjets','WW','WZ','ZZ']),
 #
 #}
-nuisances['FSR_TT'] = {
+
+nuisances['FSR_TTjj'] = {
     'name': 'ttbar_fsr',
+    'rename': 'ttjj_fsr',
     'kind': 'weight',
     'type': 'shape',
-    'samples': dict((skey, fsr_syst) for skey in ttmc ),
+    #'syncronize_stat' : True,
+    'samples': dict((skey, fsr_syst) for skey in ttmc if skey not in ttbbmc+ttccmc),
+    'group': 'theory',
+
+}
+nuisances['FSR_TTcc'] = {
+    'name': 'ttbar_fsr',
+    'rename': 'ttcc_fsr',
+    'kind': 'weight',
+    'type': 'shape',
+    #'syncronize_stat' : True,
+    'samples': dict((skey, fsr_syst) for skey in ttccmc ),
+    'group': 'theory',
+
+}
+nuisances['FSR_TTbb'] = {
+    'name': 'ttbar_fsr',
+    'rename': 'ttbb_fsr',
+    'kind': 'weight',
+    'type': 'shape',
+    #'syncronize_stat' : True,
+    'samples': dict((skey, fsr_syst) for skey in ttbbmc ),
     'group': 'theory',
 
 }

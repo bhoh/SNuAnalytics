@@ -29,12 +29,21 @@ groupPlot['QCD'] = {
         'samples' : ['QCD'],
     }
 
+groupPlot['ST'] = {
+        'nameHR' : 'ST',
+        'isSignal' : 0,
+        'color' :  dict_TColor['azure'],
+        'isData'   : 0,
+        'samples' : ['ST'],
+    }
+
+
 groupPlot['Others'] = {
         'nameHR' : 'Others',
         'isSignal' : 0,
         'color' :  dict_TColor['magenta'],
         'isData'   : 0,
-        'samples' : ['TTWjets','TTZjets','ttH','WW','WZ','ZZ','Wjets','ST','DY'],
+        'samples' : ['TTWjets','TTZjets','ttH','WW','WZ','ZZ','Wjets','DY'],
         #'samples' : ['TTWjets','TTZjets','WW','WZ','ZZ','Wjets','ST'],
     }
 

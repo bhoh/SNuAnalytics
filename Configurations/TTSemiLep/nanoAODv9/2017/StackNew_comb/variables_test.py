@@ -1,12 +1,12 @@
 #-----Variable Deinition-----#
 try:
-  from WPandCut2016 import *
+  from WPandCut2017 import *
 except ImportError:
   import os, sys
   CMSSW     = os.environ["CMSSW_BASE"]
-  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv5/2016/SKIM7"
+  BASE_PATH = CMSSW + "/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv9/2017/StackNew_comb"
   sys.path.append(BASE_PATH)
-  from WPandCut2016 import *
+  from WPandCut2017 import *
 
 
 #------End of Variable Definition-----#
@@ -88,6 +88,26 @@ variables['btagDeepFlavB']={
     'xaxis':'btag score',
     'fold': 0
 }
+
+variables['1st_leading_jet_pt']={
+    'name' : 'Jet_pt_nom[SelectedJetIdx[0]]',
+    'range':(50,25,600),
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+
+common_KF_cuts = '(status_nom==0)'
+name_template = "{0}*({1}==1) + (-9999)*({1}==0)"
+for key in ['hadronic_top_pt_nom']:
+    variables[key.replace("_nom","")] = {
+        'name': name_template.format(key,common_KF_cuts),
+        'range':(60,0,600),
+        'xaxis': 'hadronic top p_{T} [GeV]',
+        'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+        'fold': 0
+    }
 
 
 

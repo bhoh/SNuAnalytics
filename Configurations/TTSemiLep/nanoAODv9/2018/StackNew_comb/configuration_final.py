@@ -16,9 +16,9 @@ outputDirPlots='plots_'+tag
 outputDir ='rootFile_'+tag
 treeName='Events'
 aliasesFile='aliases.py'
-#nuisancesFile = 'nuisances_stat_only.py'
+nuisancesFile = 'nuisances_stat_only.py'
 #nuisancesFile = 'nuisances_weight_based.py'
-nuisancesFile = 'nuisances_all.py'
+#nuisancesFile = 'nuisances_all.py'
 
 #structureFile = 'structure.py'
 

@@ -149,7 +149,7 @@ aliases['SelectedBJetIdx'] = {
         '.L %s/patches/selectedbjet.cc+' % configurations,
     ],
     'class': 'SelectedBJet',
-    'args': (25.,2.4, 0.), # pT, |eta| cut, csv cut(not used variable)
+    'args': (25.,2.4, 0., True), # pT, |eta| cut, csv cut(not used variable)
     'samples': samples.keys(),
 }
 

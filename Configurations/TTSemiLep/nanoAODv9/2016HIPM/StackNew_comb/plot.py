@@ -90,8 +90,8 @@ groupPlot['TT+bb']  = {
 for mass, color in [('090','green'),('120','red'),('150','blue')]:
     sample_name = 'CHToCB_M{0}'.format(mass) 
     groupPlot[sample_name]={
-        'nameHR':'M{0}(BR=0.01)'.format(mass),
-        'scale' : 2*(0.01)*(1-0.01)*364.35,
+        'nameHR':'M{0}(BR=0.001)'.format(mass),
+        'scale' : 2*(0.001)*(1-0.001)*364.35,
         'isData'   : 0,
         'isSignal' : 2,
         'color':dict_TColor[color],
@@ -251,8 +251,8 @@ plot['DATA']  = {
 for mass, color in [('090','green'),('120','red'),('150','blue')]:
     sample_name = 'CHToCB_M{0}'.format(mass) 
     plot[sample_name]={
-        'nameHR':'M{0}(BR=0.01)'.format(mass),
-        'scale' : 2*(0.01)*(1-0.01)*364.35,
+        'nameHR':'M{0}(BR=0.001)'.format(mass),
+        'scale' : 2*(0.001)*(1-0.001)*364.35,
         'isData'   : 0,
         'isSignal' : 2,
         'color':dict_TColor[color],

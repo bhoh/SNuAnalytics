@@ -138,9 +138,6 @@ elif '_noBtagNormSF' in opt.pycfg:
   SFweight=SFweight+'/btagSFNorm_top'
 elif '_noPUjetIDSF' in opt.pycfg:
   SFweight=SFweight+'/Jet_PUID_SF_L[0]'
-elif '_TopPtReweight' in opt.pycfg:
-  Top_pTrw = ''
-  SFweight=SFweight+'*'+Top_pTrw
 
 
 
@@ -148,8 +145,12 @@ elif '_TopPtReweight' in opt.pycfg:
 ############### TT specific SF  ################
 ################################################
 
-TTSFweight_SemiLeptonic = '(1.)'
-TTSFweight_2L2Nu        = '(1.)'
+if '_noTopPtReweight' in opt.pycfg:
+  TTSFweight_SemiLeptonic = '(1.)'
+  TTSFweight_2L2Nu        = '(1.)'
+else:
+  TTSFweight_SemiLeptonic = '(Top_pTrw)'
+  TTSFweight_2L2Nu        = '(Top_pTrw)'
 #TTSFweight_SemiLeptonic = '(nLHELep_TT==1)'
 #TTSFweight_2L2Nu        = '(nLHELep_TT==2)'
 TTbj        = '(genTtbarId%100==51 || genTtbarId%100==52)'

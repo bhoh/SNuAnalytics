@@ -1,11 +1,11 @@
 ##Just set below things##
 
 
-tag='2016_SKIM9_val'
+tag='2016HIPM_SKIM9_val'
 
 variablesFile='variables.py' ##what variables to draw
 cutsFile='cuts.py' ## event selection##region selection
-plotFile='plot_new.py' ##color code and some format-related things
+plotFile='plot.py' ##color code and some format-related things
 
 samplesFile = 'samples.py'
 

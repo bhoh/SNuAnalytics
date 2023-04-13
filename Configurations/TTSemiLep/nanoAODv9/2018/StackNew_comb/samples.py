@@ -33,7 +33,7 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/bhoh/Latino/HWWNano/"
 
-include_mva = True
+include_mva = False
 
 CAMPAIGN='Summer20UL18_106x_nAODv9_Full2018v9'
 
@@ -127,9 +127,6 @@ elif '_noBtagNormSF' in opt.pycfg:
   SFweight=SFweight+'/btagSFNorm_top'
 elif '_noPUjetIDSF' in opt.pycfg:
   SFweight=SFweight+'/Jet_PUID_SF_L[0]'
-elif '_TopPtReweight' in opt.pycfg:
-  Top_pTrw = ''
-  SFweight=SFweight+'*'+Top_pTrw
 
 
 
@@ -138,7 +135,10 @@ elif '_TopPtReweight' in opt.pycfg:
 ############### TT specific SF  ################
 ################################################
 #XXX
-TTSFweight = '1.'
+if '_noTopPtReweight' in opt.pycfg:
+  TTSFweight = '(1.)'
+else:
+  TTSFweight = '(Top_pTrw)'
 #TTSFweight = '1'
 TTbj        = '(genTtbarId%100==51 || genTtbarId%100==52)'
 TTbb       = '(genTtbarId%100>=53 && genTtbarId%100<=55)'
@@ -246,7 +246,7 @@ samples['TTLJ'] = {    'name'   :   getSampleFiles(directory,'TTToSemiLeptonic',
 
 
 samples['TTLL'] = {    'name'   :   getSampleFiles(directory,'TTTo2L2Nu',False,'nanoLatino_'),
-                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC,
+                      'weight' : XSWeight+'*'+SFweight+'*'+TTSFweight+'*'+GenLepMatch+'*'+METFilter_MC,
                       'FilesPerJob' : 1,
                       'subsamples': {
                           'jj' : TTjj,

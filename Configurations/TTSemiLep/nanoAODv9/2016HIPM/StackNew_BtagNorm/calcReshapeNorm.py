@@ -20,7 +20,7 @@ h_Btag_2l   = f_Btag.  Get(hName_2l)
 h_noBtag_1l.Divide(h_Btag_1l)
 h_noBtag_2l.Divide(h_Btag_2l)
 
-def printFormula(ratio):
+def printFormula(ratio, template):
     nBinsX = ratio.GetNbinsX()
     ratio_list = []
     ratio_err_list = []
@@ -35,7 +35,6 @@ def printFormula(ratio):
     np_ratio_up   = (np_ratio+np_ratio_err)/(np_ratio)
     np_ratio_down = (np_ratio-np_ratio_err)/(np_ratio)
 
-    template = "({VAR}<4)*(1.) + ({VAR}==4)*({r2}) + ({VAR}==5)*({r3}) + ({VAR}==6)*({r4}) + ({VAR}==7)*({r5}) + ({VAR}==8)*({r6}) + ({VAR}>=9)*({r7})"
     getFormula = lambda np_ratio: template.format(VAR=varName,
                                             r2=np_ratio[2],
                                             r3=np_ratio[3],
@@ -48,22 +47,27 @@ def printFormula(ratio):
     formula_up   = getFormula(np_ratio_up)
     formula_down = getFormula(np_ratio_down)
 
-    print("print ratio")
-    print(ratio_list)
-    print("print ratio err.")
-    print(ratio_err_list)
+    #print("print ratio")
+    #print(ratio_list)
+    #print("print ratio err.")
+    #print(ratio_err_list)
     print("print formula")
     print(formula)
-    print("print formula up")
-    print(formula_up)
-    print("print formula down")
-    print(formula_down)
+    #print("print formula up")
+    #print(formula_up)
+    #print("print formula down")
+    #print(formula_down)
 
     return ratio_list, ratio_err_list
 
+template1 = "({VAR}<4)*(1.) + ({VAR}==4)*({r2}) + ({VAR}==5)*({r3}) + ({VAR}==6)*({r4}) + ({VAR}==7)*({r5}) + ({VAR}==8)*({r6}) + ({VAR}>=9)*({r7})"
+template2 = "{r2:.4f} & {r3:.4f} & {r4:.4f} & {r5:.4f} & {r6:.4f} & {r7:.4f}"
 print("################################ l1")
-printFormula(h_noBtag_1l)
+printFormula(h_noBtag_1l, template1)
+printFormula(h_noBtag_1l, template2)
 print("################################ l2")
-printFormula(h_noBtag_2l)
+printFormula(h_noBtag_2l, template1)
+printFormula(h_noBtag_2l, template2)
+
 
 

@@ -304,15 +304,20 @@ aliases['SelectedBJetIdx'] = {
 #            'expr': 'Alt$(MET_CHToCB_pt_nom, PuppiMET_pt)',
 #            #'expr': 'MET_CHToCB_pt_nom'
 #            }
-aliases['ttGenPt'] = {
-     'expr': 'TMath::Sqrt( topGenPt*topGenPt + antitopGenPt*antitopGenPt + 2*topGenPt*antitopGenPt*TMath::Cos(topGenPhi - antitopGenPhi) )',
+Top_pTrw = 'TMath::Sqrt((0.103*TMath::Exp(-0.0118*{TOP_GEN_PT})-0.000134*{TOP_GEN_PT}+0.973)*(0.103*TMath::Exp(-0.0118*{ANTITOP_GEN_PT})-0.000134*{ANTITOP_GEN_PT}+0.973))'.format(TOP_GEN_PT='topGenPt', ANTITOP_GEN_PT='antitopGenPt')
+aliases['Top_pTrw'] = {
+     'expr': Top_pTrw,
      'samples': ttmc_syst,
 }
-
-aliases['avgtopGenMass'] = {
-     'expr': 'TMath::Sqrt( topGenMass * antitopGenMass )',
-     'samples': ttmc_syst,
-}
+#aliases['ttGenPt'] = {
+#     'expr': 'TMath::Sqrt( topGenPt*topGenPt + antitopGenPt*antitopGenPt + 2*topGenPt*antitopGenPt*TMath::Cos(topGenPhi - antitopGenPhi) )',
+#     'samples': ttmc_syst,
+#}
+#
+#aliases['avgtopGenMass'] = {
+#     'expr': 'TMath::Sqrt( topGenMass * antitopGenMass )',
+#     'samples': ttmc_syst,
+#}
 
 # top pt reweight
 
@@ -350,8 +355,8 @@ aliases['btagSF'] = {
     'samples': mc
 }
 
-btagSFNorm_top_1l = "(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(1.00595324309) + (nCleanJet25_2p4==5)*(0.992855137755) + (nCleanJet25_2p4==6)*(0.970725731887) + (nCleanJet25_2p4==7)*(0.941676056308) + (nCleanJet25_2p4==8)*(0.90803666089) + (nCleanJet25_2p4>=9)*(0.869970625797)"
-btagSFNorm_top_2l = "(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.984168515465) + (nCleanJet25_2p4==5)*(0.96219077772) + (nCleanJet25_2p4==6)*(0.932760158934) + (nCleanJet25_2p4==7)*(0.898964288828) + (nCleanJet25_2p4==8)*(0.866384016097) + (nCleanJet25_2p4>=9)*(0.829212517951)"
+btagSFNorm_top_1l = "(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.999558629848) + (nCleanJet25_2p4==5)*(0.988554409403) + (nCleanJet25_2p4==6)*(0.969425114582) + (nCleanJet25_2p4==7)*(0.943688995808) + (nCleanJet25_2p4==8)*(0.913024674379) + (nCleanJet25_2p4>=9)*(0.87768790965)"
+btagSFNorm_top_2l = "(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.978329578407) + (nCleanJet25_2p4==5)*(0.960751321102) + (nCleanJet25_2p4==6)*(0.936243160494) + (nCleanJet25_2p4==7)*(0.907221221331) + (nCleanJet25_2p4==8)*(0.878125279419) + (nCleanJet25_2p4>=9)*(0.853389741223)"
 aliases['btagSFNorm_top'] = {
     #'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.5)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.5))))',
     #'expr': '1.',

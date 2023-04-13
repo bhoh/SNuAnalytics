@@ -20,19 +20,13 @@ dict_TColor={
 scriptname=opt.plotFile
 
 
-groupQCD = []
-if not 'ele' in scriptname:
-  groupQCD.extend(['QCD_MU'])
-if not 'mu' in scriptname:
-  groupQCD.extend(['QCD_EM','QCD_bcToE'])
-
 
 groupPlot['Bkgs'] = {
         'nameHR' : 'All Bkgs',
         'isSignal' : 0,
         'color' :  dict_TColor['black'],
         'isData'   : 0,
-        'samples' : ['TTWjets','TTZjets','WW','WZ','ZZ','Wjets','ST','DY','QCD_MU','QCD_EM','QCD_bcToE','TTLJ_jj','TTLL_jj','TTLJ_cc','TTLL_cc','TTLJ_bb','TTLL_bb','TTLJ_bj','TTLL_bj'],
+        'samples' : ['TTWjets','TTZjets','ttH','WW','WZ','ZZ','Wjets','ST','DY','QCD','TTLJ_jj','TTLL_jj','TTLJ_cc','TTLL_cc','TTLJ_bb','TTLL_bb','TTLJ_bj','TTLL_bj'],
     }
 
 
@@ -50,35 +44,15 @@ for mass, color in [('140','green'),('150','red'),('160','blue')]:
         'samples' : [sample_name]
     }
 
+plot['QCD']  = {
+    'nameHR' : 'QCD',
+    'isSignal' : 0,
+    'color': dict_TColor['gray'],
+    'isData'   : 0,
+    'samples'  : ['QCD']
+}
 
 
-
-if not 'ele' in scriptname:
-    plot['QCD_MU']  = {
-        'nameHR' : 'QCD_MU',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        
-        'samples'  : ['QCD_MU']
-    }
-
-if not 'mu' in scriptname:
-    plot['QCD_EM']  = {
-        'nameHR' : 'QCD_EM',
-        'isSignal' : 0,
-        'color': dict_TColor['gray'],
-        'isData'   : 0,
-        'samples'  : ['QCD_EM']
-    }
-
-    plot['QCD_bcToE']  = {
-        'nameHR' : 'QCD_bcToE',
-        'isSignal' : 0,
-        'color': dict_TColor['gray']+1,
-        'isData'   : 0,
-        'samples'  : ['QCD_bcToE']
-    }
 plot['WW']  = {
                   'nameHR' : 'WW',
                   'isSignal' : 0,
@@ -203,7 +177,13 @@ plot['TTZjets']  = {
                   'isData'   : 0,                 
                   'samples'  : ['TTZjets']
               }
-
+plot['ttH']  = {
+                  'nameHR' : 'ttH',
+                  'isSignal' : 0,
+                  'color': dict_TColor['green'],
+                  'isData'   : 0,                 
+                  'samples'  : ['ttH']
+              }
 
 #plot['DATA']  = {
 #                  'nameHR' : 'DATA',

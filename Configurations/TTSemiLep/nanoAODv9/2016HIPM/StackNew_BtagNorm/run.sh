@@ -1,9 +1,9 @@
 
 
-
+sleep 10m
 mkShapesMulti.py --pycfg=configuration_noBtagSF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016HIPM_SKIM9_noBtagSF
-#sleep 30m
-#mkShapesMulti.py --pycfg=configuration_BtagSF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016HIPM_SKIM9_BtagSF
+sleep 10m
+mkShapesMulti.py --pycfg=configuration_BtagSF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016HIPM_SKIM9_BtagSF
 
 #mkShapesMulti.py --pycfg=configuration_stat_only.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016HIPM_SKIM9_stat_only
 #mkShapesMulti.py --pycfg=configuration_puWeight.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2016HIPM_SKIM9_puWeight

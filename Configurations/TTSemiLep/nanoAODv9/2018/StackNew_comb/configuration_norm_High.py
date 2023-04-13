@@ -1,7 +1,7 @@
 ##Just set below things##
 
 
-tag='2018_SKIM7_norm_High'
+tag='2018_SKIM9_norm_High'
 
 variablesFile='variables_norm.py' ##what variables to draw
 cutsFile='cuts_norm.py' ## event selection##region selection

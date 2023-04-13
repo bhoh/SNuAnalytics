@@ -83,6 +83,7 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'range':(90,0,90),
           'xaxis':'#it{M_{jj}} bins', #0 to 36 for not pass MVA, 36 to 72 for pass MVA, 5 GeV per 1 bin
           'fold':0,
+          'blind': {'sng_4j_eleCH_3b': 'full', 'sng_4j_muCH_3b': 'full', 'sng_4j_eleORmuCH_3b': 'full'},
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
     for var_key, var_name in [('DNN_High_failMVA',Name_DNN_High_nom_failMVA),('DNN_Low_failMVA',Name_DNN_Low_nom_failMVA),('BDT_High_failMVA',Name_BDT_High_nom_failMVA),('BDT_Low_failMVA',Name_BDT_Low_nom_failMVA)]:
@@ -93,6 +94,7 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'range':(45,0,180),
           'xaxis':'#it{M_{jj}}',
           'fold':0,
+          'blind': {'sng_4j_eleCH_3b': 'full', 'sng_4j_muCH_3b': 'full', 'sng_4j_eleORmuCH_3b': 'full'},
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
     for var_key, var_name in [('DNN_High_passMVA',Name_DNN_High_nom_passMVA),('DNN_Low_passMVA',Name_DNN_Low_nom_passMVA),('BDT_High_passMVA',Name_BDT_High_nom_passMVA),('BDT_Low_passMVA',Name_BDT_Low_nom_passMVA)]:
@@ -103,6 +105,7 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'range':(45,0,180),
           'xaxis':'#it{M_{jj}}',
           'fold':0,
+          'blind': {'sng_4j_eleCH_3b': 'full', 'sng_4j_muCH_3b': 'full', 'sng_4j_eleORmuCH_3b': 'full'},
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
      

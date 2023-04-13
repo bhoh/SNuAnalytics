@@ -172,8 +172,8 @@ aliases['btagSF'] = {
     'samples': mc
 }
 
-btagSFNorm_top_1l = '(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.903487961263) + (nCleanJet25_2p4==5)*(0.862775313038) + (nCleanJet25_2p4==6)*(0.818740670384) + (nCleanJet25_2p4==7)*(0.773510974258) + (nCleanJet25_2p4==8)*(0.727078073773) + (nCleanJet25_2p4>=9)*(0.681306892495)'
-btagSFNorm_top_2l = '(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.88037907678) + (nCleanJet25_2p4==5)*(0.835905625161) + (nCleanJet25_2p4==6)*(0.790230290978) + (nCleanJet25_2p4==7)*(0.74416511057) + (nCleanJet25_2p4==8)*(0.702100349303) + (nCleanJet25_2p4>=9)*(0.662077227088)'
+btagSFNorm_top_1l = '(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.901034418457) + (nCleanJet25_2p4==5)*(0.86246778859) + (nCleanJet25_2p4==6)*(0.820366378211) + (nCleanJet25_2p4==7)*(0.776851424111) + (nCleanJet25_2p4==8)*(0.731724160763) + (nCleanJet25_2p4>=9)*(0.68657586231)'
+btagSFNorm_top_2l = '(nCleanJet25_2p4<4)*(1.) + (nCleanJet25_2p4==4)*(0.885921664793) + (nCleanJet25_2p4==5)*(0.843904056654) + (nCleanJet25_2p4==6)*(0.80228636438) + (nCleanJet25_2p4==7)*(0.755937021284) + (nCleanJet25_2p4==8)*(0.716063879724) + (nCleanJet25_2p4>=9)*(0.673483607875)'
 aliases['btagSFNorm_top'] = {
     #'expr': 'TMath::Exp(Sum$(TMath::Log((Jet_pt_nom[CleanJet_jetIdx]>30 && abs(CleanJet_eta)<2.4)*Jet_btagSF_shapeFixNorm_top[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=30 || abs(CleanJet_eta)>=2.4))))',
     'expr' : '(nLepton==1)*({FORMULA1})+(nLepton==2)*({FORMULA2})'.format(FORMULA1=btagSFNorm_top_1l, FORMULA2=btagSFNorm_top_2l),
@@ -318,15 +318,20 @@ aliases['Jet_PUID_SF_L'] = {
 #            'expr': 'PuppiMET_pt',
 #            #'expr': 'MET_CHToCB_pt_nom'
 #            }
-aliases['ttGenPt'] = {
-     'expr': 'TMath::Sqrt( topGenPt*topGenPt + antitopGenPt*antitopGenPt + 2*topGenPt*antitopGenPt*TMath::Cos(topGenPhi - antitopGenPhi) )',
+Top_pTrw = 'TMath::Sqrt((0.103*TMath::Exp(-0.0118*{TOP_GEN_PT})-0.000134*{TOP_GEN_PT}+0.973)*(0.103*TMath::Exp(-0.0118*{ANTITOP_GEN_PT})-0.000134*{ANTITOP_GEN_PT}+0.973))'.format(TOP_GEN_PT='topGenPt', ANTITOP_GEN_PT='antitopGenPt')
+aliases['Top_pTrw'] = {
+     'expr': Top_pTrw,
      'samples': ttmc_syst,
 }
-
-aliases['avgtopGenMass'] = {
-     'expr': 'TMath::Sqrt( topGenMass * antitopGenMass )',
-     'samples': ttmc_syst,
-}
+#aliases['ttGenPt'] = {
+#     'expr': 'TMath::Sqrt( topGenPt*topGenPt + antitopGenPt*antitopGenPt + 2*topGenPt*antitopGenPt*TMath::Cos(topGenPhi - antitopGenPhi) )',
+#     'samples': ttmc_syst,
+#}
+#
+#aliases['avgtopGenMass'] = {
+#     'expr': 'TMath::Sqrt( topGenMass * antitopGenMass )',
+#     'samples': ttmc_syst,
+#}
 
 #aliases['cutflow0'] = {
 #     'expr': 'nCleanJet25_2p4==4',
