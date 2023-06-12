@@ -116,6 +116,16 @@ class mvaTreeCHToCB(Module):
         self.out.branch("csv_jet2_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("csv_jet3_mvaCHToCB_%s"%self._syst_suffix, "F")
 
+        self.out.branch("CvB_jet0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvB_jet1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvB_jet2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvB_jet3_mvaCHToCB_%s"%self._syst_suffix, "F")
+
+        self.out.branch("CvL_jet0_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvL_jet1_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvL_jet2_mvaCHToCB_%s"%self._syst_suffix, "F")
+        self.out.branch("CvL_jet3_mvaCHToCB_%s"%self._syst_suffix, "F")
+
         self.out.branch("avg_csv_had_top_%s"%self._syst_suffix, "F")
         self.out.branch("second_moment_csv_jet0_mvaCHToCB_%s"%self._syst_suffix, "F")
         self.out.branch("second_moment_csv_jet1_mvaCHToCB_%s"%self._syst_suffix, "F")
@@ -241,6 +251,7 @@ class mvaTreeCHToCB(Module):
         
         if self._syst_suffix == 'nom':
           self.out.branch("EventNum_mvaCHToCB", "I")
+          self.out.branch("btagSF", "F")
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -358,9 +369,9 @@ class mvaTreeCHToCB(Module):
             return True
 
           had_top_jets_idx = [
-                            hadronic_top_b_jet_idx_nom,
                             w_ch_up_type_jet_idx_nom,  
                             w_ch_down_type_jet_idx_nom,
+                            hadronic_top_b_jet_idx_nom,
                           ]
 
           leptonic_top_jets_idx = [ leptonic_top_b_jet_idx_nom
@@ -422,7 +433,8 @@ class mvaTreeCHToCB(Module):
             return True
 
         # sort this jet pair in leading csv ordering
-        nearest_top_mass_pair_jetIdx.sort(key=lambda idx: self.rawJet_coll[good_jets_idx[idx]].btagDeepFlavB, reverse=True)
+        # not sorted in csv order, it increase ambiguity in b jet order in H+ Mar21, 2023
+        #nearest_top_mass_pair_jetIdx.sort(key=lambda idx: self.rawJet_coll[good_jets_idx[idx]].btagDeepFlavB, reverse=True)
 
         if self.nbtags_event < 2:
           return True
@@ -446,6 +458,16 @@ class mvaTreeCHToCB(Module):
         csv_jet2 = self.rawJet_coll[idx2].btagDeepFlavB #smallest csv
         csv_jet3 = self.rawJet_coll[leptonic_top_jets_idx[0]].btagDeepFlavB #leptonic csv
 
+        CvB_jet0 = self.rawJet_coll[idx0].btagDeepFlavCvB #leading csv
+        CvB_jet1 = self.rawJet_coll[idx1].btagDeepFlavCvB #2nd leading csv
+        CvB_jet2 = self.rawJet_coll[idx2].btagDeepFlavCvB #smallest csv
+        CvB_jet3 = self.rawJet_coll[leptonic_top_jets_idx[0]].btagDeepFlavCvB #leptonic csv
+
+        CvL_jet0 = self.rawJet_coll[idx0].btagDeepFlavCvL #leading csv
+        CvL_jet1 = self.rawJet_coll[idx1].btagDeepFlavCvL #2nd leading csv
+        CvL_jet2 = self.rawJet_coll[idx2].btagDeepFlavCvL #smallest csv
+        CvL_jet3 = self.rawJet_coll[leptonic_top_jets_idx[0]].btagDeepFlavCvL #leptonic csv
+
         avg_csv_had_top     = (csv_jet0+csv_jet1+csv_jet2)/3
         second_moment_csv_jet0 = (csv_jet0-avg_csv_had_top)*(csv_jet0-avg_csv_had_top)
         second_moment_csv_jet1 = (csv_jet1-avg_csv_had_top)*(csv_jet1-avg_csv_had_top)
@@ -456,15 +478,17 @@ class mvaTreeCHToCB(Module):
         #
         #
 
-        jet_vector0 = good_jets[nearest_top_mass_pair_jetIdx[0]]
-        jet_vector1 = good_jets[nearest_top_mass_pair_jetIdx[1]]
-        jet_vector2 = good_jets[nearest_top_mass_pair_jetIdx[2]]
+        jet_vector0 = good_jets[nearest_top_mass_pair_jetIdx[0]] # H+ c
+        jet_vector1 = good_jets[nearest_top_mass_pair_jetIdx[1]] # H+ b
+        jet_vector2 = good_jets[nearest_top_mass_pair_jetIdx[2]] # top b
         jet_vector3 = good_leptonic_top_jet  #leptonic_top_jets_idx
+        
+        #is_high_mass_fitter = (jet_pt1 < jet_pt2) and (jet_pt1 < jet_pt0)
 
-        jet_pt0 = jet_vector0.Pt()
-        jet_pt1 = jet_vector1.Pt()
-        jet_pt2 = jet_vector2.Pt()
-        jet_pt3 = jet_vector3.Pt()
+        jet_pt0 = jet_vector0.Pt() * self.rawJet_coll[idx0].cRegRes
+        jet_pt1 = jet_vector1.Pt() * self.rawJet_coll[idx1].bRegCorr
+        jet_pt2 = jet_vector2.Pt() * self.rawJet_coll[idx2].bRegCorr
+        jet_pt3 = jet_vector3.Pt() * self.rawJet_coll[leptonic_top_jets_idx[0]].bRegCorr
         jet_eta0 = jet_vector0.Eta()
         jet_eta1 = jet_vector1.Eta()
         jet_eta2 = jet_vector2.Eta()
@@ -473,12 +497,13 @@ class mvaTreeCHToCB(Module):
         jet_phi1 = jet_vector1.Phi()
         jet_phi2 = jet_vector2.Phi()
         jet_phi3 = jet_vector3.Phi()
-        dijet_pt0 = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).Pt()
-        dijet_pt1 = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).Pt()
-        dijet_E0  = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).E()
-        dijet_E1  = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).E()
-        dijet_M0  = (jet_vector2 + jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1).M()
-        dijet_M1  = (jet_vector2 + jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0).M()
+
+        dijet_pt0 = (jet_vector0 + jet_vector1).Pt()
+        dijet_pt1 = (jet_vector0 + jet_vector2).Pt()
+        dijet_E0  = (jet_vector0 + jet_vector1).E()
+        dijet_E1  = (jet_vector0 + jet_vector2).E()
+        dijet_M0  = (jet_vector0 + jet_vector1).M()
+        dijet_M1  = (jet_vector0 + jet_vector2).M()
         dijet_gamma0 = dijet_E0 / dijet_M0
         dijet_gamma1 = dijet_E1 / dijet_M1
 
@@ -491,33 +516,28 @@ class mvaTreeCHToCB(Module):
         # 0,1 are labeled in pT order
         #
         #
-        dijet_deltaR0     = jet_vector2.DeltaR(jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
-        dijet_deltaR1     = jet_vector2.DeltaR(jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
-        # flip with jet_pt0 and jet_pt3 
-        dijet_deltaR2     = jet_vector2.DeltaR(jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
-        dijet_deltaR3     = jet_vector2.DeltaR(jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        dijet_deltaR0     = jet_vector0.DeltaR(jet_vector1)
+        dijet_deltaR1     = jet_vector0.DeltaR(jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        dijet_deltaR2     = jet_vector0.DeltaR(jet_vector1)
+        dijet_deltaR3     = jet_vector0.DeltaR(jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        dijet_deltaR4     = jet_vector2.DeltaR(jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
-        dijet_deltaR5     = jet_vector2.DeltaR(jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
-        Hplus_b_deltaR0   = jet_vector0.DeltaR(jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector1.DeltaR(jet_vector0+jet_vector2)
-        Hplus_b_deltaR1   = jet_vector1.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector0.DeltaR(jet_vector1+jet_vector2)
-        # flip with jet_pt0 and jet_pt3 
-        Hplus_b_deltaR2   = jet_vector3.DeltaR(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaR(jet_vector3+jet_vector2)
-        Hplus_b_deltaR3   = jet_vector3.DeltaR(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaR(jet_vector3+jet_vector2)
+        dijet_deltaR4     = jet_vector0.DeltaR(jet_vector3)
+        dijet_deltaR5     = jet_vector0.DeltaR(jet_vector2)
+        Hplus_b_deltaR0   = jet_vector2.DeltaR(jet_vector0+jet_vector1)
+        Hplus_b_deltaR1   = jet_vector1.DeltaR(jet_vector0+jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        Hplus_b_deltaR2   = jet_vector3.DeltaR(jet_vector0+jet_vector1)
+        Hplus_b_deltaR3   = jet_vector1.DeltaR(jet_vector0+jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        Hplus_b_deltaR4   = jet_vector3.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaR(jet_vector3+jet_vector2)
-        Hplus_b_deltaR5   = jet_vector3.DeltaR(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaR(jet_vector3+jet_vector2)
+        Hplus_b_deltaR4   = jet_vector2.DeltaR(jet_vector0+jet_vector3)
+        Hplus_b_deltaR5   = jet_vector3.DeltaR(jet_vector0+jet_vector2)
 
-        bb_deltaR0         = jet_vector0.DeltaR(jet_vector1)
-        # flip with jet_pt0 and jet_pt3 
-        bb_deltaR1         = jet_vector3.DeltaR(jet_vector1)
+        bb_deltaR0         = jet_vector1.DeltaR(jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        bb_deltaR1         = jet_vector1.DeltaR(jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        bb_deltaR2         = jet_vector0.DeltaR(jet_vector3)
-
-        #dijet_ptD0        = dijet_deltaR0
-        #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
-        #dijet_ptD1        = dijet_deltaR1
-        #dijet_ptD1        *= (jet_vector2+jet_vector1).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector0).Pt()
+        bb_deltaR2         = jet_vector3.DeltaR(jet_vector2)
 
         lj_deltaR0        = lepton_vector.DeltaR(jet_vector0)
         lj_deltaR1        = lepton_vector.DeltaR(jet_vector1)
@@ -527,28 +547,28 @@ class mvaTreeCHToCB(Module):
         # delta Eta
         DeltaEta = lambda vec_1, vec_2: abs(vec_1.Eta() - vec_2.Eta())
 
-        dijet_deltaEta0     = DeltaEta(jet_vector2,jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
-        dijet_deltaEta1     = DeltaEta(jet_vector2,jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
-        # flip with jet_pt0 and jet_pt3 
-        dijet_deltaEta2     = DeltaEta(jet_vector2,jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
-        dijet_deltaEta3     = DeltaEta(jet_vector2,jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        dijet_deltaEta0     = DeltaEta(jet_vector0,jet_vector1)
+        dijet_deltaEta1     = DeltaEta(jet_vector0,jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        dijet_deltaEta2     = DeltaEta(jet_vector0,jet_vector1)
+        dijet_deltaEta3     = DeltaEta(jet_vector0,jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        dijet_deltaEta4     = DeltaEta(jet_vector2,jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
-        dijet_deltaEta5     = DeltaEta(jet_vector2,jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
-        Hplus_b_deltaEta0   = DeltaEta(jet_vector0,jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else DeltaEta(jet_vector1,jet_vector0+jet_vector2)
-        Hplus_b_deltaEta1   = DeltaEta(jet_vector1,jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else DeltaEta(jet_vector0,jet_vector1+jet_vector2)
-        # flip with jet_pt0 and jet_pt3 
-        Hplus_b_deltaEta2   = DeltaEta(jet_vector3,jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else DeltaEta(jet_vector1,jet_vector3+jet_vector2)
-        Hplus_b_deltaEta3   = DeltaEta(jet_vector3,jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else DeltaEta(jet_vector1,jet_vector3+jet_vector2)
+        dijet_deltaEta4     = DeltaEta(jet_vector0,jet_vector3)
+        dijet_deltaEta5     = DeltaEta(jet_vector0,jet_vector2)
+        Hplus_b_deltaEta0   = DeltaEta(jet_vector2,jet_vector0+jet_vector1)
+        Hplus_b_deltaEta1   = DeltaEta(jet_vector1,jet_vector0+jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        Hplus_b_deltaEta2   = DeltaEta(jet_vector3,jet_vector0+jet_vector1)
+        Hplus_b_deltaEta3   = DeltaEta(jet_vector1,jet_vector0+jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        Hplus_b_deltaEta4   = DeltaEta(jet_vector3,jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else DeltaEta(jet_vector0,jet_vector3+jet_vector2)
-        Hplus_b_deltaEta5   = DeltaEta(jet_vector3,jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else DeltaEta(jet_vector0,jet_vector3+jet_vector2)
+        Hplus_b_deltaEta4   = DeltaEta(jet_vector2,jet_vector0+jet_vector3)
+        Hplus_b_deltaEta5   = DeltaEta(jet_vector3,jet_vector0+jet_vector2)
 
-        bb_deltaEta0         = DeltaEta(jet_vector0,jet_vector1)
-        # flip with jet_pt0 and jet_pt3 
-        bb_deltaEta1         = DeltaEta(jet_vector3,jet_vector1)
+        bb_deltaEta0         = DeltaEta(jet_vector1,jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        bb_deltaEta1         = DeltaEta(jet_vector1,jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        bb_deltaEta2         = DeltaEta(jet_vector0,jet_vector3)
+        bb_deltaEta2         = DeltaEta(jet_vector3,jet_vector2)
 
         #dijet_ptD0        = dijet_deltaEta0
         #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
@@ -561,28 +581,28 @@ class mvaTreeCHToCB(Module):
         lj_deltaEta3        = DeltaEta(lepton_vector,jet_vector3)
 
         # delta phi
-        dijet_deltaPhi0     = jet_vector2.DeltaPhi(jet_vector0 if jet_pt0 >= jet_pt1 else jet_vector1)
-        dijet_deltaPhi1     = jet_vector2.DeltaPhi(jet_vector1 if jet_pt0 >= jet_pt1 else jet_vector0 )
-        # flip with jet_pt0 and jet_pt3 
-        dijet_deltaPhi2     = jet_vector2.DeltaPhi(jet_vector3 if jet_pt3 >= jet_pt1 else jet_vector1)
-        dijet_deltaPhi3     = jet_vector2.DeltaPhi(jet_vector1 if jet_pt3 >= jet_pt1 else jet_vector3 )
+        dijet_deltaPhi0     = jet_vector0.DeltaPhi(jet_vector1)
+        dijet_deltaPhi1     = jet_vector0.DeltaPhi(jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        dijet_deltaPhi2     = jet_vector0.DeltaPhi(jet_vector1)
+        dijet_deltaPhi3     = jet_vector0.DeltaPhi(jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        dijet_deltaPhi4     = jet_vector2.DeltaPhi(jet_vector0 if jet_pt0 >= jet_pt3 else jet_vector3)
-        dijet_deltaPhi5     = jet_vector2.DeltaPhi(jet_vector3 if jet_pt0 >= jet_pt3 else jet_vector0 )
-        Hplus_b_deltaPhi0   = jet_vector0.DeltaPhi(jet_vector1+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector0+jet_vector2)
-        Hplus_b_deltaPhi1   = jet_vector1.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt1 else jet_vector0.DeltaPhi(jet_vector1+jet_vector2)
-        # flip with jet_pt0 and jet_pt3 
-        Hplus_b_deltaPhi2   = jet_vector3.DeltaPhi(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector3+jet_vector2)
-        Hplus_b_deltaPhi3   = jet_vector3.DeltaPhi(jet_vector1+jet_vector2) if jet_pt3 < jet_pt1 else jet_vector1.DeltaPhi(jet_vector3+jet_vector2)
+        dijet_deltaPhi4     = jet_vector0.DeltaPhi(jet_vector3)
+        dijet_deltaPhi5     = jet_vector0.DeltaPhi(jet_vector2)
+        Hplus_b_deltaPhi0   = jet_vector2.DeltaPhi(jet_vector0+jet_vector1)
+        Hplus_b_deltaPhi1   = jet_vector1.DeltaPhi(jet_vector0+jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        Hplus_b_deltaPhi2   = jet_vector3.DeltaPhi(jet_vector0+jet_vector1)
+        Hplus_b_deltaPhi3   = jet_vector1.DeltaPhi(jet_vector0+jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        Hplus_b_deltaPhi4   = jet_vector3.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaPhi(jet_vector3+jet_vector2)
-        Hplus_b_deltaPhi5   = jet_vector3.DeltaPhi(jet_vector0+jet_vector2) if jet_pt0 < jet_pt3 else jet_vector0.DeltaPhi(jet_vector3+jet_vector2)
+        Hplus_b_deltaPhi4   = jet_vector2.DeltaPhi(jet_vector0+jet_vector3)
+        Hplus_b_deltaPhi5   = jet_vector3.DeltaPhi(jet_vector0+jet_vector2)
 
-        bb_deltaPhi0         = jet_vector0.DeltaPhi(jet_vector1)
-        # flip with jet_pt0 and jet_pt3 
-        bb_deltaPhi1         = jet_vector3.DeltaPhi(jet_vector1)
+        bb_deltaPhi0         = jet_vector1.DeltaPhi(jet_vector2)
+        # flip with jet_pt2 and jet_pt3 
+        bb_deltaPhi1         = jet_vector1.DeltaPhi(jet_vector3)
         # flip with jet_pt1 and jet_pt3
-        bb_deltaPhi2         = jet_vector0.DeltaPhi(jet_vector3)
+        bb_deltaPhi2         = jet_vector3.DeltaPhi(jet_vector2)
 
         #dijet_ptD0        = dijet_deltaPhi0
         #dijet_ptD0        *= (jet_vector2+jet_vector0).Pt() if jet_pt0 >= jet_pt1 else (jet_vector2+jet_vector1).Pt()
@@ -601,12 +621,21 @@ class mvaTreeCHToCB(Module):
 
 
         had_top_pt_scalar_sum = jet_pt0 + jet_pt1 + jet_pt2
-        mbb  = ( jet_vector0 + jet_vector1 ).M()
-        mcb0 = ( jet_vector2 + jet_vector1 ).M() if jet_pt0 < jet_pt1 else ( jet_vector2 + jet_vector0 ).M()
-        mcb1 = ( jet_vector2 + jet_vector0 ).M() if jet_pt0 < jet_pt1 else ( jet_vector2 + jet_vector1 ).M()
+        mbb  = ( jet_vector1 + jet_vector2 ).M()
+        mcb0 = ( jet_vector0 + jet_vector1 ).M()
+        mcb1 = ( jet_vector0 + jet_vector2 ).M()
+        
         hadronic_top_mass = ( jet_vector0 + jet_vector1 + jet_vector2 ).M()
         hadronic_top_E = ( jet_vector0 + jet_vector1 + jet_vector2 ).E()
         hadronic_top_gamma = hadronic_top_E / hadronic_top_mass
+
+        #btag SF
+        btagSF = 1.
+        if hasattr(self.rawJet_coll[0], "btagSF_deepjet_shape"):
+          for jet in self.Jet_coll:
+            if jet.pt < 25. or abs(jet.eta) > 2.4:
+              continue
+            btagSF *= self.rawJet_coll[jet.jetIdx].btagSF_deepjet_shape
 
         self.out.fillBranch("nbtags_had_top_mvaCHToCB_%s"%self._syst_suffix, nbtags_had_top)
         self.out.fillBranch("nbtags_event_mvaCHToCB_%s"%self._syst_suffix, self.nbtags_event)
@@ -615,6 +644,16 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("csv_jet1_mvaCHToCB_%s"%self._syst_suffix, csv_jet1)
         self.out.fillBranch("csv_jet2_mvaCHToCB_%s"%self._syst_suffix, csv_jet2)
         self.out.fillBranch("csv_jet3_mvaCHToCB_%s"%self._syst_suffix, csv_jet3)
+
+        self.out.fillBranch("CvB_jet0_mvaCHToCB_%s"%self._syst_suffix, CvB_jet0)
+        self.out.fillBranch("CvB_jet1_mvaCHToCB_%s"%self._syst_suffix, CvB_jet1)
+        self.out.fillBranch("CvB_jet2_mvaCHToCB_%s"%self._syst_suffix, CvB_jet2)
+        self.out.fillBranch("CvB_jet3_mvaCHToCB_%s"%self._syst_suffix, CvB_jet3)
+
+        self.out.fillBranch("CvL_jet0_mvaCHToCB_%s"%self._syst_suffix, CvL_jet0)
+        self.out.fillBranch("CvL_jet1_mvaCHToCB_%s"%self._syst_suffix, CvL_jet1)
+        self.out.fillBranch("CvL_jet2_mvaCHToCB_%s"%self._syst_suffix, CvL_jet2)
+        self.out.fillBranch("CvL_jet3_mvaCHToCB_%s"%self._syst_suffix, CvL_jet3)
 
         self.out.fillBranch("avg_csv_had_top_%s"%self._syst_suffix, avg_csv_had_top)
         self.out.fillBranch("second_moment_csv_jet0_mvaCHToCB_%s"%self._syst_suffix, second_moment_csv_jet0)
@@ -738,12 +777,17 @@ class mvaTreeCHToCB(Module):
         self.out.fillBranch("year_label", self.year_label)
         if self._syst_suffix == 'nom':
           self.out.fillBranch("EventNum_mvaCHToCB", self.eventNum)
+          self.out.fillBranch("btagSF", btagSF)
 
         return True
 
 
     def findJetPtSystAttr(self,object_):
         if "unclustEn" in self._syst_suffix:
+          syst_suffix = "pt_nom"
+        elif "RegCorr" in self._syst_suffix:
+          syst_suffix = "pt_nom"
+        elif "RegRes" in self._syst_suffix:
           syst_suffix = "pt_nom"
         else:
           syst_suffix = "pt_{}".format(self._syst_suffix)

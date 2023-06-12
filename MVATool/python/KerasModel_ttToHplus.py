@@ -8,6 +8,7 @@ from keras import initializers
 from keras import regularizers
 from keras.optimizers import SGD, Adam, Nadam, Adadelta
 
+import numpy as np
 
 # Define initialization
 def normal(shape, name=None):
@@ -16,8 +17,17 @@ def normal(shape, name=None):
 # Generate model
 class KerasModel():
 
-  def __init__(self):
+  def __init__(self, index1=0,index2=0):
     self.model = Sequential()
+    self.grid_search(index1, index2)
+
+
+  def grid_search(self,index1,index2):
+    node = [[400,200,100], [256,128,64], [200,100,50]]
+    l2_norm = [1e-4, 5e-3, 1e-3]
+
+    self.node    = node[index1]
+    self.l2_norm = l2_norm[index2]
 
 
   def defineModel_3layer(self,input_dim_):
@@ -28,21 +38,21 @@ class KerasModel():
     self.model.add(Lambda(lambda X : X, input_shape=(input_dim_,))) #dummy Lamda layer for test
     self.model.add(BatchNormalization())
 
-    self.model.add(Dense(256, kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    self.model.add(Dense(self.node[0], kernel_initializer=initializers.he_normal(seed=1231), kernel_regularizer=regularizers.l1_l2(l1=0., l2=self.l2_norm)))
     #self.model.add(Dense(256, kernel_initializer=initializers.he_normal(seed=1231), kernel_constraint=unit_norm()))
     self.model.add(BatchNormalization())
     self.model.add(Activation('elu'))
     self.model.add(Dropout(0.50))
 
     # we can think of this chunk as the input layer
-    self.model.add(Dense(128, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    self.model.add(Dense(self.node[1], kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=self.l2_norm)))
     #self.model.add(Dense(128, kernel_initializer=initializers.he_normal(seed=1232), kernel_constraint=unit_norm()))
     self.model.add(BatchNormalization())
     self.model.add(Activation('elu'))
     self.model.add(Dropout(0.50))
 
     # we can think of this chunk as the input layer
-    self.model.add(Dense(64, kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=1e-4)))
+    self.model.add(Dense(self.node[2], kernel_initializer=initializers.he_normal(seed=1232), kernel_regularizer=regularizers.l1_l2(l1=0., l2=self.l2_norm)))
     #self.model.add(Dense(64, kernel_initializer=initializers.he_normal(seed=1232), kernel_constraint=unit_norm()))
     self.model.add(BatchNormalization())
     self.model.add(Activation('elu'))

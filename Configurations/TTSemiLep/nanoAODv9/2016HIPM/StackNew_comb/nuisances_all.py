@@ -23,8 +23,9 @@ mc += ['CHToCB_M080_yield']
 ttmc_syst = ['TTLJ','TTLJ_jj','TTLJ_cc','TTLJ_bb','TTLJ_bj','TTLL','TTLL_jj','TTLL_cc','TTLL_bb','TTLL_bj']
 ttmc_syst += ['TT','TT+bb','TT+bj','TT+cc','TT+jj','TTLJ+bb','TTLJ+bj','TTLJ+cc','TTLJ+jj','TTLL+bb','TTLL+bj','TTLL+cc','TTLL+jj',]
 ttmc_syst += ['CHToCB_M080_yield']
+signal = ['CHToCB_M%s'%mass for mass in ['075','080','085','090','100','110','120','130','140','150','160'] ]
 ttmc = [ skey for skey in ttmc_syst ]
-ttmc += ['CHToCB_M%s'%mass for mass in ['075','080','085','090','100','110','120','130','140','150','160']]
+ttmc += signal
 ttbbmc = [ ttmc_ for ttmc_ in ttmc if 'bb' in ttmc_ or 'bj' in ttmc_ ]
 ttbbmc += ['CHToCB_M080_yield']
 ttccmc = [ ttmc_ for ttmc_ in ttmc if 'cc' in ttmc_ ]
@@ -42,8 +43,8 @@ lnN_eff_ele = False
 splitTTLL = False
 merge_trig_syst = True
 lnN_UE_Tune = True
-tt_psweight = True
-splitQCDscale_tt = False
+splitQCDscale_tt = False if '_comb' in opt.pycfg else False
+splitISRscale_tt = True
 
 
 ## Use the following if you want to apply the automatic combine MC stat nuisances.
@@ -96,6 +97,7 @@ nuisances['ttbbXsec'] = {
     'name': 'ttbbXsec',
     'type': 'rateParam',
     'samples': {'TT+bb':'1.0'},
+    #'samples': {'TT+bb':'1.0', 'TT+cc':'1.0'},
     'group': 'theory',
 }
 nuisances['ttbbXsec_param'] = {
@@ -114,16 +116,17 @@ nuisances['ttbbXsec_param'] = {
 nuisances['ttccXsec'] = {
     'name': 'ttccXsec',
     'type': 'rateParam',
-    'samples': {'TT+cc':'1'},
+    #'samples': {'TT+cc':'1'},
+    'samples': {'TT+cc':'(2*@0-@1-0.25)    ttbbXsec,ttbbXsec'},
     'group': 'theory',
 }
-nuisances['ttccXsec_param'] = {
-    'name': 'ttccXsec',
-    'type': 'param',
-    'constraint': '1.11  0.15',
-    'samples': {},
-    'group': 'theory',
-}
+#nuisances['ttccXsec_param'] = {
+#    'name': 'ttccXsec',
+#    'type': 'param',
+#    'constraint': '1.11  0.15',
+#    'samples': {},
+#    'group': 'theory',
+#}
 
 #ttbbXsec: 1.746610', 'ttbjXsec: 8.265863', 'ttccXsec: 33.970058', 'ttjjXsec: 407.677469
 # (451.66-@0*(1.7466+8.2659)-@1*33.970)/(407.68)
@@ -131,16 +134,25 @@ nuisances['ttccXsec_param'] = {
 nuisances['ttjjXsec'] = {
     'name': 'ttjjXsec',
     'type': 'rateParam',
+    #'samples': {'TT+jj':'1'},
     #'samples': {'TT+jj':'(364.35-@0*1.433-@1*6.782-@2*28.21)/(327.93)    ttbbXsec,ttbjXsec,ttccXsec'},
     'samples': {'TT+jj':'(451.66-@0*(1.7466+8.2659)-@1*33.970)/(407.68)    ttbbXsec,ttccXsec'},  #XXX 364.35 : Xsec of TTLJ, but TT+jj is TTLJ+TTLL. it's wrong.
-    #'samples': {'TT+jj':'(364.35-@0*(1.433+6.782)-1.*28.21)/(327.93)    ttbbXsec'},
-    'cuts': ['dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_mm','dbl_4j_ee_onZ','dbl_4j_mm_onZ',],
+    #'cuts': ['dbl_4j_eeORmmORemORme','dbl_4j','dbl_4j_ee','dbl_4j_em','dbl_4j_me','dbl_4j_mm','dbl_4j_ee_onZ','dbl_4j_mm_onZ',],
     'group': 'theory',
 }
-if splitTTLL:
-  nuisances['ttbbXsec']['samples'] = {'TTLJ+bb':'1 [0.8,1.5] ','TTLL+bb':'1 [0.8,1.5] '}
-  nuisances['ttccXsec']['samples'] = {'TTLJ+cc':'1 [0.8,1.5] ','TTLL+cc':'1 [0.8,1.5] '}
-  nuisances['ttjjXsec']['samples'] = {'TTLJ+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec','TTLL+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec'}
+#
+#if splitTTLL:
+#  nuisances['ttbbXsec']['samples'] = {'TTLJ+bb':'1 [0.8,1.5] ','TTLL+bb':'1 [0.8,1.5] '}
+#  nuisances['ttccXsec']['samples'] = {'TTLJ+cc':'1 [0.8,1.5] ','TTLL+cc':'1 [0.8,1.5] '}
+#  nuisances['ttjjXsec']['samples'] = {'TTLJ+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec','TTLL+jj':'(364.35-@0*(1.433+6.782)-@1*28.21)/(327.93)    ttbbXsec,ttccXsec'}
+#
+#nuisances['ttjjXsec_param'] = {
+#    'name': 'ttjjXsec',
+#    'type': 'param',
+#    'constraint': '1  0.1',
+#    'samples': {},
+#    'group': 'theory',
+#}
 
 
 #nuisances['DYNorm_2016'] = {
@@ -383,7 +395,7 @@ nuisances['Top_pTreweight'] = {
 #}
 #for shift in ['jes', 'lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
 for shift in ['lf', 'hf', 'hfstats1', 'hfstats2', 'lfstats1', 'lfstats2', 'cferr1', 'cferr2']:
-    btag_up, btag_down = '(btagSF%sup)/(btagSF)' % shift, '(btagSF%sdown)/(btagSF)' % shift
+    btag_up, btag_down = '(OTF_btagSF%sup)/(OTF_btagSF)' % shift, '(OTF_btagSF%sdown)/(OTF_btagSF)' % shift
     btag_syst = ['({var}<9999?{var}:1.)'.format(var=btag_up),'({var}<9999?{var}:1.)'.format(var=btag_down)]
 
 
@@ -542,6 +554,8 @@ if include_mva:
     'BDT_Low_nom',                            
     'DNN_High_nom',
     'DNN_Low_nom',
+    'DNN_mass_High_nom',
+    'DNN_mass_Low_nom',
     'csv_jet0_mvaCHToCB_nom',
     'csv_jet1_mvaCHToCB_nom',
     'csv_jet2_mvaCHToCB_nom',
@@ -579,12 +593,12 @@ if True:
   for syst in jes_syst:
       syst_ = syst.replace('RPLME_YEAR','2016')
       skim_ = syst.replace('RPLME_YEAR','uncorr')
-      btag_jes_up   = "btagSF{SYST}up".format(SYST=syst_)
-      btag_jes_down = "btagSF{SYST}down".format(SYST=syst_)
+      btag_jes_up   = "OTF_btagSF{SYST}up".format(SYST=syst_)
+      btag_jes_down = "OTF_btagSF{SYST}down".format(SYST=syst_)
       BrFromToUp_dict   = GetJECVariationDict(JECUnc_nom_branches, syst_ + "Up")
       BrFromToDown_dict = GetJECVariationDict(JECUnc_nom_branches,syst_ + "Down")
-      BrFromToUp_dict.update({'btagSF':btag_jes_up})
-      BrFromToDown_dict.update({'btagSF':btag_jes_down})
+      BrFromToUp_dict.update({'OTF_btagSF':btag_jes_up})
+      BrFromToDown_dict.update({'OTF_btagSF':btag_jes_down})
       nuisances[syst_] = {
           'name': syst_,
           'kind': 'branch_custom',
@@ -642,17 +656,17 @@ nuisances['bRegCorr'] = {
     'folderDown' : makeMCDirectory('_jetMETSyst_bRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrDown__mvaCHToCB_2016_jetMETSyst_bRegCorrDown')  ,
     'group': 'experimental',
 }
-nuisances['bRegRes'] = {
-    'name': 'bRegRes_2016',
-    'kind': 'branch_custom',
-    'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegResUp"),
-    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegResDown"),
-    'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResUp__mvaCHToCB_2016_jetMETSyst_bRegResUp')      ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_bRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResDown__mvaCHToCB_2016_jetMETSyst_bRegResDown')  ,
-    'group': 'experimental',
-}
+#nuisances['bRegRes'] = {
+#    'name': 'bRegRes_2016',
+#    'kind': 'branch_custom',
+#    'type': 'shape',
+#    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegResUp"),
+#    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegResDown"),
+#    'samples': dict((skey, ['1.','1.']) for skey in mc),
+#    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResUp__mvaCHToCB_2016_jetMETSyst_bRegResUp')      ,
+#    'folderDown' : makeMCDirectory('_jetMETSyst_bRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResDown__mvaCHToCB_2016_jetMETSyst_bRegResDown')  ,
+#    'group': 'experimental',
+#}
 nuisances['cRegCorr'] = {
     'name': 'cRegCorr_2016',
     'kind': 'branch_custom',
@@ -664,17 +678,17 @@ nuisances['cRegCorr'] = {
     'folderDown' : makeMCDirectory('_jetMETSyst_cRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrDown__mvaCHToCB_2016_jetMETSyst_cRegCorrDown')  ,
     'group': 'experimental',
 }
-nuisances['cRegRes'] = {
-    'name': 'cRegRes_2016',
-    'kind': 'branch_custom',
-    'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegResUp"),
-    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegResDown"),
-    'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResUp__mvaCHToCB_2016_jetMETSyst_cRegResUp')      ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_cRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResDown__mvaCHToCB_2016_jetMETSyst_cRegResDown')  ,
-    'group': 'experimental',
-}
+#nuisances['cRegRes'] = {
+#    'name': 'cRegRes_2016',
+#    'kind': 'branch_custom',
+#    'type': 'shape',
+#    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegResUp"),
+#    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegResDown"),
+#    'samples': dict((skey, ['1.','1.']) for skey in mc),
+#    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegResUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResUp__mvaCHToCB_2016_jetMETSyst_cRegResUp')      ,
+#    'folderDown' : makeMCDirectory('_jetMETSyst_cRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegResDown__mvaCHToCB_2016_jetMETSyst_cRegResDown')  ,
+#    'group': 'experimental',
+#}
 
 
 #samples_ttsyst = {}
@@ -745,7 +759,7 @@ if not 'comb' in opt.pycfg:
       'kind': 'tree',
       'type': 'shape',
       #'symmetrize_ttsyst': True,
-      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
+      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc),
       'folderUp'   : makeMCDirectory('__MTOPup'),
       'folderDown' : makeMCDirectory('__MTOPdo'),
       'group': 'theory',
@@ -757,7 +771,7 @@ if not 'comb' in opt.pycfg:
       'type': 'shape',
       #'symmetrize_ttsyst': True,
       #'syncronize_stat' : True,
-      'samples': dict((skey, [mtop_syst_up, mtop_syst_down]) for skey in ttmc_syst ),
+      'samples': dict((skey, [mtop_syst_up, mtop_syst_down]) for skey in ttmc ),
       'group': 'theory',
   }
 else:
@@ -780,7 +794,7 @@ else:
       'kind': 'tree',
       'type': 'shape',
       #'symmetrize_ttsyst': True,
-      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc_syst),
+      'samples': dict((skey, ['0.973','1.028']) for skey in ttmc),
       'folderUp'   : makeMCDirectory('__MTOPup'),
       'folderDown' : makeMCDirectory('__MTOPdo'),
       'group': 'theory',
@@ -800,64 +814,65 @@ nuisances['PU_ID_L'] = {
 isr_syst=['PSWeight[2]','PSWeight[0]']
 fsr_syst=['PSWeight[3]','PSWeight[1]']
 
-if not 'comb' in opt.pycfg:
-  if tt_psweight:
-    nuisances['ISR_TT_weight'] = {
-        'name': 'ttbar_isr',
-        'kind': 'weight',
-        'type': 'shape',
-        'samples': dict((skey, isr_syst) for skey in ttmc),
-    
-    }
-  else:
-    nuisances['ISR_TT_weight'] = {
-        'name': 'ttbar_isr',
-        'kind': 'weight',
-        'type': 'shape',
-        'samples': dict((skey, isr_syst) for skey in ttmc if 'CHToCB' in skey),
-    
-    }
-    nuisances['ISR_TT_tree'] = {
-        'name': 'ttbar_isr',
-        'kind': 'tree',
-        'type': 'shape',
-        'samples': dict((skey, ['1.0','1.0']) for skey in ttmc if not 'CHToCB' in skey),
-        #flip Up and Down histogram
-        'folderDown'   : makeMCDirectory('__ISRup'),
-        'folderUp' : makeMCDirectory('__ISRdo'),
-    }
+if not splitISRscale_tt:
+  nuisances['ISR_ttbar'] = {
+      'name': 'PS_alphaS_tt_isr',
+      'rename': 'PS_alphaS_tt_isr',
+      'kind': 'weight',
+      'type': 'shape',
+      #'syncronize_stat' : True,
+      'samples': dict((skey, isr_syst) for skey in ttmc),
+      'group': 'theory',
+  
+  }
 else:
-  nuisances['ISR_TTjj'] = {
-      'name': 'ttbar_isr',
-      'rename': 'ttjj_isr',
+  nuisances['ISR_sig'] = {
+      'name': 'PS_alphaS_tt_isr',
+      'rename': 'PS_alphaS_sig_isr',
       'kind': 'weight',
       'type': 'shape',
-      #'syncronize_stat' : True,
-      'samples': dict((skey, isr_syst) for skey in ttmc if skey not in ttbbmc+ttccmc),
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, isr_syst) for skey in signal),
       'group': 'theory',
-  
   }
-  nuisances['ISR_TTcc'] = {
-      'name': 'ttbar_isr',
-      'rename': 'ttcc_isr',
+  nuisances['ISR_ttjj'] = {
+      'name': 'PS_alphaS_tt_isr',
+      'rename': 'PS_alphaS_ttjj_isr',
       'kind': 'weight',
       'type': 'shape',
-      #'syncronize_stat' : True,
-      'samples': dict((skey, isr_syst) for skey in ttccmc ),
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, isr_syst) for skey in ttmc_syst if skey not in ttbbmc+ttccmc ),
       'group': 'theory',
-  
   }
-  nuisances['ISR_TTbb'] = {
-      'name': 'ttbar_isr',
-      'rename': 'ttbb_isr',
+  nuisances['ISR_ttbb'] = {
+      'name': 'PS_alphaS_tt_isr',
+      'rename': 'PS_alphaS_ttbb_isr',
       'kind': 'weight',
       'type': 'shape',
-      #'syncronize_stat' : True,
-      'samples': dict((skey, isr_syst) for skey in ttbbmc ),
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, isr_syst) for skey in ttbbmc ),
       'group': 'theory',
-  
+  }
+  nuisances['ISR_ttcc'] = {
+      'name': 'PS_alphaS_tt_isr',
+      'rename': 'PS_alphaS_ttcc_isr',
+      'type': 'shape',
+      'kind': 'weight',
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, isr_syst) for skey in ttccmc ),
+      'group': 'theory',
   }
 
+nuisances['ISR_st'] = {
+    'name': 'PS_alphaS_st_isr',
+    'rename': 'PS_alphaS_st_isr',
+    'kind': 'weight',
+    'type': 'shape',
+    #'syncronize_stat' : True,
+    'samples': dict((skey, isr_syst) for skey in ['ST','Others']),
+    'group': 'theory',
+
+}
 
 #empty PSWeights for tW
 #nuisances['ISR_EWK'] = {
@@ -868,36 +883,28 @@ else:
 #
 #}
 
-nuisances['FSR_TTjj'] = {
-    'name': 'ttbar_fsr',
-    'rename': 'ttjj_fsr',
+nuisances['FSR_sig'] = {
+    'name': 'PS_alphaS_fsr',
+    'rename': 'PS_alphaS_fsr_sig',
     'kind': 'weight',
     'type': 'shape',
     #'syncronize_stat' : True,
-    'samples': dict((skey, fsr_syst) for skey in ttmc if skey not in ttbbmc+ttccmc),
+    'samples': dict((skey, fsr_syst) for skey in signal ),
     'group': 'theory',
 
 }
-nuisances['FSR_TTcc'] = {
-    'name': 'ttbar_fsr',
-    'rename': 'ttcc_fsr',
+
+nuisances['FSR_top'] = {
+    'name': 'PS_alphaS_fsr',
+    'rename': 'PS_alphaS_fsr',
     'kind': 'weight',
     'type': 'shape',
     #'syncronize_stat' : True,
-    'samples': dict((skey, fsr_syst) for skey in ttccmc ),
+    'samples': dict((skey, fsr_syst) for skey in ttmc_syst + ['ST','Others']),
     'group': 'theory',
 
 }
-nuisances['FSR_TTbb'] = {
-    'name': 'ttbar_fsr',
-    'rename': 'ttbb_fsr',
-    'kind': 'weight',
-    'type': 'shape',
-    #'syncronize_stat' : True,
-    'samples': dict((skey, fsr_syst) for skey in ttbbmc ),
-    'group': 'theory',
 
-}
 #nuisances['FSR_EWK'] = {
 #    'name': 'ewk_fsr',
 #    'kind': 'weight',
@@ -930,14 +937,6 @@ lhe_scale_syst_tt_6j = lambda skey: lhe_scale_syst_ttlj_6j*('TTLJ' in skey) + lh
 
 
 
-if not 'comb' in opt.pycfg:
-  nuisances['QCDscale_tt'] = {
-      'name': 'QCDscale_tt',
-      'type': 'shape', # not treat this in plot maker and datacard maker
-      'kind': 'weight_envelope',
-      'samples':dict((skey, lhe_scale_syst) for skey in ttmc ),
-      'group': 'theory',
-  }
 if not splitQCDscale_tt:
   nuisances['QCDscale_tt'] = {
       'name': 'QCDscale_tt',
@@ -947,11 +946,20 @@ if not splitQCDscale_tt:
       'group': 'theory',
   }
 else:
-  nuisances['QCDscale_tt_'] = {
+  nuisances['QCDscale_sig'] = {
       'name': 'QCDscale_tt',
+      'rename': 'QCDscale_sig',
       'type': 'shape',
       # if kind is not specified, skiped in shape factory
-      'samples':dict((skey, lhe_scale_syst) for skey in ttmc if skey not in ttbbmc+ttccmc ),
+      'samples':dict((skey, lhe_scale_syst) for skey in signal ),
+      'group': 'theory',
+  }
+  nuisances['QCDscale_ttjj'] = {
+      'name': 'QCDscale_tt',
+      'rename': 'QCDscale_ttjj',
+      'type': 'shape',
+      # if kind is not specified, skiped in shape factory
+      'samples':dict((skey, lhe_scale_syst) for skey in ttmc_syst if skey not in ttbbmc+ttccmc ),
       'group': 'theory',
   }
   nuisances['QCDscale_ttbb'] = {

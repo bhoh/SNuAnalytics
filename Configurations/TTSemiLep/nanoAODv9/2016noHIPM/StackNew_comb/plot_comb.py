@@ -308,6 +308,17 @@ plot['DATA']  = {
 		  'isBlind'  : 0,
                   'samples'  : ['DATA']
               }
+
+groupPlot['DATA_blind']  = {
+                  'nameHR' : 'DATA_blind',
+                  'isSignal' : 0,
+                  'color': 1, 
+                  'isData'   : 1 ,
+		  'isBlind'  : 0,
+                  'samples'  : ['TTLJ_jj', 'TTLJ_cc', 'TTLJ_bb', 'TTLJ_bj', 'TTLL_jj', 'TTLL_cc', 'TTLL_bb', 'TTLL_bj'] + ['TTWjets','TTZjets','ttH','WW','WZ','ZZ','Wjets','DY','ST','QCD']
+              }
+
+
 for mass in ['075','080','085','090','100','110','120','130','140','150', '160']:
     sample_name = 'CHToCB_M{0}'.format(mass) 
     plot[sample_name]={

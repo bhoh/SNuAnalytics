@@ -121,12 +121,14 @@ def SkimTree(outFileName, fileList, nMax, formula, year_label=None, mass_label=N
   fChain.SetBranchStatus("PuppiMET_pt",1)
   fChain.SetBranchStatus("XSWeight",1)
   fChain.SetBranchStatus("status_nom",1)
+  fChain.SetBranchStatus("btagSF",1)
+  fChain.SetBranchStatus("genTtbarId",1)
   #fChain.SetBranchStatus("matched_4jet_matched",1)
 
   #block1 = fChain.CopyTree("EventNum_mvaCHToCB%100 >= 50")
   #block2 = fChain.CopyTree("EventNum_mvaCHToCB%100 <  50")
 
-  tmp_tree = fChain.CopyTree("status_nom==0 && nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2 && Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 ))) && PuppiMET_pt > 20.")
+  tmp_tree = fChain.CopyTree("status_nom==0 && nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=2 && Lepton_genmatched[0]>0.5 && Lepton_pt[0] > 30. && ((abs(Lepton_pdgId[0])==11 && ( abs(Lepton_eta[0])<2.5 )) || (abs(Lepton_pdgId[0])==13 && ( abs(Lepton_eta[0])<2.4 )))")
   #tmp_tree = fChain.CopyTree("status_nom==0 && nbtags_event_mvaCHToCB_nom>=3 && nbtags_had_top_mvaCHToCB_nom>=1")
   #tmp_tree = fChain.CopyTree("matched_4jet_matched && status_nom==0")
   #tmp_tree = fChain.CopyTree("nbtags_event_mvaCHToCB_nom>=3 && status_nom==0")

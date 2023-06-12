@@ -14,13 +14,14 @@ except ImportError:
 scriptname=opt.cutsFile
 include_bincl = True if not '_final' in opt.pycfg else False
 
-supercut = '((nLooseLep == 1) && (nCleanJet25_2p4 >=4) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 20.))\
+supercut = '((nLooseLep == 1) && (nCleanJet25_2p4 >=4) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom >= 0.))\
            || ((nLooseLep == 2) && (nCleanJet30_2p4 >=2) && (nBJets_WP_M >= 2) && (MET_CHToCB_pt_nom > 40.))'
 
 # to speed up, add kinematic fitter status cut on super cut
-kf_status_cut = True if '_final' in opt.pycfg else False
+#kf_status_cut = True if '_final' in opt.pycfg else False
+kf_status_cut = False if '_final' in opt.pycfg else False
 if kf_status_cut:
-  supercut = '(' + supercut +') && (status_nom==0)'
+  supercut = '(' + supercut +') && (status_nom>=0)'
 
 
 
@@ -91,36 +92,36 @@ cuts['sng_4j'] = {
 #  }
 
 
-cuts['dbl_2j_eeORmmORemORme'] = {
-  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 12)',
-  'categories' : {
-    '2b' : 'isOSpair && (nBJets_WP_M) == 2 && (emCH || meCH || abs(mll-91.18)>15)',
-    '3b' : 'isOSpair && (nBJets_WP_M) >= 3 && (emCH || meCH || abs(mll-91.18)>15)',
-    '2b_onZ' : 'isOSpair && (nBJets_WP_M) == 2 && (!emCH && !meCH && abs(mll-91.18)<=15)',
-    '3b_onZ' : 'isOSpair && (nBJets_WP_M) >= 3 && (!emCH && !meCH && abs(mll-91.18)<=15)',
-  },
-}
-
-
-
-cuts['dbl_2j'] = {
-  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 12)',
-  'categories' : {
-    'ee_2b' : 'eeCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)>15)',
-    'mm_2b' : 'mmCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)>15)',
-    'em_2b' : 'emCH && isOSpair && ((nBJets_WP_M) == 2)',
-    'me_2b' : 'meCH && isOSpair && ((nBJets_WP_M) == 2)',
-    'ee_3b' : 'eeCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)>15)',
-    'mm_3b' : 'mmCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)>15)',
-    'em_3b' : 'emCH && isOSpair && ((nBJets_WP_M) >= 3)',
-    'me_3b' : 'meCH && isOSpair && ((nBJets_WP_M) >= 3)',
-    'ee_2b_onZ' : 'eeCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)<=15)',
-    'mm_2b_onZ' : 'mmCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)<=15)',
-    'ee_3b_onZ' : 'eeCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)<=15)',
-    'mm_3b_onZ' : 'mmCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)<=15)',
-
-  },
-}
+#cuts['dbl_2j_eeORmmORemORme'] = {
+#  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 12)',
+#  'categories' : {
+#    '2b' : 'isOSpair && (nBJets_WP_M) == 2 && (emCH || meCH || abs(mll-91.18)>15)',
+#    '3b' : 'isOSpair && (nBJets_WP_M) >= 3 && (emCH || meCH || abs(mll-91.18)>15)',
+#    '2b_onZ' : 'isOSpair && (nBJets_WP_M) == 2 && (!emCH && !meCH && abs(mll-91.18)<=15)',
+#    '3b_onZ' : 'isOSpair && (nBJets_WP_M) >= 3 && (!emCH && !meCH && abs(mll-91.18)<=15)',
+#  },
+#}
+#
+#
+#
+#cuts['dbl_2j'] = {
+#  'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 12)',
+#  'categories' : {
+#    'ee_2b' : 'eeCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)>15)',
+#    'mm_2b' : 'mmCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)>15)',
+#    'em_2b' : 'emCH && isOSpair && ((nBJets_WP_M) == 2)',
+#    'me_2b' : 'meCH && isOSpair && ((nBJets_WP_M) == 2)',
+#    'ee_3b' : 'eeCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)>15)',
+#    'mm_3b' : 'mmCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)>15)',
+#    'em_3b' : 'emCH && isOSpair && ((nBJets_WP_M) >= 3)',
+#    'me_3b' : 'meCH && isOSpair && ((nBJets_WP_M) >= 3)',
+#    'ee_2b_onZ' : 'eeCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)<=15)',
+#    'mm_2b_onZ' : 'mmCH && isOSpair && ((nBJets_WP_M) == 2) && (abs(mll-91.18)<=15)',
+#    'ee_3b_onZ' : 'eeCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)<=15)',
+#    'mm_3b_onZ' : 'mmCH && isOSpair && ((nBJets_WP_M) >= 3) && (abs(mll-91.18)<=15)',
+#
+#  },
+#}
 
 cuts['dbl_4j_eeORmmORemORme'] = {
   'expr' : '(nLooseLep == 2) && (nCleanJet30_2p4>=2) && (nCleanJet25_2p4>=4) && (nBJets_WP_M >= 2) && (eeCH || mmCH || emCH || meCH) && (mll > 12)',

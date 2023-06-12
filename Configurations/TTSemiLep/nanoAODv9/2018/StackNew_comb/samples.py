@@ -33,7 +33,7 @@ elif  'sdfarm' in SITE:
   xrootdPath = 'root://cms-xrdr.private.lo:2094'
   treeBaseDir = "/xrootd/store/user/bhoh/Latino/HWWNano/"
 
-include_mva = False
+include_mva = True
 
 CAMPAIGN='Summer20UL18_106x_nAODv9_Full2018v9'
 
@@ -377,7 +377,7 @@ for mass in ['075','080','085','090','100','110','120','130','140','150','160']:
     sample_name = 'CHToCB_M{0}'.format(mass) 
     samples[sample_name] = { 'name'    : getSampleFiles(directory,sample_name,False,'nanoLatino_'),
                                      'weight' : XSWeight+'*'+SFweight+'*'+GenLepMatch+'*'+METFilter_MC+'*'+ttch,
-                                     'FilesPerJob' : 50,
+                                     'FilesPerJob' : 10,
             }
 
 

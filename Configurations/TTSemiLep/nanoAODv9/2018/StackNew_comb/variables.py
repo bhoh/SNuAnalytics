@@ -12,7 +12,7 @@ except ImportError:
 #------End of Variable Definition-----#
 #variables={}
 
-include_mva   = False
+include_mva   = True
 exclude_BDT   = True
 include_final = True if '_final' in opt.pycfg else False
 

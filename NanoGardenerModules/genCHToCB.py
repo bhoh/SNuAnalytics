@@ -117,6 +117,8 @@ class genCHToCB(Module):
         self.out.branch("matched_mbl_flavCorr", "F")
         self.out.branch("matched_tt_dphi", "F")
         self.out.branch("matched_had_top_sign", "I")
+        self.out.branch("matched_had_top_b_score", "F")
+        self.out.branch("matched_lep_top_b_score", "F")
         self.out.branch("matched_4jet_matched", "I")
 
         self.out.branch("gen_dijet_mass", "F")
@@ -149,6 +151,8 @@ class genCHToCB(Module):
         self.out.branch("had_top_up_type_random_jet_idx", "I")
         self.out.branch("had_top_b_random_jet_idx", "I")
         self.out.branch("lep_top_b_random_jet_idx", "I")
+        self.out.branch("rand_had_top_b_score", "F")
+        self.out.branch("rand_lep_top_b_score", "F")
 
 
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
@@ -373,6 +377,25 @@ class genCHToCB(Module):
         rand_lep_top_mass, rand_lep_top_mass_flavCorr, rand_mbl, rand_mbl_flavCorr = self.getLepTopMassMbl(lep_top_b_random_jet_idx, Jets, Leptons, MET_pt, MET_phi)
         rand_tt_dphi                = self.getTTdPhi()
 
+        if lep_top_b_idx == -1:
+          matched_lep_top_b_score = -1
+        else:
+          matched_lep_top_b_score = Jets[lep_top_b_idx].btagDeepFlavB
+        if had_top_b_idx == -1:
+          matched_had_top_b_score = -1
+        else:
+          matched_had_top_b_score = Jets[had_top_b_idx].btagDeepFlavB
+
+        if lep_top_b_random_jet_idx == -1:
+          rand_lep_top_b_score = -1
+        else:
+          rand_lep_top_b_score = Jets[lep_top_b_random_jet_idx].btagDeepFlavB
+        if had_top_b_random_jet_idx == -1:
+          rand_had_top_b_score = -1
+        else:
+          rand_had_top_b_score = Jets[had_top_b_random_jet_idx].btagDeepFlavB
+
+
 
         #check if there 4 jet matched with parton with no ambiguity
         is_4jet_matched = -1
@@ -410,6 +433,8 @@ class genCHToCB(Module):
         self.out.fillBranch("matched_mbl_flavCorr", matched_mbl_flavCorr)
         self.out.fillBranch("matched_tt_dphi", matched_tt_dphi)
         self.out.fillBranch("matched_had_top_sign", matched_had_top_sign)
+        self.out.fillBranch("matched_had_top_b_score", matched_had_top_b_score)
+        self.out.fillBranch("matched_lep_top_b_score", matched_lep_top_b_score)
         self.out.fillBranch("matched_4jet_matched", is_4jet_matched)
 
         self.out.fillBranch("gen_dijet_mass",   gen_dijet_mass)
@@ -442,6 +467,8 @@ class genCHToCB(Module):
         self.out.fillBranch("had_top_up_type_random_jet_idx",   had_top_up_type_random_jet_idx)
         self.out.fillBranch("had_top_b_random_jet_idx",         had_top_b_random_jet_idx)
         self.out.fillBranch("lep_top_b_random_jet_idx",         lep_top_b_random_jet_idx)
+        self.out.fillBranch("rand_had_top_b_score", rand_had_top_b_score)
+        self.out.fillBranch("rand_lep_top_b_score", rand_lep_top_b_score)
             
         return True
 
@@ -468,6 +495,8 @@ class genCHToCB(Module):
         self.out.fillBranch("matched_mbl_flavCorr", -1)
         self.out.fillBranch("matched_tt_dphi", -1)
         self.out.fillBranch("matched_had_top_sign", -1)
+        self.out.fillBranch("matched_had_top_b_score", -1)
+        self.out.fillBranch("matched_lep_top_b_score", -1)
         self.out.fillBranch("matched_4jet_matched", -1)
 
         self.out.fillBranch("gen_dijet_mass",   -1)
@@ -500,6 +529,8 @@ class genCHToCB(Module):
         self.out.fillBranch("had_top_up_type_random_jet_idx",    -1)
         self.out.fillBranch("had_top_b_random_jet_idx",          -1)
         self.out.fillBranch("lep_top_b_random_jet_idx",          -1)
+        self.out.fillBranch("rand_had_top_b_score", -1)
+        self.out.fillBranch("rand_lep_top_b_score", -1)
 
 
     def findAncester(self, offspring_Idx, genPart, ancester_Idx, ancester_pdgId, not_from_ancester_pdgId=[]):
@@ -675,9 +706,6 @@ class genCHToCB(Module):
         if (set(CleanJets_idxs) & set(CleanJets_btaged_idxs) ) < 2:
           return [-1,-1,-1,-1]
 
-        # sample again if this is same as true assignment
-        # [had_top_down_type_matched_jet_idx, had_top_up_type_matched_jet_idx, had_top_b_idx, lep_top_b_idx]
-
         resample = True
         nIter    = 0
         maxIter  = 5000
@@ -696,6 +724,7 @@ class genCHToCB(Module):
             resample = True
           if random_jets[3] == trueIdxs[3]:
             resample = True
+          # btagging requirements
           if random_jets[2] not in CleanJets_btaged_idxs:
             resample = True
           if random_jets[3] not in CleanJets_btaged_idxs:

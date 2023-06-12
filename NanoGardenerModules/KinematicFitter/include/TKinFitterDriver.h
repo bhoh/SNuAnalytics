@@ -3,6 +3,9 @@
 
 #include "TString.h"
 #include "TSystem.h"
+#include "TFile.h"
+#include "TH2.h"
+#include "TH2F.h"
 #include <iostream>
 #include <numeric>
 
@@ -74,9 +77,16 @@ public:
   void SetNeutrino(TLorentzVector met_,int i); // i is related to neu. Pz
   void SetNeutrinoSmallerPz(TLorentzVector met_);
 
+  void SetLDRoot(TFile* fFile);
+
+  void Set_had_top_mass_LD(TH1F* histo);
+  void Set_lep_top_mass_LD(TH1F* histo);
+  void Set_mbl_LD(TH1F* histo);
+
   void Fit();
   void FitCurrentPermutation();
   void FindBestChi2Fit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
+  void FindBestLDFit(bool UseLeading4Jets=false, bool IsHighMassFitter=false);
 
   int GetStatus();
   double GetChi2();
@@ -196,12 +206,22 @@ private:
   double CalcPull(TAbsFitParticle* ptr);
   double CalcEachChi2(TFitConstraintM* ptr, double width);
   double CalcEachChi2(TFitConstraintMGaus* ptr, double width);
+  double CalcLD();
+
+  double GetBinContent(TH1* hist, double valx);
+  TFile* fLDroot;
+  TH1F* had_top_mass_LD;
+  TH1F* lep_top_mass_LD;
+  TH1F* mbl_LD;
+  //TH1F* lep_top_b_score_LD;
 
   void SetCurrentPermutationJets();
   bool Check_BJet_Assignment();
   bool Kinematic_Cut();
+  bool Kinematic_Cut_LD();
   bool Quality_Cut();
   bool NextPermutation(bool UseLeading4Jets=false);
+  void FindBestLDPermutaion(bool UseLeading4Jets=false);
 
   void Sol_Neutrino_Pz();
   void Resol_Neutrino_Pt();

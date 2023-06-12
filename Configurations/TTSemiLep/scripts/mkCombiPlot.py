@@ -10,15 +10,15 @@ import argparse
 from collections import OrderedDict
 
 input_files = {
-  #'8tev' : OrderedDict({
-  #    90  : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_90_syst.out',
-  #    100 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_100_syst.out',
-  #    110 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_110_syst.out',
-  #    120 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_120_syst.out',
-  #    130 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_130_syst.out',
-  #    140 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_140_syst.out',
-  #    150 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_150_syst.out',
-  #}),
+  '8tev' : OrderedDict({
+      90  : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_90_syst.out',
+      100 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_100_syst.out',
+      110 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_110_syst.out',
+      120 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_120_syst.out',
+      130 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_130_syst.out',
+      140 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_140_syst.out',
+      150 : '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/combine_8tev/res_Comb_8TeV_150_syst.out',
+  }),
   'not_flip' : OrderedDict({
       75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__075.out',
       80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M/mkCombine__Asym_fitted_dijet_M__ALL__080.out',
@@ -71,19 +71,19 @@ input_files = {
   #    150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__150.out',
   #    160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_BDT_High/mkCombine__Asym_fitted_dijet_M_high_BDT_High__ALL__160.out',
   #}),  
-  #'DNN' : OrderedDict({
-  #    75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__075.out',
-  #    80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__080.out',
-  #    85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__085.out',
-  #    90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__090.out',
-  #    100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__100.out',
-  #    110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__110.out',
-  #    120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__120.out',
-  #    130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__130.out',
-  #    140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__140.out',
-  #    150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__150.out',
-  #    160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__160.out',
-  #}),
+  'DNN' : OrderedDict({
+      75  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__075.out',
+      80  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__080.out',
+      85  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__085.out',
+      90  : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__090.out',
+      100 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__100.out',
+      110 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__110.out',
+      120 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_DNN_Low/mkCombine__Asym_fitted_dijet_M_DNN_Low__ALL__120.out',
+      130 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__130.out',
+      140 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__140.out',
+      150 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__150.out',
+      160 : '/cms/ldap_home/bhoh/latinos/jobs/mkCombine__Asym_fitted_dijet_M_high_DNN_High/mkCombine__Asym_fitted_dijet_M_high_DNN_High__ALL__160.out',
+  }),
 }
 
 
@@ -119,34 +119,44 @@ class CombiPlot:
             self._values[tag_key][row].append( float(x.split("BR <")[-1]) )
             row +=1
       Nmass=len(file_dict.keys())
-      self.drawExpObsLimits(tag_key, Nmass)
+      self.drawExpObsLimits(tag_key, Nmass, None)
+      #self.drawExpObsLimits(tag_key, Nmass, '8tev')
     expAll = [('8tev','8 TeV',ROOT.kBlack),('not_flip','not flip',ROOT.kGreen),('flip_all','flip',ROOT.kYellow),('BDT','BDT',ROOT.kBlue),('DNN','DNN',ROOT.kRed)] #(<tag_key>,<label>,<color>)
 
     Nmass = len(masses)
     print "Nmass", Nmass
     self.drawExpLimitsAll(expAll)
 
-  def drawExpObsLimits(self,tag_key,Nmass):
+  def drawExpObsLimits(self,tag_key,Nmass, reference=None):
    
     tcanvas = ROOT.TCanvas( 'tcanvas', 'distro',800,600)
     tcanvas.cd()
     # Making tgraphs for each items
     tgr_cls_obs     = ROOT.TGraph(Nmass)
     tgr_cls_exp     = ROOT.TGraph(Nmass)
+    if not reference == None:
+      tgr_cls_ref     = ROOT.TGraph(Nmass - 4)
     tgr_cls_exp_pm1 = ROOT.TGraphAsymmErrors(Nmass)
     tgr_cls_exp_pm2 = ROOT.TGraphAsymmErrors(Nmass)
     tgr_cls_obs.SetLineWidth(2)
     tgr_cls_exp.SetLineWidth(4)
+    if not reference == None:
+      tgr_cls_ref.SetLineWidth(4)
     tgr_cls_exp_pm1.SetLineWidth(2)
     tgr_cls_exp_pm2.SetLineWidth(2)
 
 
     tgr_cls_exp.SetLineColor(ROOT.kRed)
+    if not reference == None:
+      tgr_cls_ref.SetLineColor(ROOT.kBlack)
     tgr_cls_exp_pm1.SetLineColor(ROOT.kGreen)
     tgr_cls_exp_pm2.SetLineColor(ROOT.kYellow)
     tgr_cls_exp_pm1.SetFillColor(ROOT.kGreen)
     tgr_cls_exp_pm2.SetFillColor(ROOT.kYellow)
 
+    if not reference == None:
+      for i in range(Nmass-4):
+        tgr_cls_ref.SetPoint(i,self._values[reference][0][i], self._values[reference][4][i])
     for i in range(Nmass):
       tgr_cls_obs.SetPoint(i,self._values[tag_key][0][i], self._values[tag_key][1][i])
       tgr_cls_exp.SetPoint(i,self._values[tag_key][0][i], self._values[tag_key][4][i])
@@ -183,12 +193,16 @@ class CombiPlot:
     #tgr_cls_exp_pm2.Draw("a3 same")
     tgr_cls_exp_pm1.Draw("3 same")
     tgr_cls_exp.Draw("l same")
+    if not reference == None:
+      tgr_cls_ref.Draw("l same")
     #tgr_cls_obs.Draw("pl same")
 
     leg= ROOT.TLegend(0.35,0.75,0.6,0.94);
     leg.SetFillColor(0);
     leg.SetBorderSize(0);
     #leg.SetTextFont(40);
+    if not reference == None:
+      leg.AddEntry(tgr_cls_ref,     "8TeV median expected","l");
     #leg.AddEntry(tgr_cls_obs,    "Observed","l");
     leg.AddEntry(tgr_cls_exp,     "Median expected","l");
     leg.AddEntry(tgr_cls_exp_pm1, "68% expected","f");

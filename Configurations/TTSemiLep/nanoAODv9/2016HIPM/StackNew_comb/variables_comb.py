@@ -15,6 +15,15 @@ except ImportError:
 include_mva = True
 exclude_BDT = True
 
+variables['Event'] = {
+    #'name' : '1',
+    'name' : '(status_nom==0)+(-9999)*(status_nom>0)+(-9999)*(status_nom<0)',
+    'range':(1,0,2),
+    'xaxis':'1',
+    'fold': 0
+}
+
+
 variables['3_4rd_leading_b_disc'] = {
     'name' : ('Jet_btagDeepFlavB[SelectedBJetIdx[2]]','Jet_btagDeepFlavB[SelectedBJetIdx[3]]'),
     'unroll' : True,
@@ -29,7 +38,8 @@ name_template = "{0}*({1}==1) + (-9999)*({1}==0)"
 
 
 #for key in ["initial_dijet_M_nom",'initial_dijet_M_high_nom','fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
-for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
+for key in ["initial_dijet_M_nom",'fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
+#for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
 
   variables[key.replace("_nom","")] = {
       'name' : name_template.format(key,common_KF_cuts),
@@ -53,14 +63,16 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
   }
-  if include_mva:
+
+if include_mva:
+  for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
     mva_template = '(({MVA_VAR}>{MVA_CUT})*(179.9*({VAR2}>=180)+({VAR2}<180)*{VAR2}+180)+({MVA_VAR}<={MVA_CUT})*(179.9*({VAR1}>=180)+({VAR1}<180)*{VAR1}))/{BIN_INTERVAL}'
     mva_template_failMVA = '(({MVA_VAR}<={MVA_CUT})*({VAR})+({MVA_VAR}>{MVA_CUT})*999)'
     mva_template_passMVA = '(({MVA_VAR}>{MVA_CUT})*({VAR})+({MVA_VAR}<={MVA_CUT})*999)'
 
     #2016 : set sig 100, bkg 1000 optimize S/sqrt(S+B) 
-    Cut_DNN_High_nom  = 0.7546
-    Cut_DNN_Low_nom   = 0.7036
+    Cut_DNN_High_nom  = 0.6994
+    Cut_DNN_Low_nom   = 0.6630
     Cut_BDT_High_nom  = 0.1538
     Cut_BDT_Low_nom   = 0.0287
     Name_DNN_High_nom = mva_template.format(MVA_VAR='DNN_High_nom', MVA_CUT = Cut_DNN_High_nom,VAR1='fitted_dijet_M_nom',VAR2=key,BIN_INTERVAL='4.') 
@@ -110,5 +122,20 @@ for key in ['fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
           'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
       }
 
+  variables["DNN_mass"] = {
+      'name' : name_template.format("DNN_mass_nom",common_KF_cuts),
+      'range':(20,0,1),
+      'xaxis':'DNN score',
+      'fold':0,
+      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+  
+  }
+  variables["DNN_mass"+"_down_type_jet_b_tagged"] = {
+      'name' : name_template.format("DNN_mass_nom",common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
+      'range':(20,0,1),
+      'xaxis':'DNN score',
+      'fold':0,
+      'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
+  }
 
 print "len(variables)=",len(variables)

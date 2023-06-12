@@ -42,7 +42,7 @@ file_names = {
   ],
   ('2016HIPM','CHToCB_Train') :
   [
-    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016HIPM_Train.root',
@@ -56,7 +56,7 @@ file_names = {
   ],
   ('2016noHIPM','CHToCB_Train') :
   [
-    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Train.root',
+    '/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016noHIPM_Train.root',

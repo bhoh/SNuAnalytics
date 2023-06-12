@@ -2,7 +2,7 @@ import ROOT
 import sys
 
 
-
+f = ROOT.TFile("Likelihood.root","UPDATE")
 
 mass = "080"
 mass = str( sys.argv[1] )
@@ -18,8 +18,10 @@ if mass not in ["SM", "075", "080", "085", "090", "100", "110", "120", "130", "1
 
 if mass == "SM":
   fIn = "/xrootd/store/user/bhoh/Latino/HWWNano/Summer20UL18_106x_nAODv9_Full2018v9/CHToCBLepton2018v9__CHToCBJetMETCorr2018v9__kinFitTTSemiLepV5__mvaTreeCHToCB/nanoLatino_TTToSemiLeptonic__part1*.root"
+  fIn = "/xrootd/store/user/bhoh/Latino/HWWNano/Summer20UL17_106x_nAODv9_Full2017v9/CHToCBLepton2017v9__CHToCBJetMETCorr2017v9__kinFitTTSemiLepV5__mvaTreeCHToCB/nanoLatino_TTToSemiLeptonic__part1*.root"
 else:
   fIn = "/xrootd/store/user/bhoh/Latino/HWWNano/Summer20UL18_106x_nAODv9_Full2018v9/CHToCBLepton2018v9__CHToCBJetMETCorr2018v9__kinFitTTSemiLepV5__mvaTreeCHToCB/nanoLatino_CHToCB_M{MASS}__part*.root".format(MASS=mass)
+  fIn = "/xrootd/store/user/bhoh/Latino/HWWNano/Summer20UL17_106x_nAODv9_Full2017v9/CHToCBLepton2017v9__CHToCBJetMETCorr2017v9__kinFitTTSemiLepV5__mvaTreeCHToCB/nanoLatino_CHToCB_M{MASS}__part*.root".format(MASS=mass)
 
 
 #"root://cms-xrdr.private.lo:2094///xrd/store/user/bhoh/Latino/HWWNano//Summer20UL18_106x_nAODv9_Full2018v9/CHToCBLepton2018v9__CHToCBJetMETCorr2018v9__kinFitTTSemiLepV5__mvaTreeCHToCB//nanoLatino_CHToCB_M150__part0.root"
@@ -50,20 +52,17 @@ pad1.cd()
 #fChain.Draw("gen_tt_dphi>>h1(50,{MIN},{MAX})".format(MIN=histo_min,MAX=histo_max),"(gen_tt_dphi>0)*XSWeight")
 #fChain.Draw("rand_tt_dphi>>h2(50,{MIN},{MAX})".format(MIN=histo_min,MAX=histo_max),"(rand_tt_dphi>0)*XSWeight")
 
-# histogram for normalization
-fChain.Draw("1.>>n1","({VAR}>0)*XSWeight".format(VAR=variable1))
-fChain.Draw("1.>>n2","({VAR}>0)*XSWeight".format(VAR=variable2))
-
 # histogram for plotting
-fChain.Draw("{VAR}>>h1(50,{MIN},{MAX})".format(VAR=variable1,MIN=histo_min,MAX=histo_max),"({VAR}>0)*XSWeight".format(VAR=variable1))
-fChain.Draw("{VAR}>>h2(50,{MIN},{MAX})".format(VAR=variable2,MIN=histo_min,MAX=histo_max),"({VAR}>0)*XSWeight".format(VAR=variable2))
+fChain.Draw("TMath::Min(TMath::Max({VAR},{MIN}+0.01),{MAX}-0.01)>>h1(50,{MIN},{MAX})".format(VAR=variable1,MIN=histo_min,MAX=histo_max),"({VAR}>0)*XSWeight".format(VAR=variable1))
+fChain.Draw("TMath::Min(TMath::Max({VAR},{MIN}+0.01),{MAX}-0.01)>>h2(50,{MIN},{MAX})".format(VAR=variable2,MIN=histo_min,MAX=histo_max),"({VAR}>0)*XSWeight".format(VAR=variable2))
+
 
 #
-n1 = ROOT.gROOT.FindObject("n1").Integral()
-n2 = ROOT.gROOT.FindObject("n2").Integral()
-
 h1 = ROOT.gROOT.FindObject("h1")
 h2 = ROOT.gROOT.FindObject("h2")
+#
+n1 = h1.Integral()
+n2 = h2.Integral()
 #
 h1.Scale(1/n1)
 h2.Scale(1/n2)
@@ -116,4 +115,20 @@ CMS_lumi.CMS_lumi(pad1, 4, 0)
 cc.Update()
 
 cc.SaveAs("signalKF_{VAR}_M{MASS}.png".format(VAR=variable1, MASS=mass))
+
+f.cd()
+
+h1.Sumw2()
+h2.Sumw2()
+h1.Write("{VAR}_{MASS}".format(VAR=variable1, MASS=mass))
+h2.Write("{VAR}_{MASS}".format(VAR=variable2, MASS=mass))
+
+h3 = h1.Clone("likelihood_ratio")
+h4 = h1.Clone("likelihood_divide")
+h4.Add(h2)
+h3.Divide(h4)
+
+h3.GetYaxis().SetRangeUser(0, 1)
+
+h3.Write("likelihood_ratio_{VAR}_{MASS}".format(VAR=variable1.replace("matched_",""), MASS=mass))
 

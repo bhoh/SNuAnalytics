@@ -27,7 +27,7 @@ import sys
 
 
 class KinFitterProducer(Module):
-    def __init__(self, cmssw, syst_suffix='nom', lowerBjetPt=False,branch_map=''):
+    def __init__(self, cmssw, syst_suffix='nom', lowerBjetPt=False, noRegCorr=False,branch_map=''):
 
         # change this part into correct path structure... 
 
@@ -40,6 +40,7 @@ class KinFitterProducer(Module):
 
         self._syst_suffix = syst_suffix
         self._lowerBjetPt = lowerBjetPt
+        self._noRegCorr   = noRegCorr
         cmssw_base = os.getenv('CMSSW_BASE')
         
 
@@ -209,6 +210,14 @@ class KinFitterProducer(Module):
         for nameBranches in self.newbranches_I:
           self.out.branch(nameBranches ,  "I");
 
+
+        self._fLDroot = ROOT.TFile("/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/nanoAODv9/2018/StackNew_comb/signal_study/Likelihood.root","READ")
+        self._had_top_mass_LD = self._fLDroot.Get("likelihood_ratio_had_top_mass_flavCorr_SM")
+        self._lep_top_mass_LD = self._fLDroot.Get("likelihood_ratio_lep_top_mass_flavCorr_SM")
+        self._mbl_LD          = self._fLDroot.Get("likelihood_ratio_mbl_flavCorr_SM")
+
+
+
     def endFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
         pass
 
@@ -216,7 +225,10 @@ class KinFitterProducer(Module):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         # top mass 171.77 \pm 0.38 GeV
         # https://cms.cern/news/cms-collaboration-measures-mass-top-quark-unparalleled-accuracy
-        self._fitter = ROOT.TKinFitterDriver(int(self._Year), ROOT.Double(171.77))
+        self._fitter = ROOT.TKinFitterDriver(int(self._Year), ROOT.Double(172.5))
+        self._fitter.Set_had_top_mass_LD(self._had_top_mass_LD)
+        self._fitter.Set_lep_top_mass_LD(self._lep_top_mass_LD)
+        self._fitter.Set_mbl_LD(self._mbl_LD)
         event = mappedEvent(event, mapname=self._branch_map)
         #muons = Collection(event, "Muon")
         #electrons = Collection(event, "Electron")
@@ -282,11 +294,40 @@ class KinFitterProducer(Module):
           tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
           # set jet resolution
           jetPtResolution_, jetEtaResolution_, jetPhiResolution_ = self.getJetPtResolution(tmp_jet, event.fixedGridRhoFastjetAll)
-          # sigma = 1.482 * IQR 
-          jetPtBregCorr_ = OrigJet[jet.jetIdx].bRegCorr
-          jetPtBregRes_  = 1.482 * OrigJet[jet.jetIdx].bRegRes
-          jetPtCregCorr_ = OrigJet[jet.jetIdx].cRegCorr
-          jetPtCregRes_  = 1.482 * OrigJet[jet.jetIdx].cRegRes
+          if self._noRegCorr == False:
+            # sigma = 1.482 * IQR
+            jetPtBregCorr_ = OrigJet[jet.jetIdx].bRegCorr
+            jetPtBregRes_  = 1.482 * OrigJet[jet.jetIdx].bRegRes
+            jetPtCregCorr_ = OrigJet[jet.jetIdx].cRegCorr
+            jetPtCregRes_  = 1.482 * OrigJet[jet.jetIdx].cRegRes
+          else:
+            jetPtBregCorr_ = 1.
+            jetPtBregRes_  = jetPtResolution_
+            jetPtCregCorr_ = 1.
+            jetPtCregRes_  = jetPtResolution_
+
+
+          # 3% of jet pT is assigned as conservative uncertainties.
+          if "RegCorr" in self._syst_suffix:
+            if   "bRegCorrUp" in self._syst_suffix:
+              jetPtBregCorr_ += 0.03
+            elif "bRegCorrDown" in self._syst_suffix:
+              jetPtBregCorr_ -= 0.03 if jetPtBregCorr_ > 0.03 else 0
+            elif "cRegCorrUp" in self._syst_suffix:
+              jetPtCregCorr_ += 0.03
+            elif "cRegCorrDown" in self._syst_suffix:
+              jetPtCregCorr_ -= 0.03 if jetPtCregCorr_ > 0.03 else 0
+
+          elif "RegRes" in self._syst_suffix:
+            if   "bRegResUp" in self._syst_suffix:
+              jetPtBregRes_  += 0.1
+            elif "bRegResDown" in self._syst_suffix:
+              jetPtBregRes_  -= 0.1 if jetPtBregRes_ > 0.1 else 0
+            elif "cRegResUp" in self._syst_suffix:
+              jetPtCregRes_  += 0.1
+            elif "cRegResDown" in self._syst_suffix:
+              jetPtCregRes_  -= 0.1 if jetPtCregRes_ > 0.1 else 0
+
           jetPtResolution.push_back(jetPtResolution_)
           jetPtBregCorr.push_back(jetPtBregCorr_)
           jetPtBregRes .push_back(jetPtBregRes_ )
@@ -320,7 +361,8 @@ class KinFitterProducer(Module):
         #self._fitter.SetJetEtaResolution(jetEtaResolution)
         #self._fitter.SetJetPhiResolution(jetPhiResolution)
         self._fitter.SetMETShift(METShiftX, METShiftY)
-        self._fitter.FindBestChi2Fit()
+        #self._fitter.FindBestChi2Fit()
+        self._fitter.FindBestLDFit()
         #self._fitter.FindBestSelTopFit(False,True,True) #old. closest leptonic top, closet had. top, max. had. top
         #void TKinFitterDriver::FindBestSelTopFit(bool IsMaxHadTopPt, bool IsClosestHadTopM, bool IsMaxLepTopPt, bool IsClosestLepTopM){
         #self._fitter.FindBestSelTopFit(True,True,False,True,False)
@@ -401,6 +443,10 @@ class KinFitterProducer(Module):
 
     def findJetPtSystAttr(self,object_,suffix_):
         if "unclustEn" in self._syst_suffix:
+          syst_suffix = "{}_nom".format(suffix_)
+        elif "RegCorr" in self._syst_suffix:
+          syst_suffix = "{}_nom".format(suffix_)
+        elif "RegRes" in self._syst_suffix:
           syst_suffix = "{}_nom".format(suffix_)
         else:
           syst_suffix = "{}_{}".format(suffix_, self._syst_suffix)

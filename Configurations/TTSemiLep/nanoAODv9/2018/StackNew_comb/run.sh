@@ -1,8 +1,8 @@
 
-mkShapesMulti.py --pycfg=configuration_charge.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_charge
+#mkShapesMulti.py --pycfg=configuration_charge.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_charge
 #mkShapesMulti.py --pycfg=configuration_val.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_val
 #sleep 30m;
-#mkShapesMulti.py --pycfg=configuration_final.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_final
+mkShapesMulti.py --pycfg=configuration_final.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_final
 #mkShapesMulti.py --pycfg=configuration_stat_only.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_stat_only
 #sleep 30m;
 #mkShapesMulti.py --pycfg=configuration_noBtagNormSF.py --batchSplit=AsMuchAsPossible --doBatch --treeName Events --outputDir=../../../../../../../../../../../../cms_scratch/bhoh/rootFile_2018_SKIM9_noBtagNormSF

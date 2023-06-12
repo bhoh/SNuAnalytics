@@ -4,4 +4,5 @@ InputFile='rootFile_2017_SKIM9_final/PDF/results_unc.root'
 #InputFile_ele='rootFile_2017_SKIM9_ele/PDF/results_suppressZeros.root'
 #InputFile_mu='rootFile_2017_SKIM9_mu/PDF/results_suppressZeros.root'
 
-python mkDatacards_CHToCB.py --pycfg=configuration_comb.py --inputFile=$InputFile --outputDirDatacard=Datacards --structureFile=structure.py
+python mkDatacards_CHToCB.py --pycfg=configuration_comb.py --inputFile=$InputFile --outputDirDatacard=Datacards --structureFile=structure.py &
+python mkDatacards_CHToCB.py --pycfg=configuration_comb.py --inputFile=$InputFile --outputDirDatacard=Datacards_blind --structureFile=structure_blind.py

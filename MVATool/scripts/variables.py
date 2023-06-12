@@ -12,9 +12,13 @@ class Variables():
     self.include_dijet_pt = False
     self.include_dijet_E = False
     self.include_leptonic_side = False
+
+    self.include_ctagging = True
+    self.include_btagging = True
     
     self.include_year_label = True
     self.include_mass_label = True
+    self.include_dijet_M = True
   
   # do not add spectator, it should be add when using it after training. but TMVAfiller module don't support spectators
   #spectators['fitted_dijet_M_nom'] = {
@@ -45,18 +49,58 @@ class Variables():
           'type' : 'F'
         }
     
-    variables['csv_jet0_mvaCHToCB_nom'] = {
-        'definition' : 'csv_jet0_mvaCHToCB_nom',
-        'type' : 'F'
-      }
-    variables['csv_jet1_mvaCHToCB_nom'] = {
-        'definition' : 'csv_jet1_mvaCHToCB_nom',
-        'type' : 'F'
-      }
-    variables['csv_jet2_mvaCHToCB_nom'] = {
-        'definition' : 'csv_jet2_mvaCHToCB_nom',
-        'type' : 'F'
-      }
+
+    if self.include_ctagging:
+      variables['CvB_jet0_mvaCHToCB_nom'] = {
+          'definition' : 'CvB_jet0_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['CvB_jet1_mvaCHToCB_nom'] = {
+          'definition' : 'CvB_jet1_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['CvB_jet2_mvaCHToCB_nom'] = {
+          'definition' : 'CvB_jet2_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+
+      variables['CvL_jet0_mvaCHToCB_nom'] = {
+          'definition' : 'CvL_jet0_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['CvL_jet1_mvaCHToCB_nom'] = {
+          'definition' : 'CvL_jet1_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['CvL_jet2_mvaCHToCB_nom'] = {
+          'definition' : 'CvL_jet2_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+
+    if self.include_btagging:
+      variables['csv_jet0_mvaCHToCB_nom'] = {
+          'definition' : 'csv_jet0_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['csv_jet1_mvaCHToCB_nom'] = {
+          'definition' : 'csv_jet1_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+      variables['csv_jet2_mvaCHToCB_nom'] = {
+          'definition' : 'csv_jet2_mvaCHToCB_nom',
+          'type' : 'F'
+        }
+
+    if self.include_dijet_M:
+      variables['fitted_dijet_M_nom'] = {
+          'definition' : 'fitted_dijet_M_nom',
+          'type' : 'F'
+        }
+      variables['fitted_dijet_M_high_nom'] = {
+          'definition' : 'fitted_dijet_M_high_nom',
+          'type' : 'F'
+        }
+
     if self.include_leptonic_side:
       variables['csv_jet3_mvaCHToCB_nom'] = {
           'definition' : 'csv_jet3_mvaCHToCB_nom',
@@ -477,7 +521,7 @@ class Variables():
           'type' : 'F'
         }
     #variables['hadronic_top_M_nom'] = {
-    #    'definition' : 'hadronic_top_M_nom',
+    #    'definition' : 'hadronic_top_mass_mvaCHToCB_nom',
     #    'type' : 'F'
     #  }
     #variables['leptonic_top_M_nom'] = {

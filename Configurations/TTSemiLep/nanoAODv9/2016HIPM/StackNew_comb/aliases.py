@@ -167,7 +167,7 @@ aliases['nBJets_WP_M_25to30'] = {
 
 
 
-aliases['btagSF'] = {
+aliases['OTF_btagSF'] = {
         'expr': 'TMath::Exp(Sum$(TMath::Log(((Jet_pt_nom[CleanJet_jetIdx]>25 && abs(CleanJet_eta)<2.4))*Jet_btagSF_deepjet_shape[CleanJet_jetIdx]+1*(Jet_pt_nom[CleanJet_jetIdx]<=25 || abs(CleanJet_eta)>=2.4))))',
     'samples': mc
 }
@@ -184,13 +184,13 @@ jes_syst = ['jesFlavorQCD','jesTotalNoFlavor']
 for shift in jes_syst + ['lf', 'hf', 'lfstats1', 'lfstats2', 'hfstats1', 'hfstats2', 'cferr1', 'cferr2']:
  
     shift_ = shift.replace("jesTotalNoFlavor","jesNoFlavor")
-    aliases['btagSF%sup' % shift] = {
-        'expr': aliases['btagSF']['expr'].replace('Jet_btagSF_deepjet_shape', 'Jet_btagSF_deepjet_shape_up_' + shift_),
+    aliases['OTF_btagSF%sup' % shift] = {
+        'expr': aliases['OTF_btagSF']['expr'].replace('Jet_btagSF_deepjet_shape', 'Jet_btagSF_deepjet_shape_up_' + shift_),
         'samples': mc
     }
 
-    aliases['btagSF%sdown' % shift] = {
-        'expr': aliases['btagSF']['expr'].replace('Jet_btagSF_deepjet_shape', 'Jet_btagSF_deepjet_shape_down_' + shift_),
+    aliases['OTF_btagSF%sdown' % shift] = {
+        'expr': aliases['OTF_btagSF']['expr'].replace('Jet_btagSF_deepjet_shape', 'Jet_btagSF_deepjet_shape_down_' + shift_),
         'samples': mc
     }
 

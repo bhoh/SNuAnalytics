@@ -17,7 +17,7 @@ if __name__ == '__main__':
     combine_base = '/cms/ldap_home/bhoh/HiggsCombTool/CMSSW_10_6_4/src/HiggsAnalysis/CombinedLimit'
     PWD = '/cms/ldap_home/bhoh/latinos/CMSSW_10_6_4/src/SNuAnalytics/Configurations/TTSemiLep/scripts/batch'
     
-    seed = '12345'
+    seed = '12349'
     #nPoints = 1000
     #points = [0.00000000000001+0.00000000000001*i*i*i*i for i in range(nPoints)] # from 0.00001 to 500 points with 0.00005 steps
     #

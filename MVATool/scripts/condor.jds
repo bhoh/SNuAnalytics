@@ -14,7 +14,7 @@ error = job_$(Process).err
 #+SingularityImage = "/cvmfs/singularity.opensciencegrid.org/opensciencegrid/tensorflow-gpu:2.3-cuda-10.1"
 #+SingularityBindCVMFS = True
 
-request_cpus=2
+request_cpus=8
 request_GPUs = 0
 
-queue 10
+queue 54
