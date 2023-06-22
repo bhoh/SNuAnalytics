@@ -550,6 +550,7 @@ if include_mva:
     'DNN_Low_nom',
     'DNN_mass_High_nom',
     'DNN_mass_Low_nom',
+    'DNN_mass_nom',
     'csv_jet0_mvaCHToCB_nom',
     'csv_jet1_mvaCHToCB_nom',
     'csv_jet2_mvaCHToCB_nom',

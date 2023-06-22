@@ -34,7 +34,7 @@ variables['3_4rd_leading_b_disc'] = {
     'cuts': ['dbl_4j','dbl_4j_eeORmmORemORme'],
 }
 common_KF_cuts = '(status_nom==0)'
-name_template = "{0}*({1}==1) + (-9999)*({1}==0)"
+name_template = "{0}*({1}==1) + (-0.01)*({1}==0)"
 #( down_type_jet_b_tagged_nom>2 && down_type_jet_b_tagged_nom==1)
 
 #for key in ["initial_dijet_M_nom",'initial_dijet_M_high_nom','fitted_dijet_M_nom','fitted_dijet_M_high_nom']:
@@ -124,7 +124,7 @@ if include_mva:
 
   variables["DNN_mass"] = {
       'name' : name_template.format("DNN_mass_nom",common_KF_cuts),
-      'range':(20,0,1),
+      'range':(11,-0.1,1),
       'xaxis':'DNN score',
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],
@@ -132,7 +132,7 @@ if include_mva:
   }
   variables["DNN_mass"+"_down_type_jet_b_tagged"] = {
       'name' : name_template.format("DNN_mass_nom",common_KF_cuts + "*" + "(nBJets_WP_M >2 && down_type_jet_b_tagged_nom==1)"),
-      'range':(20,0,1),
+      'range':(11,-0.1,1),
       'xaxis':'DNN score',
       'fold':0,
       'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown'],

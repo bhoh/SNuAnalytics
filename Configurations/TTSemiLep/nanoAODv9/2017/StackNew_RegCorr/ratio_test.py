@@ -3,8 +3,8 @@ import numpy as np
 import root_numpy as rnp
 from array import array
 
-f1  = ROOT.TFile("rootFile_2018_SKIM9_RegCorr/hadd.root", "READ")
-f2 = ROOT.TFile("../StackNew_comb/rootFile_2018_SKIM9_final/hadd.root", "READ")
+f1  = ROOT.TFile("rootFile_2017_SKIM9_RegCorr/hadd.root", "READ")
+f2 = ROOT.TFile("../StackNew_comb/rootFile_2017_SKIM9_final/hadd.root", "READ")
 
 
 def testKS(h1, h2):
@@ -92,10 +92,15 @@ def drawGraph(canvas, x_name, legend1, legend2, legend3, ratio1, ratio2, ratio3,
   hRef.SetFillColor(12)
   hRef.SetFillStyle(3004)
   for iBin in range(hRef.GetNbinsX()):
-      error   = histo1.GetBinError(iBin+1)
-      content = histo1.GetBinContent(iBin+1)
-      print(error, content)
-      hRef.SetBinError(iBin+1,   error/content if content > 0 else 0 )
+      error1   = histo1.GetBinError(iBin+1)
+      content1 = histo1.GetBinContent(iBin+1)
+      error2   = histo2.GetBinError(iBin+1)
+      content2 = histo2.GetBinContent(iBin+1)
+
+      SR = lambda x,y: (x**2 + y**2)**(0.5)
+      error = SR(error1/content1 if content1 > 0 else 0, error2/content2 if content2 > 0 else 0)
+      print(error)
+      hRef.SetBinError(iBin+1,   error)
       hRef.SetBinContent(iBin+1, 1.)
   hRef.Draw("E2 same")
 
@@ -105,9 +110,10 @@ def drawGraph(canvas, x_name, legend1, legend2, legend3, ratio1, ratio2, ratio3,
   # include third graph
   if (ratio3 is not None) and (histo3 is not None):
     legend.AddEntry(gr3, legend3, "lp")
-  legend.AddEntry(hRef, "MC stat. error", "f")
+  legend.AddEntry(hRef, "Stat. error", "f")
 
   legend.Draw("same")
+
 
   # TCanvas.Update() draws the frame, after which one can change it
   canvas.Update()
@@ -117,20 +123,32 @@ def drawGraph(canvas, x_name, legend1, legend2, legend3, ratio1, ratio2, ratio3,
   canvas.Print("bc_corr_ratio_test_2017.pdf")
 
 
-def calcRatio(dir1, dir2, dir3):
+def calcRatio(dir1, dir2, dir3, syst=None):
   samples_mc =  ["histo_TTLJ_jj", "histo_TTLJ_cc", "histo_TTLJ_bj", "histo_TTLJ_bb",]
   samples_mc += ["histo_TTLL_jj", "histo_TTLL_cc", "histo_TTLL_bj", "histo_TTLL_bb",]
   samples_mc += ["histo_ST", "histo_Wjets", "histo_DY", "histo_QCD", "histo_TTZjets", "histo_TTWjets", "histo_WW", "histo_WZ", "histo_ZZ", "histo_ttH"]
   
+  if syst is not None:
+    samples_mc1 = map(lambda hName: hName + "_" + syst[0] if not "histo_QCD" in hName else hName, samples_mc) if syst[0] is not None else samples_mc
+    samples_mc2 = map(lambda hName: hName + "_" + syst[1] if not "histo_QCD" in hName else hName, samples_mc) if syst[1] is not None else samples_mc
+    samples_mc3 = map(lambda hName: hName + "_" + syst[2] if not "histo_QCD" in hName else hName, samples_mc) if syst[2] is not None else samples_mc
+  else:
+    samples_mc1 = samples_mc
+    samples_mc2 = samples_mc
+    samples_mc3 = samples_mc
+  print(samples_mc1)
+  print(samples_mc2)
+  print(samples_mc3)
+
   samples_data = ["histo_DATA"]
-  h1 = addHist(samples_mc, dir1)
+  h1 = addHist(samples_mc1, dir1)
   # flip dir1 and dir2 if there's 'jes' or 'noSmear'
   h2 = addHist(samples_data, dir2 if 'jes' in dir1 else dir2 if 'noSmear' in dir1 else dir1)
-  h3 = addHist(samples_mc, dir2)
+  h3 = addHist(samples_mc2, dir2)
   # flip dir2 and dir1 if there's 'jes' or 'noSmear'
   h4 = addHist(samples_data, dir1 if 'jes' in dir2 else dir1 if 'noSmear' in dir2 else dir2)
   if dir3 is not None:
-    h5 = addHist(samples_mc, dir3)
+    h5 = addHist(samples_mc3, dir3)
     # flip dir3 and dir2 if there's 'jes' or 'noSmear'
     h6 = addHist(samples_data, dir1 if 'jes' in dir3 else dir1 if 'noSmear' in dir3 else dir3)
   
@@ -236,6 +254,17 @@ if __name__ == "__main__":
   baseDir_noRegCorr_fitted_dijet_M1 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
   baseDir_noRegCorr_fitted_dijet_M2 = "sng_4j_eleORmuCH_2b/fitted_dijet_M/"
 
+  baseDir_jesTotalNoFlavor_fitted_dijet_M1 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jesTotalNoFlavor_fitted_dijet_M2 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jesTotalNoFlavor_fitted_dijet_M3 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+
+  baseDir_jesFlavorQCD_fitted_dijet_M1 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jesFlavorQCD_fitted_dijet_M2 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jesFlavorQCD_fitted_dijet_M3 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+
+  baseDir_jer_fitted_dijet_M1 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jer_fitted_dijet_M2 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
+  baseDir_jer_fitted_dijet_M3 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
 
   c1 = ROOT.TCanvas( 'c1', 'A Simple Graph Example', 200, 10, 700, 500 )
   
@@ -273,5 +302,8 @@ if __name__ == "__main__":
   drawGraph(c1, "2nd leading b jet p_{T}", "corr., no smear.", "corr., smear.", None, *calcRatio(baseDir_RegCorr_noSmear_2nd_b_jet1, baseDir_RegCorr_noSmear_2nd_b_jet2, None))
   #
   drawGraph(c1, "M_{jj}", "b corr.", "no b corr.", None, *calcRatio(baseDir_noRegCorr_fitted_dijet_M1, baseDir_noRegCorr_fitted_dijet_M2, None))
+  drawGraph(c1, "M_{jj}", "b corr.", "jesTotalNoFlavorUp", "jesTotalNoFlavorDown", *calcRatio(baseDir_jesTotalNoFlavor_fitted_dijet_M1, baseDir_jesTotalNoFlavor_fitted_dijet_M2, baseDir_jesTotalNoFlavor_fitted_dijet_M3, [None, "jesTotalNoFlavorUp", "jesTotalNoFlavorDown"]))
+  drawGraph(c1, "M_{jj}", "b corr.", "jesFlavorQCDUp", "jesFlavorQCDDown", *calcRatio(baseDir_jesFlavorQCD_fitted_dijet_M1, baseDir_jesFlavorQCD_fitted_dijet_M2, baseDir_jesFlavorQCD_fitted_dijet_M3, [None, "jesFlavorQCDUp", "jesFlavorQCDDown"]))
+  drawGraph(c1, "M_{jj}", "b corr.", "jerUp", "jerDown", *calcRatio(baseDir_jer_fitted_dijet_M1, baseDir_jer_fitted_dijet_M2, baseDir_jer_fitted_dijet_M3, [None, "jer_2017Up", "jer_2017Down"]))
   #
   c1.Print("bc_corr_ratio_test_2017.pdf]")

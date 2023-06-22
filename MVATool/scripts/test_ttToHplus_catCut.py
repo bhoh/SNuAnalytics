@@ -42,9 +42,9 @@ file_names = {
   ],
   ('2016HIPM','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016HIPM_Train.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2016HIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2016HIPM_Train.root',
@@ -56,9 +56,9 @@ file_names = {
   ],
   ('2016noHIPM','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016noHIPM_Train.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2016noHIPM_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2016noHIPM_Train.root',
@@ -70,9 +70,9 @@ file_names = {
   ],
   ('2017','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2017_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2017_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2017_Train.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2017_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2017_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2017_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2017_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2017_Train.root',
@@ -84,9 +84,9 @@ file_names = {
   ],
   ('2018','CHToCB_Train') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2018_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2018_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2018_Train.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2018_Train.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2018_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2018_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2018_Train.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2018_Train.root',
@@ -116,9 +116,9 @@ file_names = {
   ],
   ('2016HIPM','CHToCB_Test') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016HIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016HIPM_Test.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2016HIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016HIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2016HIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2016HIPM_Test.root',
@@ -130,9 +130,9 @@ file_names = {
   ],
   ('2016noHIPM','CHToCB_Test') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2016noHIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2016noHIPM_Test.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2016noHIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2016noHIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2016noHIPM_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2016noHIPM_Test.root',
@@ -144,9 +144,9 @@ file_names = {
   ],
   ('2017','CHToCB_Test') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2017_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2017_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2017_Test.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2017_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2017_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2017_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2017_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2017_Test.root',
@@ -158,9 +158,9 @@ file_names = {
   ],
   ('2018','CHToCB_Test') :
   [
-    '/cms_scratch/bhoh/mva_CHToCB_M075_2018_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M075_2018_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M080_2018_Test.root',
-    '/cms_scratch/bhoh/mva_CHToCB_M085_2018_Test.root',
+    #'/cms_scratch/bhoh/mva_CHToCB_M085_2018_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M090_2018_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M100_2018_Test.root',
     '/cms_scratch/bhoh/mva_CHToCB_M110_2018_Test.root',

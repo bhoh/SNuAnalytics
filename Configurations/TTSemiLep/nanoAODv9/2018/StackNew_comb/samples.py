@@ -100,7 +100,7 @@ GenLepMatch = '1'
 
 #pfCombinedInclusiveSecondaryVertexV2BJetTags (CSV) algorithm [26] loose working point.
 #SFweight=SFweight+'*btagSF*HEMweight'
-SFweight=SFweight+'*btagSF'
+SFweight=SFweight+'*OTF_btagSF'
 SFweight=SFweight+'*btagSFNorm_top'
 
 ################################################
@@ -122,7 +122,7 @@ elif '_noPreFireSF' in opt.pycfg:
 elif '_noPUweightSF' in opt.pycfg:
   SFweight=SFweight+'/puWeight'
 elif '_noBtagSF' in opt.pycfg:
-  SFweight=SFweight+'/btagSF/btagSFNorm_top'
+  SFweight=SFweight+'/OTF_btagSF/btagSFNorm_top'
 elif '_noBtagNormSF' in opt.pycfg:
   SFweight=SFweight+'/btagSFNorm_top'
 elif '_noPUjetIDSF' in opt.pycfg:
