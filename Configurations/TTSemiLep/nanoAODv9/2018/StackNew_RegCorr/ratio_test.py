@@ -142,13 +142,16 @@ def calcRatio(dir1, dir2, dir3, syst=None):
   samples_data = ["histo_DATA"]
   h1 = addHist(samples_mc1, dir1)
   # flip dir1 and dir2 if there's 'jes' or 'noSmear'
+  dir1 = dir1.replace("_corr_JERUp","").replace("_corr_JERDown","").replace("_corr_JER","")
   h2 = addHist(samples_data, dir2 if 'jes' in dir1 else dir2 if 'noSmear' in dir1 else dir1)
   h3 = addHist(samples_mc2, dir2)
   # flip dir2 and dir1 if there's 'jes' or 'noSmear'
+  dir2 = dir2.replace("_corr_JERUp","").replace("_corr_JERDown","").replace("_corr_JER","")
   h4 = addHist(samples_data, dir1 if 'jes' in dir2 else dir1 if 'noSmear' in dir2 else dir2)
   if dir3 is not None:
     h5 = addHist(samples_mc3, dir3)
     # flip dir3 and dir2 if there's 'jes' or 'noSmear'
+    dir3 = dir3.replace("_corr_JERUp","").replace("_corr_JERDown","").replace("_corr_JER","")
     h6 = addHist(samples_data, dir1 if 'jes' in dir3 else dir1 if 'noSmear' in dir3 else dir3)
   
   #ratio
@@ -265,6 +268,27 @@ if __name__ == "__main__":
   baseDir_jer_fitted_dijet_M2 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
   baseDir_jer_fitted_dijet_M3 = "###final:sng_4j_eleORmuCH_2b/fitted_dijet_M/"
 
+  baseDir_Wc_cRegRes_corr_JER1 = "sng_4j_eleORmuCH_2b/W_c_jet_cRegRes/"
+  baseDir_Wc_cRegRes_corr_JER2 = "sng_4j_eleORmuCH_2b/W_c_jet_cRegRes_corr_JER/"
+  
+  baseDir_jer_Wc_cRegRes_corr_JER1 = "sng_4j_eleORmuCH_2b/W_c_jet_cRegRes_corr_JER/"
+  baseDir_jer_Wc_cRegRes_corr_JER2 = "sng_4j_eleORmuCH_2b/W_c_jet_cRegRes_corr_JERUp/"
+  baseDir_jer_Wc_cRegRes_corr_JER3 = "sng_4j_eleORmuCH_2b/W_c_jet_cRegRes_corr_JERDown/"
+
+  baseDir_1st_b_jet_bRegRes_corr_JER1 = "dbl_4j_eeORmmORemORme_offZ/1st_leading_jet_pt_bRegRes/"
+  baseDir_1st_b_jet_bRegRes_corr_JER2 = "dbl_4j_eeORmmORemORme_offZ/1st_leading_jet_pt_bRegRes_corr_JER/"
+  
+  baseDir_jer_1st_b_jet_bRegRes_corr_JER1 = "dbl_4j_eeORmmORemORme_offZ/1st_leading_jet_pt_bRegRes_corr_JER/"
+  baseDir_jer_1st_b_jet_bRegRes_corr_JER2 = "dbl_4j_eeORmmORemORme_offZ/1st_leading_jet_pt_bRegRes_corr_JERUp/"
+  baseDir_jer_1st_b_jet_bRegRes_corr_JER3 = "dbl_4j_eeORmmORemORme_offZ/1st_leading_jet_pt_bRegRes_corr_JERDown/"
+
+  baseDir_2nd_b_jet_bRegRes_corr_JER1 = "dbl_4j_eeORmmORemORme_offZ/2nd_leading_jet_pt_bRegRes/"
+  baseDir_2nd_b_jet_bRegRes_corr_JER2 = "dbl_4j_eeORmmORemORme_offZ/2nd_leading_jet_pt_bRegRes_corr_JER/"
+  
+  baseDir_jer_2nd_b_jet_bRegRes_corr_JER1 = "dbl_4j_eeORmmORemORme_offZ/2nd_leading_jet_pt_bRegRes_corr_JER/"
+  baseDir_jer_2nd_b_jet_bRegRes_corr_JER2 = "dbl_4j_eeORmmORemORme_offZ/2nd_leading_jet_pt_bRegRes_corr_JERUp/"
+  baseDir_jer_2nd_b_jet_bRegRes_corr_JER3 = "dbl_4j_eeORmmORemORme_offZ/2nd_leading_jet_pt_bRegRes_corr_JERDown/"
+
   c1 = ROOT.TCanvas( 'c1', 'A Simple Graph Example', 200, 10, 700, 500 )
   
   c1.Print("bc_corr_ratio_test_2018.pdf[")
@@ -304,5 +328,12 @@ if __name__ == "__main__":
   drawGraph(c1, "M_{jj}", "b corr.", "jesTotalNoFlavorUp", "jesTotalNoFlavorDown", *calcRatio(baseDir_jesTotalNoFlavor_fitted_dijet_M1, baseDir_jesTotalNoFlavor_fitted_dijet_M2, baseDir_jesTotalNoFlavor_fitted_dijet_M3, [None, "jesTotalNoFlavorUp", "jesTotalNoFlavorDown"]))
   drawGraph(c1, "M_{jj}", "b corr.", "jesFlavorQCDUp", "jesFlavorQCDDown", *calcRatio(baseDir_jesFlavorQCD_fitted_dijet_M1, baseDir_jesFlavorQCD_fitted_dijet_M2, baseDir_jesFlavorQCD_fitted_dijet_M3, [None, "jesFlavorQCDUp", "jesFlavorQCDDown"]))
   drawGraph(c1, "M_{jj}", "b corr.", "jerUp", "jerDown", *calcRatio(baseDir_jer_fitted_dijet_M1, baseDir_jer_fitted_dijet_M2, baseDir_jer_fitted_dijet_M3, [None, "jer_2018Up", "jer_2018Down"]))
+
+  drawGraph(c1, "c resolution", "no corr", "JER corr.", None, *calcRatio(baseDir_Wc_cRegRes_corr_JER1, baseDir_Wc_cRegRes_corr_JER2, None))
+  drawGraph(c1, "c resolution", "JER corr.", "JER corr. Up", "JER corr. Down", *calcRatio(baseDir_jer_Wc_cRegRes_corr_JER1,baseDir_jer_Wc_cRegRes_corr_JER2,baseDir_jer_Wc_cRegRes_corr_JER3))
+  drawGraph(c1, "b resolution", "no corr", "JER corr.", None, *calcRatio(baseDir_1st_b_jet_bRegRes_corr_JER1, baseDir_1st_b_jet_bRegRes_corr_JER2, None))
+  drawGraph(c1, "b resolution", "JER corr.", "JER corr. Up", "JER corr. Down", *calcRatio(baseDir_jer_1st_b_jet_bRegRes_corr_JER1,baseDir_jer_1st_b_jet_bRegRes_corr_JER2,baseDir_jer_1st_b_jet_bRegRes_corr_JER3))
+  #drawGraph(c1, "b resolution", "no corr", "JER corr.", None, *calcRatio(baseDir_2nd_b_jet_bRegRes_corr_JER1, baseDir_2nd_b_jet_bRegRes_corr_JER2, None))
+  #drawGraph(c1, "b resolution", "JER corr.", "JER corr. Up", "JER corr. Down", *calcRatio(baseDir_jer_2nd_b_jet_bRegRes_corr_JER1,baseDir_jer_2nd_b_jet_bRegRes_corr_JER2,baseDir_jer_2nd_b_jet_bRegRes_corr_JER3))
   #
   c1.Print("bc_corr_ratio_test_2018.pdf]")

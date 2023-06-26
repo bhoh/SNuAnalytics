@@ -644,17 +644,17 @@ nuisances['unclustEn'] = {
     'FromNormTree': ['Jet_pt_unclustEnUp','Jet_pt_unclustEnDown'],
     'group': 'experimental',
 }
-nuisances['bRegCorr'] = {
-    'name': 'bRegCorr_2016',
-    'kind': 'branch_custom',
-    'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegCorrUp"),
-    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegCorrDown"),
-    'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrUp__mvaCHToCB_2016_jetMETSyst_bRegCorrUp')      ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_bRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrDown__mvaCHToCB_2016_jetMETSyst_bRegCorrDown')  ,
-    'group': 'experimental',
-}
+#nuisances['bRegCorr'] = {
+#    'name': 'bRegCorr_2016',
+#    'kind': 'branch_custom',
+#    'type': 'shape',
+#    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"bRegCorrUp"),
+#    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"bRegCorrDown"),
+#    'samples': dict((skey, ['1.','1.']) for skey in mc),
+#    'folderUp'   : makeMCDirectory('_jetMETSyst_bRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrUp__mvaCHToCB_2016_jetMETSyst_bRegCorrUp')      ,
+#    'folderDown' : makeMCDirectory('_jetMETSyst_bRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegCorrDown__mvaCHToCB_2016_jetMETSyst_bRegCorrDown')  ,
+#    'group': 'experimental',
+#}
 #nuisances['bRegRes'] = {
 #    'name': 'bRegRes_2016',
 #    'kind': 'branch_custom',
@@ -666,17 +666,17 @@ nuisances['bRegCorr'] = {
 #    'folderDown' : makeMCDirectory('_jetMETSyst_bRegResDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_bRegResDown__mvaCHToCB_2016_jetMETSyst_bRegResDown')  ,
 #    'group': 'experimental',
 #}
-nuisances['cRegCorr'] = {
-    'name': 'cRegCorr_2016',
-    'kind': 'branch_custom',
-    'type': 'shape',
-    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegCorrUp"),
-    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegCorrDown"),
-    'samples': dict((skey, ['1.','1.']) for skey in mc),
-    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrUp__mvaCHToCB_2016_jetMETSyst_cRegCorrUp')      ,
-    'folderDown' : makeMCDirectory('_jetMETSyst_cRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrDown__mvaCHToCB_2016_jetMETSyst_cRegCorrDown')  ,
-    'group': 'experimental',
-}
+#nuisances['cRegCorr'] = {
+#    'name': 'cRegCorr_2016',
+#    'kind': 'branch_custom',
+#    'type': 'shape',
+#    'BrFromToUp'  : GetJECVariationDict(RegCorr_branches,"cRegCorrUp"),
+#    'BrFromToDown' : GetJECVariationDict(RegCorr_branches,"cRegCorrDown"),
+#    'samples': dict((skey, ['1.','1.']) for skey in mc),
+#    'folderUp'   : makeMCDirectory('_jetMETSyst_cRegCorrUp')    if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrUp__mvaCHToCB_2016_jetMETSyst_cRegCorrUp')      ,
+#    'folderDown' : makeMCDirectory('_jetMETSyst_cRegCorrDown')  if not include_mva else  makeMCDirectory_mva('_jetMETSyst_cRegCorrDown__mvaCHToCB_2016_jetMETSyst_cRegCorrDown')  ,
+#    'group': 'experimental',
+#}
 #nuisances['cRegRes'] = {
 #    'name': 'cRegRes_2016',
 #    'kind': 'branch_custom',

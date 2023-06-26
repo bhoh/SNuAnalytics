@@ -26,7 +26,7 @@ if [ $1 -eq 0 ]; then
   combine -M FitDiagnostics -d $WORK_SPACE_DIR_75 -m 75 -n pull_75 --setParameters BR=0.000001 -t -1 --robustHesse 1 --robustFit 1 --setRobustFitTolerance 0.1 --stepSize 0.1 --rMin -1
 fi
 if [ $1 -eq 1 ]; then
-  combine -M FitDiagnostics -d $WORK_SPACE_DIR_80 -m 80 -n pull_80  --setParameters BR=0.00001 -t -1 --robustHesse 1 --robustFit 1 --setRobustFitTolerance 0.1 --stepSize 0.1
+  combine -M FitDiagnostics -d $WORK_SPACE_DIR_80 -m 80 -n pull_80  --setParameters BR=0.00001 -t -1 --robustHesse 1 --robustFit 1 --setRobustFitTolerance 0.1 --stepSize 0.1 --rMin -1
 fi
 if [ $1 -eq 2 ]; then
   combine -M FitDiagnostics -d $WORK_SPACE_DIR_85 -m 85 -n pull_85 --setParameters BR=0.000001 -t -1 --robustHesse 1 --robustFit 1 --setRobustFitTolerance 0.1 --stepSize 0.1 --rMin -1

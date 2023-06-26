@@ -469,6 +469,111 @@ variables['2nd_leading_jet_pt_jesFlavorQCDDown']={
     'fold':0
 
 }
+variables['W_c_jet_cRegRes']={
+    'name' : 'Jet_cRegRes[w_ch_down_type_jet_idx_nom]',
+    'range':(50,0,1),
+    'xaxis':'Hadronic W c jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown',],
+    'fold':0
 
+}
+variables['W_c_jet_cRegRes_corr_JER']={
+    'name' : 'Jet_cRegRes[w_ch_down_type_jet_idx_nom] * Jet_corr_JER[w_ch_down_type_jet_idx_nom] ',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'Hadronic W c jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown',],
+    'fold':0
+
+}
+variables['W_c_jet_cRegRes_corr_JERUp']={
+    'name' : 'Jet_cRegRes[w_ch_down_type_jet_idx_nom] * Jet_corr_JER[w_ch_down_type_jet_idx_nom] * Jet_pt_jerUp[w_ch_down_type_jet_idx_nom]/Jet_pt_nom[w_ch_down_type_jet_idx_nom]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'Hadronic W c jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown',],
+    'fold':0
+
+}
+variables['W_c_jet_cRegRes_corr_JERDown']={
+    'name' : 'Jet_cRegRes[w_ch_down_type_jet_idx_nom] * Jet_corr_JER[w_ch_down_type_jet_idx_nom] * Jet_pt_jerDown[w_ch_down_type_jet_idx_nom]/Jet_pt_nom[w_ch_down_type_jet_idx_nom]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'Hadronic W c jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown',],
+    'fold':0
+
+}
+variables['1st_leading_jet_pt_bRegRes']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[0]]',
+    'range':(50,0,1),
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['1st_leading_jet_pt_bRegRes_corr_JER']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[0]] * Jet_corr_JER[SelectedBJetIdx[0]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['1st_leading_jet_pt_bRegRes_corr_JERUp']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[0]] * Jet_corr_JER[SelectedBJetIdx[0]] * Jet_pt_jerUp[SelectedBJetIdx[0]] / Jet_pt_nom[SelectedBJetIdx[0]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['1st_leading_jet_pt_bRegRes_corr_JERDown']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[0]] * Jet_corr_JER[SelectedBJetIdx[0]] * Jet_pt_jerDown[SelectedBJetIdx[0]] / Jet_pt_nom[SelectedBJetIdx[0]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'1^{st} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['2nd_leading_jet_pt_bRegRes']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[1]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'2^{nd} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['2nd_leading_jet_pt_bRegRes_corr_JER']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[1]] * Jet_corr_JER[SelectedBJetIdx[1]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'2^{nd} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['2nd_leading_jet_pt_bRegRes_corr_JERUp']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[1]] * Jet_corr_JER[SelectedBJetIdx[1]] * Jet_pt_jerUp[SelectedBJetIdx[1]] / Jet_pt_nom[SelectedBJetIdx[1]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'2^{nd} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
+variables['2nd_leading_jet_pt_bRegRes_corr_JERDown']={
+    'name' : 'Jet_bRegRes[SelectedBJetIdx[1]] * Jet_corr_JER[SelectedBJetIdx[1]] * Jet_pt_jerDown[SelectedBJetIdx[1]] / Jet_pt_nom[SelectedBJetIdx[1]]',
+    'range':(50,0,1),
+    'samples': mc,
+    'xaxis':'2^{nd} leading jet P_{T} [GeV]',
+    'cuts': ['sng_4j','sng_4j_isoUp','sng_4j_isoDown','sng_jbin','sng_4j_eleORmuCH','sng_4j_eleORmuCH_isoUp','sng_4j_eleORmuCH_isoDown','dbl_2j','dbl_4j','dbl_4j_eeORmmORemORme'],
+    'fold':0
+
+}
 
 print "len(variables)=",len(variables)
