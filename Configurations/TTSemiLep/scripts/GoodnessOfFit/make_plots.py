@@ -39,17 +39,17 @@ def drawPlot(cc, ttree, BR, mass):
   
   pad1.cd()
 
-  t.Draw("limit>>h(50,0,800)")
+  t.Draw("limit>>h(50,500,2000)")
   h = ROOT.gROOT.FindObject("h")
   h.SetLineColor(ROOT.kBlack)
   h.GetXaxis().SetTitle("q_{GoF,saturated}")
   h.GetXaxis().SetTitleSize(0.04)
   h.GetXaxis().SetTitleOffset(1.5)
   h.GetYaxis().SetTitle("Number of toys")
-  fitGaus = ROOT.TF1("gaus","gaus",0,800)
+  fitGaus = ROOT.TF1("gaus","gaus",500,2000)
   fitGaus.SetLineColor(ROOT.kBlue)
   fitGaus.SetLineWidth(3)
-  h.Fit("gaus","","",0, 800)
+  h.Fit("gaus","","",500, 2000)
   gausParams      = fitGaus.GetParameters()
   gausParamErrors = fitGaus.GetParErrors()
 
