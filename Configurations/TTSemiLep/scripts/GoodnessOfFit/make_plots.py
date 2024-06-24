@@ -29,7 +29,14 @@ def getTrees(BR, mass):
     fChain.Add(fileName)
   return fChain
 
-def drawPlot(cc, ttree, BR, mass):
+def getDataFit(mass):
+  f = ROOT.TFile("/cms_scratch/bhoh/toys/higgsCombinedata.GoodnessOfFit.mH{MASS}.root".format(MASS=mass), "READ")
+  tree = f.Get("limit")
+  tree.GetEntry(0)
+  value = tree.limit
+  return value
+
+def drawPlot(cc, ttree, dataValue, BR, mass):
   pad1   = ROOT.TPad("pad1", "pad1", 0, 0, 1.0, 1.0)
   ROOT.gPad.SetGrid()
   pad1.SetTopMargin(0.11)
@@ -38,23 +45,34 @@ def drawPlot(cc, ttree, BR, mass):
   pad1.Draw()
   
   pad1.cd()
-
-  t.Draw("limit>>h(50,500,2000)")
+  
+  toys = []
+  nEntries = ttree.GetEntries()
+  for i in range(nEntries):
+      ttree.GetEntry(i)
+      toys.append(ttree.limit)
+  try:
+    pValue = sum([ toyValue > dataValue  for toyValue in toys])/float(len(toys))
+  except ZeroDivisionError:
+    pValue = 0
+  print(pValue)
+  ttree.Draw("limit>>h(50,0,3000)")
+  #t.Draw("limit>>h")
   h = ROOT.gROOT.FindObject("h")
   h.SetLineColor(ROOT.kBlack)
   h.GetXaxis().SetTitle("q_{GoF,saturated}")
   h.GetXaxis().SetTitleSize(0.04)
   h.GetXaxis().SetTitleOffset(1.5)
   h.GetYaxis().SetTitle("Number of toys")
-  fitGaus = ROOT.TF1("gaus","gaus",500,2000)
+  fitGaus = ROOT.TF1("gaus","gaus",0,3000)
   fitGaus.SetLineColor(ROOT.kBlue)
   fitGaus.SetLineWidth(3)
-  h.Fit("gaus","","",500, 2000)
+  h.Fit("gaus","","",0, 3000)
   gausParams      = fitGaus.GetParameters()
   gausParamErrors = fitGaus.GetParErrors()
 
   pt = ROOT.TPaveText(0.20,0.55,0.20,0.83,"NBNDC")
-  ptptr = pt.AddText("m_{{H+}} = {MASS} GeV".format(MASS=mass))
+  ptptr = pt.AddText("p-value {VALUE}".format(VALUE=pValue))
   ptptr.SetTextColor(ROOT.kBlack)
   ptptr.SetTextSize(0.038)
   ptptr.SetTextAlign(11)
@@ -79,11 +97,21 @@ def drawPlot(cc, ttree, BR, mass):
   ptptr.SetTextSize(0.038)
   ptptr.SetTextAlign(11)
 
-
   pt.Draw("same")
+
 
   ROOT.gStyle.SetOptFit(0000)
   h.Draw("same")
+
+  arr = ROOT.TArrow(dataValue, 0.001, dataValue, h.GetMaximum()/8, 0.02, "<|");
+  arr.SetLineColor(ROOT.kBlue);
+  arr.SetFillColor(ROOT.kBlue);
+  arr.SetFillStyle(1001);
+  arr.SetLineWidth(6);
+  arr.SetLineStyle(1);
+  arr.SetAngle(60);
+  arr.Draw("<|same");
+
 
   CMS_lumi.CMS_lumi(pad1, 4, 0)
   
@@ -96,11 +124,12 @@ def drawPlot(cc, ttree, BR, mass):
 
 cc = ROOT.TCanvas("cc","",800,600)
 cc.Print("GoF_test.pdf[")
-for mass in ['75', '80', '85', '90', '100', '110', '120', '130', '140', '150', '160']:
-  for BR in ['0','0.01']:
+for mass in ['75', '80', '85', '90', '100', '110', '120', '130', '140' ,'150', '160']:
+  for BR in ['0',]:
 #for mass in ['75']:
 #  for BR in ['0',]:
     t = getTrees(BR, mass)
-    drawPlot(cc, t, BR, mass)
+    dataValue = getDataFit(mass)
+    drawPlot(cc, t, dataValue, BR, mass)
 cc.Print("GoF_test.pdf]")
 
