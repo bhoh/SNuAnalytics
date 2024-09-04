@@ -12,5 +12,5 @@ periodic_release =  (NumJobStarts < 3) && ((CurrentTime - EnteredCurrentStatus) 
 
 accounting_group=group_cms
 JobBatchName=mkCombine_GoodnessOfFit
-queue 1100
+queue 550
 
