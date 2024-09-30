@@ -1,4 +1,4 @@
-executable = condor_GoodnessOfFit_data.sh
+executable = condor_importPars.sh
 arguments = $(ProcId)
 +singularityimage="/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-el7:latest"
 +singularitybind="/cvmfs, /etc/condor, /cms, /cms_scratch, /var/lib/condor, /xrootd/store/user/bhoh"
@@ -13,6 +13,6 @@ on_exit_hold = (ExitBySignal == True) || (ExitCode != 0)
 periodic_release =  (NumJobStarts < 3) && ((CurrentTime - EnteredCurrentStatus) > 600)
 
 accounting_group=group_cms
-JobBatchName=mkCombine_GoodnessOfFit_data
+JobBatchName=mkCombine_importPars
 queue 11
 

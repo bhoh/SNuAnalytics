@@ -1,5 +1,7 @@
 executable = condor_pull.sh
 arguments = $(ProcId)
++singularityimage="/cvmfs/singularity.opensciencegrid.org/opensciencegrid/osgvo-el7:latest"
++singularitybind="/cvmfs, /etc/condor, /cms, /cms_scratch, /var/lib/condor, /xrootd/store/user/bhoh"
 output                = /cms_scratch/bhoh/toys/combine_task.$(ClusterId).$(ProcId).out
 error                 = /cms_scratch/bhoh/toys/combine_task.$(ClusterId).$(ProcId).err
 log                   = /cms_scratch/bhoh/toys/combine_task.$(ClusterId).log

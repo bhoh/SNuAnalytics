@@ -20,7 +20,7 @@ PARMS3='mask_Y2016HIPM__sng_4j_eleCH_3b=0,mask_Y2016HIPM__sng_4j_muCH_3b=0,mask_
 
 start_if = 'if [ $1 -eq {IDX} ]; then'
 #commend  = '  combine -M GenerateOnly -d {WS} --toysFrequentist --bypassFrequentistFit -t {N_TOYS} --saveToys --setParameters {PARAMS},BR={BR} -s {SEED} -n {BR} -m {MASS}'
-commend  = '  combine -M GoodnessOfFit -d {WS} --toysFile higgsCombine{BR}.GenerateOnly.mH{MASS}.{SEED}.root -m {MASS} --algorithm saturated --toysFrequentist -t {N_TOYS} -n {BR} -s {SEED} --setParameters {PARAMS} --freezeParameters BR'
+#commend  = '  combine -M GoodnessOfFit -d {WS} --toysFile higgsCombine{BR}.GenerateOnly.mH{MASS}.{SEED}.root -m {MASS} --algorithm saturated --toysFrequentist -t {N_TOYS} -n {BR} -s {SEED} --setParameters {PARAMS} --freezeParameters BR'
 commend  = '  combine -M GoodnessOfFit -d {WS} -m {MASS} --algorithm saturated -t {N_TOYS} -n {BR} -s {SEED} --setParameters {PARAMS} --freezeParameters BR --cminApproxPreFitTolerance=10'
 end_if   = 'fi'
 

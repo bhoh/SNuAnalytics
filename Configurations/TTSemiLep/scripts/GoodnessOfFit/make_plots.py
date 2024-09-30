@@ -56,7 +56,7 @@ def drawPlot(cc, ttree, dataValue, BR, mass):
   except ZeroDivisionError:
     pValue = 0
   print(pValue)
-  ttree.Draw("limit>>h(50,0,3000)")
+  ttree.Draw("limit>>h(50,0,1500)")
   #t.Draw("limit>>h")
   h = ROOT.gROOT.FindObject("h")
   h.SetLineColor(ROOT.kBlack)
@@ -64,14 +64,15 @@ def drawPlot(cc, ttree, dataValue, BR, mass):
   h.GetXaxis().SetTitleSize(0.04)
   h.GetXaxis().SetTitleOffset(1.5)
   h.GetYaxis().SetTitle("Number of toys")
-  fitGaus = ROOT.TF1("gaus","gaus",0,3000)
+  fitGaus = ROOT.TF1("gaus","gaus",0,1500)
   fitGaus.SetLineColor(ROOT.kBlue)
   fitGaus.SetLineWidth(3)
-  h.Fit("gaus","","",0, 3000)
+  h.Fit("gaus","","",0, 1500)
   gausParams      = fitGaus.GetParameters()
   gausParamErrors = fitGaus.GetParErrors()
 
-  pt = ROOT.TPaveText(0.20,0.55,0.20,0.83,"NBNDC")
+  #pt = ROOT.TPaveText(0.20,0.55,0.20,0.83,"NBNDC")
+  pt = ROOT.TPaveText(0.60,0.55,0.60,0.83,"NBNDC")
   ptptr = pt.AddText("p-value {VALUE}".format(VALUE=pValue))
   ptptr.SetTextColor(ROOT.kBlack)
   ptptr.SetTextSize(0.038)

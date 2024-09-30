@@ -3,10 +3,10 @@
 
 import sys, subprocess, ROOT
 
-def importPars(incard,fitresult,toDrop):
+def importPars(incard,fitresult,toDrop,mass):
     # First convert the card
-    outFileName = "morphedWorkspace_{}".format(str(fitresult))
-    origFileName = "origWorkspace_{}".format(str(fitresult))
+    outFileName = "morphedWorkspace_fitDiagnostics{}.root".format(str(mass))
+    origFileName = "origWorkspace_fitDiagnostics{}.root".format(str(mass))
     subprocess.call(['cp {} {}'.format(incard, outFileName)],shell=True)
     subprocess.call(['cp {} {}'.format(incard, origFileName)],shell=True)
 
@@ -22,7 +22,8 @@ def importPars(incard,fitresult,toDrop):
 
     for i in range(myargs.getSize()):
         var = myargs.at(i)
-        if var.GetName() in toDrop: continue
+        #if var.GetName() in toDrop: continue
+        #if 'prop_bin' in var.GetName(): continue
 
         print (var.GetName())
 
@@ -45,5 +46,6 @@ def importPars(incard,fitresult,toDrop):
 if __name__ == "__main__":
     incard = sys.argv[1]
     fit_result = sys.argv[2]
-    toDrop = [] # parameter names to drop from import - I've left it empty as a placeholder
-    importPars(incard,fit_result,toDrop)
+    toDrop = sys.argv[3].split(',')
+    mass = sys.argv[4]
+    importPars(incard,fit_result,toDrop,mass)

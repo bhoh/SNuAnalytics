@@ -410,7 +410,7 @@ if options.plotfile:
         canvas_nuis.SetGridx()
         canvas_nuis.RedrawAxis()
         canvas_nuis.RedrawAxis('g')
-        leg=ROOT.TLegend(0.7,0.8,0.89,0.89)
+        leg=ROOT.TLegend(0.7,0.89,0.89,0.99)
         leg.SetFillColor(0)
         leg.SetTextFont(42)
         leg.AddEntry(hist_prefit,"Prefit","FL")
