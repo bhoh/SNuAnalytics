@@ -156,6 +156,10 @@ public:
     double leptonic_top_M;
     double leptonic_top_pt;
     double leptonic_W_M;
+
+    double initial_MET;
+    double fitted_MET;
+
     bool IsRealNeuPz;
 
     double hadronic_top_b_pt;
@@ -206,7 +210,7 @@ private:
   double CalcPull(TAbsFitParticle* ptr);
   double CalcEachChi2(TFitConstraintM* ptr, double width);
   double CalcEachChi2(TFitConstraintMGaus* ptr, double width);
-  double CalcLD();
+  double CalcLD(int i_pz);
 
   double GetBinContent(TH1* hist, double valx);
   TFile* fLDroot;
@@ -240,6 +244,7 @@ private:
   std::vector<double> jet_pt_cRegRes_vector;
   std::vector<bool> btag_vector;
   std::vector<double> btag_csv_vector;
+  double btag_cut;
   TLorentzVector METv;
   TLorentzVector corr_METv;
   double MET_pt_shift;

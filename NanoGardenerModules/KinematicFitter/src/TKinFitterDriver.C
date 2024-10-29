@@ -147,6 +147,7 @@ void TKinFitterDriver::SetAllObjects(std::vector<TLorentzVector> jet_vector_,
                                      TLorentzVector lepton_,
                                      TLorentzVector met_){
   btag_csv_vector = btag_csv_vector_;
+  btag_cut = btag_cut_;
   std::vector<bool> btag_vector_;
   for(UInt_t i=0; i<btag_csv_vector.size(); i++){
     if(btag_csv_vector.at(i)>btag_cut_){
@@ -978,7 +979,7 @@ void TKinFitterDriver::SetFitter(){
   fitter->addConstraint( constrain_pY );
 
   //Set convergence criteria
-  fitter->setMaxNbIter( 1000 ); //50 is default
+  fitter->setMaxNbIter( 2000 ); //50 is default
   fitter->setMaxDeltaS( 1e-2 );
   fitter->setMaxF( 1e-2 ); //1e-1 is default
   fitter->setVerbosity(1);
@@ -1006,6 +1007,10 @@ void TKinFitterDriver::SaveResults(){
   fit_result.leptonic_top_M = leptonic_top.M();
   fit_result.leptonic_top_pt = leptonic_top.Pt();
   fit_result.leptonic_W_M = leptonic_W.M();
+
+  fit_result.initial_MET = neutrino_pxpypz.Pt();
+  fit_result.fitted_MET = fit_neutrino_pxpypz->getCurr4Vec()->Pt();
+
   fit_result.IsRealNeuPz = IsRealNeuPz;
 
   fit_result.hadronic_top_b_pt = hadronic_top_b_jet.Pt();
@@ -1017,6 +1022,10 @@ void TKinFitterDriver::SaveResults(){
   fit_result.leptonic_top_b_jet_idx = leptonic_top_b_jet_idx;
   fit_result.w_ch_up_type_jet_idx = w_ch_up_type_jet_idx;
   fit_result.w_ch_down_type_jet_idx = w_ch_down_type_jet_idx;
+
+  if(btag_csv_vector.at(fit_result.leptonic_top_b_jet_idx) < btag_cut){
+    cout << "btag_csv_vector.at(fit_result.leptonic_top_b_jet_idx) < btag_cut" << endl;
+  }
 
   fit_result.hadronic_top_b_jet_pull = (*fit_hadronic_top_b_jet->getPull())(0,0);
   fit_result.leptonic_top_b_jet_pull = (*fit_leptonic_top_b_jet->getPull())(0,0);
@@ -1255,10 +1264,12 @@ double TKinFitterDriver::GetBinContent(TH1* hist, double valx){
   return hist->GetBinContent(hist->FindBin(valx));
 }
 
-double TKinFitterDriver::CalcLD(){
+double TKinFitterDriver::CalcLD(int i_pz){
+  double pz = neutrino_pz_sol.at(i_pz);
   TLorentzVector hadronic_w_ch = hadronic_w_ch_jet1 + hadronic_w_ch_jet2;
   TLorentzVector hadronic_top  = hadronic_top_b_jet + hadronic_w_ch;
-  TLorentzVector leptonic_top = leptonic_top_b_jet + lepton + corr_METv;
+  TLorentzVector neutrino_vector(corr_METv.Px(), corr_METv.Py(), pz, TMath::Sqrt(corr_METv.E()*corr_METv.E()+pz*pz));
+  TLorentzVector leptonic_top = leptonic_top_b_jet + lepton + neutrino_vector;
   double hadronic_top_mass = hadronic_top.M();
   double leptonic_top_mass = leptonic_top.M();
   double hadronic_w_ch_mass = hadronic_w_ch.M();
@@ -1362,7 +1373,7 @@ void TKinFitterDriver::FindBestLDFit(bool UseLeading4Jets, bool IsHighMassFitter
   //cout << "set best LD permutation jets" << endl;
     this->Sol_Neutrino_Pz();
     for(unsigned int i_pz(0); i_pz<neutrino_pz_sol.size(); i_pz++) { // neu. pz loop
-      //if(this->Check_BJet_Assignment() == false) break;
+      if(this->Check_BJet_Assignment() == false) break;
       //to initialize fitting parameters
       this->SetCurrentPermutationJets();
 	  //set pz
@@ -1727,7 +1738,10 @@ void TKinFitterDriver::FindBestLDPermutaion(bool UseLeading4Jets){
     do{
       if(this->Check_BJet_Assignment() == false) continue;
       this->SetCurrentPermutationJets();
-      float curr_LD = this->CalcLD();
+      this->Sol_Neutrino_Pz();
+      for(unsigned int i_pz(0); i_pz<neutrino_pz_sol.size(); i_pz++) { // neu. pz loop
+
+      float curr_LD = this->CalcLD(i_pz);
       // update best LD permutation
       if(curr_LD > best_LD){
         best_LD = curr_LD;
@@ -1736,6 +1750,7 @@ void TKinFitterDriver::FindBestLDPermutaion(bool UseLeading4Jets){
         for(auto x:permutation_vector){
           best_LD_permutation_vector.push_back(x);
         }
+      }
       }
     }while(this->NextPermutation(UseLeading4Jets));
     // copy vector

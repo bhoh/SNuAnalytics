@@ -176,6 +176,8 @@ class KinFitterProducer(Module):
             'hadronic_top_pt_{}'.format(self._syst_suffix),
             'leptonic_top_M_{}'.format(self._syst_suffix),
             'leptonic_W_M_{}'.format(self._syst_suffix),
+            'initial_MET_{}'.format(self._syst_suffix),
+            'fitted_MET_{}'.format(self._syst_suffix),
             'chi2_{}'.format(self._syst_suffix),
             #'lambda_{}'.format(self._syst_suffix),
             'hadronic_top_b_jet_pull_{}'.format(self._syst_suffix),
@@ -282,16 +284,19 @@ class KinFitterProducer(Module):
             #  continue
             pass
           njets += 1
-          btag_csv_vector.push_back(jet_csv)
           # b taggging
           isBtaged = jet_csv > self._DeepFlavB_WP_M
           if isBtaged:
             nbtags += 1
           tmp_jet = ROOT.TLorentzVector()
           tmp_jet.SetPtEtaPhiM(jet_pt, jet.eta, jet.phi, jet_mass)
+          if lepton.DeltaR(tmp_jet) < 0.3:
+            print("Debug!!!!!: lepton.DeltaR(tmp_jet) < 0.3")
+            continue
+          btag_csv_vector.push_back(jet_csv)
           jets.push_back(tmp_jet)
           orig_jets_idx.push_back(jet.jetIdx)
-          tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass)
+          #tmp_jet.SetPtEtaPhiM(jet.pt, jet.eta, jet.phi, OrigJet[jet.jetIdx].mass) #XXX 24.04.10, bug fix: commented out
           # set jet resolution
           jetPtResolution_, jetEtaResolution_, jetPhiResolution_ = self.getJetPtResolution(tmp_jet, event.fixedGridRhoFastjetAll)
           if self._noRegCorr == False:
@@ -385,6 +390,11 @@ class KinFitterProducer(Module):
               else:
                 # convert jet index inside the fitter to index in Jet collection
                 variables[nameBranches] = self.findOrigJetIdx(getattr(fit_results.at(0),nameBranches_no_suffix), orig_jets_idx)
+                if "leptonic_top_b_jet_idx" in nameBranches:
+                  tmp_csv = OrigJet[variables[nameBranches]].btagDeepFlavB
+                  if tmp_csv < self._DeepFlavB_WP_M:
+                    print("tmp_csv < self._DeepFlavB_WP_M")
+
         else:
           for nameBranches in self.newbranches_F + self.newbranches_I:
             if 'nbtagsCleanJet' in nameBranches: # skip variable not retrived from fitter
@@ -435,10 +445,11 @@ class KinFitterProducer(Module):
 
     def findOrigJetIdx(self,fitter_jet_idx, orig_jets_idx):
         # convert 'jet index inside fitter' to 'jet index in OrigJets(Jet_ in nanoAOD)'
-        if fitter_jet_idx<0:
-          return fitter_jet_idx
-        else:
-          return orig_jets_idx[fitter_jet_idx]
+        #if fitter_jet_idx<0:
+        #  return fitter_jet_idx
+        #else:
+        #  return orig_jets_idx[fitter_jet_idx]
+        return orig_jets_idx[fitter_jet_idx]
 
 
     def findJetPtSystAttr(self,object_,suffix_):
